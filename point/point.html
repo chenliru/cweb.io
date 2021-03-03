@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../cweb.css">
+    <title>Drawing with mouse events</title>
+</head>
+<body>
+<h1>Drawing with mouse events</h1>
+<div class="display">
+    <canvas id="point-canvas" class="cwebCanvas"></canvas>
+    <div class="controlCanvas">
+        <div class="dropdown">
+            <button class="dropdownBottom">Dropdown</button>
+            <div class="dropdownContent">
+                <a class="reload" href="#">Reload</a>
+                <a href="#">PlaceHold 1</a>
+                <a href="#">PlaceHold 2</a>
+                <a href="#">PlaceHold 3</a>
+            </div>
+        </div>
+        <div id="mouse"></div>
+    </div>
+</div>
+
+<script type="module" src="point.js"></script>
+
+</body>
+</html>

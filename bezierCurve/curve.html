@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../cweb.css">
+    <title>Drawing with mouse events</title>
+</head>
+<body>
+<h1>Drawing bezier Curve with mouse events</h1>
+<div class="display">
+    <canvas id="curve-canvas" class="cwebCanvas"></canvas>
+        <div class="controlCanvas">
+            <br><label><input type="checkbox" id="show-points" checked> Show points</label>
+            <br>
+            <label for="flexible"></label><input type="range" id="flexible" min="-1" max="2" step=".1" value=".3"> Flexible <span
+                id="flexible-value">(0.3)</span>
+            <br>
+            <label for="tension"></label><input type="range" id="tension" min="-1" max="2" step=".1" value=".6"> Tension <span
+                id="tension-value">(0.6)</span>
+            <br>
+            <button class="reload" type="button">Reload</button>
+            <div id="mouse"></div>
+        </div>
+</div>
+
+<script type="module" src="curve.js"></script>
+
+</body>
+</html>

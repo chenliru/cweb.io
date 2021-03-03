@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'assets/example/css/canvas.css' %}">
+    <title>Drawing with mouse events</title>
+</head>
+<body>
+<h1>Drawing with mouse events</h1>
+<div class="display">
+    <canvas id="pointCanvas" class="canvas-item"></canvas>
+    <div class="controls">
+        <div class="dropdown">
+            <button class="dropbtn">Dropdown</button>
+            <div class="dropdown-content">
+                <a class="reload" href="#">Reload</a>
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="display">
+    <canvas id="curveCanvas" class="canvas-item"></canvas>
+        <div class="controls">
+            <br><label><input type="checkbox" id="showPoints" checked> Show points</label>
+            <br>
+            <label for="flexible"></label><input type="range" id="flexible" min="-1" max="2" step=".1" value=".3"> Flexible <span
+                id="flexible-value">(0.3)</span>
+            <br>
+            <label for="tension"></label><input type="range" id="tension" min="-1" max="2" step=".1" value=".6"> Tension <span
+                id="tension-value">(0.6)</span>
+            <br>
+            <button class="reload" type="button">Reload</button>
+            <div id="mouse"></div>
+        </div>
+</div>
+<div class="display">
+    <canvas id="traceCanvas"></canvas>
+    <canvas id="blobCanvas" class="canvas-item"></canvas>
+        <div class="controls">
+            <br><label><input type="checkbox" id="showTrace" checked> Show Blob Trace</label>
+            <br>
+            <label for="blob"></label><input type="number" id="blob" value="20"> Blob Number <span
+                id="blob-value">(20)</span>
+            <br>
+            <button class="reload" type="button">Reload</button>
+        </div>
+</div>
+<div id="source-images">
+    <img id="soccer-gate"
+         src="https://en.js.cx/clipart/soccer-gate.svg" crossorigin="anonymous"
+         width="300" height="227" alt="">
+    <img id="ball"
+         src="https://en.js.cx/clipart/ball.svg" crossorigin="anonymous"
+         alt="">
+    <img id="chenliru"
+         src="../media/profile_pics/chenliru.jpg" alt="">
+</div>
+<script src="{% static 'assets/example/js/canvas.js' %}"></script>
+{#<script type="module" src="{% static 'assets/example/js/blob.js' %}"></script>#}
+</body>
+</html>
