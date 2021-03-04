@@ -4,19 +4,24 @@ import {$, Point, bezierCurve} from "../cweb.js"
 const curveCanvas = $("curve-canvas")
 const curve = new bezierCurve()
 
-function update_curve() {
-    $("tension-value").innerHTML = "(" + $("tension").value + ")";
-    $("flexible-value").innerHTML = "(" + $("flexible").value + ")";
+let show_points = $("show-points")
+let tension = $("tension")
+let flexible = $("flexible")
 
-    curve.showPoints = $("show-points").checked
-    curve.tension = $("tension").value
-    curve.flexible = $("flexible").value
+
+function update_curve() {
+    $("tension-value").innerHTML = "(" + tension.value + ")";
+    $("flexible-value").innerHTML = "(" + flexible.value + ")";
+
+    curve.showPoints = show_points.checked
+    curve.tension = tension.value
+    curve.flexible = flexible.value
     curve.draw_splines(curveCanvas)
 }
 
-$("show-points").onchange = update_curve
-$("flexible").onchange = update_curve
-$("tension").onchange = update_curve
+show_points.onchange = update_curve
+flexible.onchange = update_curve
+tension.onchange = update_curve
 
 curveCanvas.onclick = function (e) {
     const point = new Point()

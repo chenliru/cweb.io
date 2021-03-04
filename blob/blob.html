@@ -3,27 +3,40 @@
 <head>
     <meta charset="utf-8">
     <title>Bouncing balls</title>
-    <link rel="stylesheet" href="blob.css">
+    <link rel="stylesheet" href="../cweb.css">
+    <link href="../bootstrap-examples/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
 <h1>bouncing balls</h1>
-<p>Ball count: </p>
-<div id="blob-image">
-    <img id="soccer-gate"
-         src="https://en.js.cx/clipart/soccer-gate.svg" crossorigin="anonymous"
-         width="300" height="227" alt="">
-    <img id="ball"
-         src="https://en.js.cx/clipart/ball.svg" crossorigin="anonymous"
-         alt="">
+<div class="imageSource">
+    <img id="soccer-gate" src="https://en.js.cx/clipart/soccer-gate.svg" crossorigin="anonymous" alt="">
+    <img id="ball" src="https://en.js.cx/clipart/ball.svg" crossorigin="anonymous" alt="">
 </div>
-<div id="source-canvas">
-    <canvas id="canvas-main" style="background: url(Liquid-Cheese.svg)"></canvas>
-    <canvas id="canvas-tracing"></canvas>
+<div class="displayCanvas">
+    <canvas id="blob-canvas" class="layerCanvas" style="background: url(Liquid-Cheese.svg)"></canvas>
+    <canvas id="trace-canvas" class="layerCanvas"></canvas>
+    <div class="controlCanvas">
+        <div class="mb-3">
+            <input class="form-control form-control-lg" type="number" id="ball-number" placeholder="ball number"
+                   value="20" aria-label=".form-control-lg example">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="tracing-ball">
+            <label class="form-check-label" for="tracing-ball">Tracing ball(s)</label>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="gravity">
+            <label class="form-check-label" for="gravity">Gravity</label>
+        </div>
+        <div id="mouse"></div>
+    </div>
 </div>
 
 <div id="source-blobs"></div>
 
 <script type="module" src="blob.js"></script>
+<script src="../bootstrap-examples/assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
