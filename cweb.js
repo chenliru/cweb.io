@@ -26,7 +26,6 @@ class Point {
         if (this.isDraw) {
             if (typeof (canvas) == 'undefined') canvas = event.target
             let ctx = canvas.getContext('2d')
-            this.canvas = canvas
 
             ctx.save()
             ctx.fillStyle = this.color
@@ -35,25 +34,23 @@ class Point {
             //get mouse x,y
             this.mouse_xy(event)
 
-            ctx.arc(this.x, this.y, 3, 0, 2 * Math.PI);
+            ctx.arc(this.x, this.y, 2, 0, 2 * Math.PI);
             ctx.fill()
             ctx.restore();
         }
-
     }
 
     draw_curve(event, canvas) {
         if (this.isDraw) {
             if (typeof (canvas) == 'undefined') canvas = event.target
             let ctx = canvas.getContext('2d')
-            this.canvas = canvas
 
             ctx.beginPath();
             ctx.strokeStyle = 'black';
             ctx.lineWidth = 1;
             ctx.moveTo(this.x, this.y);
 
-            this.mouse_xy(event)
+            this.mouse_xy(event, canvas)
 
             ctx.lineTo(this.x, this.y);
             ctx.stroke();
@@ -66,12 +63,14 @@ class Point {
         console.log("put your code here")
     }
 
-    mouse_xy(event) {
-        let canvas =  event.target
+    mouse_xy(event, canvas) {
+        if (typeof (canvas) == 'undefined') canvas = event.target
+        // let canvas =  event.target
 
         let c = canvas
         let scaleX = c.width / c.offsetWidth || 1
         let scaleY = c.height / c.offsetHeight || 1
+        console.log(c.width, c.offsetWidth)
 
         if (!isNaN(event.offsetX)) {
             this.x = event.offsetX * scaleX
@@ -208,7 +207,7 @@ class Blob {
         this.get_velocity()
 
         this.anti_gravity = false
-        this.tracing = true
+        this.trace = false
 
         this.color = 'rgb(' + Blob.random(0, 255) + ',' + Blob.random(0, 255) + ',' + Blob.random(0, 255) + ')'
     }
@@ -297,7 +296,7 @@ class Blob {
 
             ctx_blob.drawImage(this.image, Math.floor(this.rect[0]), Math.floor(this.rect[1]), this.rect[2], this.rect[3])
 
-            if (this.tracing) {
+            if (this.trace) {
                 this.get_center()
                 Blob.line(ctx_tracing, x, y, this.center[0], this.center[1]);
             }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Greedy Snake</title>
+    <link href="../bootstrap-examples/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../cweb.css">
+    <link rel="stylesheet" href="snake.css">
+</head>
+
+<body>
+<h1 style="text-align: center">Greedy Snake</h1>
+<div class="displayCanvas">
+    <canvas id="snake-canvas" class="drawCanvas" width="800" height="800"
+            style="background: url(meadow.svg)"></canvas>
+    <div class="mouse-click hide">
+        <div id="up">&#8593;</div>
+        <div id="right">&#8594;</div>
+        <div id="left">&#8592;</div>
+        <div id="down">&#8595;</div>
+    </div>
+    <div class="banner" id="selector">
+        <div>Time :<span id="time">0</span></div>
+        <div>Score :<span id="score">0</span></div>
+        <div class="mouse off" onclick="mouse(this)">mouse</div>
+    </div>
+</div>
+<script type="module" src="snake.js"></script>
+</body>
+
+</html>

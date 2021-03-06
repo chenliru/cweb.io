@@ -1,0 +1,69 @@
+.banner {
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 30px;
+    text-align: center;
+    color: #fff;
+    background: #3f51b5;
+    line-height: 29px;
+    font-family: monospace;
+    opacity: .4;
+    transition: .5s
+}
+
+.banner:hover {
+    opacity: 1
+}
+
+div#selector > div {
+    width: 50%;
+    z-index: 100;
+}
+
+.mouse-click > div {
+    display: flex;
+    height: 48%;
+    width: 48%;
+    border: dashed 3px #fff;
+    border-radius: 7px;
+    align-content: center;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    font-weight: 900;
+    color: #fff;
+    transition: .5s;
+    opacity: .1;
+}
+
+.mouse-click {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    opacity: 1;
+    user-select: none
+}
+
+.mouse-click > div:hover {
+    opacity: 1
+}
+
+.mouse {
+    background: #8bc34a
+}
+
+.off {
+    background: #f44336
+}
+
+.hide {
+    opacity: 0
+}

@@ -9,14 +9,14 @@
 </head>
 
 <body>
-<h1>bouncing balls</h1>
+<h1 style="text-align: center">bouncing balls</h1>
 <div class="imageSource">
     <img id="soccer-gate" src="https://en.js.cx/clipart/soccer-gate.svg" crossorigin="anonymous" alt="">
     <img id="ball" src="https://en.js.cx/clipart/ball.svg" crossorigin="anonymous" alt="">
 </div>
 <div class="displayCanvas">
-    <canvas id="blob-canvas" class="layerCanvas" style="background: url(Liquid-Cheese.svg)"></canvas>
-    <canvas id="trace-canvas" class="layerCanvas"></canvas>
+    <canvas id="blob-canvas" class="drawCanvas" width="600" height="600" style="background: url(Liquid-Cheese.svg)"></canvas>
+    <canvas id="trace-canvas" class="drawCanvas" width="600" height="600"></canvas>
     <div class="controlCanvas">
         <div class="mb-3">
             <input class="form-control form-control-lg" type="number" id="ball-number" placeholder="ball number"
@@ -33,8 +33,6 @@
         <div id="mouse"></div>
     </div>
 </div>
-
-<div id="source-blobs"></div>
 
 <script type="module" src="blob.js"></script>
 <script src="../bootstrap-examples/assets/dist/js/bootstrap.bundle.min.js"></script>

@@ -7,14 +7,14 @@ const point = new Point()
 pointCanvas.addEventListener('mousedown', e => {
     point.isDraw = true
     point.draw_point(e, pointCanvas)
-    // console.log('mouse down')
 })
 
 pointCanvas.addEventListener('mousemove', e => {
     point.draw_curve(e, pointCanvas)
-    $("mouse").innerHTML = "x: " + Math.floor(point.x) + "," + " y: " + Math.floor(point.y);
+    $("mouse").innerHTML = "x: " + Math.floor(point.x) + "," + " y: " + Math.floor(point.y)
 })
 
 pointCanvas.addEventListener('mouseup', e => {
+    point.draw_point(e, pointCanvas)
     point.isDraw = false
 })
