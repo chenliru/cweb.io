@@ -7,22 +7,20 @@ body {
     overflow: hidden;
 }
 
-.displayCanvas {
+.display-canvas {
     display: flex;
     position: relative;
     width: 90%;
     height: 90%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     border: 2px solid green;
     background: white;
 }
 
-.drawCanvas {
+.draw-canvas {
     position: absolute;
     width: 100%;
     height: 100%;
-    border: dashed 1px red;
 }
 
 #trace-canvas {
@@ -33,16 +31,16 @@ body {
     z-index: 0;
 }
 
-.imageSource {
+.image-source {
     display: none;
 }
 
-.controlCanvas {
+.gui-canvas {
     position: absolute;
     right: 0;
     top: 0;
     margin: 4px;
-    z-index: 2;
+    z-index: 100;
 }
 
 /* Style The Dropdown Button */

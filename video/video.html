@@ -1,43 +1,20 @@
 <!DOCTYPE html> 
-<html> 
+<html lang="en">
 <body> 
 
 <div style="text-align:center"> 
-  <button onclick="playPause()">Play/Pause</button> 
+  <button onclick="playPause()">Play/Pause</button>
   <button onclick="makeBig()">Big</button>
   <button onclick="makeSmall()">Small</button>
   <button onclick="makeNormal()">Normal</button>
   <br><br>
-  <video id="video1" width="640">
-    <source src="cweb.mp4" type="video/mp4">
-    Your browser does not support HTML video.
-  </video>
+
+  <video id="video" muted="muted"></video>
+  <button id="snap">Snap Photo</button>
+  <canvas id="canvas" width="640" height="480"></canvas>
 </div> 
 
-<script> 
-let myVideo = document.getElementById("video1");
-
-function playPause() { 
-  if (myVideo.paused) 
-    myVideo.play(); 
-  else 
-    myVideo.pause(); 
-} 
-
-function makeBig() { 
-    myVideo.width = 780; 
-} 
-
-function makeSmall() { 
-    myVideo.width = 320; 
-} 
-
-function makeNormal() { 
-    myVideo.width = 640; 
-} 
-</script> 
-
-<p>Video courtesy of <a href="https://www.bigbuckbunny.org/" target="_blank">Big Buck Bunny</a>.</p>
+<script src="video.js" ></script>
 
 </body> 
 </html>
