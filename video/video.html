@@ -1,20 +1,12 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
-<body> 
+<body>
 
-<div style="text-align:center"> 
-  <button onclick="playPause()">Play/Pause</button>
-  <button onclick="makeBig()">Big</button>
-  <button onclick="makeSmall()">Small</button>
-  <button onclick="makeNormal()">Normal</button>
-  <br><br>
+<div style="text-align:center">
+    <video id="videoID" playsinline autoplay muted="muted"></video>
+</div>
 
-  <video id="video" muted="muted"></video>
-  <button id="snap">Snap Photo</button>
-  <canvas id="canvas" width="640" height="480"></canvas>
-</div> 
+<script type="module" src="VideoCapture.js"></script>
 
-<script src="video.js" ></script>
-
-</body> 
+</body>
 </html>

@@ -5,7 +5,7 @@
 //     - 'content_script' and execution env are isolated from each other
 //     - In order to communicate we use the DOM (window.postMessage)
 //
-// app.js            |        |content-script.js |      |background.js
+// audio.js            |        |content-script.js |      |background.js
 // window.postMessage|------->|port.postMessage  |----->| port.onMessage
 //                   | window |                  | port |
 // webkitGetUserMedia|<------ |window.postMessage|<-----| port.postMessage
