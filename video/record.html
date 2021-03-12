@@ -155,8 +155,7 @@
         return Promise.all([
             stopped,
             recorded
-        ])
-            .then(() => data);
+        ]).then(() => data);
     }
 
     function stop(stream) {
@@ -181,8 +180,7 @@
 
                 log("Successfully recorded " + recordedBlob.size + " bytes of " +
                     recordedBlob.type + " media.");
-            })
-            .catch(log);
+            }).catch(log);
     }, false);
     stopButton.addEventListener("click", function () {
         stop(preview.srcObject);
