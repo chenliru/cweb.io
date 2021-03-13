@@ -3,8 +3,15 @@
 <body>
 
 <div style="text-align:center">
+    <div>
+        <button id="stopRecord">Stop Record</button>
+    </div>
+    <video id="video" controls src = record.webm></video>
     <video id="videoID" playsinline autoplay controls muted="muted"></video>
     <video id="videoID-Second" playsinline controls muted="muted"></video>
+    <a id="download" class="button">
+        Download
+    </a>
 </div>
 
 <script type="module" src="VideoCapture.js"></script>

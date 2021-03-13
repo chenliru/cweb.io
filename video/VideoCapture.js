@@ -3,6 +3,8 @@ import {$} from "../cweb.js";
 
 const video = $("videoID");
 const video2 = $("videoID-Second");
+const stopRecord = $("stopRecord")
+const downloadButton = $("download")
 
 
 class VideoCapture {
@@ -12,11 +14,23 @@ class VideoCapture {
         this.videoIDX = videoIDX;
         this.audioIDX = audioIDX;
         this.size = [1024, 768];
+        this.source = 'user';
+        this.boolean_record = false;
     }
 
     setSize(width, height) {
         this.size[0] = width;
         this.size[1] = height;
+    }
+
+    // 'user', 'display'
+    setSource(source) {
+        this.source = source;
+    }
+
+    //
+    setRecord(boolean_record) {
+        this.boolean_record = boolean_record;
     }
 
     //Define cameras and microphones.
@@ -54,7 +68,8 @@ class VideoCapture {
                 }
             });
 
-            const stream = _this.getMedia(audio, video);
+            //
+            const stream = _this.device(audio, video);
             console.log('device ALL: ', audio, video, stream);
             return stream;
 
@@ -63,7 +78,7 @@ class VideoCapture {
         });
     }
 
-    async getMedia(audio, video) {
+    async device(audio, video) {
         const _this = this;
         if (window.stream) {
             window.stream.getTracks().forEach(track => {
@@ -80,11 +95,18 @@ class VideoCapture {
             }
         };
 
-        window.constraints = constraints;   // make constrains available to browser console
+        // window.constraints = constraints;   // make constrains available to browser console
         console.log('Got stream with constraints:', constraints);
 
+        let stream;
         try {
-            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            if (_this.source === 'display') {
+                stream = await navigator.mediaDevices.getDisplayMedia(constraints);
+            } else if (_this.source === 'user') {
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+            } else {
+                stream = undefined;
+            }
             _this.mediaStream(stream);    // get user media successfully
             return stream;
         } catch (e) {
@@ -92,19 +114,70 @@ class VideoCapture {
         }  // always check for errors at the end.
     }
 
+    // media stream process here
     mediaStream(stream) {
         const videoTracks = stream.getVideoTracks();
-        console.log(`Using video device: ${videoTracks[0].label}`);
-        // media stream process here:
-        window.stream = stream;    // make stream available to browser console
+        const audioTracks = stream.getAudioTracks();
+        console.log('Using video device: ', videoTracks);
+        console.log('Using video device: ', audioTracks);
+
+        // window.stream = stream;    // make stream available to browser console
         this.video.srcObject = stream;
+
+        if(this.boolean_record) this.record(stream).then(this.download);
+        // demonstrates how to detect that the user has stopped
+        // sharing the screen via the browser UI.
+        stream.getVideoTracks()[0].addEventListener('ended', () => {
+            console.log('The user has ended Media Source');
+        });
+    }
+
+    record(stream) {
+        let recorder = new MediaRecorder(stream);
+        let data = [];
+
+        recorder.ondataavailable = event => data.push(event.data);
+        recorder.start();
+
+        let stopped = new Promise((resolve, reject) => {
+            recorder.onstop = resolve;
+            recorder.onerror = event => reject(event.name);
+        });
+
+        stopRecord.addEventListener('click', ()=>{
+            recorder.stop();
+            this.stop(stream);
+        })
+
+        return Promise.all([
+            stopped,
+        ]).then(() => data);    // Once that resolves, the array data is returned
+    }
+
+    download(data) {
+        let recordedBlob = new Blob(data, {type: "video/webm"});
+        downloadButton.href = URL.createObjectURL(recordedBlob);
+        downloadButton.download = "RecordedVideo.webm";
+
+        console.log("Successfully recorded " + recordedBlob.size + " bytes of " +
+            recordedBlob.type + " media.");
+    }
+
+    stop(stream) {
+        stream.getTracks().forEach(track => track.stop());
     }
 }
 
-let cam = new VideoCapture(video, 2, 0);
+const cam = new VideoCapture(video, 2, 0);
 cam.setSize(1280, 720);
-const stream = cam.start();
+cam.start();
 
-let cam2 = new VideoCapture(video2, 0, 1);
+const cam2 = new VideoCapture(video2, 0, 1);
 cam2.setSize(640, 480);
-cam2.start()
+cam2.setSource('display')
+cam2.setRecord(true)
+cam2.start();
+
+document.addEventListener('dblclick', () => {
+    cam2.setRecord(false);
+});
