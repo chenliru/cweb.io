@@ -397,6 +397,46 @@ class Blobs {
 
 }
 
+class Food {
+    constructor(canvas) {
+        this.x = 0;
+        this.y = 0;
+        this.b = 10;
+
+        this.w = this.b;
+        this.h = this.b;
+
+        this.color = 'red';
+        this.bowl = 'yellow';
+        this.canvas = canvas;
+
+        this.renew();   // set food random locations
+        this.serve();   // draw foods
+    }
+
+    renew() {
+        this.x = Math.floor(Math.random() * (this.canvas.width - 200) + 10);
+        this.y = Math.floor(Math.random() * (this.canvas.height - 200) + 30);
+    }
+
+    serve() {
+        const ctx = this.canvas.getContext('2d');
+
+        ctx.beginPath();    //draw food
+        ctx.lineWidth = 1;
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.b - 5, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.beginPath();    //draw bawl
+        ctx.arc(this.x, this.y, this.b - 5, 0, Math.PI);
+        ctx.strokeStyle = this.bowl;
+        ctx.lineWidth = 10;
+        ctx.stroke();
+
+    }
+}
+
 class Snake {
     constructor(canvas) {
         this.w = 15;
@@ -471,58 +511,28 @@ class Snake {
         // the index of the element
         // the Array object being traversed
         this.snake.forEach((body, idx, snake) => {
+            // snake body
+            ctx.beginPath();    //green body
+            ctx.fillStyle = "#37ea18";
             ctx.fillRect(body.x, body.y, this.w, this.h);
-            ctx.strokeStyle = "#39031f"; //"#E91E63"
-            ctx.font = "30px serif";
-            ctx.strokeStyle = "#c34a89"; // "#9E9E9E"
-            snake.length - 1 !== idx && 0 !== idx && ctx.strokeRect(body.x, body.y, this.w, this.h);
-
-            if (0 === idx) {
-                ctx.beginPath();
-                ctx.fillStyle = "#5ff436";
-                ctx.arc(body.x + 10, body.y + 2, 5, 360, 0);
-                ctx.fill();
-            }
-
             ctx.arc(body.x + 10, body.y + 2, 5, 360, 0);
             ctx.fill();
-            ctx.beginPath();
+
+            ctx.beginPath();    // red texture
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#961e5c";
+            snake.length - 1 !== idx && 0 !== idx && ctx.strokeRect(body.x, body.y, this.w, this.h);
+
+            // snake head
+            if (0 === idx) {
+                ctx.beginPath();
+                ctx.fillStyle = "#ead518";  // yellow head
+                ctx.fillRect(body.x, body.y, this.w, this.h);
+                ctx.fillStyle = "#ea18c7";  // red eyes
+                ctx.arc(body.x + 10, body.y + 2, 8, 360, 0);
+                ctx.fill();
+            }
         })
-    }
-}
-
-class Food {
-    constructor(canvas) {
-        this.x = 0;
-        this.y = 0;
-        this.b = 10;
-        this.w = this.b;
-        this.h = this.b;
-        this.color = 'red';
-        this.bowl = 'yellow';
-        this.canvas = canvas;
-
-        this.renew();
-        this.serve();
-    }
-
-    renew() {
-        this.x = Math.floor(Math.random() * (this.canvas.width - 200) + 10);
-        this.y = Math.floor(Math.random() * (this.canvas.height - 200) + 30);
-    }
-
-    serve() {
-        const ctx = this.canvas.getContext('2d');
-        ctx.fillStyle = this.color;
-        ctx.arc(this.x, this.y, this.b - 5, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.b - 5, 0, Math.PI);
-        ctx.strokeStyle = this.bowl;
-        ctx.lineWidth = 10;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.lineWidth = 1;
     }
 }
 

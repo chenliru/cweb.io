@@ -106,7 +106,6 @@ class blobGame {
         });
 
         this.blobs.draw(canvas_layer);
-
         window.requestAnimationFrame(this.loop.bind(this));
     }
 }

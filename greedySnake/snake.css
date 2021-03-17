@@ -1,3 +1,5 @@
+/*cweb.css*/
+
 .banner {
     display: flex;
     position: absolute;
@@ -5,7 +7,7 @@
     top: 0;
     right: 0;
     height: 30px;
-    text-align: center;
+    /*text-align: center;*/
     color: #fff;
     background: #3f51b5;
     line-height: 29px;
@@ -29,10 +31,10 @@ div#selector > div {
     width: 48%;
     border: dashed 3px #fff;
     border-radius: 7px;
-    align-content: center;
-    justify-content: center;
-    align-self: center;
-    align-items: center;
+    /*align-content: center;*/
+    /*justify-content: center;*/
+    /*align-self: center;*/
+    /*align-items: center;*/
     font-weight: 900;
     color: #fff;
     transition: .5s;
@@ -56,14 +58,36 @@ div#selector > div {
     opacity: 1
 }
 
-.mouse {
-    background: #8bc34a
-}
-
 .off {
-    background: #f44336
+    background: #1a1615
 }
 
 .hide {
     opacity: 0
+}
+
+
+aside {
+    position: fixed;
+    top: 20%;
+    right: 0;
+    transform: translateX(100%);
+    transition: 0.3s all ease-out;
+    background-color: #73ab5e;
+    padding: 1rem;
+    z-index: -1;
+}
+
+aside p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+aside a {
+    color: #666;
+}
+
+/* Toggled State of information box */
+input[type=checkbox]:checked ~ aside {
+    transform: translateX(0);
 }
