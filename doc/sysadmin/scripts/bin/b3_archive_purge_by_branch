@@ -1,0 +1,115 @@
+#!/bin/ksh93
+###########################################################################
+#  Script modified from AWS Project for B3 purge by branch# and date
+#
+#  Author : Liru Chen
+#  Date: 2017-08-22
+###########################################################################
+#set -v
+#set -x
+
+DATETIME=$(date +%Y%m%d%H%M)
+
+brno=$1
+months=$2
+
+if [[ $# != 2 ]]
+then
+	echo $"Usage: $0 Branch_Number Months_To_Keep_B3"
+	exit 1
+fi
+
+if [[ $months -lt 12 ]]
+then
+	echo "Not permitted, You should keep at least 12 months B3 data"
+	exit 2
+fi
+
+BASE=/dbbkup
+BIN=$BASE/bin
+TMP=$BASE/tmp
+ETC=$BASE/etc
+LOG=$BASE/log
+
+PATH=$BASE/bin:$PATH
+export PATH
+
+rootwhere="(b3.liibrchno=BRCH AND b3.approveddate like 'APPROVEDMONTH')"
+TABLE_KEY=${ETC}/table_key
+
+#Mail address
+amail="lchen@livingstonintl.com"
+pmail="EKotsalainen@livingstonintl.com MStruys@livingstonintl.com lchen@livingstonintl.com"
+
+# func_tabcolumn () {
+	# tablename=$(echo $1|tr A-Z a-z)
+	# columnsql="
+		# SELECT colname from systables,syscolumns
+		# WHERE tabname like '${tablename}'
+		  # and systables.tabid=syscolumns.tabid
+		# ORDER BY colno
+		# " 
+	# func_runsql "$columnsql"|grep colname|grep -v "^$"
+# }
+
+# #1-building select clause
+# func_tabcolumn ${chtable} |
+# while read column columnname
+# do
+	# selectclause="${selectclause} ${chtable}.${columnname},"
+# done
+		
+#Based on business requirement, (branch number and purged months)
+#Build WHERE Statement, as globle variable ${where_select_statement}
+func_whereclause () {
+	b3month=18					#we keep 18 months b3 data on production DB
+	((mons=b3month-months))	
+	
+	nums=1
+	while [[ $nums -le $mons ]]
+	do
+		y=$(date "+%Y")
+		m=$(date "+%m")
+		
+		((m=m+nums))
+		
+		if [[ $m -le 6 ]]
+		then
+			((Y=y-2))
+			((M=m+6))
+		else
+			((Y=y-1))
+			((M=m-6))
+		fi
+		
+		[[ ${M} -lt 10 ]] && M=0${M}
+		approvedmonth=${Y}\\/${M}\\/%
+		
+		wherenext=$(echo ${rootwhere}|sed "s/BRCH/${brno}/")
+		wherenext=$(echo ${wherenext}|sed "s/APPROVEDMONTH/${approvedmonth}/")		
+		
+		if [[ $nums -eq 1 ]] 	#handling approveddate more than one month
+		then
+			whereclause="${wherenext}"
+		else
+			whereclause="${whereclause} OR ${wherenext}"
+		fi	
+	
+	((nums=nums+1))
+	done
+	
+	rootclause="b3,b3,@b3iid,,~${whereclause}~"
+
+	echo ${rootclause}
+	
+}
+
+func_whereclause
+
+cp ${TABLE_KEY} ${TABLE_KEY}.${DATETIME}
+echo ${rootclause} > ${TABLE_KEY}
+grep -v "^b3,b3,@b3iid,," ${TABLE_KEY}.${DATETIME} >> ${TABLE_KEY}
+
+relation_data.ksh
+
+exit 0

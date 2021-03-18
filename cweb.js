@@ -13,6 +13,16 @@ function $(id) {
     return document.getElementById(id);
 }
 
+$('inputfile').addEventListener('change', printFile)
+
+function printFile() {
+    const fr = new FileReader();
+    fr.onload = function (e) {
+        $('output').textContent = e.target.result + "";
+    }
+/*    fr.readAsText(file);*/
+}
+
 const reload = document.querySelectorAll('.reload');
 
 reload.forEach((reload) => {
