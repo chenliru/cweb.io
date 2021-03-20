@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc5 {
+	color: #808080;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+.sc10 {
+	color: #008080;
+	background: #00FFFF;
+}
+.sc11 {
+	font-weight: bold;
+	color: #804040;
+	background: #E1FFF3;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/bin/ksh93</span><span class="sc0">
+</span><span class="sc2">###########################################################################</span><span class="sc0">
+</span><span class="sc2">#  Script modified from AWS Project for B3 purge by branch# and date</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Author : Liru Chen</span><span class="sc0">
+</span><span class="sc2">#  Date: 2017-08-22</span><span class="sc0">
+</span><span class="sc2">###########################################################################</span><span class="sc0">
+</span><span class="sc2">#set -v</span><span class="sc0">
+</span><span class="sc2">#set -x</span><span class="sc0">
+
+</span><span class="sc8">DATETIME</span><span class="sc7">=</span><span class="sc11">$(date +%Y%m%d%H%M)</span><span class="sc0">
+
+</span><span class="sc8">brno</span><span class="sc7">=</span><span class="sc9">$1</span><span class="sc0">
+</span><span class="sc8">months</span><span class="sc7">=</span><span class="sc9">$2</span><span class="sc0">
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$#</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+    </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">$"Usage: $0 Branch_Number Months_To_Keep_B3"</span><span class="sc0">
+    </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc0">
+</span><span class="sc4">fi</span><span class="sc0">
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$months</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">lt</span><span class="sc0"> </span><span class="sc3">12</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+    </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"Not permitted, You should keep at least 12 months B3 data"</span><span class="sc0">
+    </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0">
+</span><span class="sc4">fi</span><span class="sc0">
+
+</span><span class="sc8">BASE</span><span class="sc7">=/</span><span class="sc8">dbbkup</span><span class="sc0">
+</span><span class="sc8">BIN</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">bin</span><span class="sc0">
+</span><span class="sc8">TMP</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">tmp</span><span class="sc0">
+</span><span class="sc8">ETC</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc0">
+</span><span class="sc8">LOG</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">log</span><span class="sc0">
+
+</span><span class="sc8">PATH</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">bin</span><span class="sc7">:</span><span class="sc9">$PATH</span><span class="sc0">
+</span><span class="sc4">export</span><span class="sc0"> </span><span class="sc8">PATH</span><span class="sc0">
+
+</span><span class="sc8">rootwhere</span><span class="sc7">=</span><span class="sc5">"(b3.liibrchno=BRCH AND b3.approveddate like 'APPROVEDMONTH')"</span><span class="sc0">
+</span><span class="sc8">TABLE_KEY</span><span class="sc7">=</span><span class="sc10">${ETC}</span><span class="sc7">/</span><span class="sc8">table_key</span><span class="sc0">
+
+</span><span class="sc2">#Mail address</span><span class="sc0">
+</span><span class="sc8">amail</span><span class="sc7">=</span><span class="sc5">"lchen@livingstonintl.com"</span><span class="sc0">
+</span><span class="sc8">pmail</span><span class="sc7">=</span><span class="sc5">"EKotsalainen@livingstonintl.com MStruys@livingstonintl.com lchen@livingstonintl.com"</span><span class="sc0">
+
+</span><span class="sc2"># func_tabcolumn () {</span><span class="sc0">
+    </span><span class="sc2"># tablename=$(echo $1|tr A-Z a-z)</span><span class="sc0">
+    </span><span class="sc2"># columnsql="</span><span class="sc0">
+        </span><span class="sc2"># SELECT colname from systables,syscolumns</span><span class="sc0">
+        </span><span class="sc2"># WHERE tabname like '${tablename}'</span><span class="sc0">
+          </span><span class="sc2"># and systables.tabid=syscolumns.tabid</span><span class="sc0">
+        </span><span class="sc2"># ORDER BY colno</span><span class="sc0">
+        </span><span class="sc2"># " </span><span class="sc0">
+    </span><span class="sc2"># func_runsql "$columnsql"|grep colname|grep -v "^$"</span><span class="sc0">
+</span><span class="sc2"># }</span><span class="sc0">
+
+</span><span class="sc2"># #1-building select clause</span><span class="sc0">
+</span><span class="sc2"># func_tabcolumn ${chtable} |</span><span class="sc0">
+</span><span class="sc2"># while read column columnname</span><span class="sc0">
+</span><span class="sc2"># do</span><span class="sc0">
+    </span><span class="sc2"># selectclause="${selectclause} ${chtable}.${columnname},"</span><span class="sc0">
+</span><span class="sc2"># done</span><span class="sc0">
+        
+</span><span class="sc2">#Based on business requirement, (branch number and purged months)</span><span class="sc0">
+</span><span class="sc2">#Build WHERE Statement, as globle variable ${where_select_statement}</span><span class="sc0">
+</span><span class="sc8">func_whereclause</span><span class="sc0"> </span><span class="sc7">()</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+    </span><span class="sc8">b3month</span><span class="sc7">=</span><span class="sc3">18</span><span class="sc0">                  </span><span class="sc2">#we keep 18 months b3 data on production DB</span><span class="sc0">
+    </span><span class="sc7">((</span><span class="sc8">mons</span><span class="sc7">=</span><span class="sc8">b3month-months</span><span class="sc7">))</span><span class="sc0"> 
+    
+    </span><span class="sc8">nums</span><span class="sc7">=</span><span class="sc3">1</span><span class="sc0">
+    </span><span class="sc4">while</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$nums</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">le</span><span class="sc0"> </span><span class="sc9">$mons</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+    </span><span class="sc4">do</span><span class="sc0">
+        </span><span class="sc8">y</span><span class="sc7">=</span><span class="sc11">$(date "+%Y")</span><span class="sc0">
+        </span><span class="sc8">m</span><span class="sc7">=</span><span class="sc11">$(date "+%m")</span><span class="sc0">
+        
+        </span><span class="sc7">((</span><span class="sc8">m</span><span class="sc7">=</span><span class="sc8">m+nums</span><span class="sc7">))</span><span class="sc0">
+        
+        </span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$m</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">le</span><span class="sc0"> </span><span class="sc3">6</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+        </span><span class="sc4">then</span><span class="sc0">
+            </span><span class="sc7">((</span><span class="sc8">Y</span><span class="sc7">=</span><span class="sc8">y-2</span><span class="sc7">))</span><span class="sc0">
+            </span><span class="sc7">((</span><span class="sc8">M</span><span class="sc7">=</span><span class="sc8">m+6</span><span class="sc7">))</span><span class="sc0">
+        </span><span class="sc4">else</span><span class="sc0">
+            </span><span class="sc7">((</span><span class="sc8">Y</span><span class="sc7">=</span><span class="sc8">y-1</span><span class="sc7">))</span><span class="sc0">
+            </span><span class="sc7">((</span><span class="sc8">M</span><span class="sc7">=</span><span class="sc8">m-6</span><span class="sc7">))</span><span class="sc0">
+        </span><span class="sc4">fi</span><span class="sc0">
+        
+        </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${M}</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">lt</span><span class="sc0"> </span><span class="sc3">10</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc8">M</span><span class="sc7">=</span><span class="sc3">0</span><span class="sc10">${M}</span><span class="sc0">
+        </span><span class="sc8">approvedmonth</span><span class="sc7">=</span><span class="sc10">${Y}</span><span class="sc8">\\</span><span class="sc7">/</span><span class="sc10">${M}</span><span class="sc8">\\</span><span class="sc7">/%</span><span class="sc0">
+        
+        </span><span class="sc8">wherenext</span><span class="sc7">=</span><span class="sc11">$(echo ${rootwhere}|sed "s/BRCH/${brno}/")</span><span class="sc0">
+        </span><span class="sc8">wherenext</span><span class="sc7">=</span><span class="sc11">$(echo ${wherenext}|sed "s/APPROVEDMONTH/${approvedmonth}/")</span><span class="sc0">      
+        
+        </span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$nums</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">eq</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">    </span><span class="sc2">#handling approveddate more than one month</span><span class="sc0">
+        </span><span class="sc4">then</span><span class="sc0">
+            </span><span class="sc8">whereclause</span><span class="sc7">=</span><span class="sc5">"${wherenext}"</span><span class="sc0">
+        </span><span class="sc4">else</span><span class="sc0">
+            </span><span class="sc8">whereclause</span><span class="sc7">=</span><span class="sc5">"${whereclause} OR ${wherenext}"</span><span class="sc0">
+        </span><span class="sc4">fi</span><span class="sc0">  
+    
+    </span><span class="sc7">((</span><span class="sc8">nums</span><span class="sc7">=</span><span class="sc8">nums+1</span><span class="sc7">))</span><span class="sc0">
+    </span><span class="sc4">done</span><span class="sc0">
+    
+    </span><span class="sc8">rootclause</span><span class="sc7">=</span><span class="sc5">"b3,b3,@b3iid,,~${whereclause}~"</span><span class="sc0">
+
+    </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc10">${rootclause}</span><span class="sc0">
+    
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc8">func_whereclause</span><span class="sc0">
+
+</span><span class="sc4">cp</span><span class="sc0"> </span><span class="sc10">${TABLE_KEY}</span><span class="sc0"> </span><span class="sc10">${TABLE_KEY}</span><span class="sc7">.</span><span class="sc10">${DATETIME}</span><span class="sc0">
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc10">${rootclause}</span><span class="sc0"> </span><span class="sc7">&gt;</span><span class="sc0"> </span><span class="sc10">${TABLE_KEY}</span><span class="sc0">
+</span><span class="sc4">grep</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0"> </span><span class="sc5">"^b3,b3,@b3iid,,"</span><span class="sc0"> </span><span class="sc10">${TABLE_KEY}</span><span class="sc7">.</span><span class="sc10">${DATETIME}</span><span class="sc0"> </span><span class="sc7">&gt;&gt;</span><span class="sc0"> </span><span class="sc10">${TABLE_KEY}</span><span class="sc0">
+
+</span><span class="sc8">relation_data.ksh</span><span class="sc0">
+
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0">
+</span></div></body>
+</html>

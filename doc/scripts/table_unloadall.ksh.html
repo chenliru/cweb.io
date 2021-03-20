@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc5 {
+	color: #808080;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+.sc10 {
+	color: #008080;
+	background: #00FFFF;
+}
+.sc11 {
+	font-weight: bold;
+	color: #804040;
+	background: #E1FFF3;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/usr/bin/ksh93</span><span class="sc0">
+</span><span class="sc2">#######################################################################################</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Filename    : unloadTable.ksh</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Author      : Liru Chen</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Date        : 2015-04-10</span><span class="sc0">
+</span><span class="sc2">#                </span><span class="sc0">
+</span><span class="sc2">########################################################################################</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc8">-x</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0">
+
+</span><span class="sc2"># tableName</span><span class="sc0">
+</span><span class="sc8">tableList</span><span class="sc7">=/</span><span class="sc8">archbkup</span><span class="sc7">/</span><span class="sc8">log</span><span class="sc7">/</span><span class="sc8">loadtables</span><span class="sc0">
+</span><span class="sc8">unloadDir</span><span class="sc7">=/</span><span class="sc8">archbkup</span><span class="sc7">/</span><span class="sc8">log</span><span class="sc0">
+</span><span class="sc8">DATABASE</span><span class="sc7">=</span><span class="sc8">ip_0p</span><span class="sc7">@</span><span class="sc8">ipdb</span><span class="sc0">
+
+</span><span class="sc8">tableNames</span><span class="sc7">=(</span><span class="sc11">$(cat $tableList)</span><span class="sc7">)</span><span class="sc0">
+</span><span class="sc8">currentDate</span><span class="sc7">=</span><span class="sc11">$(date +%Y%m%d)</span><span class="sc0">
+
+</span><span class="sc2">#setup Database environment</span><span class="sc0">
+</span><span class="sc7">.</span><span class="sc0"> </span><span class="sc7">/</span><span class="sc8">home</span><span class="sc7">/</span><span class="sc8">lchen</span><span class="sc7">/</span><span class="sc8">ids115.env</span><span class="sc0"> </span><span class="sc9">$DATABASE</span><span class="sc0">
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$1</span><span class="sc0"> </span><span class="sc7">==</span><span class="sc0"> </span><span class="sc5">"data"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+    </span><span class="sc2">#download tables</span><span class="sc0">
+    </span><span class="sc4">integer</span><span class="sc0"> </span><span class="sc8">summ</span><span class="sc7">=</span><span class="sc10">${#tableNames[@]}</span><span class="sc0">
+    </span><span class="sc4">integer</span><span class="sc0"> </span><span class="sc8">i</span><span class="sc7">=</span><span class="sc3">0</span><span class="sc0">
+
+    </span><span class="sc4">while</span><span class="sc0"> </span><span class="sc7">((</span><span class="sc0"> </span><span class="sc8">i</span><span class="sc0"> </span><span class="sc7">&lt;</span><span class="sc0"> </span><span class="sc8">summ</span><span class="sc0"> </span><span class="sc7">))</span><span class="sc0">
+    </span><span class="sc4">do</span><span class="sc0"> 
+        </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"
+        UNLOAD TO $unloadDir/${tableNames[$i]}.$currentDate
+        SELECT * FROM ${tableNames[$i]}"</span><span class="sc0"> </span><span class="sc7">|</span><span class="sc0">
+        </span><span class="sc9">$INFORMIXDIR</span><span class="sc7">/</span><span class="sc8">bin</span><span class="sc7">/</span><span class="sc8">dbaccess</span><span class="sc0"> </span><span class="sc9">$DATABASE</span><span class="sc0">
+
+    </span><span class="sc8">i</span><span class="sc7">=</span><span class="sc8">i+1</span><span class="sc0">
+    </span><span class="sc4">done</span><span class="sc0">
+
+</span><span class="sc4">else</span><span class="sc0">
+    </span><span class="sc2">#get table names</span><span class="sc0">
+    </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"
+    select tabname,nrows from systables "</span><span class="sc0"> </span><span class="sc7">|</span><span class="sc0">
+    </span><span class="sc9">$INFORMIXDIR</span><span class="sc7">/</span><span class="sc8">bin</span><span class="sc7">/</span><span class="sc8">dbaccess</span><span class="sc0"> </span><span class="sc9">$DATABASE</span><span class="sc0"> </span><span class="sc7">&gt;</span><span class="sc0"> </span><span class="sc9">$tableList</span><span class="sc0">
+
+</span><span class="sc4">fi</span><span class="sc0">
+
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0">
+
+
+
+</span></div></body>
+</html>

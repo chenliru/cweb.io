@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc5 {
+	color: #808080;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+.sc10 {
+	color: #008080;
+	background: #00FFFF;
+}
+.sc11 {
+	font-weight: bold;
+	color: #804040;
+	background: #E1FFF3;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/bin/ksh93</span><span class="sc0">
+</span><span class="sc2">###########################################################################</span><span class="sc0">
+</span><span class="sc2">#  Script modified from AWS Project for B3 purge by branch# and date</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Author : Liru Chen</span><span class="sc0">
+</span><span class="sc2">#  Date: 2017-08-22</span><span class="sc0">
+</span><span class="sc2">###########################################################################</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc8">-x</span><span class="sc0">
+
+</span><span class="sc8">DATETIME</span><span class="sc7">=</span><span class="sc11">$(date +%Y%m%d%H%M)</span><span class="sc0">
+
+</span><span class="sc8">BASE</span><span class="sc7">=/</span><span class="sc8">dbbkup</span><span class="sc0">
+</span><span class="sc8">BIN</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">bin</span><span class="sc0">
+</span><span class="sc8">TMP</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">tmp</span><span class="sc0">
+</span><span class="sc8">ETC</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc0">
+</span><span class="sc8">LOG</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">log</span><span class="sc0">
+
+</span><span class="sc8">DATADIR</span><span class="sc7">=</span><span class="sc10">${ETC}</span><span class="sc7">/</span><span class="sc8">data</span><span class="sc0">
+</span><span class="sc8">SQLDIR</span><span class="sc7">=</span><span class="sc10">${ETC}</span><span class="sc7">/</span><span class="sc8">sql</span><span class="sc0">
+
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc7">!</span><span class="sc0"> </span><span class="sc4">-d</span><span class="sc0"> </span><span class="sc10">${BIN}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc4">mkdir</span><span class="sc0"> </span><span class="sc8">-p</span><span class="sc0"> </span><span class="sc10">${BIN}</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc7">!</span><span class="sc0"> </span><span class="sc4">-d</span><span class="sc0"> </span><span class="sc10">${LOG}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc4">mkdir</span><span class="sc0"> </span><span class="sc8">-p</span><span class="sc0"> </span><span class="sc10">${LOG}</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc7">!</span><span class="sc0"> </span><span class="sc4">-d</span><span class="sc0"> </span><span class="sc10">${DATADIR}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc4">mkdir</span><span class="sc0"> </span><span class="sc8">-p</span><span class="sc0"> </span><span class="sc10">${DATADIR}</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc7">!</span><span class="sc0"> </span><span class="sc4">-d</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc4">mkdir</span><span class="sc0"> </span><span class="sc8">-p</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc0">
+
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc7">!</span><span class="sc0"> </span><span class="sc4">-d</span><span class="sc0"> </span><span class="sc10">${DATADIR}</span><span class="sc7">/</span><span class="sc10">${DATETIME}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc4">mkdir</span><span class="sc0"> </span><span class="sc10">${DATADIR}</span><span class="sc7">/</span><span class="sc10">${DATETIME}</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc7">!</span><span class="sc0"> </span><span class="sc4">-d</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc10">${DATETIME}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc4">mkdir</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc10">${DATETIME}</span><span class="sc0">
+
+</span><span class="sc4">mv</span><span class="sc0"> </span><span class="sc10">${DATADIR}</span><span class="sc7">/</span><span class="sc8">unload.</span><span class="sc7">*</span><span class="sc0"> </span><span class="sc10">${DATADIR}</span><span class="sc7">/</span><span class="sc10">${DATETIME}</span><span class="sc0">
+</span><span class="sc4">mv</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/*.</span><span class="sc8">sql</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc10">${DATETIME}</span><span class="sc0">
+            
+</span><span class="sc8">PATH</span><span class="sc7">=</span><span class="sc9">$BASE</span><span class="sc7">/</span><span class="sc8">bin</span><span class="sc7">:</span><span class="sc9">$PATH</span><span class="sc0">
+</span><span class="sc4">export</span><span class="sc0"> </span><span class="sc8">PATH</span><span class="sc0">
+</span><span class="sc4">export</span><span class="sc0"> </span><span class="sc8">TERMINAL</span><span class="sc7">=</span><span class="sc11">$(tty)</span><span class="sc0">
+
+</span><span class="sc8">RED</span><span class="sc7">=</span><span class="sc5">"\033[0;31m"</span><span class="sc0">
+</span><span class="sc8">NORM</span><span class="sc7">=</span><span class="sc5">"\033[0m"</span><span class="sc0">
+
+</span><span class="sc2">#INFORMIX DYNAMIC SERVER</span><span class="sc0">
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc11">$(hostname)</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">"ifx01"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+    </span><span class="sc8">IDSENV</span><span class="sc7">=</span><span class="sc5">"/home/informix/ids115.env"</span><span class="sc0">
+    </span><span class="sc8">IDSSERVER</span><span class="sc7">=</span><span class="sc5">"ipdb"</span><span class="sc0">
+    </span><span class="sc8">IDSDB</span><span class="sc7">=</span><span class="sc5">"ip_0p"</span><span class="sc0">
+</span><span class="sc4">elif</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc11">$(hostname)</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">"ipdev"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0"> 
+    </span><span class="sc8">IDSENV</span><span class="sc7">=</span><span class="sc5">"/login/infown/ids115.env"</span><span class="sc0">
+    </span><span class="sc8">IDSSERVER</span><span class="sc7">=</span><span class="sc5">"systestdb"</span><span class="sc0">
+    </span><span class="sc8">IDSDB</span><span class="sc7">=</span><span class="sc5">"ip_systest"</span><span class="sc0">
+</span><span class="sc4">fi</span><span class="sc0">
+
+</span><span class="sc2">#Define tables and the foreign keys between them, Format:</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#   roottable,roottable@select_critial_column_statement</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#   Parent_Table,Child_Table@Foreign_Key_column,Foreign_Key_column,...</span><span class="sc0">
+</span><span class="sc2">#   ......</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+
+</span><span class="sc8">TABLE_KEY</span><span class="sc7">=</span><span class="sc10">${ETC}</span><span class="sc7">/</span><span class="sc8">table_key</span><span class="sc0">
+    
+</span><span class="sc7">.</span><span class="sc0"> </span><span class="sc9">$IDSENV</span><span class="sc0"> </span><span class="sc9">$IDSSERVER</span><span class="sc0">
+
+</span><span class="sc8">func_dbaccess</span><span class="sc0"> </span><span class="sc7">()</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+    </span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc4">-f</span><span class="sc0"> </span><span class="sc9">$1</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+    </span><span class="sc4">then</span><span class="sc0">
+        </span><span class="sc8">dbaccess</span><span class="sc0"> </span><span class="sc9">$IDSDB</span><span class="sc0"> </span><span class="sc9">$1</span><span class="sc0">
+    </span><span class="sc4">else</span><span class="sc0">
+        </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"$1"</span><span class="sc0"> </span><span class="sc7">|</span><span class="sc0"> </span><span class="sc8">dbaccess</span><span class="sc0"> </span><span class="sc9">$IDSDB</span><span class="sc0"> 
+    </span><span class="sc4">fi</span><span class="sc0">
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc2">#This is a recursive algorithm:</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#function call itself, find all related tables after each function return,</span><span class="sc0">
+</span><span class="sc2">#function will not call itself (ends cycling) when "${prtable} = ${chtable}" ,that is the root table</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#Set function local variable in KSH:</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2"># - use "function" to set function "func_clause", </span><span class="sc0">
+</span><span class="sc2"># - and use "typeset" to set function specified local variable "prtable" &amp; "chtable"</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc4">function</span><span class="sc0"> </span><span class="sc8">func_clause</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+    </span><span class="sc8">tables</span><span class="sc7">=</span><span class="sc11">$(grep "$1,@" ${TABLE_KEY}|cut -f1 -d"@"|tr -d ' ')</span><span class="sc0">
+    
+    </span><span class="sc4">typeset</span><span class="sc0"> </span><span class="sc8">prtable</span><span class="sc7">=</span><span class="sc11">$(echo "${tables},"|cut -f1 -d",")</span><span class="sc0">
+    </span><span class="sc4">typeset</span><span class="sc0"> </span><span class="sc8">chtable</span><span class="sc7">=</span><span class="sc11">$(echo "${tables},"|cut -f2 -d",")</span><span class="sc0">
+    
+    </span><span class="sc2">#both parent table and child table must exist, and name cannot be empty</span><span class="sc0">
+    </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${prtable}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">""</span><span class="sc0"> </span><span class="sc7">||</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">""</span><span class="sc0">  </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0"> 
+    
+    </span><span class="sc2">##When recursive forward</span><span class="sc0">
+    </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"Tables: ${tables}; Parent: ${prtable} Child: ${chtable}"</span><span class="sc0">
+
+    </span><span class="sc2">#Check recursive continue condition, it will stop calling itself...</span><span class="sc0">
+    </span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${prtable}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+    </span><span class="sc4">then</span><span class="sc0">
+        </span><span class="sc8">fromclause</span><span class="sc7">=</span><span class="sc5">"FROM "</span><span class="sc0">
+        </span><span class="sc8">whereclause</span><span class="sc7">=</span><span class="sc5">"WHERE ($(grep "$1,@" ${TABLE_KEY}|cut -f2 -d"~"))"</span><span class="sc0">
+    </span><span class="sc4">else</span><span class="sc0">
+        </span><span class="sc8">func_clause</span><span class="sc0"> </span><span class="sc10">${prtable}</span><span class="sc0">
+    </span><span class="sc4">fi</span><span class="sc0">
+
+    </span><span class="sc2">##When recursive return</span><span class="sc0">
+    
+    </span><span class="sc2">#2-building from clause, function parameters $1 will be kept for each recursive call</span><span class="sc0">
+    </span><span class="sc8">keys</span><span class="sc7">=</span><span class="sc11">$(grep "$1,@" ${TABLE_KEY}|cut -f2 -d"@"|tr -d ' ')</span><span class="sc0">
+    </span><span class="sc8">fromclause</span><span class="sc7">=</span><span class="sc5">"${fromclause} ${chtable},"</span><span class="sc0">
+    
+    </span><span class="sc2">#3-building where clause</span><span class="sc0">
+    </span><span class="sc8">nums</span><span class="sc7">=</span><span class="sc3">1</span><span class="sc0">
+    </span><span class="sc8">key</span><span class="sc7">=</span><span class="sc11">$(echo ${keys}|cut -f1 -d",")</span><span class="sc0">
+    
+    </span><span class="sc4">until</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${key}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">""</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> 
+    </span><span class="sc4">do</span><span class="sc0">
+        </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${prtable}</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc8">whereclause</span><span class="sc7">=</span><span class="sc5">"${whereclause}
+AND ${prtable}.${key} = ${chtable}.${key}"</span><span class="sc0">
+                
+        </span><span class="sc7">((</span><span class="sc8">nums</span><span class="sc7">=</span><span class="sc8">nums+1</span><span class="sc7">))</span><span class="sc0">
+        </span><span class="sc8">key</span><span class="sc7">=</span><span class="sc11">$(echo ${keys}|cut -f${nums} -d",")</span><span class="sc0">
+    </span><span class="sc4">done</span><span class="sc0">
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc8">func_sql</span><span class="sc0"> </span><span class="sc7">()</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${ACTION}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">"UNLOAD"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"UNLOAD TO ${DATADIR}/unload.$1.$2
+SELECT $1.*
+${fromclause%,} 
+${whereclause}
+;"</span><span class="sc0"> </span><span class="sc7">&gt;</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc8">unload.</span><span class="sc9">$1</span><span class="sc7">.</span><span class="sc9">$2</span><span class="sc7">.</span><span class="sc8">sql</span><span class="sc0"> 
+</span><span class="sc2">#${string%substring}, Strip shortest match of $substring, that is "," , from back of $string</span><span class="sc0">
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${ACTION}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">"LOAD"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"LOAD FROM ${DATADIR}/unload.$1.$2
+INSERT INTO $1
+;"</span><span class="sc0"> </span><span class="sc7">&gt;</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc8">load.</span><span class="sc9">$1</span><span class="sc7">.</span><span class="sc9">$2</span><span class="sc7">.</span><span class="sc8">sql</span><span class="sc0">
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${ACTION}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">"PURGE"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"DELETE FROM $1
+WHERE ${chdwhereclause%,}
+IN (
+SELECT ${prselectclause%,}
+${fromclause%,}
+${whereclause}
+)
+;"</span><span class="sc0"> </span><span class="sc7">&gt;</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc8">delete.</span><span class="sc9">$1</span><span class="sc7">.</span><span class="sc9">$2</span><span class="sc7">.</span><span class="sc8">sql</span><span class="sc0">
+</span><span class="sc2">#${string%substring}, Strip shortest match of $substring, that is "," , from back of $string</span><span class="sc0">
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc2">#This is a recursive algorithm:</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#Start from root table</span><span class="sc0">
+</span><span class="sc2">#function will not call itself(stop), when no child table(s)</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#1 - loading sequence: from parent table(root table) to child table(s), code in When recursive forward</span><span class="sc0">
+</span><span class="sc2">#2 - unloading and delete sequence: from child talbe(s) to parent table(s), code in When recursive return</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc4">function</span><span class="sc0"> </span><span class="sc8">func_data</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+    </span><span class="sc4">typeset</span><span class="sc0"> </span><span class="sc8">prtable</span><span class="sc7">=</span><span class="sc9">$1</span><span class="sc0">
+    </span><span class="sc4">typeset</span><span class="sc0"> </span><span class="sc8">chtable</span><span class="sc7">=</span><span class="sc11">$(grep "^$1," ${TABLE_KEY}|cut -f1 -d"@"|cut -f2 -d","|tr -d ' ')</span><span class="sc0">
+    
+    </span><span class="sc2">##When recursive forward</span><span class="sc0">
+    </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${ACTION}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">"LOAD"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+        </span><span class="sc2">#find ${SQLDIR} -name "load.${prtable}.*.sql" -print|</span><span class="sc0">
+        </span><span class="sc4">for</span><span class="sc0"> </span><span class="sc8">loadsql</span><span class="sc0"> </span><span class="sc4">in</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc8">load.</span><span class="sc10">${prtable}</span><span class="sc7">.*.</span><span class="sc8">sql</span><span class="sc0">
+        </span><span class="sc4">do</span><span class="sc0">
+            </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"${loadsql}"</span><span class="sc0">
+            </span><span class="sc8">func_dbaccess</span><span class="sc0"> </span><span class="sc5">"${loadsql}"</span><span class="sc0">
+            </span><span class="sc8">func_dbaccess</span><span class="sc0"> </span><span class="sc5">"select count(*) from ${prtable}"</span><span class="sc0">
+        </span><span class="sc4">done</span><span class="sc0">    
+    </span><span class="sc7">}</span><span class="sc0">
+
+
+    </span><span class="sc2">#Check recursive continue condition, it will stop calling itself...</span><span class="sc0">
+    </span><span class="sc4">for</span><span class="sc0"> </span><span class="sc8">child</span><span class="sc0"> </span><span class="sc4">in</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0">
+    </span><span class="sc4">do</span><span class="sc0"> 
+        </span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${child}</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc5">""</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc10">${child}</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc10">${prtable}</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+        </span><span class="sc4">then</span><span class="sc0">
+            </span><span class="sc8">func_data</span><span class="sc0"> </span><span class="sc10">${child}</span><span class="sc0">
+        </span><span class="sc4">fi</span><span class="sc0">
+    </span><span class="sc4">done</span><span class="sc0">
+
+    </span><span class="sc2">##When recursive return</span><span class="sc0">
+    </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${ACTION}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">"UNLOAD"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+        </span><span class="sc2">#find ${SQLDIR} -name "unload.${prtable}.*.sql" -print|</span><span class="sc0">
+        </span><span class="sc4">for</span><span class="sc0"> </span><span class="sc8">unloadsql</span><span class="sc0"> </span><span class="sc4">in</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc8">unload.</span><span class="sc10">${prtable}</span><span class="sc7">.*.</span><span class="sc8">sql</span><span class="sc0">
+        </span><span class="sc4">do</span><span class="sc0">
+            </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"${unloadsql}"</span><span class="sc0">
+            </span><span class="sc8">func_dbaccess</span><span class="sc0"> </span><span class="sc5">"${unloadsql}"</span><span class="sc0">
+            </span><span class="sc8">func_dbaccess</span><span class="sc0"> </span><span class="sc5">"select count(*) from ${prtable}"</span><span class="sc0">
+        </span><span class="sc4">done</span><span class="sc0">    
+    </span><span class="sc7">}</span><span class="sc0">
+    
+    </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${ACTION}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">"PURGE"</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+        </span><span class="sc2">#find ${SQLDIR} -name "delete.${prtable}.*.sql" -print|</span><span class="sc0">
+        </span><span class="sc4">for</span><span class="sc0"> </span><span class="sc8">deletesql</span><span class="sc0"> </span><span class="sc4">in</span><span class="sc0"> </span><span class="sc10">${SQLDIR}</span><span class="sc7">/</span><span class="sc8">delete.</span><span class="sc10">${prtable}</span><span class="sc7">.*.</span><span class="sc8">sql</span><span class="sc0">
+        </span><span class="sc4">do</span><span class="sc0">
+            </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"${deletesql}"</span><span class="sc0">
+            </span><span class="sc8">func_dbaccess</span><span class="sc0"> </span><span class="sc5">"${deletesql}"</span><span class="sc0">
+            </span><span class="sc8">func_dbaccess</span><span class="sc0"> </span><span class="sc5">"select count(*) from ${prtable}"</span><span class="sc0">
+        </span><span class="sc4">done</span><span class="sc0">
+    </span><span class="sc7">}</span><span class="sc0">
+    
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc2">#Prepare SQL for related tables</span><span class="sc0">
+</span><span class="sc8">func_table_sql</span><span class="sc0"> </span><span class="sc7">()</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+    </span><span class="sc8">tabnum</span><span class="sc7">=</span><span class="sc3">1</span><span class="sc0">
+    
+    </span><span class="sc4">grep</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0"> </span><span class="sc5">"^$"</span><span class="sc0"> </span><span class="sc9">$TABLE_KEY</span><span class="sc7">|</span><span class="sc0">
+    </span><span class="sc4">while</span><span class="sc0"> </span><span class="sc4">read</span><span class="sc0"> </span><span class="sc8">table_key</span><span class="sc0">
+    </span><span class="sc4">do</span><span class="sc0">
+        </span><span class="sc8">prtable</span><span class="sc7">=</span><span class="sc11">$(echo ${table_key}|cut -f1 -d"@"|cut -f1 -d","|tr -d ' ')</span><span class="sc0">
+        </span><span class="sc8">chtable</span><span class="sc7">=</span><span class="sc11">$(echo ${table_key}|cut -f1 -d"@"|cut -f2 -d","|tr -d ' ')</span><span class="sc0">
+
+        </span><span class="sc2">#1-building unload and loading SQL</span><span class="sc0">
+        </span><span class="sc8">func_clause</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0">
+        </span><span class="sc8">ACTION</span><span class="sc7">=</span><span class="sc8">UNLOAD</span><span class="sc7">;</span><span class="sc8">func_sql</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc10">${tabnum}</span><span class="sc0">
+        </span><span class="sc8">ACTION</span><span class="sc7">=</span><span class="sc8">LOAD</span><span class="sc7">;</span><span class="sc8">func_sql</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc10">${tabnum}</span><span class="sc0">
+
+        </span><span class="sc2">#2-building delete SQL</span><span class="sc0">
+        </span><span class="sc8">keys</span><span class="sc7">=</span><span class="sc11">$(echo ${table_key}|cut -f2 -d"@"|tr -d ' ')</span><span class="sc7">,</span><span class="sc0">
+        
+        </span><span class="sc8">nums</span><span class="sc7">=</span><span class="sc3">1</span><span class="sc0">
+        </span><span class="sc8">key</span><span class="sc7">=</span><span class="sc11">$(echo "${keys}"|cut -f1 -d",")</span><span class="sc0">
+        </span><span class="sc8">chdwhereclause</span><span class="sc7">=</span><span class="sc5">""</span><span class="sc0">
+        </span><span class="sc8">prselectclause</span><span class="sc7">=</span><span class="sc5">""</span><span class="sc0">
+
+        </span><span class="sc4">until</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${key}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc5">""</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> 
+        </span><span class="sc4">do</span><span class="sc0">
+            </span><span class="sc8">chdwhereclause</span><span class="sc7">=</span><span class="sc5">"${chtable}.${key},${chdwhereclause}"</span><span class="sc0">
+            </span><span class="sc8">prselectclause</span><span class="sc7">=</span><span class="sc5">"${prtable}.${key},${prselectclause}"</span><span class="sc0">
+                
+            </span><span class="sc7">((</span><span class="sc8">nums</span><span class="sc7">=</span><span class="sc8">nums+1</span><span class="sc7">))</span><span class="sc0">
+            </span><span class="sc8">key</span><span class="sc7">=</span><span class="sc11">$(echo "${keys}"|cut -f${nums} -d",")</span><span class="sc0">
+        </span><span class="sc4">done</span><span class="sc0">
+    
+        </span><span class="sc8">func_clause</span><span class="sc0"> </span><span class="sc10">${prtable}</span><span class="sc0">      
+        </span><span class="sc8">ACTION</span><span class="sc7">=</span><span class="sc8">PURGE</span><span class="sc7">;</span><span class="sc8">func_sql</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc10">${tabnum}</span><span class="sc0">
+            
+        </span><span class="sc7">((</span><span class="sc8">tabnum</span><span class="sc7">=</span><span class="sc8">tabnum+1</span><span class="sc7">))</span><span class="sc0">
+    </span><span class="sc4">done</span><span class="sc0">
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc8">func_table_sql</span><span class="sc0">
+
+</span><span class="sc8">func_table_data</span><span class="sc0"> </span><span class="sc7">()</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+
+    </span><span class="sc4">grep</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0"> </span><span class="sc5">"^$"</span><span class="sc0"> </span><span class="sc9">$TABLE_KEY</span><span class="sc7">|</span><span class="sc0">
+    </span><span class="sc4">while</span><span class="sc0"> </span><span class="sc4">read</span><span class="sc0"> </span><span class="sc8">table_key</span><span class="sc0">
+    </span><span class="sc4">do</span><span class="sc0">
+        </span><span class="sc8">prtable</span><span class="sc7">=</span><span class="sc11">$(echo ${table_key}|cut -f1 -d"@"|cut -f1 -d","|tr -d ' ')</span><span class="sc0">
+        </span><span class="sc8">chtable</span><span class="sc7">=</span><span class="sc11">$(echo ${table_key}|cut -f1 -d"@"|cut -f2 -d","|tr -d ' ')</span><span class="sc0">
+
+        </span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc10">${prtable}</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc5">""</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+        </span><span class="sc4">then</span><span class="sc0">
+            </span><span class="sc8">ACTION</span><span class="sc7">=</span><span class="sc8">UNLOAD</span><span class="sc7">;</span><span class="sc8">func_data</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc7">&gt;</span><span class="sc0"> </span><span class="sc10">${LOG}</span><span class="sc7">/</span><span class="sc8">b3archive.log</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc7">&gt;&amp;</span><span class="sc3">1</span><span class="sc0">
+            </span><span class="sc4">grep</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">i</span><span class="sc0"> </span><span class="sc8">err</span><span class="sc0"> </span><span class="sc10">${LOG}</span><span class="sc7">/</span><span class="sc8">b3archive.log</span><span class="sc0">
+            </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$?</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+                </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"Download error"</span><span class="sc0">
+                </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0">
+            </span><span class="sc7">}</span><span class="sc0">
+            
+            </span><span class="sc4">while</span><span class="sc0"> </span><span class="sc4">true</span><span class="sc0">
+            </span><span class="sc4">do</span><span class="sc0">
+    </span><span class="sc4">print</span><span class="sc0"> </span><span class="sc5">"
+    Choose 1 : Load the data you downloaded
+    Choose 2 : Purge the data you downloaded
+    Choose 3 : Exit
+    "</span><span class="sc0">
+                </span><span class="sc4">read</span><span class="sc0"> </span><span class="sc8">opt</span><span class="sc0">
+                </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc8">opt</span><span class="sc7">:</span><span class="sc0"> </span><span class="sc9">$opt</span><span class="sc0">
+                
+                </span><span class="sc4">case</span><span class="sc0"> </span><span class="sc9">$opt</span><span class="sc0"> </span><span class="sc4">in</span><span class="sc0">
+                    </span><span class="sc3">1</span><span class="sc7">)</span><span class="sc0">  </span><span class="sc8">ACTION</span><span class="sc7">=</span><span class="sc8">LOAD</span><span class="sc7">;;</span><span class="sc0">
+                    </span><span class="sc3">2</span><span class="sc7">)</span><span class="sc0">  </span><span class="sc8">ACTION</span><span class="sc7">=</span><span class="sc8">PURGE</span><span class="sc7">;;</span><span class="sc0">
+                    </span><span class="sc3">3</span><span class="sc7">)</span><span class="sc0">  </span><span class="sc8">ACTION</span><span class="sc7">=</span><span class="sc8">NONE</span><span class="sc7">;</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">3</span><span class="sc7">;;</span><span class="sc0">
+                    </span><span class="sc7">*)</span><span class="sc0">  </span><span class="sc8">ACTION</span><span class="sc7">=</span><span class="sc8">NONE</span><span class="sc7">;</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"${RED} your choose?... ${NORM}"</span><span class="sc7">;;</span><span class="sc0">
+                </span><span class="sc4">esac</span><span class="sc0">
+
+                </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"Your ACTION: $ACTION ${chtable}, you have 10 seconds to press ^c"</span><span class="sc0">
+                </span><span class="sc4">sleep</span><span class="sc0"> </span><span class="sc3">10</span><span class="sc0">
+                
+                </span><span class="sc8">func_data</span><span class="sc0"> </span><span class="sc10">${chtable}</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc7">&gt;</span><span class="sc0"> </span><span class="sc10">${LOG}</span><span class="sc7">/</span><span class="sc8">b3purge.log</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc7">&gt;&amp;</span><span class="sc3">1</span><span class="sc0">
+                </span><span class="sc4">grep</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">i</span><span class="sc0"> </span><span class="sc8">err</span><span class="sc0"> </span><span class="sc10">${LOG}</span><span class="sc7">/</span><span class="sc8">b3purge.log</span><span class="sc0">
+                </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$?</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+                    </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"Load and/or Purge error"</span><span class="sc0">
+                    </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0">
+                </span><span class="sc7">}</span><span class="sc0">
+            </span><span class="sc4">done</span><span class="sc0"> </span><span class="sc7">&lt;</span><span class="sc0"> </span><span class="sc9">$TERMINAL</span><span class="sc0">
+        </span><span class="sc4">fi</span><span class="sc0">
+    </span><span class="sc4">done</span><span class="sc0">
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc8">func_table_data</span><span class="sc0">
+
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0">
+</span></div></body>
+</html>

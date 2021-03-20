@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc5 {
+	color: #808080;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+.sc11 {
+	font-weight: bold;
+	color: #804040;
+	background: #E1FFF3;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/bin/ksh </span><span class="sc0">
+</span><span class="sc2">#=========================================================================== </span><span class="sc0">
+</span><span class="sc2"># filename:dbload.sh </span><span class="sc0">
+</span><span class="sc2"># Function: Upload large datafile (over Millions records) into informix table </span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2"># Address Buffer overflow problem of load utility: </span><span class="sc0">
+</span><span class="sc2">#    load from loadfile.txt insert into tablename; </span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2"># Sytax:</span><span class="sc0">
+</span><span class="sc2">#   input: nameDB nameTable dataFile </span><span class="sc0">
+</span><span class="sc2"># </span><span class="sc0">
+</span><span class="sc2">#=========================================================================== </span><span class="sc0">
+
+</span><span class="sc2">#set -x</span><span class="sc0">
+</span><span class="sc8">errLog</span><span class="sc7">=/</span><span class="sc8">login</span><span class="sc7">/</span><span class="sc8">lchen</span><span class="sc7">/</span><span class="sc8">informix</span><span class="sc7">/</span><span class="sc8">errdbload.log</span><span class="sc0">
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[</span><span class="sc0"> </span><span class="sc9">$#</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">ne</span><span class="sc0"> </span><span class="sc3">3</span><span class="sc0"> </span><span class="sc7">];</span><span class="sc4">then</span><span class="sc0"> 
+</span><span class="sc4">cat</span><span class="sc0"> </span><span class="sc7">&lt;</span><span class="sc0"> </span><span class="sc7">&lt;</span><span class="sc0"> </span><span class="sc8">EOF</span><span class="sc0"> 
+ </span><span class="sc8">Usage</span><span class="sc7">:</span><span class="sc0"> </span><span class="sc9">$0</span><span class="sc0"> </span><span class="sc8">nameDB</span><span class="sc0"> </span><span class="sc8">nameTable</span><span class="sc0"> </span><span class="sc8">dataFile</span><span class="sc0"> 
+
+ </span><span class="sc8">nameDB</span><span class="sc7">:</span><span class="sc0"> </span><span class="sc8">Database</span><span class="sc0"> </span><span class="sc8">name</span><span class="sc0"> 
+ </span><span class="sc8">nameTable</span><span class="sc7">:</span><span class="sc0"> </span><span class="sc8">Table</span><span class="sc0"> </span><span class="sc8">name</span><span class="sc0"> 
+ </span><span class="sc8">dataFile</span><span class="sc7">:</span><span class="sc0"> </span><span class="sc8">TXT</span><span class="sc0"> </span><span class="sc8">Data</span><span class="sc0"> </span><span class="sc8">File</span><span class="sc0"> 
+</span><span class="sc8">EOF</span><span class="sc0"> 
+
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc0"> 
+
+</span><span class="sc4">fi</span><span class="sc0"> 
+
+</span><span class="sc8">nameDB</span><span class="sc7">=</span><span class="sc5">"$1"</span><span class="sc0">  
+</span><span class="sc8">nameTable</span><span class="sc7">=</span><span class="sc5">"$2"</span><span class="sc0">  
+</span><span class="sc8">dataFile</span><span class="sc7">=</span><span class="sc5">"$3"</span><span class="sc0"> 
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[</span><span class="sc0"> </span><span class="sc7">!</span><span class="sc0"> </span><span class="sc4">-f</span><span class="sc0"> </span><span class="sc5">"$dataFile"</span><span class="sc0"> </span><span class="sc7">];</span><span class="sc4">then</span><span class="sc0"> 
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">" &lt;ERROR&gt;DataFile[$dataFile] does not exit!"</span><span class="sc0"> </span><span class="sc7">|</span><span class="sc0"> </span><span class="sc4">tee</span><span class="sc0"> </span><span class="sc8">-a</span><span class="sc0"> </span><span class="sc9">$errLog</span><span class="sc0"> 
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc0"> 
+</span><span class="sc4">fi</span><span class="sc0"> 
+
+</span><span class="sc8">tmpStr0</span><span class="sc7">=</span><span class="sc11">`echo $dataFile | sed "s/\//_/g"`</span><span class="sc0"> 
+
+</span><span class="sc8">dbload</span><span class="sc0"> </span><span class="sc8">nameDB</span><span class="sc0"> </span><span class="sc8">nameTable</span><span class="sc0"> </span><span class="sc8">dataFile</span><span class="sc0">
+
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0">
+
+</span></div></body>
+</html>

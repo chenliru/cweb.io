@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc5 {
+	color: #808080;
+}
+.sc6 {
+	color: #808080;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+.sc10 {
+	color: #008080;
+	background: #00FFFF;
+}
+.sc11 {
+	font-weight: bold;
+	color: #804040;
+	background: #E1FFF3;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/usr/bin/ksh</span><span class="sc0">
+</span><span class="sc2">##############################################################################################</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2"># Name:     ids.ontape.rest</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2"># Reference:    n/a</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2"># Description: </span><span class="sc0">
+</span><span class="sc2">#    1. To configure the database server environment, verify that the following environment </span><span class="sc0">
+</span><span class="sc2">#       variables are set correctly: </span><span class="sc0">
+</span><span class="sc2">#       INFORMIXDIR: is set to the full path of the IBM® Informix® directory. </span><span class="sc0">
+</span><span class="sc2">#       INFORMIXSERVER: is set to the name of the default database server. </span><span class="sc0">
+</span><span class="sc2">#       INFORMIXSQLHOSTS: is set to the full path to the SQLHOSTS file (UNIX) </span><span class="sc0">
+</span><span class="sc2">#                        or the SQLHOSTS registry host machine (Windows). </span><span class="sc0">
+</span><span class="sc2">#       DELIMIDENT: is not set or set to n. Enterprise Replication does not allow </span><span class="sc0">
+</span><span class="sc2">#                  delimited identifiers</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#       . $IDSENV $instance</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#    2. Verify that the raw devices or files that you used for storage (of the storage spaces </span><span class="sc0">
+</span><span class="sc2">#       being restored) after the level-0 backup are available.</span><span class="sc0">
+</span><span class="sc2">#    </span><span class="sc0">
+</span><span class="sc2">#       ./ids.create.chunk $instance</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#    3. Gather the appropriate backup and logical-log tapes,use ontape to perform the backup </span><span class="sc0">
+</span><span class="sc2">#       tasks. With ontape utility:</span><span class="sc0">
+</span><span class="sc2">#       -r option to perform a full physical and logical restore of the database server data. </span><span class="sc0">
+</span><span class="sc2">#       -D option to restore selected storage spaces. </span><span class="sc0">
+</span><span class="sc2">#       -rename option to rename chunks during the restore</span><span class="sc0">
+</span><span class="sc2">#    </span><span class="sc0">
+</span><span class="sc2">#    The database server is offline when you begin a cold restore but it goes into recovery</span><span class="sc0">
+</span><span class="sc2">#    mode after it restores the reserved pages. From that point on it stays in recovery </span><span class="sc0">
+</span><span class="sc2">#    mode until either a logical restore finishes (after which it works in quiescent mode) </span><span class="sc0">
+</span><span class="sc2">#    or you use the onmode utility to shift it to another mode.</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#    In the next example, assume that the TAPEDEV configuration parameter is not set. </span><span class="sc0">
+</span><span class="sc2">#    The following command loads data into the secondary server of an HDR pair </span><span class="sc0">
+</span><span class="sc2">#    (named secondary_host):</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#    ontape -s -L 0 -F -t STDIO | rsh secondary_host "ontape -t STDIO -p" </span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#    The examples perform a fake level-0 archive of the database server on the local computer, </span><span class="sc0">
+</span><span class="sc2">#    pipe the data to the remote computer by using the rsh system utility, and perform a </span><span class="sc0">
+</span><span class="sc2">#    physical restore on the remote computer by reading the data directly from the pipe.</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#    Important: The previous examples require that the INFORMIXDIR, INFORMIXSERVER, </span><span class="sc0">
+</span><span class="sc2">#    INFORMIXSQLHOSTS, and ONCONFIG environment variables be set in the default environment </span><span class="sc0">
+</span><span class="sc2">#    for the user on the remote computer on which the command is executed. The user must be </span><span class="sc0">
+</span><span class="sc2">#    informix or root.</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#    4. Use the RENAME DATABASE statement to change the name of a database</span><span class="sc0">
+</span><span class="sc2">#       RENAME DATABASE owner.old_database TO new_database</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#    5. Use onmode -m to bring informix db on-Line</span><span class="sc0">
+</span><span class="sc2">###############################################################################################</span><span class="sc0">
+</span><span class="sc2">#set -v</span><span class="sc0">
+</span><span class="sc2">#set -x</span><span class="sc0">
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$#</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+  </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">$"Usage: $0 informix_instance "</span><span class="sc0">
+  </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc0">
+</span><span class="sc4">fi</span><span class="sc0">
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$USER</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc6">'root'</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+  </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"You should be root user"</span><span class="sc0">
+  </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0">
+</span><span class="sc4">fi</span><span class="sc0">
+
+</span><span class="sc7">.</span><span class="sc0"> </span><span class="sc7">~/</span><span class="sc8">tools.profile</span><span class="sc0">
+
+</span><span class="sc8">instance</span><span class="sc7">=</span><span class="sc10">${1-$IDSSERVER}</span><span class="sc0">
+</span><span class="sc8">bkupdev</span><span class="sc7">=</span><span class="sc11">$(grep "BACKUP DEVICE" $TOOLSDIR/db/informix/etc/CHUNK.$instance | awk '{print $3}')</span><span class="sc0">
+
+</span><span class="sc7">.</span><span class="sc0"> </span><span class="sc9">$TOOLSDIR</span><span class="sc7">/</span><span class="sc8">db</span><span class="sc7">/</span><span class="sc8">informix</span><span class="sc7">/</span><span class="sc9">$IDSENV</span><span class="sc0"> </span><span class="sc9">$instance</span><span class="sc0">
+
+</span><span class="sc4">date</span><span class="sc0"> </span><span class="sc7">&gt;</span><span class="sc0"> </span><span class="sc9">$LOGFILE</span><span class="sc0">
+
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"\nLevel 0 $Instance Database Restore start...."</span><span class="sc0"> </span><span class="sc7">&gt;&gt;</span><span class="sc0"> </span><span class="sc9">$LOGFILE</span><span class="sc0">            
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">" Warning: This is the last chance to STOP Database Restore..."</span><span class="sc0">
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">" CONTROL+C to STOP Restore process, which may DISTROY current Database..."</span><span class="sc0">
+
+</span><span class="sc4">sleep</span><span class="sc0"> </span><span class="sc3">60</span><span class="sc0">
+
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"\nRestore Configuration Files ... "</span><span class="sc0"> </span><span class="sc7">&gt;&gt;</span><span class="sc0"> </span><span class="sc9">$LOGFILE</span><span class="sc0">
+</span><span class="sc2"># Find the latest copy of the onconfig/sqlhosts files when you create a level-0 backup. </span><span class="sc0">
+</span><span class="sc2"># You need this information to restore database server data from the backup tape.</span><span class="sc0">
+
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc4">-z</span><span class="sc0"> </span><span class="sc9">$INFORMIXSQLHOSTS</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc8">INFORMIXSQLHOSTS</span><span class="sc7">=</span><span class="sc9">$INFORMIXDIR</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">sqlhosts</span><span class="sc0">
+
+</span><span class="sc4">cp</span><span class="sc0"> </span><span class="sc9">$INFORMIXDIR</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc9">$ONCONFIG</span><span class="sc0"> </span><span class="sc9">$INFORMIXDIR</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc9">$ONCONFIG</span><span class="sc7">.</span><span class="sc9">$TOOLSID</span><span class="sc7">.</span><span class="sc8">bkup</span><span class="sc0">
+</span><span class="sc4">cp</span><span class="sc0"> </span><span class="sc9">$INFORMIXSQLHOSTS</span><span class="sc0"> </span><span class="sc9">$INFORMIXSQLHOSTS</span><span class="sc7">.</span><span class="sc9">$TOOLSID</span><span class="sc7">.</span><span class="sc8">bkup</span><span class="sc0">
+
+</span><span class="sc4">cp</span><span class="sc0"> </span><span class="sc9">$TOOLSDIR</span><span class="sc7">/</span><span class="sc8">db</span><span class="sc7">/</span><span class="sc8">informix</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">ONCONFIG.</span><span class="sc9">$instance</span><span class="sc0"> </span><span class="sc9">$INFORMIXDIR</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc9">$ONCONFIG</span><span class="sc0"> 
+</span><span class="sc4">cp</span><span class="sc0"> </span><span class="sc9">$TOOLSDIR</span><span class="sc7">/</span><span class="sc8">db</span><span class="sc7">/</span><span class="sc8">informix</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">SQLHOSTS.</span><span class="sc9">$instance</span><span class="sc0"> </span><span class="sc9">$INFORMIXSQLHOSTS</span><span class="sc0"> 
+
+</span><span class="sc2">#Verify that the raw devices or files of storage spaces are available</span><span class="sc0">
+</span><span class="sc2">#IDS needs chunk files before restore</span><span class="sc0">
+</span><span class="sc8">ids.create.chunk</span><span class="sc0"> </span><span class="sc9">$instance</span><span class="sc0">
+
+</span><span class="sc2"># Just follow the prompts for mounting restore tapes.</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$bkupdev</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc7">/</span><span class="sc8">dev</span><span class="sc7">/</span><span class="sc8">rmt</span><span class="sc7">*</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc8">util.tape</span><span class="sc0"> </span><span class="sc9">$bkupdev</span><span class="sc0"> </span><span class="sc8">load</span><span class="sc0">
+
+</span><span class="sc8">ontape</span><span class="sc0"> </span><span class="sc8">-r</span><span class="sc0"> </span><span class="sc8">-t</span><span class="sc0"> </span><span class="sc9">$bkupdev</span><span class="sc0"> </span><span class="sc7">|</span><span class="sc4">tee</span><span class="sc0"> </span><span class="sc8">-a</span><span class="sc0"> </span><span class="sc9">$LOGFILE</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$?</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">ne</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+  </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"$instance Database Restore Failed"</span><span class="sc0"> </span><span class="sc7">&gt;&gt;</span><span class="sc0"> </span><span class="sc9">$ERRFILE</span><span class="sc0">
+  </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0">
+  </span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc8">onmode</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">m</span><span class="sc0"> </span><span class="sc7">&gt;&gt;</span><span class="sc0"> </span><span class="sc9">$logFile</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$?</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">ne</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+  </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"$instance multi-user mode Failed"</span><span class="sc0"> </span><span class="sc7">&gt;&gt;</span><span class="sc0"> </span><span class="sc9">$ERRFILE</span><span class="sc0">
+  </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0">
+  </span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc2"># A message informs you when the restore is complete.</span><span class="sc0">
+</span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"Restore completed successfully, please check the mail ...\n"</span><span class="sc0">
+</span><span class="sc4">mail</span><span class="sc0"> </span><span class="sc8">-s</span><span class="sc0"> </span><span class="sc5">"Informix $instance Database restore successful (`hostname`) @ `date`"</span><span class="sc7">\</span><span class="sc0">
+        </span><span class="sc9">$SYSADMEMAIL</span><span class="sc0"> </span><span class="sc7">&lt;</span><span class="sc9">$LOGFILE</span><span class="sc0">
+
+</span><span class="sc2">#umount tape in TapeDrive</span><span class="sc0">
+</span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$bkupdev</span><span class="sc0"> </span><span class="sc7">=</span><span class="sc0"> </span><span class="sc7">/</span><span class="sc8">dev</span><span class="sc7">/</span><span class="sc8">rmt</span><span class="sc7">*</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">&amp;&amp;</span><span class="sc0"> </span><span class="sc8">util.tape</span><span class="sc0"> </span><span class="sc9">$bkupdev</span><span class="sc0"> </span><span class="sc8">offline</span><span class="sc0">
+
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0"> 
+
+</span></div></body>
+</html>

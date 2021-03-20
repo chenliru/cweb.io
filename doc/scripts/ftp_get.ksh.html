@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc6 {
+	color: #808080;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+.sc11 {
+	font-weight: bold;
+	color: #804040;
+	background: #E1FFF3;
+}
+.sc12 {
+	font-weight: bold;
+	color: #FFFF00;
+	background: #FF0000;
+}
+.sc13 {
+	color: #FF0000;
+	background: #FFFF80;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/bin/ksh93</span><span class="sc0">
+</span><span class="sc2">#######################################################################################</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Filename    : tableFTP.ksh</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Author      : Liru Chen</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Description : GET table data files using FTP</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Date        : 2015-03-06</span><span class="sc0">
+</span><span class="sc2">#                2015-03-13</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">########################################################################################</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc8">-x</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0">
+
+</span><span class="sc2">#hard-coded input parameters</span><span class="sc0">
+</span><span class="sc8">userName</span><span class="sc7">=</span><span class="sc6">'lchen'</span><span class="sc0">
+</span><span class="sc8">passWord</span><span class="sc7">=</span><span class="sc6">'admin12'</span><span class="sc0">
+</span><span class="sc8">remoteServer</span><span class="sc7">=</span><span class="sc6">'ifx01'</span><span class="sc0">
+
+</span><span class="sc8">sourceDir</span><span class="sc7">=</span><span class="sc6">'/usr/local/dbbkup/stage'</span><span class="sc0">
+</span><span class="sc8">targetDir</span><span class="sc7">=</span><span class="sc6">'/archbkup/dbbkup/stage'</span><span class="sc0">
+</span><span class="sc8">mailList</span><span class="sc7">=</span><span class="sc6">'lchen@livingstonintl.com'</span><span class="sc0">
+
+</span><span class="sc2">#move file function</span><span class="sc0">
+</span><span class="sc8">ftp_get</span><span class="sc0"> </span><span class="sc7">()</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[</span><span class="sc0"> </span><span class="sc9">$remoteServer</span><span class="sc0"> </span><span class="sc7">==</span><span class="sc0"> </span><span class="sc11">`hostname`</span><span class="sc0"> </span><span class="sc7">]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+    </span><span class="sc4">cp</span><span class="sc0"> </span><span class="sc8">-p</span><span class="sc0"> </span><span class="sc9">$sourceDir</span><span class="sc7">/*</span><span class="sc0"> </span><span class="sc9">$targetDir</span><span class="sc0">
+</span><span class="sc4">else</span><span class="sc0">
+
+</span><span class="sc8">ftp</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">vin</span><span class="sc0"> </span><span class="sc12">&lt;&lt; END_OF_FTP</span><span class="sc13">
+    open $remoteServer
+    user $userName $passWord
+    lcd $sourceDir
+    cd $targetDir
+    bin
+    prompt
+    mget *
+    bye
+END_OF_FTP</span><span class="sc0">
+
+</span><span class="sc4">fi</span><span class="sc0">
+</span><span class="sc7">}</span><span class="sc0">
+
+</span><span class="sc8">ftp_get</span><span class="sc0">
+
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">0</span><span class="sc0">
+</span></div></body>
+</html>

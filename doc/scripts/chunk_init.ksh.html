@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc5 {
+	color: #808080;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+.sc11 {
+	font-weight: bold;
+	color: #804040;
+	background: #E1FFF3;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/bin/ksh93</span><span class="sc0">
+</span><span class="sc2">###############################################################################</span><span class="sc0">
+</span><span class="sc2">#  Prepare the raw devices or files that you used for storage after the level-0 </span><span class="sc0">
+</span><span class="sc2">#  backup are available. </span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  All the chunks information is collected with:</span><span class="sc0">
+</span><span class="sc2"># `onstat -D ` and stored in file $TOOLSDIR/db/informix/etc/CHUNK.$instnace</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Author : Liru Chen</span><span class="sc0">
+</span><span class="sc2">#  Date: 2013-03-26</span><span class="sc0">
+</span><span class="sc2">################################################################################</span><span class="sc0">
+</span><span class="sc2">#set -v</span><span class="sc0">
+</span><span class="sc2">#set -x</span><span class="sc0">
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$#</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+    </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">$"Usage: $0 informix_instance"</span><span class="sc0">
+    </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">1</span><span class="sc0">
+</span><span class="sc4">fi</span><span class="sc0">
+
+
+</span><span class="sc4">if</span><span class="sc0"> </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc9">$USER</span><span class="sc0"> </span><span class="sc7">!=</span><span class="sc0"> </span><span class="sc8">root</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0">
+</span><span class="sc4">then</span><span class="sc0">
+    </span><span class="sc4">echo</span><span class="sc0"> </span><span class="sc5">"You should be root user"</span><span class="sc0">
+    </span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">2</span><span class="sc0">
+</span><span class="sc4">fi</span><span class="sc0">
+
+</span><span class="sc8">chunkfile</span><span class="sc7">=</span><span class="sc9">$TOOLSDIR</span><span class="sc7">/</span><span class="sc8">db</span><span class="sc7">/</span><span class="sc8">informix</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">CHUNK.</span><span class="sc9">$1</span><span class="sc0">
+
+</span><span class="sc4">grep</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0"> </span><span class="sc5">"BACKUP DEVICE"</span><span class="sc0"> </span><span class="sc9">$chunkfile</span><span class="sc7">|</span><span class="sc0"> </span><span class="sc4">while</span><span class="sc0"> </span><span class="sc4">read</span><span class="sc0"> </span><span class="sc8">chunkname</span><span class="sc0">
+</span><span class="sc4">do</span><span class="sc0">
+    </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc4">-f</span><span class="sc0"> </span><span class="sc9">$chunkname</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">||</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+        </span><span class="sc7">[[</span><span class="sc0"> </span><span class="sc4">-d</span><span class="sc0"> </span><span class="sc11">$(dirname $chunkname)</span><span class="sc0"> </span><span class="sc7">]]</span><span class="sc0"> </span><span class="sc7">||</span><span class="sc0"> </span><span class="sc7">(</span><span class="sc0"> </span><span class="sc4">mkdir</span><span class="sc0"> </span><span class="sc8">-p</span><span class="sc0"> </span><span class="sc11">$(dirname $chunkname)</span><span class="sc0"> </span><span class="sc7">)</span><span class="sc0">
+        </span><span class="sc4">touch</span><span class="sc0"> </span><span class="sc9">$chunkname</span><span class="sc0">
+    </span><span class="sc7">}</span><span class="sc0">
+
+    </span><span class="sc4">chown</span><span class="sc0"> </span><span class="sc8">-R</span><span class="sc0"> </span><span class="sc8">informix</span><span class="sc7">:</span><span class="sc8">informix</span><span class="sc0"> </span><span class="sc11">$(dirname $chunk_name)</span><span class="sc0">
+    </span><span class="sc4">chmod</span><span class="sc0"> </span><span class="sc3">660</span><span class="sc0"> </span><span class="sc9">$chunk_name</span><span class="sc0">
+
+</span><span class="sc4">done</span><span class="sc0"> 
+
+</span></div></body>
+</html>

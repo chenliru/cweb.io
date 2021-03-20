@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,34 +38,38 @@
 
 <div class="container">
     <header class="blog-header py-3">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top mb-4">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="./cweb.svg" width="100" height="60"
                          class="d-inline-block align-content-center" alt="Bootstrap" loading="lazy"
                          style="filter: brightness(200%);">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#about">About</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">My Skills</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">My Projects</a>
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarLanguageDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Language
-                            </a>
+                            <a class="nav-link dropdown-toggle disabled" href="#" id="navbarLanguageDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false" tabindex="-1" aria-disabled="true">
+                                Find More</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item small" href="#">Python</a></li>
-                                <li><a class="dropdown-item small" href="#">C++</a></li>
+                                <li><a class="dropdown-item font-italic" href="#">Python</a></li>
+                                <li><a class="dropdown-item font-italic" href="#">C++</a></li>
                                 <li><a class="dropdown-item small" href="#">Shell/PowerShell</a></li>
                                 <li><a class="dropdown-item small" href="#">HTML/CSS/Javascript</a></li>
                                 <li>
@@ -74,63 +78,48 @@
                                 <li><a class="dropdown-item" href="#">Others</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarOSDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Operating System
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item small" href="#">Linux</a></li>
-                                <li><a class="dropdown-item small" href="#">AIX</a></li>
-                                <li><a class="dropdown-item small" href="#">Solaris</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Others</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDBDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                DataBase
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item small" href="#">Oracle</a></li>
-                                <li><a class="dropdown-item small" href="#">DB2</a></li>
-                                <li><a class="dropdown-item small" href="#">Informix</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Others</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
                     </ul>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-dark" type="submit">Search</button>
+                        <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                    <a class="btn btn-sm btn-outline-secondary m-lg-auto" href="#">Sign up</a>
                 </div>
             </div>
         </nav>
+
     </header>
 
 </div>
 
 <main class="container">
-    <div class="p-4 p-md-5 mb-4 text-white rounded bg-info">
-        <div class="col-md-6 px-0">
-            <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-            <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
-                efficiently about what’s most interesting in this post’s contents.</p>
-            <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p>
-        </div>
-    </div>
+    <hr class="my-5" id="about" >
+    <section class="p-4 p-md-5 mb-4 text-white rounded bg-info bg-image"
+             style="background-image: url('./resume2/img/bg/01.jpg')">
+        <h1 class="display-4 font-italic">About Me</h1>
+        <p class="lead text-success fw-bold text-decoration-underline my-3">Experienced IT professional, Master of engineering,
+             <em>Tsinghua University </em>
+        </p>
+        <ul class="bg-secondary rounded">
+            <li>20+ years DBA/Systems Administration experience, with an emphasis on comprehensive
+                solutions in large mission-critic datacenter. Perfect expertise in hardware, software
+                and application, exceptional knowledge in systems planning, integration, sizing, performance
+                tuning, backup and disaster recovery.
+            </li>
+            <li>Excellent global perspective based on working experience in global top IT companies,
+                including SUN Microsystem (Guangzhou, China), Siemens Communication Ltd (Shanghai, China),
+                Livingston International (Toronto, Canada).
+            </li>
+            <li>Flexible and focus, with unique analytical problem-solving ability.
+                Good communication and teamwork, Self-motivated and professional. Exceptional competence in:
+                ITIL, ISO9000 standards, staff Training and Development.
+            </li>
+            <li>Outstanding Staff Award in SUN and Siemens.</li>
+            <li>Poet and Music enthusiast.</li>
+        </ul>
+        <p class="lead mb-0"><a href="#" class="text-white fw-bold">Resume</a></p>
+    </section>
 
-    <div class="row mb-2">
+    <section class="row mb-2">
         <div class="col-md-6">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
@@ -178,59 +167,190 @@
                         <rect width="100%" height="100%" fill="#55595c"/>
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
-
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="row">
+    <hr class="my-5">
+
+    <section class="row" data-masonry='{"percentPosition": true }'>
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="200"
+                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
+                     preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#868e96"/>
+                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                </svg>
+
+                <div class="card-body">
+                    <h5 class="card-title">Card title that wraps to a new line</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card p-3">
+                <figure class="p-3 mb-0">
+                    <blockquote class="blockquote">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer mb-0 text-muted">
+                        Someone famous in <cite title="Source Title">Source Title</cite>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="200"
+                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
+                     preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#868e96"/>
+                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                </svg>
+
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional
+                        content.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card bg-primary text-white text-center p-3">
+                <figure class="mb-0">
+                    <blockquote class="blockquote">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer mb-0 text-white">
+                        Someone famous in <cite title="Source Title">Source Title</cite>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This card has a regular title and short paragraph of text below it.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card">
+                <svg class="bd-placeholder-img card-img" width="100%" height="260" xmlns="http://www.w3.org/2000/svg"
+                     role="img" aria-label="Placeholder: Card image" preserveAspectRatio="xMidYMid slice"
+                     focusable="false"><title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#868e96"/>
+                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Card image</text>
+                </svg>
+
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card p-3 text-end">
+                <figure class="mb-0">
+                    <blockquote class="blockquote">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer mb-0 text-muted">
+                        Someone famous in <cite title="Source Title">Source Title</cite>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is another card with title and supporting text below. This card has some
+                        additional content to make it slightly taller overall.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section class="row">
         <div class="col-md-8">
             <h3 class="pb-4 mb-4 font-italic border-bottom">
-                From the Firehose
+                From Liru's Blogs
             </h3>
-
             <article class="blog-post">
+                <h2>My work on Oracle Enterprise Application</h2>
+                <p><strong>Oracle Configure and Maintenance</strong> is intended for Oracle Database customers and those
+                    responsible for data center site planning, configuration, and maintenance of Oracle
+                    Database Application.
+                    <a href="./doc/sysadmin/Financial%20Oracle%20APP%20on%20AWS%20Configuration%20and%20Maintenace%20.pdf">Read More</a>.
+                </p>
                 <h2 class="blog-post-title">Implement Content Manager on Linux Server</h2>
-                <p class="blog-post-meta">January 1, 2014 by <a href="#">Liru Chen</a></p>
-
-                <p>Install the <em>Library</em> and the <em>esource manager</em>, <em>DB2 Enterprise Database</em>,
-                    <em>IBM HTTP Server</em> (with WAS plugins), <em>IBM Websphere Application Server</em> on a single
+                <p class="blog-post-meta">January 1, 2014 by <a href="#about">Liru Chen</a></p>
+                <p>Install <em><strong>Library</strong></em> and <em><strong>resource manager</strong></em>,
+                    <em><strong>DB2 Enterprise Database</strong></em>,<em><strong>IBM HTTP Server</strong></em>
+                    (with WAS plugins), <em><strong>IBM Websphere Application Server</strong></em> on
                     Linux workstation. Set up central administration of client property files for ease of system
-                    management.
-                    Install <em>Tivoli® Storage Manager Client</em> to provide access to long-term storage.
-                    Set up hierarchical storage architecture with local storage system and TSM storage system.
-                    Set up pClient environment. The Client for Windows enables the agents to query, view, and
-                    update data stored on the DB2 Content Manager system from their own workstation desktops.
+                    management. Install <em><strong>Tivoli® Storage Manager Client</strong></em> to provide access to
+                    long-term storage. Set up hierarchical storage architecture with local storage system and TSM
+                    storage system. Set up pClient environment. The Client for Windows enables the agents to query,
+                    view, and update data stored on the DB2 Content Manager system from their own workstation desktops.
                     Because it is a dedicated client, the Client for Windows has rich functionality and responds
-                    rapidly.
-                    The Client for Windows requires cataloging the library server database on the client
-                    workstation. <em>The DB2® Run-Time Client</em> is required to catalog the database on the client
-                    workstation.
-                    <a href="#">Download</a></p>
+                    rapidly. The Client for Windows requires cataloging the library server<em><strong>DB2 database</strong></em>
+                    on the client workstation.<em><strong>The DB2® Run-Time Client</strong></em> is required to catalog
+                    the database on the client workstation.
+                    <a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf#toolbar=0">Read More</a>
+                </p>
                 <hr>
-                <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus.
-                    Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere
-                    consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
                 <blockquote>
-                    <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare
-                        vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    <h2>Oracle Stream</h2>
+                    <p><strong>The purpose</strong> of <a href="./doc/sysadmin/Oracle%20Streams.pdf">this document</a>
+                        is to provide high level technical description and
+                        best practices for setting up a reporting database utilizing Oracle Streams (Downstream Capture)
+                        that will facilitate data replication for the KEC/Alliance applications. This can be used to
+                        offload reporting to another database server minimizing the production database(s) work load .
+                    </p>
                 </blockquote>
                 <h2>Setup IBM NIM Server</h2>
-                <p><strong>NIM Server</strong> providse OS/software needed by clients, through network;
+                <p><strong>NIM Server</strong> provides OS/software needed by clients, through network;
                     Sample steps using NIM Server to install OS on a standalone client, same thing if you use NIM Server
                     to install software to Client, and/or backup client data using mksysb/savevg to NIM Server.
-                </p><a href="#">Download</a>
-
-                <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo
-                    luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac
-                    consectetur ac, vestibulum at eros.</p>
+                    <a href="./doc/sysadmin/NIM.pdf">Read More</a>.
+                </p>
+                <hr>
+                <p><strong>What is vi?</strong> The default editor that comes with the UNIX operating system is called
+                    vi (visual editor). [Editor for UNIX, a product of GNU.] The UNIX vi editor is a full screen editor
+                    and has two modes of operation:
+                <ul>
+                    <li>Command mode commands which cause action to be taken on the file, and</li>
+                    <li>Insert mode in which entered text is inserted into the file.</li>
+                </ul>
+                In the command mode, every character typed is a command that does something to the text file being
+                edited; a character typed in the command mode may even cause the vi editor to enter the insert mode.
+                In the insert mode, every <a href="#"> Read More</a>
                 <h3>Unix Shell Scripts</h3>
-                <input type="file" name="db_bkup.ksh" id="inputfile">
                 <p>Please feel free to download and use scripts for your daily maintenance. <a href="#">Download</a></p>
-                <pre><code id="output">Example:<object data="https://chenliru.github.io/cweb.io/doc/sysadmin/scripts/bin/ftp_get.ksh" width="300" height="200">
-Not supported</object></code>
-                </pre>
+                <code>
+                    <div class="accordion-item">
+                        <h4 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Sample Shell Script
+                            </button>
+                        </h4>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body"><code>
+                                <iframe src="./doc/scripts/table_dbload.ksh.html" width="100%"></iframe>
+                            </code></div>
+                        </div>
+                    </div>
+                </code>
                 <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce
                     dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
                 <h3>Install IBM DB2 Content Manager V8</h3>
@@ -252,42 +372,6 @@ Not supported</object></code>
                 <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
             </article><!-- /.blog-post -->
 
-            <article class="blog-post">
-                <h2 class="blog-post-title">Another blog post</h2>
-                <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
-
-                <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus.
-                    Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere
-                    consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                <blockquote>
-                    <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare
-                        vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                </blockquote>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
-                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo
-                    luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac
-                    consectetur ac, vestibulum at eros.</p>
-            </article><!-- /.blog-post -->
-
-            <article class="blog-post">
-                <h2 class="blog-post-title">New feature</h2>
-                <p class="blog-post-meta">December 14, 2013 by <a href="#">Chris</a></p>
-
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia
-                    bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet
-                    risus.</p>
-                <ul>
-                    <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-                    <li>Donec id elit non mi porta gravida at eget metus.</li>
-                    <li>Nulla vitae elit libero, a pharetra augue.</li>
-                </ul>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
-                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-            </article><!-- /.blog-post -->
-
             <nav class="blog-pagination" aria-label="Pagination">
                 <a class="btn btn-outline-primary" href="#">Older</a>
                 <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
@@ -296,47 +380,40 @@ Not supported</object></code>
         </div>
 
         <div class="col-md-4">
-            <div class="p-4 mb-3 bg-light rounded">
-                <h4 class="font-italic" id="about">About</h4>
-                <p class="mb-0">Experienced IT professional <em>, Liru Chen, </em> Master of engineering, Tsinghua
-                    University
-                <ul>
-                    <li>20+ years DBA/Systems Administration experience, with an emphasis on comprehensive
-                        solutions in large mission-critic datacenter. Perfect expertise in hardware, software
-                        and application, exceptional knowledge in systems planning, integration, sizing, performance
-                        tuning,
-                        backup and disaster recovery.
-                    </li>
-                    <li>Excellent global perspective based on working experience in global top IT companies,
-                        including SUN Microsystem (Guangzhou, China), Siemens Communication Ltd (Shanghai, China),
-                        Livingston International (Toronto, Canada).
-                    </li>
-                    <li>Flexible and focus, with unique analytical problem-solving ability.
-                        Good communication and teamwork, Self-motivated and professional. Exceptional competence in:
-                        ITIL,
-                        ISO9000 standards, staff Training and Development.
-                    </li>
-                    <li>Outstanding Staff Award in SUN and Siemens.</li>
-                </ul>
-                </p>
-
-            </div>
-
             <div class="p-4">
                 <h4 class="font-italic">Archives</h4>
                 <ol class="list-unstyled mb-0">
-                    <li><a href="#">March 2014</a></li>
-                    <li><a href="#">February 2014</a></li>
-                    <li><a href="#">January 2014</a></li>
-                    <li><a href="#">December 2013</a></li>
-                    <li><a href="#">November 2013</a></li>
-                    <li><a href="#">October 2013</a></li>
-                    <li><a href="#">September 2013</a></li>
-                    <li><a href="#">August 2013</a></li>
-                    <li><a href="#">July 2013</a></li>
-                    <li><a href="#">June 2013</a></li>
-                    <li><a href="#">May 2013</a></li>
-                    <li><a href="#">April 2013</a></li>
+                    <li><a href="./doc/sysadmin/AIX%20Server%20and%20Informix%20DB%20Disaster%20Recovery.pdf">AIX Server
+                        and Informix DB DR <small><em>March 2014</em></small></a></li>
+                    <li><a href="./doc/sysadmin/DB2%20Database%20server%20and%20daily%20maintenance.pdf">DB2 Maintenance
+                        2014</a></li>
+                    <li><a href="./doc/sysadmin/DB2-FIX-Pack-installation-on-Power7-and-Power7-systems.html">DB2 Pack
+                        FIX 2014</a></li>
+                    <li><a href="./doc/sysadmin/DBMS-Naming-Standards.html">DBMS Naming Standards 2013</a></li>
+                    <li><a href="./doc/sysadmin/HACMP%20Resource%20Group%20Add%20disk%20space.pdf">IBM PowerHA Resource
+                        Group Add Disk from DS4K 2013</a></li>
+                    <li><a href="./doc/sysadmin/HMC%20Web-based%20System%20Manager.pdf">Web-based HMC system manager
+                        2013</a></li>
+                    <li><a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf">Content Manager
+                        Implement and Maintenance 2013</a></li>
+                    <li><a href="./doc/sysadmin/IBM%20DS4K%20SAN%20Storage%20and%20Storage%20Manger.pdf">SAN Storage
+                        Management(IBM D4K) 2013</a></li>
+                    <li><a href="./doc/sysadmin/IBM%20Highly%20Available%20Cluster%20Multiprocessing%20for%20AIX.pdf">HACMP
+                        on AIX 2013</a></li>
+                    <li><a href="./doc/sysadmin/IBM%20TSM%20and%20TotalStorage%20Ultrium%20Tape%20Library.pdf">TSM
+                        Storage System Concept and Implementation 2013</a></li>
+                    <li><a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf">Content Manager
+                        on Linux 2013</a></li>
+                    <li>
+                        <a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20WAS%20Network%20Deployment%20on%20Linux%20Server.pdf">IBM
+                            WebSphere Application Server Implement 2013</a></li>
+                    <li><a href="./doc/sysadmin/Informix%20DB%20Daily%20Maintenance.pdf">Informix DB daily maintenance
+                        2013</a></li>
+                    <li><a href="./doc/sysadmin/Insight-System-Administration-Manual.html">Insight System Administration
+                        2013</a></li>
+                    <li><a href="./doc/sysadmin/NIM.pdf">NIM 2013</a></li>
+                    <li><a href="./doc/sysadmin/xwin%20on%20laptop%20as%20root%20via%20ssh%20protocol.pdf">xwin on
+                        laptop as root 2013</a></li>
                 </ol>
             </div>
 
@@ -350,25 +427,133 @@ Not supported</object></code>
             </div>
         </div>
 
-    </div><!-- /.row -->
-    <form id="form" onsubmit="return false">
-        <label for="area" style="display: block">Leave your message: </label>
-        <textarea style="width: 95%; box-sizing: border-box; height: 250px; border: 1px solid black;display: block;"
-                  id="area"></textarea>
-        <input type="button" value="Clear" style="display: block" onclick="area.value = ''"/>
-    </form>
+    </section><!-- /.row -->
+
+    <!-- Section: Contact v.3 -->
+    <section class="contact-section my-5">
+        <!-- Form with header -->
+        <div class="card">
+            <!-- Grid row -->
+            <div class="row">
+                <!-- Grid column -->
+                <div class="col-lg-8">
+                    <div class="card-body form">
+                        <!-- Header -->
+                        <h3 class="mt-4"><i class="fas fa-envelope pr-2"></i>Write to me:</h3>
+                        <!-- Grid row -->
+                        <div class="row">
+                            <!-- Grid column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="form-contact-name" class="form-control">
+                                    <label for="form-contact-name" class="">Your name</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                            <!-- Grid column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="form-contact-email" class="form-control">
+                                    <label for="form-contact-email" class="">Your email</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                        </div>
+                        <!-- Grid row -->
+                        <!-- Grid row -->
+                        <div class="row">
+                            <!-- Grid column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="form-contact-phone" class="form-control">
+                                    <label for="form-contact-phone" class="">Your phone</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                            <!-- Grid column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <input type="text" id="form-contact-company" class="form-control">
+                                    <label for="form-contact-company" class="">Your company</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                        </div>
+                        <!-- Grid row -->
+                        <!-- Grid row -->
+                        <div class="row">
+                            <!-- Grid column -->
+                            <div class="col-md-12">
+                                <div class="md-form mb-0">
+                                    <textarea id="form-contact-message" class="form-control md-textarea"
+                                              rows="3"></textarea>
+                                    <label for="form-contact-message">Your message</label>
+                                    <a class="btn-floating btn-lg blue">
+                                        <i class="far fa-paper-plane"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                        </div>
+                        <!-- Grid row -->
+                    </div>
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                <div class="col-lg-4">
+                    <div class="card-body contact text-center h-100 white-text">
+                        <h3 class="my-4 pb-2">Contact information</h3>
+                        <ul class="text-lg-left list-unstyled ml-4">
+                            <li>
+                                <p><i class="fas fa-map-marker-alt pr-2"></i>Mississauga, Toronto, Canada</p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone pr-2"></i>+01 647-797-2165</p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-envelope pr-2"></i>chenliru@yahoo.com</p>
+                            </li>
+                        </ul>
+                        <hr class="hr-light my-4">
+                        <ul class="list-inline text-center list-unstyled">
+                            <li class="list-inline-item">
+                                <a class="p-2 fa-lg tw-ic">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="p-2 fa-lg li-ic">
+                                    <i class="fab fa-linkedin-in"> </i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="p-2 fa-lg ins-ic">
+                                    <i class="fab fa-instagram"> </i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+        <!-- Form with header -->
+    </section>
+    <!-- Section: Contact v.3 -->
+
 </main><!-- /.container -->
 
 <footer class="blog-footer">
-    <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.
-    </p>
-    <p>
-        <a href="#">Back to top</a>
-    </p>
+    <p>Blog template built from <a href="https://getbootstrap.com/">Bootstrap</a></p>
+    <p><a href="#">Back to top</a></p>
 </footer>
 
 <script src="./bootstrap-examples/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="./bootstrap-examples/cheatsheet/cheatsheet.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+        integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
+        crossorigin="anonymous"></script>
 <script src="./cweb.js"></script>
 
 </body>

@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/usr/bin/ksh93</span><span class="sc0">
+</span><span class="sc2">###########################################################################</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#Indexes and referential constraints are not allowed on </span><span class="sc0">
+</span><span class="sc2">#tables of type raw, have to drop them before you set table</span><span class="sc0">
+</span><span class="sc2"># type raw, and rebuild them after large data loaded</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Author : Liru Chen</span><span class="sc0">
+</span><span class="sc2">#  Date: 2015-05-13</span><span class="sc0">
+</span><span class="sc2">############################################################################</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc8">-x</span><span class="sc0">
+
+</span><span class="sc8">delete_foreignkey</span><span class="sc0"> </span><span class="sc7">()</span><span class="sc0"> </span><span class="sc7">{</span><span class="sc0">
+
+</span><span class="sc8">referencedTable</span><span class="sc7">=</span><span class="sc9">$1</span><span class="sc0">      </span><span class="sc2"># Base Table, Owner of reference</span><span class="sc0">
+</span><span class="sc8">foreignKeyTable</span><span class="sc7">=</span><span class="sc9">$2</span><span class="sc0">      </span><span class="sc2"># Child Table, Owner of Foreign Key</span><span class="sc0">
+</span><span class="sc8">foreignKey</span><span class="sc7">=</span><span class="sc9">$3</span><span class="sc0">           </span><span class="sc2"># Foreign Key</span><span class="sc0">
+
+</span><span class="sc8">DATABASE</span><span class="sc0"> </span><span class="sc9">$DBNAME</span><span class="sc7">;</span><span class="sc0">
+
+</span><span class="sc8">BEGIN</span><span class="sc0"> </span><span class="sc8">WORK</span><span class="sc7">;</span><span class="sc0">
+
+</span><span class="sc8">LOCK</span><span class="sc0"> </span><span class="sc8">TABLE</span><span class="sc0"> </span><span class="sc9">$foreignKeyTable</span><span class="sc0"> </span><span class="sc8">IN</span><span class="sc0"> </span><span class="sc8">EXCLUSIVE</span><span class="sc0"> </span><span class="sc8">MODE</span><span class="sc7">;</span><span class="sc0">
+</span><span class="sc8">LOCK</span><span class="sc0"> </span><span class="sc8">TABLE</span><span class="sc0"> </span><span class="sc9">$referencedTable</span><span class="sc0"> </span><span class="sc8">IN</span><span class="sc0"> </span><span class="sc8">EXCLUSIVE</span><span class="sc0"> </span><span class="sc8">MODE</span><span class="sc7">;</span><span class="sc0">
+</span><span class="sc8">DELETE</span><span class="sc0"> </span><span class="sc8">FROM</span><span class="sc0">  </span><span class="sc9">$DBNAME</span><span class="sc7">@</span><span class="sc9">$DBSERVER</span><span class="sc7">:</span><span class="sc9">$USER</span><span class="sc7">.</span><span class="sc9">$foreignKeyTable</span><span class="sc0"> 
+    </span><span class="sc8">WHERE</span><span class="sc0"> </span><span class="sc9">$foreignKey</span><span class="sc0"> </span><span class="sc8">NOT</span><span class="sc0"> </span><span class="sc8">IN</span><span class="sc0">
+    </span><span class="sc7">(</span><span class="sc8">SELECT</span><span class="sc0"> </span><span class="sc9">$foreignKey</span><span class="sc0"> </span><span class="sc8">from</span><span class="sc0"> </span><span class="sc9">$referencedTable</span><span class="sc7">);</span><span class="sc0">
+
+</span><span class="sc8">UNLOCK</span><span class="sc0"> </span><span class="sc8">TABLE</span><span class="sc0"> </span><span class="sc9">$foreignKeyTable</span><span class="sc7">;</span><span class="sc0">
+</span><span class="sc8">UNLOCK</span><span class="sc0"> </span><span class="sc8">TABLE</span><span class="sc0"> </span><span class="sc9">$referencedTable</span><span class="sc7">;</span><span class="sc0">
+
+</span><span class="sc8">COMMIT</span><span class="sc0"> </span><span class="sc8">WORK</span><span class="sc7">;</span><span class="sc0">
+
+</span><span class="sc8">CLOSE</span><span class="sc0"> </span><span class="sc8">DATABASE</span><span class="sc7">;</span><span class="sc0">
+
+</span><span class="sc7">}</span><span class="sc0">
+
+
+
+</span></div></body>
+</html>

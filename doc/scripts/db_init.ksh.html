@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+.sc2 {
+	color: #008000;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc4 {
+	font-weight: bold;
+	color: #0000FF;
+}
+.sc7 {
+	font-weight: bold;
+	color: #804000;
+}
+.sc8 {
+}
+.sc9 {
+	font-weight: bold;
+	color: #FF8040;
+	background: #FFFFD9;
+}
+.sc11 {
+	font-weight: bold;
+	color: #804040;
+	background: #E1FFF3;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc2">#!/usr/bin/ksh93</span><span class="sc0">
+</span><span class="sc2">#######################################################################################</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  File name        : db_init.ksh</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Description  : Recover Informix database</span><span class="sc0">
+</span><span class="sc2">#  Phase I</span><span class="sc0">
+</span><span class="sc2">#    1. Install Informix Software/Recover from File system backup</span><span class="sc0">
+</span><span class="sc2">#    2. Environment configuration: $. ./ids115.env systestdb/ipdb</span><span class="sc0">
+</span><span class="sc2">#    2. Configuration file: </span><span class="sc0">
+</span><span class="sc2">#       $INFORMIXDIR/etc/ONCONFIG, $INFROMIXDIR/etc/SQLHOSTS, /etc/SERVICES</span><span class="sc0">
+</span><span class="sc2">#       Should be very careful and do it only you have no other choice: oninit -i</span><span class="sc0">
+</span><span class="sc2">#    3. DBSpaces and Chunks from onstat -d</span><span class="sc0">
+</span><span class="sc2">#       touch chunks;chown informix:informix *; chmod 660 *</span><span class="sc0">
+</span><span class="sc2">#       onspaces -c -d datadbs1 -p ... -o 0 -s 1000000</span><span class="sc0">
+</span><span class="sc2">#       onspaces -a -d datadbs1 -p ... -o 0 -s 1000000</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#       onparams  for logic logs creation</span><span class="sc0">
+</span><span class="sc2">#       onspaces -c -t -d tempdbs1 -p ... -o 0 -s 1000000</span><span class="sc0">
+</span><span class="sc2">#       </span><span class="sc0">
+</span><span class="sc2">#  Phase II  </span><span class="sc0">
+</span><span class="sc2">#   1. create database ip_systest and tables using SQL_db_table</span><span class="sc0">
+</span><span class="sc2">#   2. load data to tables by table using loadTable.ksh</span><span class="sc0">
+</span><span class="sc2">#   3. create procedure using SQL_procedure</span><span class="sc0">
+</span><span class="sc2">#   4. create view, index, constraint and trigger </span><span class="sc0">
+</span><span class="sc2">#                    </span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Author       : Liru Chen</span><span class="sc0">
+</span><span class="sc2">#</span><span class="sc0">
+</span><span class="sc2">#  Date        : 2015-05-15</span><span class="sc0">
+</span><span class="sc2">#                </span><span class="sc0">
+</span><span class="sc2">########################################################################################</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc8">-x</span><span class="sc0">
+</span><span class="sc4">set</span><span class="sc0"> </span><span class="sc7">-</span><span class="sc8">v</span><span class="sc0">
+
+</span><span class="sc2"># environment</span><span class="sc0">
+</span><span class="sc8">currentDate</span><span class="sc7">=</span><span class="sc11">$(date +%Y%m%d)</span><span class="sc0">
+</span><span class="sc8">workDir</span><span class="sc7">=/</span><span class="sc8">login</span><span class="sc7">/</span><span class="sc8">lchen</span><span class="sc7">/</span><span class="sc8">tools</span><span class="sc7">/</span><span class="sc8">db</span><span class="sc7">/</span><span class="sc8">informix</span><span class="sc0">
+</span><span class="sc2">#DATABASE=sysmaster@systestdb</span><span class="sc0">
+</span><span class="sc8">DATABASESVR</span><span class="sc7">=</span><span class="sc8">systestdb</span><span class="sc0">
+
+
+</span><span class="sc2"># SQL for DB</span><span class="sc0">
+</span><span class="sc8">SQL_db_table</span><span class="sc7">=</span><span class="sc9">$workDir</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">db_tables.sql</span><span class="sc0">
+</span><span class="sc8">SQL_procedure</span><span class="sc7">=</span><span class="sc9">$workDir</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">db_procedures.sql</span><span class="sc0">
+</span><span class="sc8">SQL_view</span><span class="sc7">=</span><span class="sc9">$workDir</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">db_views.sql</span><span class="sc0">
+</span><span class="sc8">SQL_index</span><span class="sc7">=</span><span class="sc9">$workDir</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">db_indexes.sql</span><span class="sc0">
+</span><span class="sc8">SQL_constraint</span><span class="sc7">=</span><span class="sc9">$workDir</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">db_constraints.sql</span><span class="sc0">
+</span><span class="sc8">SQL_trigger</span><span class="sc7">=</span><span class="sc9">$workDir</span><span class="sc7">/</span><span class="sc8">etc</span><span class="sc7">/</span><span class="sc8">db_triggers.sql</span><span class="sc0">
+
+</span><span class="sc2">#setup Database environment</span><span class="sc0">
+</span><span class="sc7">.</span><span class="sc0"> </span><span class="sc7">/</span><span class="sc8">login</span><span class="sc7">/</span><span class="sc8">lchen</span><span class="sc7">/</span><span class="sc8">ids115.env</span><span class="sc0"> </span><span class="sc9">$DATABASESVR</span><span class="sc0">
+
+</span><span class="sc2">#dbaccess - $SQL_db_table       #comment this when DB &amp; tables already created </span><span class="sc0">
+</span><span class="sc2"># {cd $workDir/bin; nohup $workDir/bin/loadTable.ksh &amp; }    #comment this when table data load completed</span><span class="sc0">
+</span><span class="sc2">#dbaccess - $SQL_procedure      #comment this when Procedures already created</span><span class="sc0">
+</span><span class="sc2">#dbaccess - $SQL_view           #comment this when Views already created</span><span class="sc0">
+</span><span class="sc2">#dbaccess - $SQL_index          #comment this when Indexs already created</span><span class="sc0">
+</span><span class="sc2">#dbaccess - $SQL_constraint     #comment this when Constraints already created</span><span class="sc0">
+</span><span class="sc2">#dbaccess - $SQL_trigger        #comment this when Triggers already created</span><span class="sc0">
+
+</span><span class="sc4">exit</span><span class="sc0"> </span><span class="sc3">0</span></div></body>
+</html>

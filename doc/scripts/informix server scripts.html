@@ -1,0 +1,712 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc0">
+# Shell Scripts – AIX mksysb, filesystems and Informix DB
+
+
+# Script /insight/local/backup/sysbkup.ksh                                                   
+#####################################################################
+#!/bin/ksh
+################################################################################
+#
+# Name:     sysbkup.ksh
+#
+# Reference:    n/a
+#
+# Description:  system backup using mksysb
+#
+# Parameters:   sysbkup.ksh &lt;tape device&gt; 
+#       tape device /dev/rmt0
+#
+# #
+################################################################################
+
+set -v
+set -x
+
+# script library
+PATH=$PATH:/insight/local/backup/sitelib:.  
+
+cd /dmqjtmp/archiveSysbkupLog
+
+backup_tape=/dev/$1
+backup_lisfile=sysbkup_lis.
+backup_errfile=sysbkup_err.
+backup_logfile=sysbkup_log.
+backup_date=`date +%Y%m%d%H%M`
+lisfile=$backup_lisfile$backup_date
+errfile=$backup_errfile$backup_date
+logfile=$backup_logfile$backup_date
+aixsupport="chenliru@yahoo.com"
+
+date &gt;$logfile
+
+Check_Tape()
+{
+  # rewind the tape; 
+  tctl -f $backup_tape rewind
+  if [[ $? -eq 0 ]] 
+    then
+        return 0    #tape is ready;
+    else 
+        date &gt; $errfile
+        echo "\nError: tape is not ready" &gt;&gt; $errfile
+        mail -s "Tape is not ready for SYSTEM backup on IFX01 @ $backup_date" computerops@livingstonintl.com &lt; $errfile
+        return 1
+  fi
+}
+
+count=3
+while [[ $count -gt 0 ]]; do
+    Check_Tape
+    if [[ $? -eq 0 ]]; then
+        break       #tape ready, continue to do backup;
+    else
+        count=$(($count-1))
+        banner "Tapes" Please!!!
+        if [[ $count -eq 0 ]]
+          then
+              mail -s "Ifx01 Sysbackup Failed Due to Tape not ready ..." computerops@livingstonintl.com &lt; /dev/null
+              mail -s "Ifx01 Sysbackup Failed Due to Tape not ready ..." $aixsupport &lt; /dev/null
+              exit 1
+        fi
+    fi
+    sleep 120
+done
+
+# backup of the operating system (that is, the root volume group)
+mksysb -e -p -i $backup_tape 1&gt;&gt;$logfile 2&gt;&amp;1
+errsts=$?
+if (($errsts != 0))
+then
+  errevent $logfile "&lt;error = $errsts&gt; error on mksysb command:"
+  mail -s "System backup failed (IFX01): $backup_date" $aixsupport &lt;$logfile
+  &lt;$logfile
+  tctl -f $backup_tape offline  
+  exit 1
+fi
+
+date &gt;&gt; $logfile
+
+# rewind the tape
+bot.check $backup_tape $logfile
+
+# finally list all the files on tape
+eventlog $logfile "----------------------------------------------------"
+eventlog $logfile "Listing of the root volume group:" | tee -a $lisfile  
+eventlog $logfile "----------------------------------------------------"
+/usr/sbin/restore -Tqs4 -f $backup_tape.1 &gt;&gt; $lisfile 2&gt;&gt; $logfile
+errsts=$?
+if (($errsts != 0))
+then    
+  errevent $logfile "\t &lt;$errsts&gt; error on readcheck of system backup" | tee -a $lisfile        
+  eventlog $logfile "\tDumping the contents of error file:"
+  mail -s "System backup failed (IFX01): $backup_date" $aixsupport 
+  mail -s "System backup failed (IFX01): $backup_date" computerops@livingstonintl.com 
+  tctl -f $backup_tape offline 
+  exit 1
+fi
+
+cat $errfile | tee -a $logfile
+eventlog $logfile "----------------------------------------------------"
+#rm $errfile
+
+eventlog $logfile "SYSTEM BACKUP task has been completed"
+eventlog $logfile "----------------------------------------------------"
+
+sleep 3
+
+# dismount the tape
+tctl -f $backup_tape offline
+
+sleep 3
+
+#Mail to Administrator;
+mail -s "System backup successful (IFX01): $backup_date" $aixsupport &lt;$logfile
+
+#Mail to operator;
+mail -s "System backup successful (IFX01): $backup_date" computerops@livingstonintl.com &lt;$logfile
+
+exit 0
+
+#####################################################################
+# Script /home/dguo/script/check_apptape.ksh                                                   
+#####################################################################
+#####################################################################
+# Script /insight/local/backup/appbkup.ksh                                                   
+#####################################################################
+#!/bin/ksh
+################################################################################
+#
+# Name:         appbkup.ksh
+#
+# Reference:    n/a
+#
+# Description:  application backup using muilt-backup
+#       backup all filesystems except database filesystems
+#
+# Parameters:   appbkup &lt;tape device&gt;
+#       tape device /dev/rmt1
+#
+################################################################################
+
+set -v
+set -x
+
+# script library
+PATH=/insight/local/backup/sitelib:$PATH:.
+
+# log file directory
+cd /dmqjtmp/archiveAppbkupLog
+
+# database filesystems
+ixFS=/ix_root:/ix_plog:/ix_llog:/ix_dat1:/ix_dat2:/ix_dat3:/ix_idx1:/ix_idx2:/ix_idx3:/ix_temp
+arFS=/ach_root:/ach_plog:/ach_llog:/ach_dat1:/ach_dat2:/ach_dat2_2:/ach_dat1_2:/ach_idx1:/ach_idx2:/ach_temp
+dbFS=${ixFS}:${arFS}
+
+# exclude filesystems
+xList=`echo ${dbFS} | sed "s/:/:|/g"`":"  
+
+# backup level and tape driv
+backup_level=0
+backup_tape=/dev/$1
+
+# log files
+backup_lisfile=level0_lis.
+backup_errfile=level0_err.
+backup_logfile=level0_log.
+backup_date=`date +%Y%m%d%H%M`
+lisfile=$backup_lisfile$backup_date
+errfile=$backup_errfile$backup_date
+logfile=$backup_logfile$backup_date
+
+aixsupport="lchen@livingstonintl.com"
+
+Check_Tape()
+{
+  # rewind the tape
+  tctl -f $backup_tape rewind
+  if [[ $? -eq 0 ]]
+     then
+         return 0     #tape is ready fro backup;
+     else 
+         date &gt; $errfile
+         echo "\nError: tape is not ready" &gt;&gt; $errfile
+         mail -s "Tape is not ready for APPLICATION backup on IFX01 @ $backup_date" computerops@livingstonintl.com &lt; $errfile
+        return 1
+  fi
+}
+
+count=3
+while [[ $count -gt 0 ]]; do
+    Check_Tape
+    if [[ $? -eq 0 ]]; then
+        break            #tape ready, continue to do the backup;
+    else
+        count=$(($count-1))
+        banner "Tapes Please!!!"
+        if [[ $count -eq 0 ]]
+          then
+              mail -s "Ifx01 Application Backup Failed Due to Tape not ready ..." $aixsupport &lt; /dev/null
+              mail -s "Ifx01 Apllication Backup Failed Due to Tape not ready ..." computerops@livingstonintl.com &lt; /dev/null
+              exit 1
+        fi
+    fi
+    sleep 120
+done
+
+#  get a list of the mounted "jfs" filesystems exclude database filesystems
+filesys=`lsfs -c -v jfs2 | tail +2 | grep -v -E "$xList" | cut -f1 -d":"`  
+
+# log the archive filesystems
+eventlog $logfile "Backup filesystem listing=$filesys"
+ 
+# get number of filesystem in the string "filesys"
+set $filesys   
+integer fsCount=$#
+
+# do not use &lt;*&gt; inside argument values : &lt;*&gt; is translated as &lt;ls *&gt;
+eventlog $lisfile "-------------------------------------------------------"
+eventlog $lisfile "BACKUP LEVEL: $backup_level" 
+eventlog $lisfile "BACKUP DATE : `date`" 
+eventlog $lisfile "-------------------------------------------------------"
+
+# Backup the file systems in the listing
+integer xCount=0
+line=$filesys
+set $line
+
+while (( $xCount &lt; $fsCount ))
+do
+  eventlog $logfile "----------------------------------------------------"
+  eventlog $logfile "Backing up filesystem: $1"
+  eventlog $logfile "----------------------------------------------------"
+  sync
+  sleep 5
+
+  backup -$backup_level -uf $backup_tape.1 $1 2&gt;&amp;1 | tee -a $logfile
+  errsts=$?
+  if (($errsts != 0))
+  then  
+    errevent $logfile "&lt;error = $errsts&gt; error on backing up filesystem: $1" 
+    mail -s "Application backup failed (IFX01): $backup_date" $aixsupport &lt;$logfile 
+    mail -s "Application backup failed (IFX01): $backup_date" computerops@livingstonintl.com &lt;$logfile 
+    tctl -f $backup_tape offline
+    exit 1
+  fi
+
+  shift 1
+  xCount=xCount+1
+done
+
+# rewind the tape
+bot.check $backup_tape $logfile
+
+# finally list all the files on tape
+integer xCount=1
+line=$filesys
+set $line
+
+while (( $xCount &lt;= $fsCount ))
+do
+  eventlog $logfile "----------------------------------------------------"
+  eventlog $logfile "Listing of filesystem: $1 File number: $xCount" | tee -a $lisfile  
+  eventlog $logfile "----------------------------------------------------"
+
+  restore -s1 -qvTf $backup_tape.1 &gt;&gt;$lisfile 2&gt;$errfile
+  errsts=$?
+  eventlog $logfile "Dumping the contents of error file:"
+  cat $errfile | tee -a $logfile
+  if (($errsts != 0))
+  then  
+    errevent $logfile "&lt;error = $errsts&gt; error on reading filesystem: $1" | tee -a $lisfile  
+    mail -s "Application backup failed (IFX01): $backup_date" $aixsupport 
+&lt;$logfile 
+    tctl -f $backup_tape offline
+    exit 1
+  fi
+
+  shift 1
+  xCount=xCount+1
+done
+
+#rm $errfile
+eventlog $logfile "/etc/dumpdates at the close of this backup:"
+sort /etc/dumpdates | tee -a $logfile
+eventlog $logfile "BACKUP task has been completed"
+
+
+sleep 5
+
+# dismount the tape
+tctl -f $backup_tape offline
+
+sleep 5
+
+#Mail to Administrator;
+mail -s "Application backup successful (IFX01): $backup_date" $aixsupport &lt;$logfile 
+
+#Mail to operator!
+mail -s "Application backup successful (IFX01): $backup_date" computerops@livingstonintl.com &lt;$logfile 
+
+exit 0
+#####################################################################
+# Script /home/dguo/script/check_dbstape.ksh                                                   
+#####################################################################
+#####################################################################
+# Script /insight/local/backup/dbsbkup.ksh                                                   
+#####################################################################
+#!/bin/ksh
+################################################################################
+#
+# Name:     dbsbkup.ksh
+#
+# Reference:    n/a
+#
+# Description:  a production database backup
+#       a level-0 backup using ontape
+#
+# Parameters:   dbsbkup.ksh &lt;tape device&gt; 
+#       tape device /dev/rmt1
+#   
+#
+################################################################################
+
+set -v
+set -x
+
+date
+su - informix -c "/insight/local/backup/infbkup.ksh" &gt; /dmqjtmp/archiveDbsbkupLog/infbkup.out 2&gt;&amp;1 
+
+exit 0 
+
+#####################################################################
+# Script /insight/local/scripts/getTxnRpt.pl                                                   
+#####################################################################
+#!/usr/bin/perl -w
+
+@QueList = qw(10 21 22 31 32 34 41 46 51 52 70 71 81);
+$FF_all = 0;
+$Total_all = 0;
+$Errors_all = 0;
+$Records_all = 0;
+$Messages_all = 0;
+$Bytes_all = 0;
+$c = "|";
+
+$DmqlogDir = "/usr/apps/dmq/beta/LOGS/LOGS.0";
+#$DmqlogDir = "/usr/apps/dmq/beta/LOGS/LOGS.1";
+#$DmqlogDir = "/usr/apps/dmq/beta/LOGS/LOGS.2";
+#$DmqlogDir = "/login/dguo/temp";
+#$ReportFile = "/login/dguo/report/trans.rpt";
+
+$stamp = `date +%Y%m%d`;
+$ReportFile = "/dmqjtmp/archiveFfileLog/getTxnRpt.${stamp}";
+
+open (OUTFILE,"&gt;$ReportFile");
+# report for transactions
+$DATE = `date`;
+format OUTFILE_TOP = 
+Daily Transaction Report
+@&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+$DATE
+ ------------------------------------------------------------------------------
+|QNum|Total_FF| Transaction |   Messages | Errors|   Records   |      Bytes    |
+.
+
+format OUTFILE = 
+|----|--------|-------------|------------|-------|-------------|---------------|
+@&lt;@||@&lt;@||||||@&lt;@&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;@&lt;@&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;@&lt;@&gt;&gt;&gt;&gt;&gt;@&lt;@&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;@&lt;@&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;@&lt;
+$c,$qname,$c,$FF,$c,$Total,$c,$Messages,$c,$Errors,$c,$Records,$c,$Bytes,$c
+.
+
+sub convert
+   {
+     ($num) = @_;
+     
+     if ( $num &gt; 999999999999 )
+        {
+         print "Exceed Max Number, quit!\n";
+         $num = 999999999999;
+         exit;
+        }
+    
+     $num =  
+           ( $num =~ /(\d{1,3})(\d{3})(\d{3})(\d{3})$/ ) ?
+             sprintf "%d,%3s,%3s,%3s\n",$1,$2,$3,$4 :
+                  ( $num =~ /(\d{1,3})(\d{3})(\d{3})$/ ) ?
+                    sprintf "%d,%3s,%3s\n",$1,$2,$3 :
+                         ( $num =~ /(\d{1,3})(\d{3})$/ ) ?
+                           sprintf "%d,%3s\n",$1,$2 : $num ;
+
+     return $num;
+   }
+
+$i = 0;
+foreach (@QueList)
+  {
+   $qname = $_;
+   $FF = 0;
+   $Total = 0;
+   $Errors = 0;
+   $Records = 0;
+   $Messages = 0;
+   $Bytes = 0;
+   $i++;
+   
+   next if ( ! -e "$DmqlogDir/dmqlog.0${qname}");
+   open (LOGFILE,"$DmqlogDir/dmqlog.0${qname}")||die " Open Files Failed ... ";
+   while (&lt;LOGFILE&gt;)
+     {
+        next if ( !/Transactions/ );
+        (undef,undef,undef,$num,$err,undef) = split(' ',$_);
+        $Total += $num;
+        $Errors += $err;
+        $FF++;
+        
+        $_ = &lt;LOGFILE&gt;;
+        (undef,undef,undef,$num,undef) = split(' ',$_);
+        $Messages += $num;
+         
+        $_ = &lt;LOGFILE&gt;;
+        (undef,undef,undef,$num,undef) = split(' ',$_);
+        $Records += $num;
+        
+        $_ = &lt;LOGFILE&gt;;
+        (undef,undef,undef,$num,undef) = split(' ',$_);
+        $Bytes += $num;
+       }
+   close (LOGFILE);
+   $FF_all += $FF;
+   $Total_all += $Total;
+   $Records_all += $Records;
+   $Errors_all += $Errors;
+   $Messages_all += $Messages;
+   $Bytes_all += $Bytes;
+   
+   $FF = convert($FF);
+   $Total = convert($Total);
+   $Records = convert($Records);
+   $Errors = convert($Errors);
+   $Messages = convert($Messages);
+   $Bytes = convert($Bytes);
+   
+   write OUTFILE;
+   }
+close(OUTFILE);
+   
+   $FF_all = convert($FF_all);
+   $Total_all = convert($Total_all);
+   $Records_all = convert($Records_all);
+   $Errors_all = convert($Errors_all);
+   $Messages_all = convert($Messages_all);
+   $Bytes_all = convert($Bytes_all);
+
+open (ENDFILE,"&gt;&gt;$ReportFile");
+format ENDFILE =
+ ------------------------------------------------------------------------------
+
+Total:
+ ------------------------------------------------------------------------------
+@&lt;@||@&lt;@||||||@&lt;@&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;@&lt;@&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;@&lt;@&gt;&gt;&gt;&gt;&gt;@&lt;@&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;@&lt;@&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;@&lt;
+$c,$i,$c,$FF_all,$c,$Total_all,$c,$Messages_all,$c,$Errors_all,$c,$Records_all,$c,$Bytes_all,$c
+ ------------------------------------------------------------------------------
+.
+write ENDFILE;
+close (ENDFILE);
+
+#####################################################################
+# Script /insight/local/scripts/cron_bkup.ksh                                                   
+#####################################################################
+#!/usr/bin/ksh
+#Save cron jobs for everybody 
+
+cd /insight/local/crontabs 
+cp -p /var/spool/cron/crontabs/* .
+
+
+#####################################################################
+# Script /sitemgr/b3_arch/run_autoarchive.ksh                                                   
+#####################################################################
+#####################################################################
+# Script /insight/local/b3_arch/run_autoarchive.ksh                                                   
+#####################################################################
+#!/bin/ksh
+#####################################################################
+#Archive B3 data from Production instance to archive instance       #
+#Purge will done manually after the verification                    #                   #
+#####################################################################
+
+umask 0000
+
+INFORMIXSERVER="ardb"
+INFORMIXDIR="/usr/apps/inf/ver115UC3"
+GL_DATETIME="%iY/%m/%d %H:%M:%S"
+PATH=$INFORMIXDIR/bin:$PATH
+
+export INFORMIXDIR INFORMIXSERVER PATH GL_DATETIME 
+
+local_dir=/insight/local/b3_arch
+log_dir=/dmqjtmp/archiveB3Log
+week_no=`date +%w`
+year_no=`date +%Y`
+month_no=`date +%m`
+day_no=`date +%d`
+
+logfile=${log_dir}/${year_no}${month_no}${day_no}archive.log
+aixsupport="lchen@livingstonintl.com"
+
+cd $local_dir
+
+echo "\nStarts monthly archive and (no purge) program on `date`"
+echo "-----------------------------------------------------------------"
+
+
+#Start archive and Purge job
+su - informix -c ${local_dir}/autoArchive.ksh &gt;&gt; $logfile
+
+echo "End of archive and (no purge) program - `date`"
+echo "======================================================================"
+
+echo "Please Stop the Cron Job and Verify the ARCHIVE!!!"| \
+       mail -s "Monthly B3 Archive Done @ `date`." $aixsupport
+
+
+#!/bin/ksh
+##################################################################################
+#
+# purpose: run update statistics medium
+#
+##################################################################################
+export INFORMIXDIR=/usr/apps/inf/ver115UC3
+export INFORMIXSERVER=ipdb
+export PATH=$INFORMIXDIR/bin:$PATH
+
+SQLDIR=/usr/apps/inf/bob/upstat
+
+echo 
+date
+
+time dbaccess &lt; $SQLDIR/tbls_med.sql &gt; $SQLDIR/tbls_med.out 2&gt;&amp;1
+time dbaccess &lt; $SQLDIR/tbls_high.sql &gt; $SQLDIR/tbls_high.out 2&gt;&amp;1
+time dbaccess &lt; $SQLDIR/proc.sql &gt; $SQLDIR/proc.out 2&gt;&amp;1
+
+exit 0
+
+database ip_0p@ipdb ;
+
+-- update for b3 table;
+update statistics high for table b3(b3iid) ;
+update statistics high for table b3(transno) ;
+update statistics high for table b3(reldate) ;
+update statistics high for table b3(approveddate) ;
+update statistics high for table b3(createdate) ;
+update statistics high for table b3(cargcntrlno) ;
+update statistics high for table b3(custoff) ;
+update statistics high for table b3(usportexit) ;
+update statistics high for table b3(carriercode) ;
+update statistics high for table b3(modetransp) ;
+update statistics high for table b3(status) ;
+
+update statistics high for table b3(liibrchno) ;
+update statistics low for table b3(liibrchno,liirefno) ;
+update statistics high for table b3(liiclientno) ;
+update statistics low for table b3(liiclientno,liiaccountno) ;
+
+-- update for status_history table;
+update statistics high for table status_history(b3iid) ;
+update statistics low for table status_history(b3iid,status) ;
+
+-- Update for b3_subheader table;
+update statistics high for table b3_subheader(b3subiid) ;
+update statistics high for table b3_subheader(b3iid) ;
+
+-- Update for b3_line table;
+update statistics high for table b3_line(b3lineiid) ;
+update statistics high for table b3_line(b3subiid) ;
+update statistics high for table b3_line(hsno) ;
+
+-- Update for b3_recap_details table;
+update statistics high for table b3_recap_details(b3recapiid) ;
+update statistics high for table b3_recap_details(b3lineiid) ;
+update statistics high for table b3_recap_details(proddesc) ;
+update statistics high for table b3_recap_details(detailponumber) ;
+
+-- Update for tariff table;
+update statistics high for table tariff(liiclientno) ;
+update statistics high for table tariff(createdate) ;
+update statistics high for table tariff(tariffcode) ;
+update statistics high for table tariff(lastuseddate) ;
+update statistics high for table tariff(tarifftrtmnt) ;
+update statistics high for table tariff(hsno) ;
+update statistics high for table tariff(remarks) ;
+update statistics high for table tariff(moddate) ;
+update statistics high for table tariff(b3description) ;
+update statistics high for table tariff(productkeyword) ;
+
+update statistics low for table tariff(liiclientno,createdate) ;
+update statistics low for table tariff(liiclientno,lastuseddate) ;
+update statistics low for table tariff(liiclientno,moddate) ;
+update statistics low for table tariff(liiclientno,tarifftrtmnt) ;
+update statistics low for table tariff(liiclientno,vendorname,productkeyword,productsufx) ;
+
+
+-- Update for client_invoice table;
+update statistics high for table client_invoice(liiclientno);
+update statistics low for table client_invoice(liiclientno,liiaccountno,liibrchno,liirefno,liireftext);
+update statistics high for table client_invoice(itemtypecode);
+update statistics high for table client_invoice(balance);
+update statistics high for table client_invoice(itemstatus);
+update statistics high for table client_invoice(itemdate);
+update statistics high for table client_invoice(totduty);
+update statistics high for table client_invoice(liiaccountno);
+update statistics high for table client_invoice(liirefno);
+update statistics high for table client_invoice(liibrchno);
+
+-- Update for claim_log table;
+update statistics high for table claim_log(claimlogiid);
+update statistics high for table claim_log(b3acctsecurno);
+update statistics low for table claim_log(b3acctsecurno,b3transno,b3transseqno);
+update statistics high for table claim_log(b2brchno);
+update statistics low for table claim_log(b2brchno,b2refno);
+update statistics high for table claim_log(claimstatus);
+update statistics high for table claim_log(claimcode);
+update statistics high for table claim_log(claimvendorname);
+update statistics high for table claim_log(b3transno);
+update statistics high for table claim_log(claimrefno);
+
+-- Update for as_accounted table;
+update statistics high for table as_accounted(asacctiid);
+update statistics high for table as_accounted(claimlogiid);
+update statistics low for table as_accounted(claimlogiid,b2subhdrno,b3lineno,b2lineno);
+update statistics high for table as_accounted(b3lineno);
+update statistics high for table as_accounted(b2lineno);
+update statistics high for table as_accounted(hsno);
+
+-- Update for as_claimed table;
+update statistics high for table as_claimed(asclaimediid);
+update statistics high for table as_claimed(claimlogiid);
+update statistics high for table as_claimed(b3lineno);
+update statistics high for table as_claimed(b2lineno);
+update statistics high for table as_claimed(hsno);
+update statistics low for table as_claimed(claimlogiid,b2subhdrno,b3lineno,b2lineno);
+
+-- Update for carrier table;
+update statistics high for table carrier(carriercode);
+
+
+-- Update for hs_uom table;
+update statistics high for table hs_uom(hsno);
+update statistics low for table hs_uom(hsno,effdate);
+
+
+-- Update for hs_duty_rate table;
+update statistics high for table hs_duty_rate(hsno);
+update statistics low for table hs_duty_rate(hsno,hstarifftrtmnt,effdate);
+
+
+-- Update for user_locus_xref table;
+update statistics high for table user_locus_xref(userlocusxrefiid);
+
+
+-- Update for tariff_code table;
+update statistics high for table tariff_code(tariffcode);
+update statistics low for table tariff_code(tariffcode,effdate,hstarifftrtmnt);
+
+
+-- Update for lii_client table;
+update statistics high for table lii_client(liiclientno);
+
+
+-- Update for securuser table;
+update statistics high for table securuser(useriid);
+update statistics high for table securuser(username);
+
+
+-- Update for lii_account table;
+update statistics high for table lii_account(liiclientno);
+update statistics low for table lii_account(liiclientno,liiaccountno);
+
+
+-- Update for account_contact table;
+update statistics high for table account_contact(liiclientno);
+update statistics low for table account_contact(liiclientno,liiaccountno);
+
+close database ;
+
+</span></div></body>
+</html>
