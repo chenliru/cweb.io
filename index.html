@@ -36,13 +36,13 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="home">
     <header class="blog-header py-3">
         <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="./cweb.svg" width="100" height="60"
-                         class="d-inline-block align-content-center" alt="Bootstrap" loading="lazy"
+                <a class="navbar-brand" href="./index.html#home">
+                    <img src="js/cweb.svg" width="100" height="60"
+                         class="d-inline-block align-content-center" alt="Bootstrap"
                          style="filter: brightness(200%);">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -52,19 +52,20 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item active">
-                            <a class="nav-link" aria-current="page" href="#">Home</a>
+                            <a class="nav-link" aria-current="page" href="./index.html#home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
+                            <a class="nav-link" href="./index.html#about">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">My Skills</a>
+                            <a class="nav-link" href="#">My Skills & Knowledge</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">My Projects</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle disabled" href="#" id="navbarLanguageDropdown" role="button"
+                            <a class="nav-link dropdown-toggle disabled" href="#" id="navbarLanguageDropdown"
+                               role="button"
                                data-bs-toggle="dropdown" aria-expanded="false" tabindex="-1" aria-disabled="true">
                                 Find More</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -92,12 +93,12 @@
 </div>
 
 <main class="container">
-    <hr class="my-5" id="about" >
+    <hr class="my-5" id="about">
     <section class="p-4 p-md-5 mb-4 text-white rounded bg-info bg-image"
              style="background-image: url('./resume2/img/bg/01.jpg')">
         <h1 class="display-4 font-italic">About Me</h1>
-        <p class="lead text-success fw-bold text-decoration-underline my-3">Experienced IT professional, Master of engineering,
-             <em>Tsinghua University </em>
+        <p class="lead text-warning fw-bold my-3">Experienced IT professional, Master of
+            engineering,<em>Tsinghua University </em>
         </p>
         <ul class="bg-secondary rounded">
             <li>20+ years DBA/Systems Administration experience, with an emphasis on comprehensive
@@ -107,64 +108,73 @@
             </li>
             <li>Excellent global perspective based on working experience in global top IT companies,
                 including SUN Microsystem (Guangzhou, China), Siemens Communication Ltd (Shanghai, China),
-                Livingston International (Toronto, Canada).
+                Livingston International (Toronto, Canada), yet work excellent independently
             </li>
             <li>Flexible and focus, with unique analytical problem-solving ability.
                 Good communication and teamwork, Self-motivated and professional. Exceptional competence in:
                 ITIL, ISO9000 standards, staff Training and Development.
             </li>
             <li>Outstanding Staff Award in SUN and Siemens.</li>
+            <li>Strong documentation skills. Enthusiasm for learning, collaboration and mentorship</li>
             <li>Poet and Music enthusiast.</li>
         </ul>
-        <p class="lead mb-0"><a href="#" class="text-white fw-bold">Resume</a></p>
+        <p class="lead mb-0"><a href="#" class="text-info fw-bold">Resume</a></p>
     </section>
 
     <section class="row mb-2">
         <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">World</strong>
+                    <strong class="d-inline-block mb-2 text-primary">Object Detect & Trace</strong>
                     <h3 class="mb-0">Featured post</h3>
                     <div class="mb-1 text-muted">Nov 12</div>
                     <p class="card-text mb-auto">
-                        This is a wider card with supporting text below as a natural lead-in to
-                        additional content.
+                        Django Web-based frame AI projects, utilize dedicated object detectors including HOG +
+                        Linear SVM, Faster R-CNN, SSDs, YOLO, etc. technical skills:  HTTP/CSS/Javascript/Python
                     </p>
                     <a href="#">Continue reading</a>
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="bd-placeholder-img align-middle" width="200" height="300"
+                         xmlns="http://www.w3.org/2000/svg"
                          role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                          focusable="false"><title>Placeholder</title>
                         <rect width="100%" height="100%" fill="#55595c"/>
-                        <foreignObject width="100%" height="100%">
+                        <foreignObject width="100%" height="100%" Y="60">
                             <iframe width="100%" height="100%"
-                                    src="https://www.youtube.com/embed/fX26oNfE8BQ">
-                            </iframe>
+                                    src="https://www.youtube.com/embed/fX26oNfE8BQ"></iframe>
                         </foreignObject>
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Blob</text>
                     </svg>
-
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-300 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
                     <strong class="d-inline-block mb-2 text-success">Design</strong>
                     <h3 class="mb-0">Post title</h3>
                     <div class="mb-1 text-muted">Nov 11</div>
                     <p class="mb-auto">
-                        This is a wider card with supporting text below as a natural lead-in to
-                        additional content.
+                        HTML, CSS, and Javascript(JQuery&Node.js)
                     </p>
-                    <a href="#" class="stretched-link">Continue reading</a>
+                    <div class="col p-4 d-flex justify-content-between">
+                        <a href="js/audio" target="_blank">Audio</a>
+                        <a href="js/video" target="_blank">Video</a>
+                        <a href="js/blob" target="_blank">Blob</a>
+                        <a href="js/calculator" target="_blank">Calculator</a>
+                        <a href="./point" target="_blank">Point</a>
+                        <!--                <a href="#" class="stretched-link">Continue reading</a>-->
+                    </div>
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="bd-placeholder-img" width="200" height="300" xmlns="http://www.w3.org/2000/svg"
                          role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                          focusable="false"><title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c"/>
+                        <foreignObject width="100%" height="100%">
+                            <iframe width="100%" height="100%" Y="60"
+                                    src="https://chenliru.github.io/cweb.io/greedySnake"></iframe>
+                        </foreignObject>
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                     </svg>
                 </div>
@@ -177,45 +187,236 @@
     <section class="row" data-masonry='{"percentPosition": true }'>
         <div class="col-sm-6 col-lg-4 mb-4">
             <div class="card">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="200"
+                <svg class="bg-primary bd-placeholder-img card-img-top" width="100%" height="200"
                      xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
                      preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#868e96"/>
-                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    <image href="./doc/img/AIXLinux.jpg" height="100%" width="100%"/>
                 </svg>
 
                 <div class="card-body">
                     <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
+                    <p class="card-text">
+                        work on one of the world's largest marketplace, dealing with one billion events per day and
+                        contribute as part of R&D self-organized team working in a challenging, innovative environment
+                        for our client. Investigate, create, and implement the solutions for existing technical
+                        challenges,
+                        including building/enhancing the Security related functionality.
+
+                        Support: Provides ongoing administration and support of a large UNIX ( AIX/Solaris and Red Hat
+                        Linux ) systems.
+                        Works with remote support team, vendors, end users, Customer Service Representatives and other
+                        technical staff to resolve Unix/Linux/Storage hardware/software issues. Able to support larger
+                        Unix environments for 50+ Servers. Must be available on-call and for after-hours maintenance
+                        changes from time to time and act as a point of escalation for technical problems encountered at
+                        this site..
+                    <ul>
+                        <li>Unix ( Aix and Red Hat) Support</li>
+                        <li>Conduct activities in such areas as server builds, operating system upgrades, capacity
+                            planning, performance tuning, resource optimization, and monitoring
+                        </li>
+                        <li>Perform administrative tasks related to Unix server installations and decommissioning</li>
+                        <li>Manage high availability clustering environment</li>
+                        <li>Performance monitoring (OS, CPU, Memory, Network and Disk)</li>
+                        <li>Detect, diagnose, report, and resolve Unix/Linux Server related hardware and OS problems.
+                        </li>
+                        <li>Ensure all Unix/Linux operating systems are patched to the latest appropriate releases.</li>
+                        <li>Ensure backups and data restore tasks are being completed.</li>
+                        <li>Disk management and configuration using OS specific Logical Volume Management tools</li>
+                        <li>Ensure server security compliance conforming to customer security requirements.</li>
+                        <li>Coordinate and/or perform tasks in change management windows</li>
+                        <li>Attend weekly meetings as required</li>
+                        <li>Respond to incident tickets towards maintaining service levels as per the established
+                            Service Level Agreements.
+                        </li>
+                        <li>Work closely with various support groups including Database, Backup, Storage, Application,
+                            Security in order to provide fast problem resolution and to improve client experience.
+                        </li>
+                        <li>Very good knowledge of Unix file-systems, Veritas Volume management, patch management,
+                            trouble-shooting, storage management, performance management.
+                        </li>
+                        <li>Very good knowledge of system tools such as Veritas Volume Manager, Tivoli Storage
+                            management, ESM etc
+                        </li>
+                        <li>Participate in the Customer Out-of-hours (OOH) support process to deal with Customer defined
+                            high priority incidents occurring outside of normal business hours.
+                        </li>
+                        <li>Update and maintain the allocated Incident / Problem / Change control tickets in line with
+                            the Customer processes and procedures.
+                        </li>
+                        <li>Maintain an awareness of dependencies off all infrastructure.</li>
+                        <li>Create, maintain, and update infrastructure documentation.</li>
+                        <li>Ensure all Work Carried out is in accordance with the Customer and SUPPLIER H&S, Security,
+                            Privacy, and code of conduct regulations (in the case of Customer regulations, provided in
+                            writing to Supplier and as amended from time to time)
+                        </li>
+                        <li>Qualifications</li>
+                        <li>Demonstrating an understanding with respect to:
+                        <li>AIX, Power 7 ( HMC and VIOS systems ) and or Redhat Linux ver 6,7</li>
+                        <li>Solaris 9,10 Global Zones and Containers</li>
+                        <li>Samba</li>
+                        <li>Oracle databases exposure</li>
+                        <li>High Availability and Clustering Experience</li>
+                        <li>Server Virtualization</li>
+                        <li>Veritas Volume Manager</li>
+                        <li>Shell and Perl Scripting</li>
+                        <li>
+                        <li>Nice to have the knowledge of</li>
+                        <li>Enterprise Storage Systems</li>
+                        <li>Symantec NetBackup, TSM, Legato</li>
+                    </ul>
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-lg-4 mb-4">
             <div class="card p-3">
+                <h5 class="card-title text-center">Python + Web Developer</h5>
                 <figure class="p-3 mb-0">
                     <blockquote class="blockquote">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        <p>Better solutions are achieved via collaboration rather than independently .</p>
                     </blockquote>
-                    <figcaption class="blockquote-footer mb-0 text-muted">
-                        Someone famous in <cite title="Source Title">Source Title</cite>
+                    <figcaption class="blockquote-footer mb-0 text-muted">Core competencies Continually improve by
+                        investing time in learning about new technologies and methods of rapidly building viable
+                        features
+                        <cite title="Source Title">Liru Chen</cite>
+
                     </figcaption>
                 </figure>
+                <ul>
+                    <li>Experience building SaaS applications using Python and frameworks such as Django, Flask
+                        etc.
+                    </li>
+                    <li>Experience building RESTful and GraphQL APIs</li>
+                    <li>Experience building and supporting SaaS applications with Amazon AWS services like AppSync,
+                        Amplify, DynamoDB, ElasticSearch, Lambda, API Gateway, Step Functions etc.
+                    </li>
+                    <li>Experience building SaaS applications using domain-driven, event-driven and microservices
+                        architectures
+                    </li>
+                    <li>Experience working with SRE engineers on application logging, monitoring, alerting and
+                        security
+                    </li>
+                    <li>Self-starter and collaborate with other teams (inside and outside of development)</li>
+                    <li>Enthusiasm for learning, collaboration and mentorship</li>
+                    <li>Good to have experience building Mobile applications including support for offline mode</li>
+                    <li>Prior remote work experience</li>
+                    <li>University degree in Computer Related Sciences or similar</li>
+                    <li>Strong OOP and Design patters knowledge</li>
+                    <li>5+ years of software development experience</li>
+                    <li>4+ years of experience in Python backend development</li>
+                    <li>Strong understanding of Python tooling</li>
+                    <li>2+ years in projects with large-scale or highly loaded systems</li>
+                    <li>Proficient in Linux package management and resolving native library dependencies</li>
+                    <li>Proficient in AWS infrastructure and configuration management</li>
+                    <li>Proficiency with Docker containers and Dockerfiles</li>
+                    <li>1+ years of either:</li>
+                    <li>frontend development in an MVC environment</li>
+                    <li>JavaScript experience</li>
+                    <li>Basic understanding of queues</li>
+                    <li>Rigor in high code quality, unit testing, and other engineering best practices</li>
+                    <li>Strong communication, collaboration and interpersonal skills
+                    <li>Good English (oral & written)
+                    <li>Assisting users with Python setup and configuration, getting access to data sources within
+                        the organization, and responding to their questions
+                    <li>Performing analysis projects on behalf of the users
+                    <li>Understand data requirements of the requestor
+                    <li>Interact with the requestor to handle any changes and updates to the request
+                    <li>Do required analysis of the data set as required
+                    <li>Work with the team on data projects to provide timely solutions
+                    <li>Create and Visualize reports/analysis and share it with the stakeholders
+                    <li>
+                    <li>As a Web Developer on the Experimentation team, you'll work closely with Engineers,
+                        Designers, and Analysts to optimize our conversion funnel and explore ways to accelerate how
+                        Thinkific users find value. You'll spend your time deploying small to medium tests within
+                        the current architectures of our marketing website and onboarding funnel, and also have an
+                        open mind for testing and adopting new growth patterns. We have a highly engaged company
+                        that cares deeply about customers, and we do that by asking the right questions of the data
+                        to inform how best to serve them.
+                    <li>In this role, you will:
+                    <li>Write code: sometimes in pairs, sometimes individually, but always remembering the minimum
+                        viable product required to validate a hypothesis
+                    <li>Work closely with other Experimentation Engineers, Designers, and Analysts to spec
+                        experiments
+                    <li>Do what needs to be done. You'll spend most of the time building experiments on our
+                        website—but you'll sometimes flex your other skills in order to deliver insights and
+                        results, which can range from writing copy to synthesizing cohort data to implementing 3P
+                        apps
+                    <li>Share the results of experiments at various meetings, presentations, and Town Halls
+                    <li>Triage and fix bugs as they arise
+                    <li>Perform code reviews for your fellow Engineers, in addition to taking responsibility for
+                        leading the QA process for your own code
+                    <li>Collaborate across other departments to support development requirements
+                    <li>To be successful in this role, you must:
+                    <li>Have 3+ years of experience in a front-end role, or demonstrate a strong grasp of
+                        experimentation and front end development
+                    <li>Have 1+ year(s) of experience actively working on developing growth or product experiments
+                    <li>Possess demonstrable knowledge of HTML, CSS, and Javascript</li>
+                    <li>Demonstrate strong knowledge of Wordpress and Wordpress theme development</li>
+                    <li>Understand Git and GitHub and source control concepts</li>
+                    <li>Have excellent verbal and written communication skills, including the comfort to say no when
+                        asked to work on something that has less impact on objectives
+                    </li>
+                    <li>Show the desire to work in a collaborative team-based environment</li>
+                    <li>You might be the person we're
+
+                </ul>
+
             </div>
         </div>
         <div class="col-sm-6 col-lg-4 mb-4">
             <div class="card">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="200"
+                <svg class="bd-placeholder-img card-img-top rounded" width="100%" height="200"
                      xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
                      preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
                     <rect width="100%" height="100%" fill="#868e96"/>
-                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    <image href="./doc/img/oracle.jpg" height="100%" width="100%"/>
+
                 </svg>
 
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                        content.</p>
+                    <h5 class="card-title">skill</h5>
+                    <ul>
+                        <li>Oracle Application Weblogic Server 11g/12c</li>
+                        <li>Oracle Identity 10g/11g/12c</li>
+                        <li>Oracle Access Manager 12c</li>
+                        <li>Oracle Forms</li>
+                        <li>Oracle Reports</li>
+                        <li>Oracle Database 11g/12c/18c/19c is a must</li>
+                        <li>J2EE Programs</li>
+                        <li>Knowledge of RAC is welcome</li>
+                        <li>Knowledge of DataGuard is welcome.</li>
+                        <li>Some in-depth knowledge of design and analysis methodology and application development
+                            processes from both a Business (Project Management/Accounting) and IT perspective
+                        </li>
+                        <li>Solid understanding of Software Development Lifecycle (SDLC) and Quality Assurance (QA)
+                            requirements
+                        </li>
+                    </ul>
+                    <p class="card-text">support all non-production and production database activities in order to
+                        deliver on commitments with the ministry. The resource will be involved to upgrade
+                        non-production database, performance optimization, integrity and security of applications
+                        databases.
+                        The successful candidate will work with various technology teams to coordinate deliverable,
+                        including planning, execution, troubleshooting, deployments and support. The FFS will also
+                        provide services under the direction of the Technical Lead, Project Manager & Manage.</p>
+                    <ul>
+                        <li>Command mode commands which cause action to be taken on the file, and</li>
+                        <li>Providing Oracle database support to project teams</li>
+                        <li>Provide ongoing support to all non-production and production databases environments</li>
+                        <li>Refreshing the non-production databases from production data</li>
+                        <li>Tune all Oracle instance components including SQL and PL/SQL</li>
+                        <li>Provide data migration and data extract support</li>
+                        <li>Control access permissions and privileges</li>
+                        <li>Maintain data standards, including adherence to the Data Protection Act</li>
+                        <li>Test and enable new database features and customize in order to make them fit for purpose
+                        </li>
+                        <li>Install, configure and test Oracle Enterprise Manager (OEM) grid agent</li>
+                        <li>Provide performance tuning and optimization of Oracle databases</li>
+                        <li>Provide database documentation, including data standards, procedures and definitions</li>
+                        <li>Monitor and ensure CPU, Memory, I/O, Storage are functioning as expected</li>
+                        <li>Collaborate with Project Manager, IT Leads, DBAs, project teams and vendors</li>
+                        <li>Support deployments and releases activities</li>
+                    </ul>
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
             </div>
@@ -247,7 +448,8 @@
                      role="img" aria-label="Placeholder: Card image" preserveAspectRatio="xMidYMid slice"
                      focusable="false"><title>Placeholder</title>
                     <rect width="100%" height="100%" fill="#868e96"/>
-                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Card image</text>
+                    <image href="./doc/img/AIXsysbkup.jpg" height="100%" width="100%"/>
+                    <text class="text-danger" x="50%" y="50%" fill="#dee2e6" dy="6em">System Level Backup</text>
                 </svg>
 
             </div>
@@ -288,7 +490,8 @@
                 <p><strong>Oracle Configure and Maintenance</strong> is intended for Oracle Database customers and those
                     responsible for data center site planning, configuration, and maintenance of Oracle
                     Database Application.
-                    <a href="./doc/sysadmin/Financial%20Oracle%20APP%20on%20AWS%20Configuration%20and%20Maintenace%20.pdf">Read More</a>.
+                    <a href="./doc/sysadmin/Financial%20Oracle%20APP%20on%20AWS%20Configuration%20and%20Maintenace%20.pdf">Read
+                        More</a>.
                 </p>
                 <h2 class="blog-post-title">Implement Content Manager on Linux Server</h2>
                 <p class="blog-post-meta">January 1, 2014 by <a href="#about">Liru Chen</a></p>
@@ -301,15 +504,19 @@
                     storage system. Set up pClient environment. The Client for Windows enables the agents to query,
                     view, and update data stored on the DB2 Content Manager system from their own workstation desktops.
                     Because it is a dedicated client, the Client for Windows has rich functionality and responds
-                    rapidly. The Client for Windows requires cataloging the library server<em><strong>DB2 database</strong></em>
+                    rapidly. The Client for Windows requires cataloging the library server<em><strong>DB2
+                        database</strong></em>
                     on the client workstation.<em><strong>The DB2® Run-Time Client</strong></em> is required to catalog
                     the database on the client workstation.
-                    <a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf#toolbar=0">Read More</a>
+                    <a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf#toolbar=0"
+                       target="_blank">Read
+                        More</a>
                 </p>
                 <hr>
                 <blockquote>
                     <h2>Oracle Stream</h2>
-                    <p><strong>The purpose</strong> of <a href="./doc/sysadmin/Oracle%20Streams.pdf">this document</a>
+                    <p><strong>The purpose</strong> of <a href="./doc/sysadmin/Oracle%20Streams.pdf" target="_blank">this
+                        document</a>
                         is to provide high level technical description and
                         best practices for setting up a reporting database utilizing Oracle Streams (Downstream Capture)
                         that will facilitate data replication for the KEC/Alliance applications. This can be used to
@@ -320,7 +527,7 @@
                 <p><strong>NIM Server</strong> provides OS/software needed by clients, through network;
                     Sample steps using NIM Server to install OS on a standalone client, same thing if you use NIM Server
                     to install software to Client, and/or backup client data using mksysb/savevg to NIM Server.
-                    <a href="./doc/sysadmin/NIM.pdf">Read More</a>.
+                    <a href="./doc/sysadmin/NIM.pdf" target="_blank">Read More</a>.
                 </p>
                 <hr>
                 <p><strong>What is vi?</strong> The default editor that comes with the UNIX operating system is called
@@ -334,23 +541,23 @@
                 edited; a character typed in the command mode may even cause the vi editor to enter the insert mode.
                 In the insert mode, every <a href="#"> Read More</a>
                 <h3>Unix Shell Scripts</h3>
-                <p>Please feel free to download and use scripts for your daily maintenance. <a href="#">Download</a></p>
-                <code>
-                    <div class="accordion-item">
-                        <h4 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Sample Shell Script
-                            </button>
-                        </h4>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                             data-bs-parent="#accordionExample">
-                            <div class="accordion-body"><code>
-                                <iframe src="./doc/scripts/table_dbload.ksh.html" width="100%"></iframe>
-                            </code></div>
-                        </div>
+                <p>Please feel free to download and use scripts for your daily maintenance. <a href="projects.html"
+                                                                                               target="_blank">Find
+                    More</a></p>
+                <div class="accordion-item">
+                    <h4 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Sample Shell Script
+                        </button>
+                    </h4>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                         data-bs-parent="#accordionExample">
+                        <code>
+                            <iframe src="bsh/shlib.html" width="100%"></iframe>
+                        </code>
                     </div>
-                </code>
+                </div>
                 <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce
                     dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
                 <h3>Install IBM DB2 Content Manager V8</h3>
@@ -383,36 +590,50 @@
             <div class="p-4">
                 <h4 class="font-italic">Archives</h4>
                 <ol class="list-unstyled mb-0">
-                    <li><a href="./doc/sysadmin/AIX%20Server%20and%20Informix%20DB%20Disaster%20Recovery.pdf">AIX Server
+                    <li><a href="./doc/sysadmin/AIX%20Server%20and%20Informix%20DB%20Disaster%20Recovery.pdf"
+                           target="_blank">AIX Server
                         and Informix DB DR <small><em>March 2014</em></small></a></li>
-                    <li><a href="./doc/sysadmin/DB2%20Database%20server%20and%20daily%20maintenance.pdf">DB2 Maintenance
+                    <li><a href="./doc/sysadmin/DB2%20Database%20server%20and%20daily%20maintenance.pdf"
+                           target="_blank">DB2 Maintenance
                         2014</a></li>
-                    <li><a href="./doc/sysadmin/DB2-FIX-Pack-installation-on-Power7-and-Power7-systems.html">DB2 Pack
+                    <li><a href="./doc/sysadmin/DB2-FIX-Pack-installation-on-Power7-and-Power7-systems.html"
+                           target="_blank">DB2 Pack
                         FIX 2014</a></li>
-                    <li><a href="./doc/sysadmin/DBMS-Naming-Standards.html">DBMS Naming Standards 2013</a></li>
-                    <li><a href="./doc/sysadmin/HACMP%20Resource%20Group%20Add%20disk%20space.pdf">IBM PowerHA Resource
+                    <li><a href="./doc/sysadmin/DBMS-Naming-Standards.html">DBMS Naming Standards 2013
+                        target="_blank"</a></li>
+                    <li><a href="./doc/sysadmin/HACMP%20Resource%20Group%20Add%20disk%20space.pdf" target="_blank">IBM
+                        PowerHA Resource
                         Group Add Disk from DS4K 2013</a></li>
-                    <li><a href="./doc/sysadmin/HMC%20Web-based%20System%20Manager.pdf">Web-based HMC system manager
+                    <li><a href="./doc/sysadmin/HMC%20Web-based%20System%20Manager.pdf" target="_blank">Web-based HMC
+                        system manager
                         2013</a></li>
-                    <li><a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf">Content Manager
+                    <li><a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf"
+                           target="_blank">Content Manager
                         Implement and Maintenance 2013</a></li>
-                    <li><a href="./doc/sysadmin/IBM%20DS4K%20SAN%20Storage%20and%20Storage%20Manger.pdf">SAN Storage
+                    <li><a href="./doc/sysadmin/IBM%20DS4K%20SAN%20Storage%20and%20Storage%20Manger.pdf"
+                           target="_blank">SAN Storage
                         Management(IBM D4K) 2013</a></li>
-                    <li><a href="./doc/sysadmin/IBM%20Highly%20Available%20Cluster%20Multiprocessing%20for%20AIX.pdf">HACMP
+                    <li><a href="./doc/sysadmin/IBM%20Highly%20Available%20Cluster%20Multiprocessing%20for%20AIX.pdf"
+                           target="_blank">HACMP
                         on AIX 2013</a></li>
-                    <li><a href="./doc/sysadmin/IBM%20TSM%20and%20TotalStorage%20Ultrium%20Tape%20Library.pdf">TSM
+                    <li><a href="./doc/sysadmin/IBM%20TSM%20and%20TotalStorage%20Ultrium%20Tape%20Library.pdf"
+                           target="_blank">TSM
                         Storage System Concept and Implementation 2013</a></li>
                     <li><a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf">Content Manager
                         on Linux 2013</a></li>
                     <li>
-                        <a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20WAS%20Network%20Deployment%20on%20Linux%20Server.pdf">IBM
+                        <a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20WAS%20Network%20Deployment%20on%20Linux%20Server.pdf"
+                           target="_blank">IBM
                             WebSphere Application Server Implement 2013</a></li>
-                    <li><a href="./doc/sysadmin/Informix%20DB%20Daily%20Maintenance.pdf">Informix DB daily maintenance
+                    <li><a href="./doc/sysadmin/Informix%20DB%20Daily%20Maintenance.pdf" target="_blank">Informix DB
+                        daily maintenance
                         2013</a></li>
-                    <li><a href="./doc/sysadmin/Insight-System-Administration-Manual.html">Insight System Administration
+                    <li><a href="./doc/sysadmin/Insight-System-Administration-Manual.html" target="_blank">Insight
+                        System Administration
                         2013</a></li>
-                    <li><a href="./doc/sysadmin/NIM.pdf">NIM 2013</a></li>
-                    <li><a href="./doc/sysadmin/xwin%20on%20laptop%20as%20root%20via%20ssh%20protocol.pdf">xwin on
+                    <li><a href="./doc/sysadmin/NIM.pdf" target="_blank">NIM 2013</a></li>
+                    <li><a href="./doc/sysadmin/xwin%20on%20laptop%20as%20root%20via%20ssh%20protocol.pdf"
+                           target="_blank">xwin on
                         laptop as root 2013</a></li>
                 </ol>
             </div>
@@ -554,7 +775,7 @@
 <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
         integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
         crossorigin="anonymous"></script>
-<script src="./cweb.js"></script>
+<script src="js/cweb.js"></script>
 
 </body>
 </html>

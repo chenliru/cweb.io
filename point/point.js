@@ -1,4 +1,4 @@
-import {$, Point} from "../cweb.js"
+import {$, Point} from "../js/cweb.js"
 
 const pointCanvas = document.getElementById('point-canvas')
 const point = new Point(pointCanvas)

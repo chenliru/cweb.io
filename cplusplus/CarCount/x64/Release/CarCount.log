@@ -1,0 +1,7 @@
+﻿  Blob.cpp
+  main.cpp
+  Generating code
+  Compiler version has changed, fall back to full compilation.
+  All 364 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  CarCount.vcxproj -> C:\Users\chenliru\GitHub\cppimg\x64\Release\CarCount.exe

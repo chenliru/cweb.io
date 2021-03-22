@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <title>Bouncing balls</title>
+    <link rel="stylesheet" href="../cweb.css">
+    <link href="../../bootstrap-examples/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<h1 style="text-align: center">bouncing balls</h1>
+<div class="image-source">
+    <img id="soccer-gate" src="https://en.js.cx/clipart/soccer-gate.svg" crossorigin="anonymous" alt="">
+    <img id="ball" src="https://en.js.cx/clipart/ball.svg" crossorigin="anonymous" alt="">
+</div>
+<div class="display-canvas">
+    <canvas id="blob-canvas" class="draw-canvas" width="600" height="600" style="background: url(Liquid-Cheese.svg)"></canvas>
+    <canvas id="trace-canvas" class="draw-canvas" width="600" height="600"></canvas>
+    <div class="gui-canvas">
+        <div class="mb-3">
+            <input class="form-control form-control-lg" type="number" id="ball-number" placeholder="ball number"
+                   value="20" aria-label=".form-control-lg example">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="tracing-ball">
+            <label class="form-check-label" for="tracing-ball">Tracing ball(s)</label>
+        </div>
+        <div class="mb-3 form-check">
+            <label class="form-check-label" for="gravity">Gravity</label>
+            <input type="checkbox" class="form-check-input" id="gravity">
+        </div>
+        <div id="mouse"></div>
+    </div>
+</div>
+
+<script type="module" src="blob.js"></script>
+<script src="../../bootstrap-examples/assets/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

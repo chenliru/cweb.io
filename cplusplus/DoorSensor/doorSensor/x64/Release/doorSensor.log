@@ -1,0 +1,137 @@
+﻿  doorimg.cpp
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(101,2): warning C4091: '__declspec(dllimport)': ignored on left of 'Monitor' when no variable is declared
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.hpp(8,1): warning C4005: 'DLL_API': macro redefinition
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(23): message : see previous definition of 'DLL_API'
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(11,1): warning C4273: 'Monitor::setMonitor': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(97,14): message : see previous definition of 'setMonitor'
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(36,23): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(40,26): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(44,25): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(48,25): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(52,24): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(56,21): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(60,21): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(64,20): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(68,19): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(72,16): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(76,16): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(80,21): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(84,21): warning C4244: '=': conversion from '_Ty' to 'unsigned int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(92,19): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(96,27): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(104,1): warning C4273: 'Monitor::setThreadhold': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(98,14): message : see previous definition of 'setThreadhold'
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(129,30): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(133,30): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(137,29): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(153,33): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(157,33): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(161,35): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(165,29): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(169,34): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(182,1): warning C4273: 'Monitor::setStatus': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(99,14): message : see previous definition of 'setStatus'
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(232,1): warning C4273: 'Monitor::setFile': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(100,14): message : see previous definition of 'setFile'
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(270,1): warning C4273: 'imgProcess': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(106,14): message : see previous definition of 'imgProcess'
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(283,1): warning C4273: 'coordinateLine': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(108,14): message : see previous definition of 'coordinateLine'
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(375,1): warning C4273: 'monitorCentral': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(104,14): message : see previous definition of 'monitorCentral'
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.cpp(439,1): warning C4273: 'monitorFront': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\DoorSensor\doorSensor\doorimg.hpp(110,14): message : see previous definition of 'monitorFront'
+     Creating library C:\Users\chenliru\GitHub\cppimg\x64\Release\doorSensor.lib and object C:\Users\chenliru\GitHub\cppimg\x64\Release\doorSensor.exp
+LINK : fatal error LNK1561: entry point must be defined

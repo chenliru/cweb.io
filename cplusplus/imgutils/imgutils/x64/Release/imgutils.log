@@ -1,0 +1,12 @@
+﻿  blob.cpp
+  imgutils.cpp
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.cpp(45,60): warning C4273: 'movingDirection': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.hpp(16,14): message : see previous definition of 'movingDirection'
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.cpp(358,1): warning C4273: 'doorEdgeCorner': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.hpp(19,14): message : see previous definition of 'doorEdgeCorner'
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.cpp(397,1): warning C4273: 'doorRotate': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.hpp(18,14): message : see previous definition of 'doorRotate'
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.cpp(408,1): warning C4273: 'img3Diff': inconsistent dll linkage
+C:\Users\chenliru\GitHUb\cppimg\imgutils\imgutils\imgutils.hpp(17,14): message : see previous definition of 'img3Diff'
+     Creating library C:\Users\chenliru\GitHub\cppimg\x64\Release\imgutils.lib and object C:\Users\chenliru\GitHub\cppimg\x64\Release\imgutils.exp
+LINK : fatal error LNK1561: entry point must be defined

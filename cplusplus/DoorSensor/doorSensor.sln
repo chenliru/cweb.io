@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "doorSensor", "doorSensor\doorSensor.vcxproj", "{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgutils", "..\imgutils\imgutils\imgutils.vcxproj", "{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}.Debug|x64.ActiveCfg = Debug|x64
+		{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}.Debug|x64.Build.0 = Debug|x64
+		{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}.Debug|x86.ActiveCfg = Debug|Win32
+		{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}.Debug|x86.Build.0 = Debug|Win32
+		{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}.Release|x64.ActiveCfg = Release|x64
+		{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}.Release|x64.Build.0 = Release|x64
+		{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}.Release|x86.ActiveCfg = Release|Win32
+		{BC05E723-3D18-4F7F-8B8C-CF8322D7CB67}.Release|x86.Build.0 = Release|Win32
+		{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}.Debug|x64.ActiveCfg = Debug|x64
+		{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}.Debug|x64.Build.0 = Debug|x64
+		{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}.Debug|x86.ActiveCfg = Debug|Win32
+		{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}.Debug|x86.Build.0 = Debug|Win32
+		{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}.Release|x64.ActiveCfg = Release|x64
+		{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}.Release|x64.Build.0 = Release|x64
+		{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}.Release|x86.ActiveCfg = Release|Win32
+		{C4716AFD-8ACB-4630-B5AF-CF908BE1C65A}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E762E05-E074-4E0C-9388-298020D93D88}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,36 @@
+﻿  BeautyPhoto.cpp
+C:\Users\chenliru\GitHub\cppimg\BeautyPhoto\BeautyPhoto.cpp(70,37): warning C4244: '=': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+C:\Users\chenliru\GitHub\cppimg\BeautyPhoto\BeautyPhoto.cpp(71,37): warning C4244: '=': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+C:\Users\chenliru\GitHub\cppimg\BeautyPhoto\BeautyPhoto.cpp(72,37): warning C4244: '=': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+C:\Users\chenliru\GitHub\cppimg\BeautyPhoto\BeautyPhoto.cpp(100,89): warning C4244: '=': conversion from 'int' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+C:\Users\chenliru\GitHub\cppimg\BeautyPhoto\BeautyPhoto.cpp(101,89): warning C4244: '=': conversion from 'int' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+C:\Users\chenliru\GitHub\cppimg\BeautyPhoto\BeautyPhoto.cpp(102,89): warning C4244: '=': conversion from 'int' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+  Generating code
+  Compiler version has changed, fall back to full compilation.
+  All 139 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  BeautyPhoto.vcxproj -> C:\Users\chenliru\GitHub\cppimg\x64\Release\BeautyPhoto.exe
