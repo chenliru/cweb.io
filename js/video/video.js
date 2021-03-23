@@ -1,12 +1,23 @@
+/*
+ You are free to use and modify this code in anyway you find useful. Please leave this comment in the code
+ to acknowledge its original source. If you feel like it, I enjoy hearing about projects that use my code,
+ but don't feel like you have to let me know or ask permission.
+
+ author: chenliru@yahoo.com
+
+*/
+
 import {$} from "../cweb.js";
 
 let audioInputMenu;
 let audioOutputMenu;
 let videoMenu;
+let screenButton;
 
 audioInputMenu = document.querySelector('#audioInputSourceMenu');
 audioOutputMenu = document.querySelector('#audioOutputSourceMenu');
 videoMenu = document.querySelector('#videoSourceMenu');
+screenButton = document.querySelector('#screenInputSourceButton');
 
 let video;
 video = document.querySelector('#video');
@@ -67,7 +78,7 @@ class VideoCapture {
             let j = 0;
             let k = 0;
 
-            devices.forEach(function (device) {
+            devices.forEach(device => {
                 // console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
                 const li = document.createElement("li");
                 const a = document.createElement("a");
@@ -153,6 +164,28 @@ class VideoCapture {
         } catch (e) {
             console.error('navigator.getUserMedia error:', e);
         }  // always check for errors at the end.
+
+        screenButton.addEventListener("click", async (e) => {
+            let displayMediaOptions = {
+                video: true,
+                audio: {
+                    echoCancellation: true,  // fix echo issues
+                }
+            };
+            if (window.stream) {
+                window.stream.getTracks().forEach(track => {
+                    track.stop();
+                });
+            }
+            try {
+                stream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+                window.stream = stream;
+                _this.mediaStream(stream);    // get user media successfully
+            } catch (e) {
+                console.error('navigator.getDisplayMedia error:', e);
+            }
+
+        })
     }
 
     // media stream process here
