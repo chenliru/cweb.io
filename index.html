@@ -58,10 +58,10 @@
                             <a class="nav-link" href="./index.html#about">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">My Skills & Knowledge</a>
+                            <a class="nav-link" href="#mySkill">My Skills & Knowledge</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">My Projects</a>
+                            <a class="nav-link" href="#myBlog">My Blogs</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle disabled" href="#" id="navbarLanguageDropdown"
@@ -114,7 +114,7 @@
             <li>Strong documentation skills. Enthusiasm for learning, collaboration and mentorship</li>
             <li>Poet and Music enthusiast.</li>
         </ul>
-        <p class="lead mb-0"><a href="#" class="text-info fw-bold">Resume</a></p>
+        <p class="lead mb-0"><a href="./doc/sysadmin/Liru%20Chen.pdf" target="_blank" class="text-info fw-bold">Resume</a></p>
     </section>
 
     <section class="row mb-2">
@@ -125,8 +125,8 @@
                     <h3 class="mb-0">Object Detect & Trace</h3>
                     <div class="mb-1 text-muted">Nov 12</div>
                     <p class="card-text mb-auto">
-                        Django Web-based frame AI projects, utilize dedicated object detectors including HOG +
-                        Linear SVM, Faster R-CNN, SSDs, YOLO, etc. technical skills: HTTP/CSS/Javascript/Python
+                        Django Web-based frame AI projects, utilize dedicated object detectors algorithm including HOG +
+                        Linear SVM, Faster R-CNN, SSDs, YOLO, Tensorflow etc.
                     </p>
                     <a href="#">Continue reading</a>
                 </div>
@@ -152,13 +152,13 @@
                     <h3 class="mb-0">Everything on Cloud</h3>
                     <div class="mb-1 text-muted">Nov 11</div>
                     <p class="mb-auto">
-                        HTML, CSS, and Javascript(JQuery&Node.js)
+                        HTML, CSS, and Javascript(JQuery&Node.js), show some awesome tools/games...
                     </p>
                     <div class="col p-4 d-flex justify-content-between">
-                        <a href="js/audio" target="_blank">Audio</a>
                         <a href="js/video" target="_blank">Video</a>
                         <a href="js/blob" target="_blank">Blob</a>
-                        <a href="js/calculator" target="_blank">Calculator</a>
+                        <a href="js/greedySnake" target="_blank">Snake</a>
+                        <a href="js/bezierCurve" target="_blank">Curve</a>
                         <a href="js/point" target="_blank">Point</a>
                         <!--                <a href="#" class="stretched-link">Continue reading</a>-->
                     </div>
@@ -170,7 +170,6 @@
                         <foreignObject width="100%" height="100%">
                             <video width="100%" height="100%" controls autoplay loop muted preload="auto">
                                 <source src="./doc/video/ball.webm" type="video/webm">
-                                <p>Your browser doesn't support HTML5 video.</p>
                             </video>
                         </foreignObject>
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
@@ -180,7 +179,7 @@
         </div>
     </section>
 
-    <hr class="my-5">
+    <hr class="my-5" id="mySkill">
 
     <section class="row" data-masonry='{"percentPosition": true }'>
         <div class="col-sm-6 col-lg-4 mb-4">
@@ -188,7 +187,10 @@
                 <svg class="bg-primary bd-placeholder-img card-img-top" width="100%" height="200"
                      xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
                      preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                    <image href="./doc/img/aix_linux.jpg" height="100%" width="100%"/>
+                    <a href="doc/sysadmin/AIX%20Systems%20Architecture%20and%20Partitioning%20All-In-One%20V1.1.pdf"
+                       target="_blank">
+                        <image href="./doc/img/aix_linux.jpg" height="100%" width="100%"/>
+                    </a>
                 </svg>
 
                 <div class="card-body">
@@ -202,30 +204,33 @@
                             trouble-shooting, resource-optimization, backup and disaster recovery, integrity and
                             security of applications
                         </li>
-                        <li>PowerHA, DR process, backups and data restore tasks</li>
+                        <li>Ensure server security compliance conforming to customer security requirements.</li>
+                        <li>PowerVM virtualization technology, including logical partitions (LPARs) and dynamic resource
+                            allocation, virtualized processors, and virtual switch, virtual SCSI adapters, virtual Fibre
+                            Channel adapters, and virtual consoles HMC
+                        </li>
+                        <li>PowerHA, DR process, backups and data restore tasks. IBM DS4k SAN Storage,
+                            Brocade fibril switch, TotalStorage Ultrium Tape Library, TSM, Legato
+                        </li>
+                        <li>Shell, Python, Javascript and Perl Scripting</li>
                         <li>Good documentation including creating, maintaining, and updating infrastructure
                             documentation. Detecting, diagnosing, and resolving Unix/Linux Server related hardware and
                             OS problems documentation.
                         </li>
-                        <li>Ensure server security compliance conforming to customer security requirements.</li>
-                        <li>HMC, Virtual IO, Server Virtualization</li>
-                        <li>Shell and Perl Scripting</li>
-                        <li>IBM DS4k SAN Storage, Brocade fibril switch, TotalStorage Ultrium Tape Library, TSM,
-                            Legato
-                        </li>
+
                     </ul>
                     </p>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-lg-4 mb-4">
-            <div class="card p-3">
+            <div class="card p-4">
                 <h5 class="card-title text-center">Software Development</h5>
-                <figure class="p-3 mb-0">
+                <figure class="p-5">
                     <blockquote class="blockquote">
-                        <p>Better solutions are achieved via collaboration rather than independently .</p>
+                        <p>A creative mindset, apply innovative design to software</p>
                     </blockquote>
-                    <figcaption class="blockquote-footer mb-0 text-muted">my github account
+                    <figcaption class="blockquote-footer mb-0 text-muted text-end">my github account
                         <cite title="Source Title"> Liru Chen </cite>
                     </figcaption>
                 </figure>
@@ -262,12 +267,11 @@
                         support hundreds of non-production and production database.</p>
                     <h5 class="card-title">skill</h5>
                     <ul>
-                        <li>Install, configure and test Oracle Database 11g/12c, WebLogic, Oracle Enterprise
+                        <li>Install, configure and maintenance Oracle Database, WebLogic, Oracle Enterprise
                             Manager&agent
                         </li>
-                        <li>Provide performance tuning and optimization of Oracle databases</li>
-                        <li>Tune all Oracle instance components including SQL and PL/SQL.
-                            Monitor and ensure CPU, Memory, I/O, Storage are functioning as expected
+                        <li>Performance tuning and optimization of Oracle databases, including SQL and PL/SQL. Monitor
+                            and ensure CPU, Memory, I/O, Storage are functioning as expected
                         </li>
                         <li>High Availability RMAN/RAC/DataGuard</li>
                         <li>Control access permissions and privileges</li>
@@ -283,19 +287,32 @@
             <div class="card bg-primary text-white text-center p-3">
                 <figure class="mb-0">
                     <blockquote class="blockquote">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
+                        <p>Better solutions are achieved via collaboration rather than independently.</p>
                     </blockquote>
                     <figcaption class="blockquote-footer mb-0 text-white">
-                        Someone famous in <cite title="Source Title">Source Title</cite>
+                        Team work, Team work! <cite title="Source Title">Liru Chen</cite>
                     </figcaption>
                 </figure>
             </div>
         </div>
         <div class="col-sm-6 col-lg-4 mb-4">
-            <div class="card text-center">
+            <div class="card bg-light">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has a regular title and short paragraph of text below it.</p>
+                    <h5 class="card-title"><a href="doc/sysadmin/IBM%20CM%20System%20Administration%20Manual.pdf"
+                    target="_blank">Implement IBM DB2 & Content Manager</a></h5>
+                    <ul>
+                        <li>library server(a DB2 database application as stored procedures)</li>
+                        <li>and one or many resource managers, responsible for storing the content (images/files),
+                            implemented as a web application, running in IBM WebSphere Application Server.
+                        </li>
+                        <li>OnDemand processes the print output of application programs, extracts index fields from
+                            the data, stores the index information in a relational database, and stores one or more
+                            copies of the data in the system
+                        </li>
+                        <li>The eClient, a Web application that enables users to search for and
+                            retrieve documents from content servers
+                        </li>
+                    </ul>
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
             </div>
@@ -313,13 +330,22 @@
             </div>
         </div>
         <div class="col-sm-6 col-lg-4 mb-4">
-            <div class="card p-3 text-end">
+            <div class="card p-3">
                 <figure class="mb-0">
                     <blockquote class="blockquote">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        <p class="small">Django is a very "high-level" (handles many things for you) and fully-featured
+                            web frame-work aimed at allowing you to achieve rapid development while also preparing you
+                            from the start to create websites that will scale in time, both in terms of speed and code
+                            bloat as well.</p>
+                        <ul class="small">
+                            <li>Databases</li>
+                            <li>Users</li>
+                            <li>Dynamic Pages</li>
+                            <li>Content Management, Blog, Poll</li>
+                        </ul>
                     </blockquote>
                     <figcaption class="blockquote-footer mb-0 text-muted">
-                        Someone famous in <cite title="Source Title">Source Title</cite>
+                        Building Application on <cite title="Source Title">Cloud</cite>
                     </figcaption>
                 </figure>
             </div>
@@ -327,16 +353,18 @@
         <div class="col-sm-6 col-lg-4 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is another card with title and supporting text below. This card has some
-                        additional content to make it slightly taller overall.</p>
+                    <h5 class="card-title"><a href="doc/sysadmin/GTM%20AWS%20Service.pdf" target="_blank"> Migrate Data Center upon AWS</a></h5>
+                    <p class="card-text">GTM Service System Database services use Amazon Relational Database Service (Amazon RDS),
+                            which is a web service that makes it easier to set up, operate, and scale a relational
+                            database in the cloud. It provides cost-efficient, resizable capacity for an
+                            industry-standard relational database and manages common database administration tasks. .</p>
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <hr class="my-5">
+    <hr class="my-5" id="myBlog">
 
     <section class="row">
         <div class="col-md-8">
@@ -416,25 +444,27 @@
                         </code>
                     </div>
                 </div>
-                <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce
-                    dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-                <h3>Install IBM DB2 Content Manager V8</h3>
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia
-                    bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus,
-                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet
-                    risus.</p>
+                <h3>OpenCV-Python</h3>
+                <p>Python is a general purpose programming language started by Guido van Rossum, which became very
+                    popular in short time mainly because of its simplicity and code readability. It enables the
+                    programmer to express his ideas in fewer lines of code without reducing any readability..</p>
                 <ul>
-                    <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-                    <li>Donec id elit non mi porta gravida at eget metus.</li>
-                    <li>Nulla vitae elit libero, a pharetra augue.</li>
+                    <li>Installing.</li>
+                    <li>Learning.</li>
                 </ul>
-                <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
+                <p>OpenCV was started at Intel in 1999 by Gary Bradsky and the first release came out in 2000.
+                    Vadim Pisarevsky joined Gary Bradsky to manage Intel’s Russian software OpenCV team. In 2005,
+                    OpenCV was used on Stanley, the vehicle who won 2005 DARPA Grand Challenge. Later its active
+                    development continued under the support of Willow Garage, with Gary Bradsky and Vadim
+                    Pisarevsky leading the project. Right now, OpenCV supports a lot of algorithms related to
+                    Computer Vision and Machine Learning and it is expanding day-by-day..</p>
                 <ol>
-                    <li>Vestibulum id ligula porta felis euismod semper.</li>
-                    <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-                    <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+                    <li>Basic Operations on Images.</li>
+                    <li>Arithmetic Operations on Images.</li>
+                    <li>Performance Measurement and Improvement Techniques.</li>
                 </ol>
-                <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
+                <p> <a href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_tutorials.html#">
+                    and more</a></p>
             </article><!-- /.blog-post -->
 
             <nav class="blog-pagination" aria-label="Pagination">
@@ -449,19 +479,22 @@
                 <h4 class="font-italic">Archives</h4>
                 <ol class="list-unstyled mb-0">
                     <li><a href="./doc/sysadmin/Administering%20Redo%20Logs%20in%20Oracle%20RAC.pdf"
-                           target="_blank">Administration Redo Logs in Oracle RAC<small><em> March 2011</em></small></a></li>
+                           target="_blank">Administration Redo Logs in Oracle RAC<small><em> March 2011</em></small></a>
+                    </li>
                     <li><a href="./doc/sysadmin/AIX%20Server%20and%20Informix%20DB%20Disaster%20Recovery.pdf"
                            target="_blank">AIX Server and Informix DB DR<small><em> March 2012</em></small></a></li>
                     <li><a href="./doc/sysadmin/DB2%20Database%20server%20and%20daily%20maintenance.pdf"
                            target="_blank">DB2 Database Server daily maintenance <small><em> 2014</em></small></a></li>
                     <li><a href="./doc/sysadmin/DB2-FIX-Pack-installation-on-Power7-and-Power7-systems.html"
-                           target="_blank">DB2 Fix Pack Installation on Power7 system <small><em> March 2016</em></small></a></li>
+                           target="_blank">DB2 Fix Pack Installation on Power7 system <small><em> March
+                        2016</em></small></a></li>
                     <li><a href="./doc/sysadmin/Duplication%20DB%20with%20RAM.pdf"
                            target="_blank">Duplicate DB2 with RMAN (Oracle) <small><em> April 2012</em></small></a></li>
                     <li><a href="./doc/sysadmin/DBMS-Naming-Standards.html"
                            target="_blank">DBMS Naming Standards 2013</a></li>
-                    <li><a href="./doc/sysadmin/Financial%20Oracle%20APP%20on%20AWS%20Configuration%20and%20Maintenace%20.pdf"
-                           target="_blank">Oracle on AWS configuration and Maintenance  2013</a></li>
+                    <li>
+                        <a href="./doc/sysadmin/Financial%20Oracle%20APP%20on%20AWS%20Configuration%20and%20Maintenace%20.pdf"
+                           target="_blank">Oracle on AWS configuration and Maintenance 2013</a></li>
                     <li><a href="./doc/sysadmin/HACMP%20Resource%20Group%20Add%20disk%20space.pdf"
                            target="_blank">IBM PowerHA Resource Group Add Disk from DS4K 2013</a></li>
                     <li><a href="./doc/sysadmin/HMC%20Web-based%20System%20Manager.pdf"
@@ -469,7 +502,7 @@
                     <li><a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf"
                            target="_blank">Content Manager Implement and Maintenance 2013</a></li>
                     <li><a href="./doc/sysadmin/IBM%20CM%20System%20Administration%20Manual.pdf"
-                           target="_blank">IBM Content Manager Administration Manuel  2013</a></li>
+                           target="_blank">IBM Content Manager Administration Manuel 2013</a></li>
                     <li><a href="./doc/sysadmin/IBM%20DS4K%20SAN%20Storage%20and%20Storage%20Manger.pdf"
                            target="_blank">SAN Storage Management(IBM D4K) 2013</a></li>
                     <li><a href="./doc/sysadmin/IBM%20Highly%20Available%20Cluster%20Multiprocessing%20for%20AIX.pdf"
@@ -478,7 +511,8 @@
                            target="_blank">TSM Storage System Concept and Implementation 2013</a></li>
                     <li><a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20Linux%20Server.pdf"
                            target="_blank">IBM Content Manager on Linux 2013</a></li>
-                    <li><a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20WAS%20Network%20Deployment%20on%20Linux%20Server.pdf"
+                    <li>
+                        <a href="./doc/sysadmin/Implement%20Content%20Manager%20on%20WAS%20Network%20Deployment%20on%20Linux%20Server.pdf"
                            target="_blank">IBM WebSphere Application Server Implement 2013</a></li>
                     <li><a href="./doc/sysadmin/Informix%20DB%20Daily%20Maintenance.pdf"
                            target="_blank">Informix Database daily maintenance 2013</a></li>
@@ -510,19 +544,22 @@
                            target="_blank">Oracle Security Standard</a></li>
                     <li><a href="./doc/sysadmin/Oracle%20Streams.pdf"
                            target="_blank">Oracle Stream</a></li>
-                    <li><a href="./doc/sysadmin/RMAN%20usage%20and%20Control%20files%20Recovery%20from%20datafiles%20and%20log%20files.pdf"
+                    <li>
+                        <a href="./doc/sysadmin/RMAN%20usage%20and%20Control%20files%20Recovery%20from%20datafiles%20and%20log%20files.pdf"
                            target="_blank">RMAN Usage, Control files Recovery from datafiles and logs</a></li>
                     <li><a href="./doc/sysadmin/Setup-informix-database-on-Redhat-Linux-5_1.html"
                            target="_blank">Informix Setup Process</a></li>
-                    <li><a href="./doc/sysadmin/Setup%20Oracle%20Management%20Center(%20Weblogic%20+%20Enterprise%20Manager).pdf"
+                    <li>
+                        <a href="./doc/sysadmin/Setup%20Oracle%20Management%20Center(%20Weblogic%20+%20Enterprise%20Manager).pdf"
                            target="_blank">Weblogic + Enterprise Manager</a></li>
                     <li><a href="./doc/sysadmin/Setup%20Oracle%20on%20AWS.pdf"
                            target="_blank">Setup Oracle on AWS</a></li>
-                    <li><a href="./doc/sysadmin/Step%20by%20Step%20installing%20Oracle%2011g%20RAC%20on%20VMware%20workstation%2011.pdf"
+                    <li>
+                        <a href="./doc/sysadmin/Step%20by%20Step%20installing%20Oracle%2011g%20RAC%20on%20VMware%20workstation%2011.pdf"
                            target="_blank">Step by Step installing Oracle RAC on VMWare workstation</a></li>
                     <li><a href="./doc/sysadmin/Upgrade%20eClient.pdf"
                            target="_blank">Upgrade eClient</a></li>
-                     <li><a href="./doc/sysadmin/What%20is%20Unix%20vi.pdf"
+                    <li><a href="./doc/sysadmin/What%20is%20Unix%20vi.pdf"
                            target="_blank">What is Unix vi</a></li>
                     <li><a href="./doc/sysadmin/"
                            target="_blank"></a></li>
@@ -658,7 +695,7 @@
 
 <footer class="blog-footer">
     <p>Blog template built from <a href="https://getbootstrap.com/">Bootstrap</a></p>
-    <p><a href="#">Back to top</a></p>
+    <p><a href="#home">Back to top</a></p>
 </footer>
 
 <script src="./bootstrap-examples/assets/dist/js/bootstrap.bundle.min.js"></script>
