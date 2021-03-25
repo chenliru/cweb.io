@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nmon>
+
+<nmon_date date="2016/11/13" days="2"></nmon_date>
+
+<nmon_app app="lms">
+
+    <nmon_os os="aix">
+      <nmon_host host="cm07">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lms/cm07/nmon/</path>
+      </nmon_host>
+      <nmon_host host="admsrv1">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lms/admsrv1/nmon/</path>
+      </nmon_host>
+      <nmon_host host="admsrv2">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lms/admsrv2/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+</nmon_app>
+
+<nmon_app app="insight">
+
+    <nmon_os os="aix">
+      <nmon_host host="ipdev">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/insight/ipdev/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ifx01">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/insight/ifx01/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+</nmon_app>
+
+<nmon_app app="ipro">
+
+    <nmon_os os="aix">
+      <nmon_host host="ecm01">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm01/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm02">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm02/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm03">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm03/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm04">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm04/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm05">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm05/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm06">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm06/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm07">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm07/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm08">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm08/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm09">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm09/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm10">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm10/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ecm11">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/isis/ecm11/nmon/</path>
+      </nmon_host>
+
+    </nmon_os>
+
+</nmon_app>
+
+<nmon_app app="lois">
+
+    <nmon_os os="aix">
+      <nmon_host host="wes01">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/wes01/nmon/</path>
+      </nmon_host>
+      <nmon_host host="wes02">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/wes02/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ihs01">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/ihs01/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ihs02">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/ihs02/nmon/</path>
+      </nmon_host>
+      <nmon_host host="was01">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/was01/nmon/</path>
+      </nmon_host>
+      <nmon_host host="was02">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/was02/nmon/</path>
+      </nmon_host>
+      <nmon_host host="icm01">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/icm01/nmon/</path>
+      </nmon_host>
+      <nmon_host host="icm02">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/icm02/nmon/</path>
+      </nmon_host>
+      <nmon_host host="tsm01">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/tsm01/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ipm02">
+        <user>lchen</user>
+        <passwd>admini@12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lois/ipm02/nmon/</path>
+      </nmon_host>
+
+    </nmon_os>
+
+</nmon_app>
+
+<nmon_app app="kec">
+
+    <nmon_os os="aix">
+      <nmon_host host="kc1prapal01">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/kewill/kc1prapal01/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+    <nmon_os os="linux">
+      <nmon_host host="kc1prdb01">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/var/log/nmon/</path>
+      </nmon_host>
+      <nmon_host host="kc1prapkc01">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/var/log/nmon/</path>
+      </nmon_host>
+      <nmon_host host="kc1prapkc02">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/var/log/nmon/</path>
+      </nmon_host>
+      <nmon_host host="kc2prapkc01">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/var/log/nmon/</path>
+      </nmon_host>
+      <nmon_host host="kc2prapkc02">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/var/log/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+</nmon_app>
+
+</nmon>

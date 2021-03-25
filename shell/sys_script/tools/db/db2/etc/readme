@@ -1,0 +1,6 @@
+1. how to run db2 sql from a file;
+   db2 -s -tvf my.sql     
+
+:  -s means stop at first error;
+
+

@@ -1,0 +1,77 @@
+#!/bin/ksh93
+###########################################################################
+#  Script modified from AWS Project for B3 purge by branch# and date
+#
+#  Author : Liru Chen
+#  Date: 2017-08-22
+###########################################################################
+#set -v
+#set -x
+
+if [[ $# -lt 2 ]]
+then
+	echo $"Usage: $0 Branch_Number YYYYMM [YYYYMM] ..."
+	exit 1
+fi
+
+DATETIME=$(date +%Y%m%d%H%M)
+y=$(date "+%Y")
+m=$(date "+%m")
+
+BASE=/archbkup
+BIN=$BASE/bin
+TMP=$BASE/tmp
+ETC=$BASE/etc
+LOG=$BASE/log
+
+TABLE_KEY=${TMP}/TK
+PATH=$BASE/bin:$PATH
+export BASE PATH TABLE_KEY
+
+brno=$1
+rootwhere="(b3.liibrchno=BRCH AND b3.approveddate like 'APPROVEDMONTH')"
+
+#Mail address
+amail="lchen@livingstonintl.com"
+pmail="EKotsalainen@livingstonintl.com MStruys@livingstonintl.com lchen@livingstonintl.com"
+
+first=1
+	
+#Based on business requirement, (branch number and purged months)
+#Build WHERE Statement, as globle variable ${where_select_statement}
+until [[ -z "$2" ]]
+do
+	ym=$2
+	
+	purgeyear=${ym:0:4}
+	purgmonth=${ym:4:2}
+	
+	days=$(datecalc.ksh -a $y $m 1 - ${purgeyear} ${purgmonth} 1)
+	((oneyear=30*12))
+	(( ${days} < ${oneyear} )) && exit 1
+	
+	approvedmonth=${purgeyear}\\/${purgmonth}\\/%
+	
+	wherenext=$(echo ${rootwhere}|sed "s/BRCH/${brno}/")
+	wherenext=$(echo ${wherenext}|sed "s/APPROVEDMONTH/${approvedmonth}/")
+	
+	if [[ $first -eq 1 ]] 	#handling approveddate more than one month
+	then
+		whereclause="${wherenext}"
+		first=0
+	else
+		whereclause="${whereclause} OR ${wherenext}"
+	fi	
+
+	shift
+
+done
+
+rootclause="WHERE (${whereclause})"
+
+echo ${rootclause} > ${TMP}/TK
+cat ${ETC}/table_key.org >> ${TMP}/TK
+
+cascade.ksh
+
+exit 0

@@ -1,0 +1,40 @@
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\put\script1.sh lchen@ibmserver:/home/lchen/script1.sh
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\sush\sush lchen@ibmserver:/tmp/sush
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\sush\sushunix\sush.ksh lchen@ibmserver:/tmp/sush.ksh
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\sush\sushunix\myTab.run lchen@ibmserver:/tmp/myTab.run
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver:/tmp/ls.out20170228162846 C:\auto_powershell\sysadm\log\ls.out20170228162846
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver:/tmp/crontab.out20170228162846 C:\auto_powershell\sysadm\log\crontab.out20170228162846
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver:/tmp/script1.sh.out20170228162846 c:\auto_powershell\sysadm\log\script1.sh.out20170228162846
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver:/tmp/large_file_report.sh.out20170228162846 c:\auto_powershell\sysadm\log\large_file_report.sh.out20170228162846
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver:/tmp/sush.out c:\auto_powershell\sysadm\log\sush.out
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver:/home/lchen/script1.sh c:\auto_powershell\sysadm\del\script1.sh
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\put\script2.sh db2inst1@ibmserver:/tmp/script2.sh
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\put\in2 db2inst1@ibmserver:/tmp/in2
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\sush\sush db2inst1@ibmserver:/tmp/sush
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\sush\sushunix\sush.ksh db2inst1@ibmserver:/tmp/sush.ksh
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no c:\auto_powershell\sysadm\sush\sushunix\myTab.run db2inst1@ibmserver:/tmp/myTab.run
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver:/tmp/script2.sh.out20170228162846 c:\auto_powershell\sysadm\log\script2.sh.out20170228162846
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver:/tmp/sush.out c:\auto_powershell\sysadm\log\sush.out
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver:/home/db2inst1/ICMSERVER.LOG c:\auto_powershell\sysadm\get\ICMSERVER.LOG
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver:/tmp/script2.sh c:\auto_powershell\sysadm\del\script2.sh
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver:/tmp/in2 c:\auto_powershell\sysadm\del\in2
+Exit Code: 0

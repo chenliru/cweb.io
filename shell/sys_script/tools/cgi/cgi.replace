@@ -1,0 +1,92 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         cgi.replace
+#
+# Reference:    n/a
+#
+# Description:  This script is used to change all the files under directory $DIR, 
+#               which contain String $origin to String $target
+#
+# Command:   cgi.replace <dir_name or file_name> <origin_string> <target_string> 
+#
+#            Approache:  change "lchen/download" to "lchen/Tools/DB/informix/download"
+#                      in all files under directory "137970"
+#            $ cd 137970
+#            $ for i in `ls *`
+#               do sed "s/lchen\/download/lchen\/Tools\/DB\/informix\/download/g" $i > tempFile
+#               mv tempFile $i
+#              done
+#
+# Modification History:
+#
+#               Date            Name            Description   
+#               ------------------------------------------------------------------
+#               2013-03-15      Liru Chen       
+#               2013-09-20      Liru Chen       MOdified for CGI migration project
+#
+####################################################################################
+set -v
+set -x
+
+if [[ $# -lt 3 ]]; then
+    echo " USAGE: cgi.replace <'DIR_Name' or 'FILE_name'> <'originString'> <'targetString'>"
+    exit 2
+fi
+
+name=$1
+origin=$2
+target=$3
+
+[[ -d /tmp/string_replace_bkup ]] || mkdir -p /tmp/string_replace_bkup
+BKUPDIR=/tmp/string_replace_bkup
+
+if [[ -d $name ]]; then
+ #Get a list of the name pattern matched files
+ filename=`find $name -ls |awk '{print $11}'`  
+
+ #Get number of filess in the string "filename"
+ set $filename   
+ integer scount=$#
+
+ #Display all content of files 
+ integer icount=0
+
+ while (( $icount < $scount ))
+ do
+   file $1 | egrep "shell|commands|text"
+   [[ $? -ne 0 ]] && {
+      shift 1
+      icount=icount+1
+      continue
+      }
+
+   grep $origin $1 
+   [[ $? -ne 0 ]] && { 
+      shift 1
+      icount=icount+1
+      continue
+      }
+
+   echo $1
+   cp $1 $BKUPDIR
+   slashorigin=$(echo $origin | sed "s/\//\\\\\//g")
+   slashtarget=$(echo $target | sed "s/\//\\\\\//g")
+   sed "s/$slashorigin/$slashtarget/g" $BKUPDIR/`basename $1` > $1
+
+  shift 1
+  icount=icount+1
+ done
+
+else
+
+ echo $name
+ cp $name $BKUPDIR
+ slashorigin=$(echo $origin | sed "s/\//\\\\\//g")
+ slashtarget=$(echo $target | sed "s/\//\\\\\//g")
+ sed "s/$slashorigin/$slashtarget/g" $BKUPDIR/`basename $name` > $name
+
+fi
+
+exit 0
+

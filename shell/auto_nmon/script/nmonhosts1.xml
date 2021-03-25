@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nmon>
+
+<nmon_date date="2016/11/2" days="4"></nmon_date>
+
+<nmon_app app="kec">
+
+    <nmon_os os="aix">
+      <nmon_host host="kc1prapal01">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/kewill/kc1prapal01/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+    <nmon_os os="aix">
+      <nmon_host host="admsrv1">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lms/admsrv1/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+    <nmon_os os="linux">
+      <nmon_host host="kc1prdb01">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/var/log/nmon/</path>
+      </nmon_host>
+
+    </nmon_os>
+
+</nmon_app>
+
+</nmon>

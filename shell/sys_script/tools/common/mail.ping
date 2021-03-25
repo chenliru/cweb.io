@@ -1,0 +1,47 @@
+#!/bin/ksh
+###############################################################################
+#
+#  Systems alive status Monitor
+#
+#  Author :      Liru Chen   Date:April 27, 2012
+#  Copyright:    Livingston International
+#
+###############################################################################
+set -v
+set -x
+
+. ~/tools.profile
+
+# systems & hostnames 
+
+echo "Start Alive Monitor Process for Systems=$MONITORSYSTEMS" 
+ 
+# Get number of UNIX systems in the string "systems"
+
+set $MONITORSYSTEMS   
+integer systemCount=$#
+
+# Login the UNIX Systems in the listing
+
+integer xCount=0
+
+while (( $xCount < $systemCount ))
+do
+  echo "----------------------------------------------------"
+  echo " Monitor System: $1"
+  echo "----------------------------------------------------"
+  sync
+  sleep 5
+
+  ping -c 4 -v $1
+  [[ $? -eq 0 ]] || {
+     mail -s " System $1 CANNOT be connected ! " $SYSADMEMAIL < /dev/null
+    } 
+
+  shift 1
+  xCount=xCount+1
+
+done
+
+exit 0
+

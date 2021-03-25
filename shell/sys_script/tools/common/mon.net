@@ -1,0 +1,152 @@
+#!/bin/ksh
+###########################################################
+# Program : mon.net
+# Purpose : Script to use netstat to find network traffic
+#
+# Licensed Materials - Property of SIEMEMS
+#
+# Author: Liru Chen
+#  
+# COPYRIGHT SIEMEMS ENTERPRISE COMMUNICATION. 1989,1995
+# All Rights Reserved 
+#
+###########################################################
+#set -x 
+#set -v
+# netstat -I display 3 head lines on Sun, 3 on AIX and 2 on Linux
+# After head lines, display 19 data lines(one page) on Sun, 20 on AIX
+# and 8 on Linux.., so had to avoid that...
+
+PLATFORM=`uname`
+if [[ $PLATFORM = "SunOS" ]]; then
+ netstat_com="netstat -I "
+ netstat_page_ctr=18
+ netstat_param="ipk ierr opk oerr"
+ netstat_head=4
+
+ #get_interface_name
+ #get_interface_name
+ NO_OF_INT=`netstat -i | grep link | awk ' {print $1}' | wc -l`
+ set -A INT_NAME `netstat -i | grep link | awk ' {print $1}'`
+fi
+
+if [[ $PLATFORM = "AIX" ]]; then
+ netstat_com="netstat -I "
+ netstat_page_ctr=19
+ netstat_param="ipk ierr opk oerr"
+ netstat_head=4
+
+ #get_interface_name
+ NO_OF_INT=`netstat -i | grep link | awk ' {print $1}' | wc -l`
+ set -A INT_NAME `netstat -i | grep link | awk ' {print $1}'`
+fi
+
+if [[ $PLATFORM = "Linux" ]]; then
+ netstat_com="netstat -I="
+ alias echo='echo -e'
+ netstat_page_ctr=7
+ netstat_param="Iface mtusz Met ipk RXERR RXDRP RXOVR opk TXERR"
+ netstat_head=3
+
+ #get_interface_name
+ NO_OF_INT=`netstat -I | tail -n +3 | awk '{print $1}' |  wc -l`
+ set -A INT_NAME `netstat -I | tail -n +3 | awk '{print $1}' `
+fi
+
+netuse(){
+typeset intr=${1-15}
+typeset counter=${2-15}
+typeset total_ipk=0
+typeset total_opk=0
+
+if [[ $counter -le 0 ]]; then exit 0 ; fi
+if [[ $intr -le 0 ]]; then exit 0 ; fi
+
+ for each_INT_NAME in ${INT_NAME[*]}
+ {
+ typeset org_cnt=$counter
+
+ typeset each_counter=$counter
+ typeset each_total_ipk=0
+ typeset each_total_opk=0
+ typeset each_avg_ipk=0
+ typeset each_avg_opk=0
+
+ [[ $PLATFORM = "AIX" ]] && {
+ typeset mtusz=`netstat -I $each_INT_NAME | grep link | awk '{print $2}'` 
+ }
+
+ echo ""
+ echo "`uname -srvmn` `date '+%m/%d/%Y'` "
+ echo
+ echo "`date '+%H:%M:%S'`\tkB in\t\tkB out on interface $each_INT_NAME"
+
+ while [[ $each_counter -gt $netstat_page_ctr ]]
+  do
+   loop_counter=$netstat_page_ctr
+   each_counter=$(( $each_counter-$loop_counter ))
+
+   $netstat_com$each_INT_NAME $intr | tail -n +$netstat_head | {
+   while read $netstat_param
+    do
+
+    echo "`date '+%H:%M:%S'`\t$((($ipk*$mtusz/$intr)/1024))\t\t$((($opk*$mtusz/$intr)/1024))"
+    each_total_ipk=$(( ($ipk*$mtusz/$intr)/1024+$each_total_ipk ))
+    each_total_opk=$(( ($opk*$mtusz/$intr)/1024+$each_total_opk ))
+
+    loop_counter=$(( $loop_counter-1 ))
+    if [[ $loop_counter -eq 0 ]]; then
+     # Continue loop on 2nd level
+     # that's "while [ $each_counter -gt $vmstat_page_ctr ]" level
+     continue 2
+    fi
+ 
+    if [[ $each_counter -le 0 ]]; then
+    {
+      # echo Total :
+      # echo kB ipk : $total_in kB out : $total_opk
+      echo "\nAverage:\c"
+      each_avg_ipk=$(( $each_total_ipk/$org_cnt ))
+      each_avg_opk=$(( $each_total_opk/$org_cnt ))
+      echo "\t$each_avg_ipk\t\t$each_avg_opk\t\t$(( $each_avg_ipk+$each_avg_opk ))"
+      break 
+    }
+    fi
+    done
+    }
+  done
+
+  if [[ $each_counter -le $netstat_page_ctr ]]; then
+   $netstat_com$each_INT_NAME $intr | tail -n +$netstat_head | {
+   while read $netstat_param
+   do
+    echo "`date '+%H:%M:%S'`\t$((($ipk*$mtusz/$intr)/1024))\t\t$((($opk*$mtusz/$intr)/1024))"
+    each_counter=$(($each_counter-1))
+    each_total_ipk=$(( ($ipk*$mtusz/$intr)/1024+$each_total_ipk ))
+    each_total_opk=$(( ($opk*$mtusz/$intr)/1024+$each_total_opk ))
+ 
+    if [[ $each_counter -eq 0 ]]; then
+    {
+     # echo Total :
+     # echo kB in : $total_ipk kB out : $total_opk
+     echo "\nAverage:\c"
+     each_avg_ipk=$(( $each_total_ipk/$org_cnt ))
+     each_avg_opk=$(( $each_total_opk/$org_cnt ))
+     echo "\t$each_avg_ipk\t\t$each_avg_opk\t\t$(( $each_avg_ipk+$each_avg_opk ))"
+     break 
+    }
+    fi
+  
+   done
+   }
+  fi
+
+ }
+# exit 0
+return 0
+}
+###################
+# end: netuse
+###################
+
+netuse $@

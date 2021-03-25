@@ -1,0 +1,1083 @@
+date
+
+. /home/db2inst1/sqllib/db2profile
+
+db2 connect to icmnlsdb user icmadmin using cmls83
+
+db2 runstats on table ICMADMIN.BROKER with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.BROKERADM with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.BROKERADMSB with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.CARRIERCODE with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.CLIENT with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.CLIENTADM with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.EPICTBROKER with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAASSOCSERV with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FACC2MIME with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FADEFAULTVALUES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAFEDATTRIBUTE with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAFEDATTRMAP with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAFEDENTITY with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAFEDFOLDER with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAFEDFOLDERMAP with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAFEDPART with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAGROUPTEMPLATE with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAINVENTORY with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FALOG with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAMIME2APP with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FANATIVEENTITYATTR with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FANLSLANGUAGE with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FANLSWORD with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAOPTIONS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAPARAMETRICFIELD with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAPREDEFINEDVALUES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FASERVERS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FASERVERTYPES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FATEMPLATE with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FATEXTFIELD with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FATEXTINVENTORY with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FATEXTINVENTORYNLS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FATEXTMAP with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FATEXTNATIVEENT with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAUSERMAP with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.FAVALIDOPS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.GATEWAY with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.GATEWAY_PORT_MAP with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTACCESSCODES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTACCESSLISTS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTACTIONLISTCD with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTACTIONLISTS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTACTIONLISTSCM with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTACTIONS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTACTIONSCM with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTADMINDOMAINS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTALISTCDCM with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTATTRDEFS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTATTRGROUP with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCHECKEDOUT with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOLLECTIONPT with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOLLNAME with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOMPATTRS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOMPATTRSFK with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOMPDEFS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOMPILEDACL with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOMPILEDPERM with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOMPVIEWATTRS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTCOMPVIEWDEFS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTDIAGPROMPT with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTDIAGRAMS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTDOMAINACCESS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTDOMAINPRIVSET with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITEMAUTOLINK with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITEMEVENTS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITEMS001001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITEMSTODELETE with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITEMTYPEDEFS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITEMTYPEREL with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITEMVER001001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITVIEWDEFS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTITVIEWID with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRADDTLPROPS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRDELTALINKS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRDUMMY with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRGENDDL with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRGLBLPROPS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRIDS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRLINKS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRMAXSNSIDX with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRNODEDEFS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRNODELOCKS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRNODETYPES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRNSPREFIXES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRNSURIS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRPROPDEFS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRRNODETYPES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRROOT with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRSUPERTYPES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRTIMESTAMPS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRTSERRORS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRTSINDEXES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRTSPENDING with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRTSTABLES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRWS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTJCRWSNODES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTLINKS001001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTLSUPDATEHIST with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTMAXKEYWORD with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTMIMETYPES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTNLSKEYWORDS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTNLSLANGUAGES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTPRIVDEFS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTPRIVGROUPCODE with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTPRIVGROUPS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTPRIVSETCODES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTPRIVSETS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTREPLICARULES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTREPLICAS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTRESOURCEMGR with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTRI001001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTRMACCESSTYPES with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTSYSADMEVENTS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTSYSCONTROL with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTTEXTINDEXCONF with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTTIELOG with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTUSERGROUPS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTUSERS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTVIEWACCESS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTWORKFLOWEVENT with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTWORKLISTS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTXDOOBJECTS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMSTXDOOBJFACTORY with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00200001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00201001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00202001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00203001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00204001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00205001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00206001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00207001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00208001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00209001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00210001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00300001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00301001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00302001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00303001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00304001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00400001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT00600001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01000001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01001001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01002001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01003001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01004001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01005001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01006001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01023001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01024001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01195001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01196001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01199001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01200001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01201001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01202001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01203001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01204001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01205001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01206001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01232001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01233001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01234001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01235001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01238001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01239001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01240001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01241001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01242001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01243001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01258001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01259001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01260001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01261001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01262001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01263001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01266001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01267001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01270001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01271001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01277001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01278001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01279001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01280001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01281001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01282001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01283001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01284001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01285001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01286001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01311001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01312001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01313001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01314001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01315001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01316001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01317001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01318001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01319001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01320001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01321001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01322001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01323001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01324001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01325001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01326001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01327001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01328001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01329001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01330001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01331001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01332001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01335001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01336001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01344001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01345001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01346001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01347001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01381001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01382001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01383001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01384001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01385001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01386001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01387001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01388001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01389001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01390001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01391001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01392001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01393001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01394001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01395001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01396001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01397001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01398001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01399001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01400001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01401001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01402001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01403001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01404001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01405001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01406001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01407001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01408001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01409001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01410001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01411001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01412001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01413001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01414001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01415001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01480001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01481001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01514001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01515001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01528001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01529001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01530001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01591001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01592001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01595001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01596001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01599001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01600001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01603001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01604001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01607001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01608001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01615001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01616001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01625001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01626001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01629001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01630001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01639001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01640001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01643001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01644001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01647001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01648001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01651001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01652001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01655001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01656001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01663001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01664001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01669001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01670001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01679001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01680001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01695001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01696001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01697001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01698001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01699001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01700001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01701001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01702001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01703001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01704001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01705001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01706001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01707001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01708001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01720001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01721001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01722001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01723001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01724001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01725001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01726001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01727001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01728001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01729001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01730001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01745001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01746001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01828001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01829001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01936001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01937001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01948001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01949001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01956001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01957001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01958001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01964001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01965001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01968001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT01969001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02042001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02043001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02060001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02061001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02096001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02097001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02106001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02107001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02110001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02111001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02114001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02115001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02147001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02148001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02174001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02175001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02176001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02177001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02178001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02179001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02180001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02181001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02182001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02183001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02184001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02189001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02190001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02191001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02192001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02195001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02250001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02251001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02269001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02270001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02625001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02626001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02638001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02639001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02723001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02724001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02738001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02765001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02778001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02779001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02780001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02784001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02785001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02788001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02789001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02792001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02793001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02796001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02797001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02827001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02828001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02900001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02901001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02911001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02912001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02919001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02920001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT02926001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03061001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03062001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03067001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03068001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03093001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03094001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03105001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03106001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03122001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03123001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03133001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03134001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03135001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03137001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03169001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03170001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03241001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03242001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03243001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03258001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03259001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03270001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03271001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03282001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03283001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03290001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03294001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03295001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03331001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03332001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03333001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03366001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03367001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03370001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03371001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03374001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03375001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03378001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03379001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03395001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03396001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03397001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03398001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03399001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03400001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03401001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03402001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03403001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03427001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03428001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03436001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03437001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03453001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03454001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03498001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03499001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03505001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03515001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03516001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03519001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03520001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03525001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03526001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03530001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03531001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03534001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03535001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03547001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03548001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03549001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03550001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03551001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03552001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03553001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03554001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03555001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03556001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03557001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03558001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03559001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03560001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03561001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03562001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03563001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03564001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03565001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03566001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03567001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03568001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03569001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03578001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03579001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03587001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03588001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03589001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03590001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03599001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03600001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03607001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03608001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03611001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03612001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03633001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03634001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03635001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03636001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03640001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03641001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03647001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03648001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03649001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03650001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03651001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03652001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03658001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03659001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03665001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03666001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03668001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03669001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03670001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03671001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03687001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03688001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03693001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03694001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03710001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03711001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03807001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03808001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03809001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03810001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03811001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03812001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03813001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.ICMUT03814001 with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.PORTS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.TERMINALS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.UPESCP with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.UPESCPBRANCH with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.UPESCPCONTAINER with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.USPORTS with distribution and detailed indexes all
+
+db2 runstats on table ICMADMIN.XREFCLIENTBROKERADM with distribution and detailed indexes all
+
+db2 connect reset
+
+db2rbind icmnlsdb -l /admsrv/db2stats/icmnlsdb/ls_stats.log all -u icmadmin -p cmls83

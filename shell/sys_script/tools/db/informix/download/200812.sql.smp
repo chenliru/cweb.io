@@ -1,0 +1,114 @@
+CONNECT TO 'ip_arch02@ardb' USER 'lchen' USING 'admini@12';
+
+unload to /home/lchen/download/298917/200812.tmp delimiter '^'
+select
+x0.acctsecurno,
+x0.transno,
+x0.b3type,
+x0.purchaseorder1,
+x0.purchaseorder2,
+x0.vendorname,
+x0.vendorstate,
+x0.vendorzip,
+x1.description,
+x0.cargcntrlno,
+round(x0.freight , 2 ),
+x3.description,
+round(x0.weight , 2 ),
+round(x0.cargcntrlqty , 2 ),
+x0.locationofgoods,
+x4.description,
+x0.shipvia,
+x0.containerno,
+x0.billoflading,
+x2.description,
+round(x0.totb3vfd , 2 ),
+round(x0.totb3duty , 2 ),
+round(x0.totb3sima, 2 ),
+round(x0.totb3exctax , 2 ),
+round(x0.totb3gst , 2 ),
+x0.approveddate [1,10],
+x0.reldate [1,10],
+"ipgown".p_invbrchno(x0.liibrchno ) || "ipgown".p_invrefno(x0.liirefno),
+-- subheader
+x13.b3subno,
+x13.vendorname,
+x13.vendorstate,
+x13.vendorzip,
+x11.description,
+x12.description,
+x10.description,
+x13.timelim,
+x13.timelimunit,
+x13.currcode,
+x13.shipdate,
+-- line
+x20.b3lineno,
+x20.partdesc,
+x20.hsno,
+x20.tariffcode,
+x20.vfdcode,
+x20.exctaxexmptcode,
+x20.simacode,
+x20.gstexemptcode,
+x20.oicspecialaut,
+round(x20.convtoqty1 , 2 ),
+x20.advaldutyrateumeas,
+round(x20.convtoqty2, 2 ),
+x20.spcdutyrateumeas,
+round(x20.convtoqty3 , 2 ),
+x20.excdutyrateumeas,
+round(x20.exchgrate , 6 ),
+round(x20.advalrate1 , 2 ),
+round(x20.spcrate, 2 ),
+round(x20.excdutyrate , 6 ),
+round(x20.exctaxrate , 2 ),
+round(x20.gstrate, 2 ),
+round(x20.vfcc , 2 ),
+round(x20.vfd , 2 ),
+round(x20.advalduty, 2 ),
+round(x20.spcduty , 2 ),
+round(x20.excduty , 2 ),
+round(x20.exctax, 2 ),
+round(x20.simaval , 2 ),
+round(x20.vft , 2 ),
+round(x20.gst , 2 ),
+x20.linecomment,
+-- recap
+x30.ccipageno,
+x30.ccilineno,
+x30.uom,
+round(x30.quantity, 2 ),
+round(x30.amount , 2 ),
+x30.proddesc
+
+from "informix".b3 x0,
+     "informix".canct_off x1 ,
+     "informix".canct_off x2 ,
+     "informix".usport_exit x3,
+     "informix".transp_mode x4,
+
+     "informix".vw_tarifftrtmnt x10,
+     "informix".ctry_code x11 ,
+     "informix".ctry_code x12 ,
+     "informix".b3_subheader x13,
+     "informix".b3_line x20,
+
+     "informix".b3_recap_details x30
+
+where ( x0.liiclientno in ( 298917 ) ) and
+      ( x0.approveddate like '2008/12/%' ) and
+      ( x0.b3iid = x13.b3iid ) and
+      ( x13.b3subiid = x20.b3subiid ) and
+      ( x20.b3lineiid = x30.b3lineiid ) and
+
+      ((((x0.usportexit = x3.portexit ) AND
+      (x0.modetransp = x4.transpmode )) AND
+      (x0.custoff = x1.canctoffcode ) ) AND
+      (x0.portunlading = x2.canctoffcode )) AND
+
+      (((x13.tarifftrtmnt = x10.tarifftrtmnt ) AND
+      (x13.placeexp = x11.ctrycode ) ) AND
+      (x13.ctryorigin = x12.ctrycode )) ;
+
+

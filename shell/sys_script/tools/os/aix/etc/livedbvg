@@ -1,0 +1,30 @@
+VOLUME GROUP:       livedbvg                 VG IDENTIFIER:  00ca32fd00004c000000011017503d85
+VG STATE:           active                   PP SIZE:        256 megabyte(s)
+VG PERMISSION:      read/write               TOTAL PPs:      399 (102144 megabytes)
+MAX LVs:            256                      FREE PPs:       24 (6144 megabytes)
+LVs:                11                       USED PPs:       375 (96000 megabytes)
+OPEN LVs:           11                       QUORUM:         2 (Enabled)
+TOTAL PVs:          1                        VG DESCRIPTORS: 2
+STALE PVs:          0                        STALE PPs:      0
+ACTIVE PVs:         1                        AUTO ON:        yes
+MAX PPs per VG:     32512                                     
+MAX PPs per PV:     1016                     MAX PVs:        32
+LTG size (Dynamic): 256 kilobyte(s)          AUTO SYNC:      no
+HOT SPARE:          no                       BB POLICY:      relocatable 
+PV RESTRICTION:     none                                      
+livedbvg:
+LV NAME             TYPE       LPs     PPs     PVs  LV STATE      MOUNT POINT
+ixrootlv            jfs2       1       1       1    open/syncd    /ix_root
+ixploglv            jfs2       1       1       1    open/syncd    /ix_plog
+ixlloglv            jfs2       4       4       1    open/syncd    /ix_llog
+ixdat1lv            jfs2       100     100     1    open/syncd    /ix_dat1
+ixdat2lv            jfs2       100     100     1    open/syncd    /ix_dat2
+ixdat3lv            jfs2       88      88      1    open/syncd    /ix_dat3
+ixidx1lv            jfs2       28      28      1    open/syncd    /ix_idx1
+ixidx2lv            jfs2       20      20      1    open/syncd    /ix_idx2
+ixidx3lv            jfs2       16      16      1    open/syncd    /ix_idx3
+ixtemplv            jfs2       16      16      1    open/syncd    /ix_temp
+loglv00             jfs2log    1       1       1    open/syncd    N/A
+livedbvg:
+PV_NAME           PV STATE          TOTAL PPs   FREE PPs    FREE DISTRIBUTION
+hdisk2            active            399         24          00..00..00..00..24

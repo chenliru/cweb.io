@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sysadm>
+
+    <auto>true</auto><choice>0,1,2,3,4</choice>
+
+    <!--host ID="1" app="lms" os="linux" name="kc1tsapkc01" port="" >
+        <connect ID="kc1tsapkc01-1" sudoer="$True" user="lchen" password="" privatekey="" publickey=""/>
+    </host-->
+
+    <host ID="2" app="lms" os="linux" name="ibmserver" port="30022">
+
+        <connect ID="1" sudoer="True" user="lchen" password="admin12" privatekey="" publickey="" path ="/tmp" > 
+            <!--task ID="1" owner="db2inst1" put="script1.sh,in1" run="script1.sh" get="script1.out" del="script1.sh,script1.out,in1" localpath="C:\auto_powershell\sysadm\script" remotepath="/tmp" /-->
+            <task ID="2" owner="lchen" put="script1.sh" putpath="/home/lchen" path=""/>
+            <task ID="3" owner="lchen" run="ls -la,crontab -l" logpath="C:\auto_powershell\sysadm\log" />
+            <task ID="2" owner="lchen" run="script1.sh,large_file_report.sh 50" runpath="/home/lchen" />
+            <task ID="2" owner="lchen" del="script1.sh" delpath="/home/lchen" />
+            <!--task ID="4" owner="informix" put="script1.sh,in1" run="script1.sh" del="script1.sh,script1.out,in1" localpath="C:\auto_powershell\sysadm\script" remotepath="/tmp" /-->
+        </connect>
+
+        <connect ID="2" user="db2inst1" password="db2inst1" >
+            <task ID="5" owner="db2inst1" put="script2.sh,in2" run="script2.sh" del="script2.sh,in2" />
+            <task ID="6" owner="db2inst1" get="ICMSERVER.LOG" getpath="/tmp" />
+        </connect>
+
+    </host>
+
+    <!--host ID="3" app="kec" os="linux" name="kc1tsapkc011" port="">
+        <connect ID="3" user="lchen1" />
+    </host-->
+               
+
+
+</sysadm>

@@ -1,0 +1,15 @@
+[8060984] |Wed Oct 14 16:17:41 2015| Signal 2 received
+
+[15138826] |Tue Oct 27 11:57:32 2015| Signal 2 received
+
+[18809036] |Wed Oct 28 10:40:17 2015| Signal 2 received
+
+[24182822] |Tue Jan  3 09:35:02 2017| ==============[ COLLECTING CEC DATA ]==============
+
+[24182822] |Tue Jan  3 09:35:02 2017| Obtaining Cluster data FAILED!!. Errno: 0, Line: 1243.
+[24182822] |Tue Jan  3 09:35:02 2017| ==============[ COLLECTING CEC DATA ]==============
+
+[24182822] |Tue Jan  3 09:35:12 2017| No Cluster hosts monitored. So exiting with error:0...
+
+[6553604] |Thu Jul  6 10:06:14 2017| Signal 2 received
+

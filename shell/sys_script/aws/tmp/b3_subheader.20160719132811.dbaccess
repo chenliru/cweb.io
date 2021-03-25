@@ -1,0 +1,58 @@
+
+
+
+b3subiid      160068021
+(constant)    ^~^
+b3iid         55328549
+(constant)    ^~^
+b3subno       1
+(constant)    ^~^
+ctryorigin    UIL
+(constant)    ^~^
+currcode      CAD
+(constant)    ^~^
+placeexp      UIL
+(constant)    ^~^
+shipdate      2016/06/22 00:00:00
+(constant)    ^~^
+tarifftrtmnt  02
+(constant)    ^~^
+timelim       0
+(constant)    ^~^
+timelimunit   
+(constant)    ^~^
+vendorname    3M COMPANY
+(constant)    ^~^
+vendorstate   
+(constant)    ^~^
+vendorzip     
+(constant)    ^~^
+
+b3subiid      160068022
+(constant)    ^~^
+b3iid         55328549
+(constant)    ^~^
+b3subno       2
+(constant)    ^~^
+ctryorigin    UIL
+(constant)    ^~^
+currcode      CAD
+(constant)    ^~^
+placeexp      UIL
+(constant)    ^~^
+shipdate      2016/06/22 00:00:00
+(constant)    ^~^
+tarifftrtmnt  10
+(constant)    ^~^
+timelim       0
+(constant)    ^~^
+timelimunit   
+(constant)    ^~^
+vendorname    3M COMPANY
+(constant)    ^~^
+vendorstate   
+(constant)    ^~^
+vendorzip     
+(constant)    ^~^
+
+

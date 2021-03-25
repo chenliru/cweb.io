@@ -1,0 +1,17 @@
+nohup: ignoring input
+Wed Sep 13 18:40:29 EDT 2017
+/usr/bin/id: cannot find name for group ID 2067792385
+
+SQL*Plus: Release 12.1.0.2.0 Production on Wed Sep 13 18:40:29 2017
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Last Successful login time: Wed Sep 13 2017 15:45:56 -04:00
+
+Connected to:
+Oracle Database 12c Release 12.1.0.1.0 - 64bit Production
+
+SQL> SQL> 
+Table truncated.
+
+SQL> SQL> Disconnected from Oracle Database 12c Release 12.1.0.1.0 - 64bit Production

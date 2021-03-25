@@ -1,0 +1,5 @@
+SELECT_CLAUSE
+FROM B3
+WHERE liibrchno = '436'
+AND liirefno = '530052'
+;

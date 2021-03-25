@@ -1,0 +1,20 @@
+#!/bin/ksh
+
+localFile=$1
+remoteFile=${2-$1}
+
+#source FTP parameters
+. /cgi/etc/ftpprofile.ids
+
+cd /cgi/db
+
+# do the FTP put
+ftp -i -n <<EOF>> /cgi/log/ftp.log
+open $FTP_HOST
+user $FTP_LOGIN $FTP_PASSWORD
+bin
+cd /ipdbbkup
+put $localFile $remoteFile
+quit
+EOF
+

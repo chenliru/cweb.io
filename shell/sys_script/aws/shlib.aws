@@ -1,0 +1,177 @@
+############################################################################
+# NAME:	shlib.$(hostname)
+#
+# FUNCTION: tools scripts help system administrator/DBA manages OS and DB 
+#           more efficiently. 
+#          
+# USAGE:    This script can either be invoked directly as above or
+#           it can be added to the user's .profile file so that the
+#           database environment is established during login.
+#
+# !! Edit this file according to your Host Environment !!
+#
+# Author:            Liru Chen
+# Date:              2015-07-07
+#
+# All Rights Reserved.
+############################################################################
+BASE=/insight/local/scripts/VaxParser/tools
+BIN=$BASE/bin
+TMP=$BASE/tmp
+ETC=$BASE/etc
+LOG=$BASE/log
+[[ ! -d ${LOG} ]] && mkdir -p ${LOG}
+[[ ! -d ${TMP} ]] && mkdir -p ${TMP}
+[[ ! -d ${ETC} ]] && mkdir -p ${ETC}
+[[ ! -d ${BIN} ]] && mkdir -p ${BIN}
+export BASE BIN TMP ETC LOG
+
+#Alert information to System administrator/DBA, and notice information to normal users
+MAILALERT="lchen@livingstonintl.com"
+MAILNOTICE="lchen@livingstonintl.com"
+export MAILALERT MAILNOTICE
+
+#Performance threshold setting
+CPUIDLE=10
+MEMPIO=50
+DISKACTIVITY=90
+NETPACKAGE=1250000
+export CPUIDLE MEMPIO DISKACTIVITY NETPACKAGE
+
+#FTP
+FTPHOST="ifx01"
+FTPUSER="lchen"
+FTPPASSWD="admin12"
+FTPLOCALDIR="${ETC}/table/load"
+FTPREMOTEDIR="/archbkup/dbbkup/stage"
+export FTPHOST FTPUSER FTPPASSWD FTPLOCALDIR FTPREMOTEDIR
+
+#TAPE
+[[ $(uname) == AIX ]] && TAPE="tctl"
+[[ $(uname) == SunOS ]] && TAPE="mt"
+[[ $(uname) == Linux ]] && TAPE="mt"
+TAPEDEVICE="/dev/rmt0"
+TAPEACTION="status"
+
+#Check Servers
+#@mping_cron:
+LOIS='wes01 wes02 ihs01 ihs02 was01 was02 icm01 icm02 tsm01 nim02 ipm02'
+IPRO='ecm01 ecm02 ecm03 ecm04 ecm05 ecm06 ecm07 ecm08 ecm09 ecm10 ecm11 ecm12'
+LMS='admsrv1 admsrv2'
+CODA='codaweb1 codaweb2 codaapp1 codaapp2 codadb1 codadb2'
+DEV='cm01 cm02 cm05 cm07'
+KECTS='kc1tsapal01 kc2tsapal01 kc1tsapkc01 kc2tsapkc01 kc1tsdb01'
+KECUT='kc1utapal01 kc2utapal01 kc1utapkc01 kc2utapkc01 kc1utdb01'
+KECDV='kc1dvapal01 kc2dvapal01 kc1dvapkc01 kc2dvapkc01 kc1dvdb01'
+KECPR1='kc1prapal01 kc2prapal01 kc1prapkc01 kc2prapkc01 kc1prdb01'
+KECPR2='kc1prapal02 kc2prapal02 kc1prapkc02 kc2prapkc02 kc1prdb02'
+KEC="${KECTS} ${KECUT} ${KECDV} ${KECPR1} ${KECPR2}"
+  
+MONITORSYSTEMS="${LOIS} ${IPRO} ${LMS} ${CODA} ${DEV} ${KEC} EOF"
+export MONITORSYSTEMS
+
+#MONITOR DEAMON, name, instance number, start command, stop command
+#dmon_cron:
+DEAMON="
+	LoadL_master,1,NONE,NONE,
+	LoadL_schedd,1,NONE,NONE,
+	LoadL_startd,1,NONE,NONE,
+	LoadL_resource_mgr,1,NONE,NONE,
+	LoadL_negotiator,1,NONE,NONE,
+	" 
+
+#LOADLEVELER JOBS and SCHEDULE, job name, time HH:MM, 1-6 weekday, 0-Sunday
+#llmon_cron:
+LLJOBSTART="LLINITJOB"		#Start LLJOB by llmon if NOT exist in LOADLEVELER
+LLJOBSTOP="					
+	SCHEDULEJOB
+	SENDLLMAIL
+	"						#Stop LLJOB by llmon if exist in LOADLEVELER
+LLJOB="
+	LLINITJOB,00:00@tomorrow,
+	SCHEDULEJOB,
+	SENDLLMAIL,
+	LLSENDMAIL,07:00@0,05:00@1,05:00@2,05:00@3,05:00@4,05:00@5,05:00@6,
+	7501COPY,07:00@0,03:00@1,03:00@2,03:00@3,03:00@4,03:00@5,03:00@6,
+	"						#JOBS run automatically in LOADLEVELER
+#USISDRIVER,09:00@1,09:00@2,09:00@3,09:00@4,09:00@5,09:00@6,
+
+#AIX BACKUP & RESTORE
+BKUPDIR="${TMP}"
+BKUPOSIMG="$(hostname)_OS"
+BKUPFSIMG="$(hostname)_FS"
+BKUPVGIMG="$(hostname)_VG"
+
+#Backup File Systems on the VG, VG will be created on specific hdisks if not exist
+VG="
+	appvg@hdisk1,hdisk2,hdisk3,hdisk4,
+	dbvg@hdisk5,hdisk6,hdisk7,hdisk8,
+	"
+	
+#Restore File Systems on specified VG,
+#VG will be created on specific hdisks if not exist
+FS="
+	/ar_idx1@appvg
+	/ix_idx2@dbvg
+	"
+	
+#NMON performance data collection
+#@start_nmon_cron:0_11-18_*_*_*
+#@mail_nmon_cron:10_12-19_*_*_*
+NMONINTERVAL=60		#second
+NMONDURATION=1		#hour
+NMONRUNDIR="/login/lchen/nmon"
+NMONREPORTDIR="
+	${NMONRUNDIR}
+	/kewill/$(hostname)/report/nmon
+	"
+NMONREADY="last_hour"		#last_hour | yesterday
+export NMONINTERVAL NMONDURATION NMONRUNDIR NMONREPORTDIR NMONREADY
+
+#INFORMIX DYNAMIC SERVER
+#@ids_cron:
+IDSENV="/home/informix/ids115.env"
+IDSSERVER="ipdb"
+IDSDB="ip_0p"
+IDSBKDIR="/livebkup"
+
+TABLEMONITOR="
+	b3 b3_line b3_recap_details 
+	tariff lii_client lii_account client_invoice 
+	securuser user_locus_xref srch_crit_batch
+	"
+	
+TABLESOURCE="systestdb,ip_systest,"
+TABLETARGET="systestdb,ip_systest,"
+TABLELOADDIR="${ETC}/table/load"
+TABLEUNLOADDIR="${ETC}/table/unload"
+
+AWSB3="	b3b,b3@b3iid,
+		containers,b3@b3iid,
+		status_history,b3@b3iid,status,
+		b3_subheader,b3@b3iid,
+		b3_line,b3_subheader@b3subiid,
+		b3_line_comment,b3_line@b3lineiid,
+		b3_recap_details,b3_line@b3lineiid,
+	"
+
+export IDSENV IDSSERVER IDSDB IDSBKUPDIR
+export TABLEMONITOR TABLELOADDIR TABLEUNLOADDIR
+
+#[[ ${IDSSERVER} == "ipdb" ]] && return 119
+. $IDSENV ${IDSSERVER}
+
+#Clean expired file types like *log after @days, under directories listed
+#@clears_cron:0_1_*_*_0
+CLEARDIR="
+	${LOG}@"txt,log,LOG,tmp,TMP,nmon,nmon.gz,sql,out"@30
+	${TMP}@"txt,log,LOG,tmp,TMP,nmon,nmon.gz,sql,out"@10
+	/recyclebox/lchen@"txt,log,LOG,tmp,TMP,nmon,nmon.gz,sql,out"@10
+	/alliance/RUNTIME/LIVOPER/usislogs@"txt,log,LOG,tmp,TMP,out"@10
+	${NMONRUNDIR}@"nmon,nmon.gz"@10
+	"
+CLEARSTAGE="${LOG}"		#Also including this directory in CLEARDIR
+export CLEARDIR CLEARSTAGE
+	
+PATH=$BASE/bin:$PATH
+export PATH

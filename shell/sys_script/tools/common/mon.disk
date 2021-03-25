@@ -1,0 +1,101 @@
+#!/bin/ksh
+#################################################################################
+# Program : utilization.dis
+# Purpose : Script to use iostat to find disk usage
+#
+# Licensed Materials - Property of SIEMEMS 
+#  
+# COPYRIGHT SIEMEMS ENTERPRISE COMMUNICATION. 1989,1995 
+# All Rights Reserved 
+#
+#################################################################################
+#set -x 
+#set -v
+PLATFORM=`uname`
+if [[ $PLATFORM = "SunOS" ]]; then
+ iostat_com="iostat" 
+ iostat_param="Disks utilities etcetc"
+ iostat_head=8
+fi
+if [[ $PLATFORM = "AIX" ]]; then
+ iostat_com="iostat"
+ iostat_param="Disks utilization etcetc"
+ iostat_head=8
+fi
+if [[ $PLATFORM = "Linux" ]]; then
+ iostat_com="iostat -d -x"
+ alias echo='echo -e'
+ iostat_param="Disks rrqm wrqm r w rsec wsec avgrq avgqu await svctm utilization"
+ iostat_head=4
+fi
+
+diskuse() {
+
+typeset intr=${1-15}
+typeset counter=${2-15}
+
+if [[ $counter -le 0 ]]; then exit 0 ; fi
+if [[ $intr -le 0 ]]; then exit 0 ; fi
+
+org_cnt=$counter
+
+typeset NO_OF_DISK=`$iostat_com | tail -n +$iostat_head | awk '{print $1}' | wc -l`
+set -A DISK_NAME `$iostat_com | tail -n +$iostat_head | awk '{print $1}'`
+
+if [[ $NO_OF_DISK -gt 1 ]]; then
+ echo "Found $NO_OF_DISK disks...${DISK_NAME[*]}"
+fi
+
+typeset total_utilization
+ i=0
+ while [[ $i -lt $NO_OF_DISK ]]
+ do
+  total_utilization[$i]=0
+ (( i=i+1 ))
+ done
+
+echo ""
+echo "`uname -srvmn` `date '+%m/%d/%Y'` "
+echo ""
+
+echo "Time\tDiskName\tDiskUtilization"
+
+while [[ $org_cnt -gt 0 ]]
+do
+ disk_cnt=0
+ $iostat_com $intr 1 | tail -n +$iostat_head | {
+ while read $iostat_param
+   do
+    [[ "$PLATFORM" = "Linux" ]] && (( utilization=utilization*100 ))
+    echo "`date '+%H:%M:%S'`\t$Disks\t$utilization"
+
+    total_utilization[$disk_cnt]=$(($utilization + ${total_utilization[$disk_cnt]}))
+
+    (( disk_cnt=disk_cnt+1 ))
+
+    [[ $disk_cnt = $NO_OF_DISK ]] && break
+   
+   done
+   }
+ (( org_cnt=org_cnt-1 ))
+
+done
+
+typeset avg_utilization
+ j=0
+ while [[ $j -lt $NO_OF_DISK ]]
+ do
+ # echo Total :
+ echo "\nAverage disk utilization(%) of ${DISK_NAME[$j]}:\c"
+ avg_utilization=$(( ${total_utilization[$j]}/$counter ))
+ echo "\t$avg_utilization"
+ (( j=j+1 ))
+ done
+
+}
+
+###################
+# end: diskuse
+###################
+
+diskuse $@

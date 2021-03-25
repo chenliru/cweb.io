@@ -1,0 +1,11 @@
+Z:\ecm01\ecm01_170921_0000.nmon
+Z:\ecm02\ecm02_170921_0000.nmon
+Z:\ecm03\ecm03_170921_0000.nmon
+Z:\ecm04\ecm04_170921_0000.nmon
+Z:\ecm05\ecm05_170921_0000.nmon
+Z:\ecm06\ecm06_170921_0000.nmon
+Z:\ecm07\ecm07_170921_0000.nmon
+Z:\ecm08\ecm08_170921_0000.nmon
+Z:\ecm09\ecm09_170921_0000.nmon
+Z:\ecm10\ecm10_170921_0000.nmon
+Z:\ecm11\ecm11_170921_0000.nmon

@@ -1,0 +1,33 @@
+#**************************************************************************
+#
+#  Licensed Material - Property Of IBM
+#
+#  "Restricted Materials of IBM"
+#
+#  IBM Informix Dynamic Server
+#  (c) Copyright IBM Corporation 1996, 2004 All rights reserved.
+#
+#   Title:	sqlhosts.demo
+#   Description:
+#		Default sqlhosts file for running demos.
+#
+#**************************************************************************
+# IANA (www.iana.org) assigned port number/service names for Informix:
+# sqlexec 9088/tcp
+# sqlexec-ssl 9089/tcp
+
+#demo_on	onipcshm	on_hostname	on_servername
+ol_informix1170	onsoctcp	db2cm64		ol_informix1170
+#demo_se	seipcpip	se_hostname	sqlexec
+
+#Systest database;
+systestdb    onsoctcp        ipdev           systestdbsvc
+
+#Below are for archive database;
+ardb	onsoctcp	ipdev	ardbsvc
+#prf	onsoctcp	ipdev	prfsvc
+
+#Old production database;
+ipdb	onsoctcp	ifx01		ipdbsvc
+
+

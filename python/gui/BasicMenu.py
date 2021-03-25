@@ -94,7 +94,7 @@ class PhotoEditor(QMainWindow):
         # Create view menu and add actions
         view_menu = menu_bar.addMenu('View')
         view_menu.addAction(self.toggle_dock_tools_act)
-        # Display info about tools, menu, and view in the status bar
+        # Display info about shell, menu, and view in the status bar
         self.setStatusBar(QStatusBar(self))
 
     def createToolBar(self):

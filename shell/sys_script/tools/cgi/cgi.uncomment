@@ -1,0 +1,1 @@
+/cgi/bin/cgi.replace $1 "###Start COMMENT by LIRU###END" ""

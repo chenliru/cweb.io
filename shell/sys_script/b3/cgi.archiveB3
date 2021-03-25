@@ -1,0 +1,115 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         cgi.archiveB3
+#
+# Reference:    n/a
+#
+# Description:  1. Start Archive DB @ardb
+#               2. Backup B3 data 1.5 year ago from @ipdb to @ardb
+#               3. Backup @ardb
+#               4. Stop @ardb
+#
+# Command:   cgi.archiveB3
+#
+# Modification History:
+#
+#               Date            Name            Description   
+#               ------------------------------------------------------------------
+#               2014-01-03      Liru Chen       
+#
+####################################################################################
+set -v
+set -x
+
+#if [[ $# -lt 3 ]]; then
+#    echo " USAGE: cgi.archiveB3 <'targetString'>"
+#    exit 2
+#fi
+
+integer year=`date +%Y`
+integer month=`date +%m`
+
+if [[ $month -le 6 ]]
+then
+	integer purgeyear=year-2
+	integer purgemonth=month+6
+	purgedate=${purgeyear}/0${purgemonth}%
+	 
+	if [[ purgemonth -ge 10 ]]
+	then
+		purgedate=${purgeyear}/${purgemonth}%
+	fi
+else
+	integer purgeyear=year-1
+	integer purgemonth=month-6
+	purgedate=${purgeyear}/0${purgemonth}%
+fi
+
+. /home/informix/ids115.env ipdb
+
+integer records=`echo \
+ "select count(*) from b3 where approveddate like '$purgedate'" \
+ | dbaccess ip_0p \
+ | grep -v count `
+
+echo $records
+
+[[ $records -eq 0 ]] && {
+	  mail -s "B3 already Purged! " lchen@livingstonintl.com < /dev/null
+	  exit 1
+	}
+
+#Check B3 Data Backup
+[[ -f /archbkup/etc/arch.done.year${purgeyear}month${purgemonth} ]] && {
+	  mail -s "B3 Archive Done! " lchen@livingstonintl.com < /dev/null
+	  exit 2
+	}
+
+#start Archive DB
+/archbkup/bin/cgi.startarch
+
+. /home/informix/ids115.env ardb
+
+integer archrecords=`echo \
+ "select count(*) from b3 where approveddate like '$purgedate'" \
+ | dbaccess ip_arch06 \
+ | grep -v count `
+
+echo $archrecords
+
+[[ $archrecords -ne 0 ]] && exit 1
+
+#start Archive B3 from @ipdb to @ardb
+nohup /insight/local/b3_arch/run_autoarchive.ksh >> /dmqjtmp/archiveB3Log/monthly_archive.log 2>&1 
+
+. /home/informix/ids115.env ardb
+
+integer archrecords=`echo \
+ "select count(*) from b3 where approveddate like '$purgedate'" \
+ | dbaccess ip_arch06 \
+ | grep -v count `
+
+echo $archrecords
+
+[[ $records -ne $archrecords ]] && {
+	  mail -s " Archive B3 Records Error" lchen@livingstonintl.com < /dev/null
+	  exit 2
+	}
+
+errorrecords=`echo "select * from reporterr" | dbaccess ip_arch06|grep -v tablename`
+
+[[ $errorrecords != "" ]] && { 
+	 mail -s "Error in reporterr" lchen@livingstonintl.com < /dev/null
+	 exit 2
+	}
+
+#start backup Archive DB
+/archbkup/bin/cgi.archbackup
+
+#Check Storage usage and Stop Archive DB
+/archbkup/bin/cgi.stoparch
+
+touch /archbkup/etc/arch.done.year${purgeyear}month${purgemonth}
+
+exit 0

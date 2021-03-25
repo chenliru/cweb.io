@@ -1,0 +1,6 @@
+lchen
+admini@12
+cd /isis/nmon
+ascii
+mget *
+quit

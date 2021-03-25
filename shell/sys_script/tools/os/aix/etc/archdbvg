@@ -1,0 +1,32 @@
+VOLUME GROUP:       archdbvg                 VG IDENTIFIER:  00ca32fd00004c00000001101750a843
+VG STATE:           active                   PP SIZE:        256 megabyte(s)
+VG PERMISSION:      read/write               TOTAL PPs:      597 (152832 megabytes)
+MAX LVs:            256                      FREE PPs:       57 (14592 megabytes)
+LVs:                11                       USED PPs:       540 (138240 megabytes)
+OPEN LVs:           11                       QUORUM:         2 (Enabled)
+TOTAL PVs:          3                        VG DESCRIPTORS: 3
+STALE PVs:          0                        STALE PPs:      0
+ACTIVE PVs:         3                        AUTO ON:        yes
+MAX PPs per VG:     32512                                     
+MAX PPs per PV:     1016                     MAX PVs:        32
+LTG size (Dynamic): 256 kilobyte(s)          AUTO SYNC:      no
+HOT SPARE:          no                       BB POLICY:      relocatable 
+PV RESTRICTION:     none                                      
+archdbvg:
+LV NAME             TYPE       LPs     PPs     PVs  LV STATE      MOUNT POINT
+achrootlv           jfs2       1       1       1    open/syncd    /ach_root
+achploglv           jfs2       1       1       1    open/syncd    /ach_plog
+achlloglv           jfs2       4       4       1    open/syncd    /ach_llog
+achdat1lv           jfs2       189     189     2    open/syncd    /ach_dat1
+achdat2lv           jfs2       245     245     2    open/syncd    /ach_dat2
+achidx1lv           jfs2       17      17      2    open/syncd    /ach_idx1
+achidx2lv           jfs2       12      12      1    open/syncd    /ach_idx2
+achtemplv           jfs2       8       8       1    open/syncd    /ach_temp
+loglv01             jfs2log    1       1       1    open/syncd    N/A
+achdat2_2lv         jfs2       41      41      1    open/syncd    /ach_dat2_2
+achdat1_2lv         jfs2       21      21      1    open/syncd    /ach_dat1_2
+archdbvg:
+PV_NAME           PV STATE          TOTAL PPs   FREE PPs    FREE DISTRIBUTION
+hdisk3            active            399         0           00..00..00..00..00
+hdisk5            active            99          24          06..00..00..00..18
+hdisk6            active            99          33          00..00..00..13..20

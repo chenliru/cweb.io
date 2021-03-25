@@ -1,0 +1,70 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         cgi.fs.bkup
+#
+# Description:  Filesystem backup using muilt-backup
+#		backup all filesystems except filesystems listed in <exclude.cgi>
+#
+# Parameters:   cgi.fs.bkup. /cgi/FS
+#
+# Modification History:
+#
+#		Date            Name            Description 
+#		--------------------------------------------------------------
+#		2013-09-05	Liru Chen	Original
+#
+################################################################################
+
+set -v
+set -x
+
+CGIDIR=$1
+[ -d $1/log ] || mkdir -p $1/log
+
+CGILOGDIR=$1/log
+
+# Change to cgi initial backup file directory
+cd $CGILOGDIR
+
+bkupdate=`date +%Y%m%d%H%M`
+logfile=`hostname`_backup_log$bkupdate
+
+# Get the mounted jfs2 filesystems exclude filesystems listed in file exclude.cgi
+filesys=`lsfs -c -v jfs2 | tail +2 | cut -f1 -d":" | grep -v -f $CGIDIR/exclude.cgi`  
+
+# Start backup process
+echo "Backup filesystem listing=$filesys" > $logfile
+ 
+# Get number of filesystem in the string "filesys"
+set $filesys   
+integer fsCount=$#
+
+# Backup the file systems in the listing
+integer xCount=0
+
+while (( $xCount < $fsCount ))
+do
+  echo  "----------------------------------------------------" >> $logfile
+  echo  "Backing up filesystem: $1" >> $logfile
+  echo  "----------------------------------------------------" >> $logfile
+  sync
+  sleep 5
+
+  filesystemname=$(echo $1 | sed "s/\//[/g")
+  backup -0 -uf $CGIDIR/`hostname`.$filesystemname.$bkupdate $1 2>&1 | tee -a $logfile
+
+  errstatus=$?
+  if (($errstatus != 0))
+  then	
+    mail -s "CGI FS backup failed (`hostname`): $bkupdate" lchen@livingstonintl.com <$logfile 
+    exit 1
+  fi
+
+  shift 1
+  xCount=xCount+1
+done
+
+mail -s "CGI FS backup completed successfully (`hostname`): $bkupdate" lchen@livingstonintl.com <$logfile
+
+exit 0

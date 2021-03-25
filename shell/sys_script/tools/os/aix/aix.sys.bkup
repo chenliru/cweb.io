@@ -1,0 +1,136 @@
+#!/bin/ksh
+################################################################################
+#
+# Name: 	aix.sys.bkup
+#
+# Reference:    n/a
+#
+# Description:  AIX system backup using mksysb.
+#
+#               The tape format includes a boot image, a bosinstall image, 
+#               and an empty table of contents followed by the system backup 
+#               (root volume group) image. 
+#
+#               The root volume group image is in backup-file format, 
+#               starting with the data files and then any optional map files
+#
+# Parameters:   aix.sys.bkuk backup_device backup_medium_lable 
+# 		default backup device: /dev/rmt0
+#               default backup medium lable: `hostname`.`date +%Y%m%d%H%M`
+#
+# Command:	aixsys.bkup /dev/rmt0 `hostname`.`date +%Y%m%d%H%M`
+#
+# Modification History:
+#
+#		Date            Name          	Description   
+#		------------------------------------------------------------
+#		2007-05-15	Patrick Tang    Original		
+#		2012-12-13	Liru Chen	Modified due to cm07 quarterly backup
+#
+####################################################################################
+set -v
+set -x
+
+if [[ $# -lt 1 ]]; then
+    echo " USAGE: aix.sys.bkup backup_device"
+    echo " "
+    exit 2
+fi
+if [[ $USER != root ]]; then
+  echo "You should be root user"
+  exit 2
+fi
+
+#Setting scritps environment parameters
+. ~/tools.profile
+
+bkupdev=${1-$BACKUPDEVICE}
+metafile=$TOOLSDIR/os/aix/etc/mksysb.$TOOLSID
+
+# If backup device is tape drive, load tape volume
+[[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev load
+
+# Backup important system configuration files
+echo "Backup AIX system configuration Data..."
+echo ""
+echo "Backup Device:    $bkupdev" > $metafile
+
+for vgOnline in $(lsvg -o)
+do
+ lsvg $vgOnline >> $metafile
+ lsvg -l $vgOnline >> $metafile
+done
+
+aix.cfg.bkup
+
+# If backup device is tape drive, load tape volume
+[[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev load
+
+# Backup operating system (that is, the root volume group)
+# -e: Excludes files listed in the /etc/exclude.rootvg file from being backed up
+# -i: Generates the /image.data file,which contains details about volume groups,
+#     logical volumes, file systems, paging space, and physical volumes
+echo "Backup Operation System (rootvg)..."
+echo ""
+
+mksysb -e -i $bkupdev
+if [[ $? != 0 ]]; then
+  echo  "<error = $?> error on mksysb command:" >> $ERRFILE
+  mail -s "Sysbkup failed: $TOOLSID" $SYSADMEMAIL < $ERRFILE
+  [[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev offline
+  exit 1
+fi
+
+# finally list all the files if medium is tape
+echo "\n----------------------------------------------------" >> $LOGFILE
+echo "\n Listing of the root volume group:" >> $LOGFILE | tee -a $LISFILE  
+echo "\n ---------------------------------------------------" >> $LOGFILE
+
+if [[ $bkupdev = /dev/rmt* ]]; then
+
+ util.tape $bkupdev rewind
+ if [[ $? != 0 ]]; then
+  echo "\t Error in rewinding the tape on $bkupdev " >> $ERRFILE
+  echo "\t <error code = $? > " >> $ERRFILE
+  mail -s "Tape Rewind on $bkupdev failed after System backup: $TOOLSID" \
+           $SYSADMEMAIL <$ERRFILE
+  util.tape $bkupdev offline
+ fi
+
+ /usr/sbin/restore -Tqs4 -f $bkupdev.1 > $LISFILE 2> $ERRFILE
+ if [[ $? != 0 ]]; then
+  echo "<error = $? > error on reading filesystem: $1" >> $ERRFILE| tee -a $LISFILE
+  echo "Dumping the contents of error file:" >> $ERRFILE
+  cat $ERRFILE | tee -a $LOGFILE
+  mail -s "List System Backup failed: $TOOLSID" $SYSADMEMAIL <$ERRFILE
+  util.tape $bkupdev offline
+  exit 1
+ fi
+
+else
+
+ /usr/sbin/restore -Tq -f $bkupdev > $LISFILE 2> $ERRFILE
+ if [[ $? != 0 ]]; then
+  echo "<error = $? > error on reading filesystem: $1" >> $ERRFILE | tee -a $lisfile
+  echo "Dumping the contents of error file:" >> $ERRFILE
+  cat $ERRFILE | tee -a $LOGFILE
+  mail -s "List System Backup failed: $TOOLSID" $SYSADMEMAIL <$ERRFILE
+  exit 1
+ fi
+
+fi
+
+cat $LISFILE 
+echo "\n----------------------------------------------------" >> $LOGFILE
+echo "\n SYSTEM BACKUP task has been completed successfully"  >> $LOGFILE
+echo "\n Check $lisfile for content of this System Backup"    >> $LOGFILE
+echo "\n----------------------------------------------------" >> $LOGFILE
+
+# dismount tape volume if backup device is TAPE DRIVE
+[[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev offline
+sleep 5
+
+mail -s "Sysbkup completed successfully: $TOOLSID" $SYSADMEMAIL < $LOGFILE
+
+exit 0
+

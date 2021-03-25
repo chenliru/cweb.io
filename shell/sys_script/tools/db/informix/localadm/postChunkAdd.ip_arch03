@@ -1,0 +1,135 @@
+
+IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 00:08:39 -- 929856 Kbytes
+
+Dbspaces
+address  number   flags      fchunk   nchunks  pgsize   flags    owner    name
+50431810 1        0x20001    1        1        4096     N        informix rootdbs
+5051dd50 2        0x1        2        1        4096     N        informix llogdbs
+5051deb0 3        0x1        3        2        4096     N        informix tempdbs1
+5138a018 4        0x1        4        1        4096     N        informix plogdbs
+5138a178 5        0x20001    5        48       4096     N        informix datadbs1
+5138a2d8 6        0x20001    27       52       4096     N        informix datadbs2
+5138a438 7        0x1        51       3        4096     N        informix indxdbs1
+5138a598 8        0x1        54       3        4096     N        informix indxdbs2
+ 8 active, 2047 maximum
+
+Chunks
+address  chunk/dbs     offset     size       free       bpages     flags pathname
+50431970 1      1      0          62500      55751                 PO--  /ach_root/ach_root.1
+5138a6f8 2      2      0          250000     124947                PO--  /ach_llog/ach_llog.1
+5138a8c8 3      3      0          250000     249547                PO--  /ach_temp/ach_temp.1
+5138aa98 4      4      0          62500      2447                  PO--  /ach_plog/ach_plog.1
+5138ac68 5      5      0          250000     0                     PO--  /ach_dat1/ach_dat1.1
+5138ae38 6      5      0          250000     3                     PO--  /ach_dat1/ach_dat1.2
+5138b018 7      5      0          250000     1                     PO--  /ach_dat1/ach_dat1.3
+5138b1e8 8      5      0          250000     1                     PO--  /ach_dat1/ach_dat1.4
+5138b3b8 9      5      0          250000     1                     PO--  /ach_dat1/ach_dat1.5
+5138b588 10     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.6
+5138b758 11     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.7
+5138b928 12     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.8
+5138baf8 13     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.9
+5138bcc8 14     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.10
+5138c018 15     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.11
+5138c1e8 16     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.12
+5138c3b8 17     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.13
+5138c588 18     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.14
+5138c758 19     5      0          250000     3                     PO--  /ach_dat1/ach_dat1.15
+5138c928 20     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.16
+5138caf8 21     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.17
+5138ccc8 22     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.18
+5138d018 23     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.19
+5138d1e8 24     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.20
+5138d3b8 25     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.21
+5138d588 26     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.22
+5138d758 27     6      0          250000     1                     PO--  /ach_dat2/ach_dat2.1
+5138d928 28     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.2
+5138daf8 29     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.3
+5138dcc8 30     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.4
+5138e018 31     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.5
+5138e1e8 32     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.6
+5138e3b8 33     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.7
+5138e588 34     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.8
+5138e758 35     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.9
+5138e928 36     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.10
+5138eaf8 37     6      0          250000     3                     PO--  /ach_dat2/ach_dat2.11
+5138ecc8 38     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.12
+5138f018 39     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.13
+5138f1e8 40     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.14
+5138f3b8 41     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.15
+5138f588 42     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.16
+5138f758 43     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.17
+5138f928 44     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.18
+5138faf8 45     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.19
+5138fcc8 46     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.20
+51390018 47     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.21
+513901e8 48     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.22
+513903b8 49     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.23
+51390588 50     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.24
+51390758 51     7      0          250000     2                     PO--  /ach_idx1/ach_idx1.1
+51390928 52     7      0          250000     162                   PO--  /ach_idx1/ach_idx1.2
+51390af8 53     7      0          250000     245901                PO--  /ach_idx1/ach_idx1.3
+51390cc8 54     8      0          250000     176857                PO--  /ach_idx2/ach_idx2.1
+51391018 55     8      0          250000     249997                PO--  /ach_idx2/ach_idx2.2
+513911e8 56     8      0          250000     249997                PO--  /ach_idx2/ach_idx2.3
+513913b8 57     3      0          256000     255997                PO--  /ach_temp/ach_temp.2
+51391588 58     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.23
+51391758 59     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.24
+51391928 60     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.25
+51391af8 61     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.26
+51391cc8 62     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.27
+51395018 63     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.28
+513951e8 64     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.25
+513953b8 65     6      0          250000     1                     PO--  /ach_dat2/ach_dat2.26
+51395588 66     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.27
+51395758 67     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.28
+51395928 68     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.29
+51395af8 69     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.30
+51395cc8 70     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.29
+51396018 71     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.30
+513961e8 72     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.31
+513963b8 73     5      0          250000     3                     PO--  /ach_dat1/ach_dat1.32
+51396588 74     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.33
+51396758 75     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.31
+51396928 76     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.32
+51396af8 77     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.33
+51396cc8 78     5      0          250000     2                     PO--  /ach_dat1/ach_dat1.34
+51397018 79     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.35
+513971e8 80     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.34
+513973b8 81     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.35
+51397588 82     5      0          250000     5                     PO--  /ach_dat1/ach_dat1.36
+51397758 83     5      0          250000     5                     PO--  /ach_dat1/ach_dat1.37
+51397928 84     5      0          250000     125                   PO--  /ach_dat1/ach_dat1.38
+51397af8 85     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.36
+51397cc8 86     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.37
+51398018 87     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.38
+513981e8 88     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.39
+513983b8 89     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.40
+51398588 90     5      0          250000     397                   PO--  /ach_dat1/ach_dat1.39
+51398758 91     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.41
+51398928 92     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.42
+51398af8 93     5      0          250000     141                   PO--  /ach_dat1/ach_dat1.40
+51398cc8 94     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.43
+51399018 95     5      0          250000     141                   PO--  /ach_dat1/ach_dat1.41
+513991e8 96     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.44
+513993b8 97     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.42
+51399588 98     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.45
+51399758 99     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.46
+51399928 100    6      0          250000     34945                 PO--  /ach_dat2/ach_dat2.47
+51399af8 101    6      0          250000     184461                PO--  /ach_dat2/ach_dat2.48
+51399cc8 102    5      0          250000     45709                 PO--  /ach_dat1/ach_dat1.43
+5139a018 103    5      0          250000     249997                PO--  /ach_dat1/ach_dat1.44
+51dd3890 104    5      0          250000     249997                PO--  /ach_dat1/ach_dat1.45
+519bad40 105    5      0          250000     249997                PO--  /ach_dat1/ach_dat1.46
+519c7d50 106    5      0          250000     249997                PO--  /ach_dat1/ach_dat1.47
+519ced50 107    5      0          250000     249997                PO--  /ach_dat1/ach_dat1.48
+51a45d50 108    6      0          250000     249997                PO--  /ach_dat2/ach_dat2.49
+51adcd40 109    6      0          250000     249997                PO--  /ach_dat2/ach_dat2.50
+51bb5d50 110    6      0          250000     249997                PO--  /ach_dat2/ach_dat2.51
+519bed38 111    6      0          250000     249997                PO--  /ach_dat2/ach_dat2.52
+ 111 active, 2047 maximum
+
+NOTE: The values in the "size" and "free" columns for DBspace chunks are
+      displayed in terms of "pgsize" of the DBspace to which they belong.
+
+Expanded chunk capacity mode: disabled
+

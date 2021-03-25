@@ -1,0 +1,22 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         cgi.mkvg <vgname> <hdiskNum1 hdiskNum2...>
+#
+################################################################################
+set -x
+set -v
+
+vgname=$1
+hdisks=$2
+
+ppsize=$(grep "PP SIZE" ../etc/$vgname | awk '{print $6}')
+
+# Create Volume Group dbvg if no there
+/usr/sbin/mkvg -s $ppsize -y $vgname $hdisks
+
+# Create log Logic Volume
+jfs2loglv=$(grep jfs2log $vgname | awk '{print $1}')
+/usr/sbin/mklv -t jfs2log -y $jfs2loglv $vgname 1
+
+exit 0

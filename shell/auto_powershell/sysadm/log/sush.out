@@ -1,0 +1,49 @@
++ set -v
+remotepwd=$(dirname $0)
+
++ dirname /tmp/sush.ksh
++ remotepwd=/tmp
+filename=$remotepwd/myTab.run
+
++ filename=/tmp/myTab.run
+IFS=,;grep ^$(hostname) $filename|
+while read hostname user script sudoer runtime
+do
+	echo $hostname $user $script $sudoer $runtime
+	
+	pathname=$(echo $script|awk '{print $1}')
+	name=$(basename $pathname)
+	out=$name.out
+		
+	[[ $sudoer == "sudoer" ]] && {
+		if [[ -e $pathname && ! -x $pathname ]];then su -l $user -c "chmod a+x $pathname";fi
+		su -l $user -c "$script 1>$remotepwd/$out$runtime 2>&1"
+	}
+	
+	[[ $sudoer == "nosudoer" ]] && {
+		if [[ -e $pathname && ! -x $pathname ]];then chmod a+x $pathname;fi
+		$script 1>$remotepwd/$out$runtime 2>&1
+	}
+	
+done
+
++ IFS=,
++ hostname
++ grep ^ibmserver /tmp/myTab.run
++ read hostname user script sudoer runtime
++ echo ibmserver db2inst1 script2.sh nosudoer 20170228162846
+ibmserver db2inst1 script2.sh nosudoer 20170228162846
++ echo script2.sh
++ awk '{print $1}'
++ pathname=script2.sh
++ basename script2.sh
++ name=script2.sh
++ out=script2.sh.out
++ [[ nosudoer == sudoer ]]
++ [[ nosudoer == nosudoer ]]
++ [[ -e script2.sh ]]
++ [[ ! -x script2.sh ]]
++ chmod a+x script2.sh
++ script2.sh
++ 1> /tmp/script2.sh.out20170228162846 2>& 1
++ read hostname user script sudoer runtime

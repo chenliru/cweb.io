@@ -1,0 +1,25 @@
+################################################################
+# Monitor Livingston AIX Systems Availability               
+################################################################
+#0 0-23  * * * ksh ~/tools/common/mail.ping >/dev/null 2>&1 
+#
+################################################################
+# Monitor Livingston AIX Errors Utility
+################################################################
+#
+################################################################
+# Collect Informix SQL
+################################################################
+1,2,3,4,5,31,32,33,34,35 6-23 * * * ksh ~/tools/common/mail.ids.SQL ipdb > /dev/null 2>&1
+#
+################################################################
+# Monitor Livingston AIX Performance Utility
+################################################################
+45 7-18 * * * ksh ~/tools/common/mail.mon > /dev/null 2>&1
+#
+###############################################################
+# Monitor Storage usage
+##############################################################
+#45 7-23 * * * ksh ~/tools/common/mail.ids.stor ipdb Daily > /dev/null 2>&1
+0 12 * * 1 ksh ~/tools/common/mail.ids.stor ipdb Weekly > /dev/null 2>&1
+0 12 1 * * ksh ~/tools/common/mail.ids.stor ipdb Monthly > /dev/null 2>&1

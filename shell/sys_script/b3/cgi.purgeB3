@@ -1,0 +1,126 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         cgi.purgeB3
+#
+# Reference:    n/a
+#
+# Description:  1. Check B3 data backup and Archive DB backup is done
+#               2. Purge B3 data 1.5 year ago from @ipdb
+#
+# Command:   cgi.purgeB3
+#
+# Modification History:
+#
+#               Date            Name            Description   
+#               ----------------------------------------------------------------
+#               2014-01-03      Liru Chen       
+#
+####################################################################################
+set -v
+set -x
+
+#if [[ $# -lt 3 ]]; then
+#    echo " USAGE: cgi.archiveB3 <'targetString'>"
+#    exit 2
+#fi
+
+integer year=`date +%Y`
+integer month=`date +%m`
+
+if [[ $month -le 6 ]]
+then
+	integer purgeyear=year-2
+	integer purgemonth=month+6
+	purgedate=${purgeyear}/0${purgemonth}%
+	
+	if [[ purgemonth -ge 10 ]]
+	then
+		purgedate=${purgeyear}/${purgemonth}%
+	fi
+else
+	integer purgeyear=year-1
+	integer purgemonth=month-6
+	purgedate=${purgeyear}/0${purgemonth}%
+fi
+
+storageusage=/archbkup/etc/ipdb_storage.`date +%Y%m`
+
+#Check B3 Backup Status
+[[ -f /archbkup/etc/arch.done.year${purgeyear}month${purgemonth} ]] || {
+	  mail -s "Backup B3 first before Purge! " lchen@livingstonintl.com < /dev/null
+	  exit 2
+	}
+
+#start Archive DB
+/archbkup/bin/cgi.startarch
+
+. /home/informix/ids115.env ardb
+
+integer archrecords=`echo \
+ "select count(*) from b3 where approveddate like '$purgedate'" \
+ | dbaccess ip_arch06 \
+ | grep -v count `
+
+echo $archrecords
+
+#Stop Archive DB
+/archbkup/bin/cgi.stoparch
+
+. /home/informix/ids115.env ipdb
+
+integer records=`echo \
+ "select count(*) from b3 where approveddate like '$purgedate'" \
+ | dbaccess ip_0p \
+ | grep -v count `
+
+echo $records
+[[ $records -eq 0 ]] && {
+	  mail -s "No B3 records in B3 ProdDB! " lchen@livingstonintl.com < /dev/null
+	  exit 1
+	}
+
+[[ $archrecords -ne $records ]] && {
+	  mail -s "arch&prod B3 mismatch" lchen@livingstonintl.com < /dev/null
+	  exit 1
+	}
+
+#start Purge B3 from @ipdb
+ps -ef|grep -v grep | grep ./tcl
+[[ $? -eq 0 ]] && {
+	 mail -s " Data loading process running!" lchen@livingstonintl.com < /dev/null
+	 exit 1
+	}
+
+#Check B3 Purge Status
+[[ -f /archbkup/etc/purge.done.year${purgeyear}month${purgemonth} ]] && {
+	  mail -s "B3 Purge already done! " lchen@livingstonintl.com < /dev/null
+	  exit 2
+	}
+
+cd /usr/apps/inf/bob/delb3
+nohup ./deleteb3.ksh > ./deleteb3.out 2>&1
+
+integer deletedrecords=`cd /usr/apps/inf/bob/delb3; \
+  grep ":s_b3iid value=" deleteb3_1.trc | wc -l`
+
+echo $deletedrecords
+
+[[ $records -ne $deletedrecords ]] && {
+	  mail -s " Purge B3 Records Error" lchen@livingstonintl.com < /dev/null
+	#  exit 2
+	}
+
+#Clean the RUNNER log
+cd /dmqjtmp/archiveRunnerLog
+cp -p runner.10.out /recyclebox; cat /dev/null > runner.10.out
+cp -p runner.71.out /recyclebox; cat /dev/null > runner.71.out
+cp -p runner.all.out /recyclebox; cat /dev/null > runner.all.out
+
+#Check storage usage
+/archbkup/bin/cgi.checkDBSpace > $storageusage
+mail -s "Purge Done Storage Usage" lchen@livingstonintl.com < $storageusage
+
+touch /archbkup/etc/purge.done.year${purgeyear}month${purgemonth}
+
+exit 0

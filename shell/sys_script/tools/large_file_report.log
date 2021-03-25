@@ -1,0 +1,14 @@
+Connected to 10.253.131.47.
+220 Microsoft FTP Service
+331 Password required for lii01\aixperf.
+230 User logged in.
+200 Type set to I.
+Local directory now /home/lchen/tools
+250 CWD command successful.
+200 PORT command successful.
+125 Data connection already open; Transfer starting.
+226 Transfer complete.
+34428 bytes sent in 0.004849 seconds (6934 Kbytes/s)
+local: large_file_report.txt remote: ifx01_20171006_large_file_report.txt
+221 Goodbye.
+Null message body; hope that's ok

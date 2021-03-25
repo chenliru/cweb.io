@@ -1,0 +1,214 @@
++ PROFILEBASE=/home/lchen/tools
++ hostname
++ [ ! -f /home/lchen/tools/shlib.ifx01 ]
++ hostname
++ . /home/lchen/tools/shlib.ifx01
++ BASE=/home/lchen/tools
++ BIN=/home/lchen/tools/bin
++ TMP=/home/lchen/tools/tmp
++ ETC=/home/lchen/tools/etc
++ LOG=/home/lchen/tools/log
++ [[ ! -d /home/lchen/tools/log ]]
++ [[ ! -d /home/lchen/tools/tmp ]]
++ [[ ! -d /home/lchen/tools/etc ]]
++ [[ ! -d /home/lchen/tools/bin ]]
++ export BASE BIN TMP ETC LOG
++ MAILALERT=lchen@livingstonintl.com
++ MAILNOTICE=lchen@livingstonintl.com
++ export MAILALERT MAILNOTICE
++ CPUIDLE=10
++ MEMPIO=50
++ DISKACTIVITY=90
++ NETPACKAGE=1250000
++ export CPUIDLE MEMPIO DISKACTIVITY NETPACKAGE
++ FTPHOST=ipdev
++ FTPUSER=lchen
++ FTPPASSWD=admin12
++ FTPLOCALDIR=/archbkup/dbbkup/stage
++ FTPREMOTEDIR=/dbbkup/stage
++ export FTPHOST FTPUSER FTPPASSWD FTPLOCALDIR FTPREMOTEDIR
++ uname
++ [[ AIX == AIX ]]
++ TAPE=tctl
++ uname
++ [[ AIX == SunOS ]]
++ uname
++ [[ AIX == Linux ]]
++ TAPEDEVICE=/dev/rmt0
++ TAPEACTION=status
++ NMONINTERVAL=60
++ NMONDURATION=1
++ NMONRUNDIR=/home/lchen/nmon
++ hostname
++ NMONREPORTDIR=$'\n\t/home/lchen/nmon\n\t/kewill/ifx01/report/nmon\n\t'
++ NMONREADY=last_hour
++ export NMONINTERVAL NMONDURATION NMONRUNDIR NMONREPORTDIR NMONREADY
++ IDSENV=/home/lchen/ids115.env
++ IDSSERVER=ipdb
++ IDSDB=ip_0p
++ IDSBKDIR=/livebkup
++ TABLEMONITOR=$'\n\tb3 b3_line b3_recap_details \n\ttariff lii_client lii_account client_invoice \n\tsecuruser user_locus_xref srch_crit_batch\n\t'
++ TABLESOURCE=ipdb,ip_0p,
++ TABLETARGET=systestdb,ip_systest,
++ TABLELOADDIR=/home/lchen/tools/etc/table/load
++ TABLEUNLOADDIR=/home/lchen/tools/etc/table/unload
++ AWSB3=$'\tb3b,b3@b3iid,\n\t\tcontainers,b3@b3iid,\n\t\tstatus_history,b3@b3iid,status,\n\t\tb3_subheader,b3@b3iid,\n\t\tb3_line,b3_subheader@b3subiid,\n\t\tb3_line_comment,b3_line@b3lineiid,\n\t\tb3_recap_details,b3_line@b3lineiid,\n\t'
++ export IDSENV IDSSERVER IDSDB IDSBKUPDIR
++ export TABLEMONITOR TABLELOADDIR TABLEUNLOADDIR
++ . /home/lchen/ids115.env ipdb
++ SRVR=ipdb
++ echo ''
+
++ echo ' Server ipdb environment ...'
+ Server ipdb environment ...
++ echo ''
+
++ INFVERSION=ver115UC3
++ INFORMIXDIR=/usr/apps/inf/ver115UC3
++ INFORMIXSERVER=ipdb
++ ONCONFIG=onconfig_ipdb
++ ARC_CONFIG=onarconfig_ipdb
++ PATH=/usr/apps/inf/ver115UC3/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin:/usr/java14/jre/bin:/usr/java14/bin
++ INFORMIXTERM=termcap
++ TERMCAP=/usr/apps/inf/ver115UC3/etc/termcap
++ SYSROOT=/usr/apps
++ INFROOT=/usr/apps/inf
++ INFBIN=/usr/apps/inf/ver115UC3/bin
++ INFLIB=/usr/apps/inf/ver115UC3/lib
++ INFINC=/usr/apps/inf/ver115UC3/incl
++ INFPLATFORM=IBMAIX
++ INFLOGDIR=/home/informix/log
++ INFBKUP=/home/informix/bkup
++ export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
++ export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM
++ export INFLOGDIR INFBKUP
++ INFXCPUVPPRIORITY=90
++ export INFXCPUVPPRIORITY
++ INFXNETVPPRIORITY=90
++ export INFXNETVPPRIORITY
++ INFXMSCVPPRIORITY=90
++ export INFXMSCVPPRIORITY
++ INFXIOVPPRIORITY=90
++ export INFXIOVPPRIORITY
++ CLEARSTAGE=/recyclebox/lchen/clears
++ CLEARDIR=$'\n\t/home/lchen/nmon@nmon,nmon.gz@3\n\t/home/lchen/tools/tmp@txt,log,LOG,tmp,TMP,sql,out@3\n\t/home/lchen/tools/log@ALL@3\n\t/recyclebox/lchen/clears@ALL@7\n\t'
++ export CLEARDIR CLEARSTAGE
++ PATH=/home/lchen/tools/bin:/usr/apps/inf/ver115UC3/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin:/usr/java14/jre/bin:/usr/java14/bin
++ export PATH
++ date +%Y%m%d
++ current_date=20171005
++ date +%Y%m%d%H%M%S
++ current_time=20171005181500
++ mail_alert=lchen@livingstonintl.com
++ mail_notice=lchen@livingstonintl.com
++ mtbls
++ ids_server=ipdb
++ ids_env=/home/lchen/ids115.env
++ ids_database=ip_0p
++ ids_tables=$'\n\tb3 b3_line b3_recap_details \n\ttariff lii_client lii_account client_invoice \n\tsecuruser user_locus_xref srch_crit_batch\n\t'
++ cd /home/lchen/tools/tmp
++ [[ ! -f tmp_tblspace ]]
++ df -k
++ 1> tmp_tblspace13107202
++ onstat -d
++ 1>> tmp_tblspace13107202
++ set b3 b3_line b3_recap_details tariff lii_client lii_account client_invoice securuser user_locus_xref srch_crit_batch
++ tablecount=10
++ typeset -i tablecount
++ icount=0
++ typeset -i icount
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:00 EDT 2017\tip_0p\tb3'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:b3
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:00 EDT 2017\tip_0p\tb3_line'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:b3_line
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:00 EDT 2017\tip_0p\tb3_recap_details'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:b3_recap_details
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:00 EDT 2017\tip_0p\ttariff'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:tariff
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:00 EDT 2017\tip_0p\tlii_client'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:lii_client
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:00 EDT 2017\tip_0p\tlii_account'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:lii_account
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:01 EDT 2017\tip_0p\tclient_invoice'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:client_invoice
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:01 EDT 2017\tip_0p\tsecuruser'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:securuser
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:01 EDT 2017\tip_0p\tuser_locus_xref'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:user_locus_xref
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ date
++ echo 'Thu Oct  5 18:15:01 EDT 2017\tip_0p\tsrch_crit_batch'
++ 1>> tmp_tblspace13107202
++ oncheck -pt ip_0p:srch_crit_batch
++ 1>> tmp_tblspace13107202
++ shift 1
++ icount=icount+1
++ (( icount < tablecount ))
++ diff tmp_tblspace tmp_tblspace13107202
++ 1> tmp_tblspace.txt
++ uname
++ hostname
++ mail_AIX ifx01_INFORMIX_TBLSPACE_CHANGE_REPORT /home/lchen/tools/tmp tmp_tblspace.txt lchen@livingstonintl.com
++ mail -s ifx01_INFORMIX_TBLSPACE_CHANGE_REPORT lchen@livingstonintl.com
++ 0<<
++ hostname
+PLEASE FIND ATTACHMENT FROM + basename tmp_tblspace.txt
+ifx01
+~<!uuencode /home/lchen/tools/tmp/tmp_tblspace.txt tmp_tblspace.txt
++ rm -f tmp_tblspace.txt
++ mv tmp_tblspace13107202 tmp_tblspace
++ exit 0

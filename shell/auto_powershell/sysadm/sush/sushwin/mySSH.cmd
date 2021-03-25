@@ -1,0 +1,1 @@
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/in2 ]] && rm -f /tmp/in2" 

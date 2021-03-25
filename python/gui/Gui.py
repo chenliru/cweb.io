@@ -253,7 +253,7 @@ class GuiCam(QMainWindow):
         view_menu.addAction(self.dock_filter.toggleViewAction())
         view_menu.addAction(self.dock_color.toggleViewAction())
 
-        # Display info about tools, menu, and view in the status bar
+        # Display info about shell, menu, and view in the status bar
         self.setStatusBar(QStatusBar(self))
 
     def init_toolbar(self):

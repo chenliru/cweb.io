@@ -1,0 +1,519 @@
+#!/bin/bash
+#
+# cmServer.rc       Start/Stop IBM DB2 Content Manager Service
+#
+# chkconfig: - 98 18
+# description: Starts/Stops the IBM DB2 Content Manager Server Service
+# processname: cmServer
+# pidfile: /var/run/dsmserv.pid
+
+#***********************************************************************
+# DB2 Content Manager (DB2CM)                                          *
+# Server Component                                                     *
+#                                                                      *
+# IBM Confidential                                                     *
+# (IBM Confidential-Restricted when combined with the Aggregated OCO   *
+# Source Modules for this Program)                                     *
+#                                                                      *
+# OCO Source Materials                                                 *
+#                                                                      *
+# 5765-303 (C) Copyright IBM Corporation 1990, 2003                    *
+#***********************************************************************
+
+# First of all, check for syntax
+set -x
+set -v
+
+if [[ $# != 1 ]]
+then
+  echo $"Usage: $0 {start|stop|status|restart}"
+  exit 1
+fi
+
+prog="cmServer"
+# determine which version of the server is installed
+# server_version=`rpm -q TIVsm-server`
+# determine where the server is installed
+# if string server_version is not NULL, it means we got something
+# if [[ -n "$server_version" ]]
+# then
+#    prefix=`rpm -q --queryformat %'{INSTALLPREFIX}' $server_version`
+# else
+#    echo "IBM Tivoli Storage Manager Server not found on this system"
+#    exit -1
+#fi
+
+# PATH=/sbin:/bin:/usr/bin:/usr/sbin:opt/tivoli/tsm/server/bin:/opt/IBM/WebSphere/AppServer/bin:/opt/IBM/HTTPServer/bin
+
+HOMENODE="db2cm64"
+HOSTNODE=`hostname`
+logFile=/root/cmServer_start_now.log
+
+if [[ ! -e /opt/tivoli/tsm/server/bin/dsmserv ]] 
+then
+   echo "IBM Tivoli Storage Manager Server not found on this system"
+   exit 0
+fi
+rc=0
+
+SLEEP_INTERVAL=2
+MAX_SLEEP_TIME=10
+
+function check_pid_file()
+{
+    test -f /var/run/dsmserv.pid
+}
+
+function check_process()
+{
+    ps -p `cat /var/run/dsmserv.pid` > /dev/null
+}
+
+function check_running()
+{
+    check_pid_file && check_process
+}
+
+function msgLog()
+{
+  echo `date` "$1" >> $logFile
+}
+
+function startDB2NODE()
+{
+  set -v
+  set -x
+  if [ $HOMENODE = $HOSTNODE ]; then
+    cp /home/db2inst1/sqllib/db2nodes.cfg.db2cm64 /home/db2inst1/sqllib/db2nodes.cfg
+  else
+    cp /home/db2inst1/sqllib/db2nodes.cfg.db2cm64 /home/db2inst1/sqllib/db2nodes.cfg  
+  fi
+  if [ $HOMENODE = $HOSTNODE ]; then
+    cp /home/db2inst2/sqllib/db2nodes.cfg.db2cm64 /home/db2inst2/sqllib/db2nodes.cfg
+  else
+    cp /home/db2inst2/sqllib/db2nodes.cfg.db2cm64 /home/db2inst2/sqllib/db2nodes.cfg  
+  fi
+  return 0
+}
+
+function startTSMClient()
+{
+  set -v
+  set -x
+  cd /opt/tivoli/tsm/client/ba/bin
+  ./dsmcad -optfile=/opt/tivoli/tsm/client/api/bin64/db2dsm.opt
+  return 0
+}
+
+function startDAS()
+{
+  set -v
+  set -x
+su - dasusr1 >> /dev/null 2>&1 <<EOF
+   db2admin start
+   if [ $? -ne 0 ]; then
+    msgLog "Error: DAS failed ..." >> $logFile
+    exit 1
+   fi
+   exit
+EOF
+return 0
+}
+  
+function startDB2INST1()
+{
+  set -v
+  set -x
+su - db2inst1 >> /dev/null 2>&1 <<EOF
+   db2start
+   if [ $? -ne 0 ]; then
+    msgLog "Error: DB2 engine failed ..." >> $logFile
+    exit 1
+   fi
+   exit
+EOF
+return 0
+}
+
+function startHTTP()
+{
+  set -v
+  set -x
+  #cd /usr/IBMHttpServer/bin
+  cd /opt/IBM/HTTPServer/bin
+  ./apachectl start
+  if [ $? -ne 0 ]; then
+    msgLog "Error: HTTP failed ..." >> $logFile
+    exit 1
+  fi
+  return 0
+}
+
+function startCMLSmonitor()
+{
+  set -v
+  set -x
+  . /home/db2inst1/sqllib/db2profile
+  cd /etc
+  ./rc.cmlsproc
+  if [ $? -ne 0 ]; then
+    msgLog "Error: CMLS failed ..." >> $logFile
+    exit 1
+  fi
+  return 0
+}
+
+#function startWASECLIENT(){
+#  set -v
+#  set -x
+#  . /home/db2inst1/sqllib/db2profile
+#  cd /opt/IBM/WebSphere/AppServer/bin
+#  ./startServer.sh eClient_Server
+#  if [ $? -ne 0 ]; then
+#    msgLog "Error: WASECLIENT failed ..." >> $logFile
+#    exit 1
+#  fi
+#  return 0
+#}
+
+#function startDB2INST2(){
+#  set -v
+#  set -x
+#  su - db2inst2 >> /dev/null 2>&1 <<EOF
+#  db2start
+#  if [ $? -ne 0 ]; then
+#    msgLog "Error: DB2 engine failed ..." >> $logFile
+#    exit 1
+#  fi
+#  exit
+#  EOF
+#  return 0
+#}
+
+#startCMRMServices(){
+#  set -v
+#  set -x
+#  . /home/db2inst2/sqllib/db2profile
+#  cd /etc
+#  ./rc.cmrmproc
+#  if [ $? -ne 0 ]; then
+#    msgLog "Error: CLRM failed ..." >> $logFile
+#    exit 1
+#  fi
+#  return 0
+#}
+
+function startWASICMRM()
+{
+  set -v
+  set -x
+  . /home/db2inst1/sqllib/db2profile
+  cd /opt/IBM/WebSphere/AppServer/bin
+  #cd /opt/IBM/WebSphere/AppServer/profiles/AppSrv02/bin
+  ./startServer.sh server1		#icmrm
+  if [ $? -ne 0 ]; then
+    msgLog "Error: WASICMRM failed to start..." >> $logFile
+    exit 1
+  fi
+  return 0
+}
+
+function stopWASICMRM()
+{
+  set -v
+  set -x
+  . /home/db2inst1/sqllib/db2profile
+  cd /opt/IBM/WebSphere/AppServer/bin
+  #cd /usr/IBM/WebSphere/AppServer/profiles/AppSrv02/bin
+  #./stopServer.sh server1		#icmrm
+  ./stopServer.sh server1 -username wasadmin -password wasadmin
+  if [ $? -ne 0 ]; then
+    msgLog "Error: WASICMRM failed to stop ..." >> $logFile
+    exit 1
+  fi
+  return 0
+}
+
+function stopCMRM()
+{
+  set -v
+  set -x
+  . /home/db2inst1/sqllib/db2profile
+  cd /etc
+  ./rc.cmrmproc -act stop
+  if [ $? -ne 0 ]; then
+    msgLog "Error: CMRM is failed ..." >> $logFile
+    exit 1
+  fi
+  return 0
+}
+
+function stopDB2INST1()
+{
+  set -v
+  set -x
+su - db2inst1 >> /dev/null 2>&1 <<EOF
+   db2 force applications all
+   if [ $? -ne 0 ]; then
+     msgLog "Error: DB2 apps failed ..." >> $logFile
+     exit 1
+   fi
+   db2stop force
+   if [ $? -ne 0 ]; then
+     msgLog "Error: DB2 engine is failed ..." >> $logFile
+     exit 1
+   fi
+   exit
+EOF
+return 0
+}
+
+#stopWASECLIENT(){
+#set -v
+#set -x
+#  . /home/db2inst1/sqllib/db2profile
+#  cd /usr/WebSphere/AppServer/bin
+#  ./stopServer.sh eClient_Server
+#  if [ $? -ne 0 ]; then
+#    msgLog "Error: WASECLIENT failed ..." >> $logFile
+#    exit 1
+#  fi
+#  return 0
+#}
+
+function stopCMLS()
+{
+  set -v
+  set -x
+  . /home/db2inst1/sqllib/db2profile
+  cd /etc
+  ./rc.cmlsproc -shutdown
+  if [ $? -ne 0 ]; then
+    msgLog "Error: CMLS is failed ..." >> $logFile
+    exit 1
+  fi
+  return 0
+}
+
+function stopHTTP()
+{
+  set -v
+  set -x
+  #cd /opt/IBMHttpServer/bin
+  cd /opt/IBM/HTTPServer/bin
+  ./apachectl stop
+  if [ $? -ne 0 ]; then
+    msgLog "Error: HTTP failed ..." >> $logFile
+    exit 1
+  fi
+  return 0
+}
+
+function stopDAS()
+{
+  set -v
+  set -x
+su - dasusr1 >> /dev/null 2>&1 <<EOF
+   db2admin stop
+   if [ $? -ne 0 ]; then
+    msgLog "Error: DAS failed ..." >> $logFile
+    exit 1
+   fi
+EOF
+return 0
+}
+
+function stopTSMClient()
+{
+  set -v
+  set -x
+  dsmcadpslist=$(ps -ef | egrep "dsmcad" | awk '{ print $2 }')
+  kill $dsmcadpslist
+  return 0
+}
+
+
+start() {
+# make sure that the server CAN create a core dump in the event of an error
+        ulimit -c unlimited
+
+        echo -n "Starting dsmserv... "
+        DSMSERV_DIR=/opt/tivoli/tsm/server/bin
+        export DSMSERV_DIR
+        cd $DSMSERV_DIR
+        #if we're already running, say so
+        status 0
+        if [[ $g_status == "running" ]]
+        then
+           echo "dsmserv already running..."
+           break
+           #exit 0
+        else
+           nohup ./dsmserv quiet >/dev/null 2>&1 &
+        # give enough time to server to start
+           sleep 5
+        # if the lock file got created, we did ok
+           if [[ -f /opt/tivoli/tsm/server/bin/dsmserv.lock ]]
+           then
+              gawk --source '{print $4}' /opt/tivoli/tsm/server/bin/dsmserv.lock>/var/run/dsmserv.pid
+              [ $? = 0 ] && echo "Succeeded :-)" || echo "Failed :-(" 
+              rc=$?
+              echo
+              [ $rc -eq 0 ] && touch /var/lock/subsys/dsmserv
+	      exit $rc
+              #return $rc
+           else
+              echo "Failed :-("
+              exit
+              #return 1
+           fi
+       fi
+
+       startDB2NODE	&&  msgLog "Message: DB2NODE cfg is copied ..." >> $logFile
+       startTSMClient	&&  msgLog "Message: TSM Client is up ..." >> $logFile
+       startDAS		&&  msgLog "Message: DAS is up ..." >> $logFile 
+       startDB2INST1	&&  msgLog "Message: DB2INST1 is up ..." >> $logFile 
+       startHTTP	&&  msgLog "Message: HTTP is up ..." >> $logFile 
+       startCMLSmonitor	&&  msgLog "Message: CM LS monitor app is up ..." >> $logFile 
+
+       #  eClient Server is running on Windows Platform - Denny@2010/04/20
+       #  startWASECLIENT &&  msgLog "Message: WASECLIENT is up ..." >> $logFile 
+       #  startDB2INST2	&&  msgLog "Message: DB2INST2 is up ..." >> $logFile 
+       #  startCMRMServices	&&  msgLog "Message: CM RM services are up ..." >> $logFile
+       startWASICMRM	&&  msgLog "Message: WAS ICMRM AppServer is up ..." >> $logFile
+  
+}
+
+stop() {
+        echo  "Stopping dsmserv..."
+
+        stopDB2NODE	&&  msgLog "Message: DB2NODE cfg is copied ..." >> $logFile
+        stopWASICMRM	&&  msgLog "Message: WAS ICMRM AppServer is down..." >> $logFile
+        ##stopCMRM	&&  msgLog "Message: CM RM Services Are Stopped ..." >> $logFile
+
+        stopDB2INST1	&&  msgLog "Message: DB2INST1 is down ..." >> $logFile
+
+        #eClient Server is running on Windows Platform - Denny@20100420
+        ##stopWASECLIENT &&  msgLog "Message: WASECLIENT is down ..." >> $logFile 
+
+        stopCMLS	&&  msgLog "Message: CM LS monitor app is down ..." >> $logFile 
+        stopHTTP	&&  msgLog "Message: HTTP is down ..." >> $logFile 
+        stopDAS		&&  msgLog "Message: DAS is down ..." >> $logFile 
+        stopTSMClient	&&  msgLog "Message: TSM is down ..." >> $logFile
+
+        if [[ -e /var/run/dsmserv.pid ]]
+        then 
+           # make sure someone else didn't kill us already
+           progpid=`cat /var/run/dsmserv.pid`
+           running=`ps -ef | grep $progpid | grep -v grep`
+           if [[ -n $running ]]
+           then
+
+
+              #echo "executing cmd kill `cat /var/run/dsmserv.pid`"
+              kill `cat /var/run/dsmserv.pid` 
+              total_slept=0
+              while check_running; do \
+                  echo  "Process dsmserv still running, will check after $SLEEP_INTERVAL seconds"
+                  sleep $SLEEP_INTERVAL
+                  total_slept=`expr $total_slept + 1`
+
+                  if [ "$total_slept" -gt "$MAX_SLEEP_TIME" ]; then \
+                      break
+                  fi
+              done
+
+              if  check_running 
+              then
+                echo "Unable to stop dsmserv"
+                exit 1
+              else
+                echo "$prog stopped Successfully :-)"  
+              fi
+           fi
+           # remove the pid file so that we don't try to kill same pid again
+           rm /var/run/dsmserv.pid
+           if [[ $? != 0 ]]
+           then
+              echo "Process dsmserv stopped, but unable to remove /var/run/dsmserv.pid"
+              echo "Be sure to remove /var/run/$prog.pid."
+              exit 1
+           fi
+        else
+           echo "dsmserv not running."
+        fi
+
+        rc=$?
+
+        echo
+        [ $rc -eq 0 ] && rm -f /var/lock/subsys/dsmserv
+	return $rc
+}
+
+status() {
+      # check usage
+      if [[ $# != 1 ]]
+      then
+         echo "$0: Invalid call to status routine. Expected argument: <display_to_screen>"
+         echo "where display_to_screen is 0 or 1 and indicates whether output will be sent to screen." 
+         exit 1
+      fi
+      #see if file /var/run/dsmserv.pid exists
+      # if it does, see if process is running
+      # if it doesn't, it's not running - or at least was not started by dsmserv.rc
+      if [[ -e /var/run/dsmserv.pid ]]
+      then
+         progpid=`cat /var/run/dsmserv.pid`
+         running=`ps -ef | grep $progpid | grep -v grep`
+         if [[ -n $running ]]
+         then
+            g_status="running"
+         else
+            g_status="stopped"
+            # remove the pidfile if stopped.
+            if [[ -e /var/run/dsmserv.pid ]]
+            then
+                rm /var/run/dsmserv.pid
+                if [[ $? != 0 ]]
+                then
+                    echo "Process dsmserv stopped, but unable to remove /var/run/dsmserv.pid"
+                    echo "Be sure to remove /var/run/dsmserv.pid."
+                fi
+            fi
+         fi
+      else 
+        g_status="stopped"
+      fi
+      if [[ $1 == 1 ]]
+      then 
+            echo "Status of dsmserv: $g_status"
+      fi
+}
+
+restart() {
+	stop
+	start
+}
+
+# main #
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status 1
+        ;;
+  restart|reload)
+        restart
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|status|restart}"
+        exit 1
+esac
+
+exit $?
+
+

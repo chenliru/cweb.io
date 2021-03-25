@@ -1,0 +1,66 @@
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /home/lchen/script1.sh ]] && mv -f /home/lchen/script1.sh /home/lchen/script1.sh_20170228162846  '" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/sush ]] && mv -f /tmp/sush /tmp/sush_20170228162846  '" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/sush.ksh ]] && mv -f /tmp/sush.ksh /tmp/sush.ksh_20170228162846  '" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/myTab.run ]] && mv -f /tmp/myTab.run /tmp/myTab.run_20170228162846  '" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' chmod a+x /tmp/sush  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' chown root.bin /tmp/sush  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' chmod +s /tmp/sush  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' chmod a+x /tmp/sush.ksh  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' cd /tmp;./sush  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/sush ]] && rm -f /tmp/sush  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/sush.ksh ]] && rm -f /tmp/sush.ksh  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/myTab.run ]] && rm -f /tmp/myTab.run  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/ls.out20170228162846 ]] && rm -f /tmp/ls.out20170228162846  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/crontab.out20170228162846 ]] && rm -f /tmp/crontab.out20170228162846  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/script1.sh.out20170228162846 ]] && rm -f /tmp/script1.sh.out20170228162846  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/large_file_report.sh.out20170228162846 ]] && rm -f /tmp/large_file_report.sh.out20170228162846  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /tmp/sush.out ]] && rm -f /tmp/sush.out  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -t -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no lchen@ibmserver "echo admin12 | sudo -S su - -c ' [[ -f /home/lchen/script1.sh ]] && rm -f /home/lchen/script1.sh  '" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/script2.sh ]] && mv -f /tmp/script2.sh /tmp/script2.sh_20170228162846" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/in2 ]] && mv -f /tmp/in2 /tmp/in2_20170228162846" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/sush ]] && mv -f /tmp/sush /tmp/sush_20170228162846" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/sush.ksh ]] && mv -f /tmp/sush.ksh /tmp/sush.ksh_20170228162846" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/myTab.run ]] && mv -f /tmp/myTab.run /tmp/myTab.run_20170228162846" 
+Exit Code: 1
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "chmod a+x /tmp/sush" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "chmod a+x /tmp/sush.ksh" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "cd /tmp;./sush" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/sush ]] && rm -f /tmp/sush" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/sush.ksh ]] && rm -f /tmp/sush.ksh" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/myTab.run ]] && rm -f /tmp/myTab.run" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/script2.sh.out20170228162846 ]] && rm -f /tmp/script2.sh.out20170228162846" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/sush.out ]] && rm -f /tmp/sush.out" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/script2.sh ]] && rm -f /tmp/script2.sh" 
+Exit Code: 0
+c:\auto_powershell\OpenSSH-Win32\ssh.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -p 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver "[[ -f /tmp/in2 ]] && rm -f /tmp/in2" 
+Exit Code: 0

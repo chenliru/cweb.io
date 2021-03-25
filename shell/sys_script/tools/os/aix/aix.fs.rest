@@ -1,0 +1,278 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         aix.fs.rest
+#
+# Reference:    n/a
+#
+# Description:  Restore AIX system file system(s)backup by aixfs.bkup on a new 
+#               volume group.
+#
+#               1. All file systems on old volume groups which backup by aix.fs.bkup
+#                  will be created on new volume group if not exit.
+#
+#                  If you don't want to create the filesystem(s), list them in 
+#                  $TOOLSDIR/os/aix/etc/`hostname`exclude.create
+#
+#               2. All file systems listed as 'aix.fs.rest' parameters and 
+#                  backuped by aix.fs.bkup will be restored
+#
+#               Tips: There maybe mutiple filesystem(s) on one single tape volume
+#               so, the tape device name is /dev/rmt0.1, which indicate 
+#               no-retention and no-rewind after tape operation.
+#
+#               All the backup information is store in a mateFile:
+#                - Backup device ( for example: /dev/rmt0)
+#                - Backup Medium lable ( for example: CM07-C02)
+#                - Detailed volume group information 
+#                - File systems backuped in the volume group (#lsvg -l $vgname)
+#                - The sequential number of backup filesystem if mutiple
+#                  filesystems is stored on one single tape volume
+#
+#               metaFile is the repository of the contents for aix.fs.bkup 
+#               and aix.fs.rest, backup device, medium lable and file systems
+#               layout are stored in this metaFile
+#               For example: /$TOOLS/os/aix/etc/`hostname`.$logDate
+#
+# Parameters:   aix.fs.rest metafileName new_volume_group_name "fs1 fs2 ..."
+#               Volume group name: on which volume group should this file system be restored.
+#               file system name(file system mount point) listed in double quote"".
+#
+#               Tips: if you want to restore only one file system listed in metaFile
+#                     just input this file system name here, otherwise input 'all' 
+#                     here and all file systems listed in metaFile will be restored.
+#
+# Command:      For example: aix.fs.rest cm07CM07-02 /home/db2inst1
+#
+# Modification History:
+#
+#               Date            Name            Description
+#               ------------------------------------------------------------
+#               2012-12-13      Liru Chen       Created due to cm07 quarterly 
+#                                               backup&restore
+#
+####################################################################################
+set -v
+set -x
+if [[ $# -lt 3 ]]; then
+    echo " USAGE: aix.fs.rest metafileName new_volume_group_name \"fs1 fs2 ...\""
+    echo " USAGE: aix.fs.rest metafileName new_volume_group_name all"
+    echo " "
+    exit 2
+fi
+if [[ $USER != root ]]; then
+  echo "You should be root user"
+  exit 2
+fi
+
+#Setting scritps environment parameters
+. ~/tools.profile
+
+metafile=$TOOLSDIR/os/aix/etc/$1
+newvgname=$2
+fsnames=${3-"all"}
+
+excludefile=$TOOLSDIR/os/aix/etc/`hostname`exclude.fs.restore
+bkupdev=$(grep -i "BACKUP DEVICE" $metafile | awk '{print $3}')
+
+createVg() {
+set -x
+set -v
+
+ createvgname=$1
+ hdisks=$2
+
+ ppsize=$(grep "PP SIZE" $metafile | awk '{print $6}')
+
+ # Create Volume Group dbvg if no there
+ /usr/sbin/mkvg -s $ppsize -y $createvgname $hdisks 
+
+ # Create log Logic Volume
+ jfs2loglv=$(grep jfs2log $metafile | awk '{print $1}')
+ /usr/sbin/mklv -t jfs2log -y $jfs2loglv $createvgname 1
+
+}
+
+createFs() {
+set -x
+set -v
+
+ createfsname=$1
+
+ echo "\n Start to create filesystem...." | tee -a $LOGFILE
+ cp /etc/filesystems /$TOOLSDIR/os/aix/etc/$TOOLSID.filesystems
+
+ # removes file system if may still have record in /etc/filesystems. 
+ # remove its entry in the /etc/filesystems file,and the underlying logical volume.
+ grep $createfsname /etc/filesystems
+ if [[ $? = 0 ]]; then
+  echo " Warning: FIRSTLY, we will DELETE current $createfsname."
+  echo ""
+  echo ""
+  echo " CONTROL+C to STOP Restore process if you DONOT want to DELETE current $createfsname....."
+  sleep 60
+ 
+  cd /
+  umount -f $createfsname
+  /usr/sbin/rmfs $createfsname
+ fi
+
+ # For example: Create Volume Group if no there
+ # prepareVg $new_vgName "hdisk4 hdisk5 hdisk6 hdisk7"
+
+ # jfs2Log Volume on the new Volume Group
+ jfs2loglv=$(lsvg -l $newvgname | grep jfs2log | awk '{print $1}')
+ 
+ # Parameters of logic volume(old) created
+ cat $metafile.* | grep $createfsname | \
+ while read LV_NAME TYPE LPs PPs PVs LV_STATE MOUNT_POINT
+ do
+  # Create Logic Volumes on new Volume Group
+  /usr/sbin/mklv -t jfs2 -y $LV_NAME $newvgname $LPs
+  [[ $? != 0 ]] && exit 1
+
+  # Create FileSystems
+  /usr/sbin/crfs -v jfs2 -d $LV_NAME -m $MOUNT_POINT -A yes \
+                 -p rw -a logname=$jfs2loglv
+  [[ $? != 0 ]] && exit 1
+
+  mount $MOUNT_POINT
+ done
+
+echo "Create File System $createfsname completed successfully." | tee -a $LOGFILE
+return 0
+}
+
+restoreFs() {
+set -x
+set -v
+
+ restorefsname=$1
+ fsnumber=$(grep $restorefsname $metafile | awk '{print $4}')
+
+ cd $restorefsname
+
+ [[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev load
+
+restore -xvqys $fsnumber -f $bkupdev.1<<EOF
+1
+no
+EOF
+[[ $? != 0 ]] && {
+ echo "Restore $restorefsname Failed." | tee -a $ERRFILE
+ exit 1
+}
+
+ else
+
+  ext=$(echo $1 | sed "s/\//[/g")
+
+restore -xvqy -f $bkupdev.$ext.$fsnumber <<EOF
+1
+no
+EOF
+[[ $? != 0 ]] && {
+ echo "Restore $restorefsname Failed." | tee -a $ERRFILE
+ exit 1
+}
+
+ fi
+
+echo "Restore $restorefsname completed successfully." | tee -a $LOGFILE
+return 0
+
+}
+
+##########################################################################
+#
+#  main()
+#
+##########################################################################
+
+#########################################################
+#Create File System(s) listed in backuped volume group(s)
+########################################################
+ #Get a list of the file systems in volume group(s) by using 'aix.fs.bkup'
+ createfilesystem=$(grep jfs $metafile.* | grep -v N/A | grep -v -f $excludefile \
+                     | awk '{print $7}')
+
+ # log the archive filesystems
+ echo "Restore filesystem listing: $createfilesystem" >> $LOGFILE
+
+ echo "--------------------------------------"  >> $LOGFILE
+ echo " Create DATE : $TOOLSID "                >> $LOGFILE
+ echo "--------------------------------------"  >> $LOGFILE
+
+ # get number of filesystem in the string "create_filesystem"
+ set $createfilesystem
+ integer cfsCount=$#
+
+ # Restore the file systems sequentially
+ integer cCount=1
+
+ while (( $cCount <= $cfsCount ))
+ do
+  sync
+  sleep 5
+
+  #If file system not mounted and cannot be mounted, create it.
+  mount | grep $1
+  if [[ $? != 0 ]]; then
+   mount $1
+   [[ $? != 0 ]] && createFs $1
+  fi
+
+  shift 1
+  cCount=cCount+1
+ done
+
+################################
+#Restore File System(s) backuped
+################################
+ if [[ $fsnames = all ]]; then
+  # Get a list of the mounted "jfs" filesystems
+  restorefilesystem=$(grep -i "BACKUP SeqNumber" $metafile | awk '{print $1}')
+ else
+  restorefilesystem=$fsnames
+ fi
+
+ # log the archive filesystems
+ echo "--------------------------------------"  >> $LOGFILE
+ echo " Restore DATE : $TOOLSID "               >> $LOGFILE
+ echo "--------------------------------------"  >> $LOGFILE
+ 
+ # get number of filesystem in the string "filesystem"
+ set $restorefilesystem
+ integer rfsCount=$#
+
+ # Restore the file systems sequentially
+ integer rCount=1
+
+ while (( $rCount <= $rfsCount ))
+ do
+   sync
+   sleep 5
+
+   mount | grep $1
+   if [[ $? != 0 ]]; then
+    echo " File System $1 is NOT mounted "
+    exit 1
+   fi
+ 
+   restoreFs $1 
+
+   shift 1
+   rCount=rCount+1
+ done
+
+# dismount the tape
+[[ $bkupDev = /dev/rmt* ]] && util.tape $bkupDev offline
+
+sleep 5
+
+#Mail to Administrator;
+mail -s "File systems restore on Volume Group(s) $newvgname completed successfully: $TOOLSID" \
+         $SYSADMEMAIL <$LOGFILE
+
+exit 0
+

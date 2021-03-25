@@ -1,0 +1,1 @@
+0 1 * * * ~/logclear.ksh > /dev/null 2>&1

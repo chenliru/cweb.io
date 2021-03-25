@@ -1,0 +1,111 @@
+
+Notes:
+1. ls -alR | wc -l
+2. ls -alR > /tmp/t1.out
+3. df -k
+
+#!/bin/ksh
+
+bkupdate=bkup.`date +%y%m%d`
+
+cd /home/db2inst1
+find . -print | backup -ivqf  /db2backup1/dr/db2inst1.$bkupdate > /db2backup1/dr/db2inst1.bkup.output 2>&1
+
+cd /home/db2fenc1
+find . -print | backup -ivqf  /db2backup1/dr/db2fenc1.$bkupdate > /db2backup1/dr/db2fenc1.bkup.output 2>&1
+
+cd /db2logging
+find . -print | backup -ivqf  /db2backup1/dr/db2logging.$bkupdate > /db2backup1/dr/db2logging.bkup.output 2>&1
+
+exit 0
+
+******************************************************************
+
+#!/bin/ksh
+
+cd /home/db2inst1
+restore -xvqf /db2backup1/dr/db2inst1.bkup.???
+
+cd /home/db2fenc1
+restore -xvqf /db2backup1/dr/db2fenc1.bkup.???
+
+cd /db2logging
+restore -xvqf /db2backup1/dr/db2logging.bkup.???
+
+exit 0
+
+******************************************************************
+
+backup by i-node
+1. VG online, but umount file systems
+2. login as root
+3. mount tape /dev/rmt2
+4. cd /; backup -0 -u -f /dev/rmt2 /home/db2inst1 (backup)
+5. cd /; restore -Tqf /dev/rmt2 | more (check)
+
+******************************************************************
+
+restore by i-node
+1. VG online, mount file systems
+2. login as root
+3. mount tape /dev/rmt2
+4. cd /home/db2inst1; restore -rvqf /dev/rmt2 /home/db2inst1 (restore)
+
+#########################################
+
+#!/bin/ksh
+
+cd /home/db2inst1
+restore -xvqf /db2bkupls/backupfs/db2inst1.???
+
+cd /home/db2fenc1
+restore -xvqf /db2bkupls/backupfs/db2fenc1.???
+
+cd /db2logls
+restore -xvqf /db2bkupls/backupfs/db2logls.???
+
+exit 0
+
+###########################################
+
+Version recovery (command line or control center) 
+1. db2 list history backup all for icmnlsdb
+2. db2 restore db icmnlsdb use tsm taken at 20120822010821
+
+Roll-forward recovery (command line or control center)
+1. db2 get db cfg for icmnlsdb  -- check database status  
+2. db2 connect to icmnlsdb; db2 list tablespaces; db2 connect reset
+3. db2 list history backup all for icmnlsdb
+4. db2 restore db icmnlsdb use tsm taken at 20120822010821
+5. db2 rollforward db icmnlsdb to end of logs and stop
+
+Point-in-time recovery (command line or control center)
+1. db2 get db cfg for icmnlsdb  -- check database status
+2. db2 connect to icmnlsdb; db2 list tablespaces; db2 connect reset
+3. db2 list history backup all for icmnlsdb
+4. db2 restore db icmnlsdb use tsm taken at 20120822010821
+5. db2 rollforward db icmnlsdb to 2012-08-22-15.00.00.000000
+6. db2 rollforward db icmnlsdb stop
+
+notes:
+1. db2adutl query db icmnlsdb | more
+2. db2 rollforward db icmnlsdb query status
+3. tail -20 /tsmha01/tsmdb2ls/log/ARCHIVE.LOG
+4. tsm > select * from backups where node_name='DB2LS'
+5. tsm > select * from archives where NODE_NAME='DB2LS' and LL_NAME='S0180783.LOG' 
+
+6. db2adutl extract full taken at 20120822010821 db icmnlsdb
+7. db2adutl exxtract logs between S0000100.LOG and S0000150.LOG db icmnlsdb 
+
+8. dsmc backup; dsmc restore
+9. dsmc archive dsmc retrieve 
+
+###################################################
+
+db2 backup database dbname online to /path1/path2 COMPRESS include logs
+db2 restore db dbname from /path1/path2/ taken at logtarget /home/db2inst/logs/ REPLACE EXISTING
+db2 rollforward db tsmtest to end of logs and complete
+db2 rollforward database tsmtest cancel
+
+######################################################
+

@@ -1,0 +1,6 @@
+xhost +
+
+su - icmadmin << EOF
+ cd /opt/IBM/db2cmv8/admin/common
+ ./cmadmin.sh &
+EOF

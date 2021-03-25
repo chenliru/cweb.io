@@ -1,0 +1,52 @@
+
+echo ""
+echo " Informix ipdb server environment ..."
+echo ""
+INFVERSION=ver115UC3
+INFORMIXDIR=/usr/apps/inf/$INFVERSION
+INFORMIXSERVER=ipdb
+ONCONFIG=onconfig_$INFORMIXSERVER 
+PATH=$INFORMIXDIR/bin:$PATH
+INFORMIXTERM=termcap
+TERMCAP=$INFORMIXDIR/etc/termcap
+SYSROOT=/usr/apps
+INFROOT=$SYSROOT/inf
+INFBIN=$INFORMIXDIR/bin
+INFLIB=$INFORMIXDIR/lib
+INFINC=$INFORMIXDIR/incl
+INFPLATFORM=IBMAIX
+INFLOGDIR=/home/informix/log
+INFBKUP=/home/informix/bkup
+#DBSPACETEMP=tempdbs1:tempdbs2:tempdbs3
+export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG PATH
+export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM 
+export INFLOGDIR INFBKUP 
+#export DBSPACETEMP
+export INFXCPUVPPRIORITY=90
+export INFXNETVPPRIORITY=90
+export INFXMSCVPPRIORITY=90
+export INFXIOVPPRIORITY=90
+
+echo ""
+echo " Tuxedo locus server environment ..."
+echo ""
+export APPDIR=/usr/apps/ipg/ver001/srv/locus
+export TUXCONFIG=$APPDIR/tuxconfig.9.1
+export FIELDTBLS=/usr/apps/ipg/ver001/srv/locus/fldidtbl
+export FLDTBLDIR=`pwd`
+export ROOTDIR=/usr/apps/tux/tux9.1
+export TUXDIR=$ROOTDIR
+export TUXROOT=$ROOTDIR
+export TUXSYS=$ROOTDIR
+export TLOGDEVICE=$APPDIR/xa_log
+export LD_LIBRARY_PATH=/usr/apps/tux/tux9.1/lib:$INFORMIXDIR/lib/esql:$INFORMIXDIR/lib:/usr/lib:
+export LD_INCLUDE_PATH=$TUXDIR/include:/usr/apps/ipg/ver001/inc:
+export LIBPATH=/usr/apps/tux/tux9.1/lib:$INFORMIXDIR/lib/esql:$INFORMIXDIR/lib:/usr/lib:
+export TUXVERSION=9.1
+export IPGROOT=/usr/apps/ipg/ver001
+export IPGINC=/usr/apps/ipg/ver001/inc
+export IPGSRC=/usr/apps/ipg/ver001/src
+export ENVFILE=ENVFILE.9.1
+export PATH=/usr/apps/tux/tux9.1/bin:/usr/apps/ipg/ver001/util:/usr/apps/tux/tux9.1/locale/C:$PATH
+export LC_MESSAGES=C
+

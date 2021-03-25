@@ -1,0 +1,37 @@
+#!/bin/ksh
+###############################################################################
+#
+#  Collect the content of script files
+#  scripts filenames are listed in <input file>
+#   
+#  Author :      Liru Chen   Date: May 13, 2013
+#                written for Insight system administration documentation
+#
+#  Copyright:    Livingston International
+#
+###############################################################################
+set -v
+set -x
+
+if [[ $# -ne 1 ]]; then
+    echo " USAGE: col.cont <input file>"
+    echo " "
+    #exit 2
+fi
+
+input=${1-"SCRIPTS"}
+
+echo "Start Collect content of scripts listed in file $input" 
+
+while read script
+do
+ echo "#####################################################################"
+ echo "# Script $script                                                   "
+ echo "#####################################################################"
+
+ cat $script 
+
+done < $input
+
+exit 0
+

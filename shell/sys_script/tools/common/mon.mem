@@ -1,0 +1,130 @@
+#!/bin/ksh
+########################################################################
+# Program : mon.mem
+# Purpose : Script to use vmstat and find out memory page in/out activity
+# on a system.
+#
+# Licensed Materials - Property of SIEMEMS
+#
+# Author: Liru Chen
+#  
+# COPYRIGHT SIEMEMS ENTERPRISE COMMUNICATION. 1989,1995
+# All Rights Reserved 
+#
+########################################################################
+#set -v
+#set -x
+# vmstat display 6 head lines on Sun, 6 on AIX and 2 on Linux
+# After head lines, display 19 data lines(one page) on Sun, 20 on AIX
+# and 21 on Linux.., so had to avoid that...
+
+PLATFORM=`uname`
+if [[ $PLATFORM = "SunOS" ]]; then
+ vmstat_page_ctr=18
+ vmstat_param="r b avm fre re pi po fr sr cy in sy cs us sy id etcetc"
+ vmstat_head=7
+fi
+if [[ $PLATFORM = "AIX" ]]; then
+ vmstat_page_ctr=19
+ vmstat_param="r b avm fre re pi po fr sr cy in sy cs us sy id etcetc"
+ vmstat_head=7
+fi
+if [[ $PLATFORM = "Linux" ]]; then
+ alias echo='echo -e'
+ vmstat_page_ctr=20
+ vmstat_param="r b swpd free buff cache pi po bi bo in cs us sy id etcetc"
+ vmstat_head=3
+fi
+
+memuse() {
+typeset intr=${1-15}
+typeset counter=${2-15}
+typeset total_pi=0
+typeset total_po=0
+
+if [[ $counter -le 0 ]]; then exit 0 ; fi
+if [[ $intr -le 0 ]]; then exit 0 ; fi
+
+#echo $vmstat_param
+typeset org_cnt=$counter
+
+echo ""
+echo "`uname -srvmn` `date '+%m/%d/%Y'` "
+echo
+echo "Time\tPageIn\tPageOut"
+
+# vmstat data collection more then one page
+while [[ $counter -gt $vmstat_page_ctr ]]
+ do
+  loop_counter=$vmstat_page_ctr
+  counter=$(($counter-$loop_counter))
+
+  vmstat $intr | tail -n +$vmstat_head | {
+  while read $vmstat_param
+   do
+
+   echo "`date '+%H:%M:%S'` \t$pi\t$po"
+
+   total_pi=$(( $pi+$total_pi))
+   total_po=$(( $po+$total_po))
+   loop_counter=$(( $loop_counter-1 ))
+
+   if [[ $loop_counter -eq 0 ]]; then
+     # Continue loop on 2nd level
+     # that's "while [ $counter -gt $vmstat_page_ctr ]" level
+     continue 2
+   fi
+
+   if [[ $counter = 0 ]]; then
+   {
+   # echo Total :
+   # echo kB in : $total_pi kB out : $total_po
+   echo "\nAverage:\c"
+   avg_pi=$(($total_pi/$org_cnt))
+   avg_po=$(($total_po/$org_cnt))
+   echo "\t$(($avg_pi+$avg_po))"
+   exit 0
+   #return 0
+   }
+   fi
+
+  done
+ }
+
+ done
+
+# data collection no more then one page, just loop till the end.
+if [[ $counter -le $vmstat_page_ctr ]]; then
+  vmstat $intr | tail -n +$vmstat_head | {
+  while read $vmstat_param
+   do
+
+   echo "`date '+%H:%M:%S'` \t$pi\t$po"
+   counter=$(($counter-1))
+   total_pi=$(( $pi+$total_pi ))
+   total_po=$(( $po+$total_po ))
+
+   if [[ $counter = 0 ]]; then
+    {
+    # echo Total :
+    # echo kB in : $total_pi kB out : $total_po
+    echo "\nAverage:\c"
+    avg_pi=$(($total_pi/$org_cnt))
+    avg_po=$(($total_po/$org_cnt))
+    echo "\t$(($avg_pi+$avg_po))"
+    exit 0
+    # return 0
+    }
+   fi
+
+  done
+  }
+fi
+
+}
+########################################
+# end: memuse
+########################################
+
+memuse $@
+

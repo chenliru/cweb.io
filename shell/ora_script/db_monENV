@@ -1,0 +1,33 @@
+#!/bin/bash
+#########################################################################
+# SCRIPT       : db_monENV                                              #
+#                                                                       #
+# DESCRIPTION  : Script to set the environment variables for the        #
+#                active_dba_db_mon.bash monitoring script.              #
+#                                                                       #
+#########################################################################
+# Modification Log:                                                     #
+# Date        Name              Description                             #
+# ---------   ---------------   --------------------------------------- #
+# Feb/24/17   Ramiz Sarah       Initial Creation                        #
+#                                                                       #
+#########################################################################
+
+#########################################################################
+# Set Global Variables
+#########################################################################
+
+BASE_DIR=/home/oracle/script
+
+LOG_DIR=/kec1fra/datapump/dbmon
+
+ORA_LSNR_LST="LISTENER listener2 listener3 listener4 listener5 listener6"
+
+EMAIL_LIST="rsarah@livingstonintl.com tward@livingstonintl.com bboyczuk@livingstonintl.com"
+
+#EMAIL_LIST="rsarah@livingstonintl.com tward@livingstonintl.com livingstonintl.com"
+
+ERR_MSG="ora-|error|Errors"
+
+DB_MON_USR=dbmon
+

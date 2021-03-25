@@ -1,0 +1,88 @@
+2,4c2,4
+< /dev/hd4          2883584   2294748   21%    15680     3% /
+< /dev/hd2          5242880   2117584   60%    67076    12% /usr
+< /dev/hd9var       3145728   1847620   42%    13535     4% /var
+---
+> /dev/hd4          2883584   2294596   21%    15680     3% /
+> /dev/hd2          5242880   2117528   60%    67076    12% /usr
+> /dev/hd9var       3145728   1847416   42%    13535     4% /var
+6c6
+< /dev/hd1          2097152   1338736   37%     2998     1% /home
+---
+> /dev/hd1          2097152   1338256   37%     2998     1% /home
+12c12
+< /dev/dmqjtmplv    36700160  25383992   31%     1798     1% /dmqjtmp
+---
+> /dev/dmqjtmplv    36700160  25201740   32%     1823     1% /dmqjtmp
+14,15c14,15
+< /dev/appslv      10485760   6238632   41%    20373     2% /usr/apps
+< /dev/ixrootlv      262144     83240   69%        5     1% /ix_root
+---
+> /dev/appslv      10485760   6200744   41%    20373     2% /usr/apps
+> /dev/ixrootlv      262144     83216   69%        5     1% /ix_root
+34c34
+< /dev/insightlv     2097152   1961052    7%     3914     1% /insight
+---
+> /dev/insightlv     2097152   1960788    7%     3971     1% /insight
+39c39
+< IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 11 days 02:54:51 -- 2051200 Kbytes
+---
+> IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 11 days 03:54:51 -- 2051200 Kbytes
+158c158
+< Thu Nov 28 10:45:00 EST 2013	ip_0p	b3
+---
+> Thu Nov 28 11:45:00 EST 2013	ip_0p	b3
+179,180c179,180
+<     Number of data pages           786071    
+<     Number of rows                 5407304   
+---
+>     Number of data pages           786093    
+>     Number of rows                 5408050   
+2297c2297
+< Thu Nov 28 10:45:00 EST 2013	ip_0p	b3_line
+---
+> Thu Nov 28 11:45:00 EST 2013	ip_0p	b3_line
+2318,2319c2318,2319
+<     Number of data pages           3903333   
+<     Number of rows                 34565648  
+---
+>     Number of data pages           3903849   
+>     Number of rows                 34574164  
+2974c2974
+< Thu Nov 28 10:45:00 EST 2013	ip_0p	b3_recap_details
+---
+> Thu Nov 28 11:45:00 EST 2013	ip_0p	b3_recap_details
+2995,2996c2995,2996
+<     Number of data pages           1674110   
+<     Number of rows                 68994813  
+---
+>     Number of data pages           1674269   
+>     Number of rows                 69005897  
+3595c3595
+< Thu Nov 28 10:45:00 EST 2013	ip_0p	tariff
+---
+> Thu Nov 28 11:45:00 EST 2013	ip_0p	tariff
+3617c3617
+<     Number of rows                 18685982  
+---
+>     Number of rows                 18687196  
+3834c3834
+<     Number of pages used           58926     
+---
+>     Number of pages used           58927     
+5447c5447
+< Thu Nov 28 10:45:00 EST 2013	ip_0p	lii_client
+---
+> Thu Nov 28 11:45:00 EST 2013	ip_0p	lii_client
+5541c5541
+< Thu Nov 28 10:45:00 EST 2013	ip_0p	lii_account
+---
+> Thu Nov 28 11:45:00 EST 2013	ip_0p	lii_account
+5563c5563
+<     Number of rows                 189446    
+---
+>     Number of rows                 189448    
+5634c5634
+< Thu Nov 28 10:45:00 EST 2013	ip_0p	client_invoice
+---
+> Thu Nov 28 11:45:00 EST 2013	ip_0p	client_invoice

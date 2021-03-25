@@ -1,0 +1,54 @@
+date
+
+. /home/db2inst2/sqllib/db2profile
+
+db2 connect to rmdb user rmadmin using cmrm83
+
+db2 runstats on table RMADMIN.RMACCESS with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMAGGREGATE with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMBLOBSwith distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMCNTL with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMCOLLECTIONS with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMDEVMGR with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMMGTCLASS with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMMGTTRANSITION with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMOBJECTS with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMOBJPARTS with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMREPLICATION with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMSERVER with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMSTAGING with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMSTGGRPCLASS with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMSTGGRPVOLUME with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMSTORAGECLASS with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMSTORAGEGROUP with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMSTRINGS with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMTABLES with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMTRACKING with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMVERSION with distribution and detailed indexes all
+
+db2 runstats on table RMADMIN.RMVOLUMES with distribution and detailed indexes all
+
+
+db2 connect reset
+
+db2rbind rmdb -l /admin/db2stats/rmdb/rmstats.log all -u rmadmin -p cmrm83

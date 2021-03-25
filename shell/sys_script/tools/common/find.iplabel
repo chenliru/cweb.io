@@ -1,0 +1,49 @@
+#!/usr/bin/ksh
+########################################################################
+# list all the content of files named like "*$2*"
+# usage: find.iplabel <iplabel>  <directory> 
+#
+# Author: Liru Chen 
+# Date:07/12/2013
+#########################################################################
+#set -v
+#set -x
+iplabel=$1
+
+#Get a list of the name pattern matched files
+filename=`find $2 -ls |awk '{print $11}'`  
+
+#Get number of filess in the string "filename"
+set $filename   
+integer scount=$#
+
+#Display all content of files matched
+integer icount=0
+
+while (( $icount < $scount ))
+do
+  #echo $iplabel
+  #Highlight the lines which contain valid ip label
+  rc=`file $1 | egrep "shell|commands|text"` 
+  if [[ $? -eq 0 ]]; then
+   #echo "########## Non Binary File found ################"
+   rc=`egrep $iplabel $1 | grep -v ^#`
+   if [[ $? -eq 0 ]]; then
+    echo "############################################################################"
+    echo " File $1 with IP LABEL:$iplabel"                                                       
+    echo "#############################################################################"
+    #cat $1                                                                              
+    #echo "#############################################################################"
+    #echo " End of file $1 "                                                             
+    #echo "#############################################################################"
+    #echo ""
+    #echo ""
+    echo ""
+   fi
+  fi
+shift 1
+  icount=icount+1
+done
+
+exit 0
+

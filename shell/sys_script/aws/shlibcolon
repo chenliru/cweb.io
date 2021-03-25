@@ -1,0 +1,6078 @@
+#!/bin/ksh93
+#######################################################################
+# SHELL SCRIPTS TOOLS LIBRARY
+#----------------------------------------------------------------------
+# 
+# Author : Liru Chen
+# Licensed Materials - Property of LIRU; All Rights Reserved 2015-2019
+#######################################################################
+#set -x			#display each line as it actually executes
+#set -v			#display each lineas the shell reads it, therefore, 
+				#displaying comments, functions definitions,and so on.
+
+#Set up running environment
+PROFILEBASE="/home/lchen/tools"
+if [ ! -f $PROFILEBASE/shlib.$(hostname) ]; then exit 1; fi
+. $PROFILEBASE/shlib.$(hostname) 			#cron.$$.LOG 2>&1
+
+##Date & Time
+current_date=$(date +%Y%m%d)
+current_time=$(date +%Y%m%d%H%M%S)
+
+#Mail address
+mail_alert=${MAILALERT:="lchen@livingstonintl.com"}
+mail_notice=${MAILNOTICE:="lchen@livingstonintl.com"}
+
+#########################################################################
+# Program : mail attachment
+# $1: mail_subject (no_space_in_subject)
+# $2: attachment file's directory
+# $3: attachment file's name (only one)
+# $4: recipients' email address (could be many email addresses)
+#########################################################################
+mail_Linux () {
+echo "PLEASE FIND ATTACHMENT FROM $(hostname)" |
+mail -s $1 -a $2/$3 $4
+}
+
+mail_AIX () {
+mail -s $1 $4 <<EOF
+PLEASE FIND ATTACHMENT FROM $(hostname)
+~<!uuencode $2/$3 $(basename $3)
+EOF
+}
+
+#########################################################################
+# Program : ftp script
+# $1: remote host name
+# $2: user name
+# $3: password
+# $4: file local directory
+# $5: file remote directory
+# $6: remote file name
+# $7: local file name
+#########################################################################
+ftp_put () {
+ftp -vn << END_OF_PUT
+open $1
+user $2 $3
+bin
+lcd $4
+cd $5
+put $6 $7
+bye
+END_OF_PUT
+}
+
+ftp_get () {
+ftp -vn << END_OF_GET
+open $1
+user $2 $3
+bin
+lcd $4
+cd $5
+get $6 $7
+bye
+END_OF_GET
+}
+
+#For GUI on your workstation, 
+#1. check that ssh X11 forwarding requests are allowed on server side:
+#	grep X11Forwarding /etc/ssh/sshd_config: X11Forwarding yes
+#	If it's necessary, change the value from "no" to "yes", and restart the ssh service
+#
+#	AIX Service Resource:
+#	stopsrc –s sshd; sleep 2; startsrc –s sshd
+#
+#2. Now set the X11 forwarding on your workstation ssh client side tool
+aix_src () {
+	aix_service=${AIXSERVICE:=sshd}
+
+	stopsrc –s ${aix_service}; sleep 2; startsrc –s ${aix_service}
+
+}
+
+########################################################################
+# check_ssh_key: check for ssh key for given ip or host
+########################################################################
+ssh_check ()
+{
+	 ssh_knownhost="$HOME/.ssh/known_hosts"
+	 ls -la $ssh_knownhost
+
+	ls_ssh_knownhost=$(ls -la $ssh_knownhost 2>/dev/null)
+	rc=$?
+	# RC=0 OK
+	# RC=2 > file does not exist <
+	AWTRACE "ssh_key: rc=${rc} ssh_knownhost=${ls_ssh_knownhost}<"
+
+	# rsa or dss
+	typeset -A sshkey
+	typeset -i i=0
+	
+	grep "ssh-" ${ssh_knownhost} | awk '{print $1" "$2}' |
+	while read sshhost sshkeytype
+	do
+	  i=$i+1
+	  echo ${sshhost} | IFS="," read hostip1 hostip2 hostip3
+	  if [[ ${hostip3} = "" ]]
+	  then
+		if [[ ${hostip2} = "" ]]
+		then
+		  : # only 1 entry
+		  sshkey[$i]=${hostip1}
+		else
+		  : # two entries found
+		  sshkey[$i]=${hostip1}
+		  i=$i+1
+		  sshkey[$i]=${hostip2}
+		fi
+	  else
+		AWTRACE "Unexpected Error. hostip3=${hostip3}"
+		i=$i-1 # more than two - nothing set
+	  fi
+
+	done # grep ssh_key
+	sshkey[0]=${i}
+	AWTRACE "ssh_key: sshkey[0]=${sshkey[0]}<"
+	AWTRACE "ssh_key: sshkey[1]=${sshkey[1]}<"
+	AWTRACE "ssh_key: sshkey[2]=${sshkey[2]}<"
+	AWTRACE "ssh_key: sshkey[3]=${sshkey[3]}<"
+	AWTRACE "ssh_key: sshkey[4]=${sshkey[4]}<"
+	AWTRACE "ssh_key: sshkey[5]=${sshkey[5]}<"
+	AWTRACE "ssh_key: sshkey[6]=${sshkey[6]}<"
+	AWTRACE "ssh_key: sshkey[7]=${sshkey[7]}<"
+	AWTRACE "ssh_key: sshkey[8]=${sshkey[8]}<"
+	
+	typeset -i idx=0
+	AWCONST "ssh_key: check for >${host_ip}<"
+	while [[ $idx -le ${sshkey[0]} ]]
+	do
+	   let idx=$idx+1
+	   if [[ ${host_ip} = ${sshkey[$idx]} ]]
+	   then
+		 : # FOUND !
+		 AWCONST "ssh_key: found ${host_ip}"
+		 key_status="OK"
+		 break # leave the loop as we are done
+	   else
+		 key_status="KO"
+		 if [[ ${ssh_key_trace} = "ON" ]]
+		 then
+		   ssh_key_trace="OFF" # set to OFF. (do it only once)
+		   AWTRACE "ssh_key: search >${sshkey[$idx]}<"
+		 fi # ssh_key_trace
+	   fi
+	 done
+}
+
+ssh_key () {
+	ssh_key_host=${1-$FTPHOST}
+	ssh_key_user=${2-$FTPUSER}
+	ssh_key_passwd=${3-$FTPPASSWD}
+	ssh_key_publickey=${4-"Publickey"}
+
+	if [[ $(hostname) == "${ssh_key_host}" ]]; then return; fi
+	
+	ftp -vn << END_OF_KEY
+	open ${ssh_key_host}
+	user ${ssh_key_user} ${ssh_key_passwd}
+	bin
+	lcd $HOME/.ssh
+	append ${ssh_key_publickey} ./.ssh/authorized_keys
+	bye
+END_OF_KEY
+	
+}
+
+ssh_port () {
+
+# ssh -f -g -L *:local_port:localhost:remote_port remote_server sleep 10
+
+# The bind_address of 'localhost' indicates that the listening port 
+# be bound for local use only, while an empty address or '*' 
+# indicates that the port should be available from all interfaces
+# -g  Allows remote hosts to connect to local forwarded ports.
+
+# The following example tunnels an telnet session from client
+# machine '127.0.0.1' (localhost) to remote server 'ifx01'
+ssh -f -g -L 1234:ifx01:6800 ifx01 sleep 100
+#             |     |     |
+#             -------------
+# This tunnels a connection to remote server 'ifx01', using port 1234.  
+# It doesn't matter which port is used, as long as it's greater than 
+# 1023 (remember, only root can open sockets on privileged ports) and 
+# doesn't conflict with any ports already in use.  The connection is 
+# forwarded to port 6800 on the remote server interface:10.253.133.30
+# (DNS name: ifx01), the first ifx01 in above example, since that's the
+# standard port for informix server services.
+
+# However, an explicit bind_address may be used to bind the 
+# connection to a specific address. 
+
+# The -f option backgrounds ssh and the remote command 'sleep
+# 100' is specified to allow an amount of time (100 seconds, in
+# the example) to start the service which is to be tunnelled.
+
+telnet ifx01 6800	# If no connections are made within the time
+					# specified, ssh will exit, then port forwarding
+					# is no long availble.
+
+}
+
+ssh_cmd () {
+:
+
+}
+
+ssh_guicmd () {
+:
+
+}
+
+#########################################################################
+# Program : cpu_idle
+# Purpose : use vmstat to find out CPU usage on a system.
+#########################################################################
+# vmstat display 6 head lines on Sun, 6 on AIX and 2 on Linux
+# After head lines, display 19 data lines(one page) on Sun, 20 on AIX
+# and 21 on Linux.., so had to avoid that...
+cpu_idle () {
+	PLATFORM=$(uname)
+	if [[ $PLATFORM = "SunOS" ]]
+	then
+		integer vmstat_page_ctr=18
+		vmstat_param="r b avm fre re pi po fr sr cy in sy cs us sy id etcetc"
+		integer vmstat_head=7
+	fi
+	
+	if [[ $PLATFORM = "AIX" ]]
+	then
+		integer vmstat_page_ctr=19
+		vmstat_param="r b avm fre re pi po fr sr cy in sy cs us sy id etcetc"
+		integer vmstat_head=7
+	fi
+	
+	if [[ $PLATFORM = "Linux" ]]
+	then
+		alias echo='echo -e'
+		integer vmstat_page_ctr=20
+		vmstat_param="r b swpd free buff cache si so bi bo in cs us sy id etcetc"
+		integer vmstat_head=3
+	fi
+
+	integer intr=${1-1}
+	integer counter=${2-30}
+	integer total_id=0
+
+	if [[ $counter -le 0 ]]; then return 0 ; fi
+	if [[ $intr -le 0 ]]; then return 0 ; fi
+
+	#echo $vmstat_param
+	integer org_cnt=$counter
+
+	echo ""
+	echo "$(uname -srvmn) $(date '+%m/%d/%Y')"
+	echo
+	echo "TIME\t\tcpu(%idle)"
+
+	#vmstat data collection more then one page
+	while (( counter > vmstat_page_ctr )) 
+	do
+		integer loop_counter=$vmstat_page_ctr
+		counter=counter-loop_counter
+
+		vmstat $intr | tail -n +$vmstat_head |
+		while read $vmstat_param
+		do
+			echo "$(date '+%H:%M:%S') \t$id"
+
+			total_id=$(( $id+$total_id ))
+
+			loop_counter=$(( $loop_counter-1 ))
+			if [[ $loop_counter -eq 0 ]]
+			then
+				#Continue loop on 2nd level
+				#that's "while [ $counter -gt $vmstat_page_ctr ]" level
+				continue 2
+			fi
+
+			if [[ $counter -le 0 ]]
+			then
+				#echo Total :
+				echo "\nAverage:\c"
+				avg_id=$(( $total_id/$org_cnt ))
+
+				echo "\t$avg_id"
+				return 0
+			fi
+		done
+
+	done
+
+	#data collection no more then one page, just loop till the end.
+	if [[ $counter -le $vmstat_page_ctr ]]
+	then
+		vmstat $intr | tail -n +$vmstat_head |
+		while read $vmstat_param
+		do
+			echo "$(date '+%H:%M:%S') \t$id"
+
+			counter=$(( $counter-1 ))
+			total_id=$(( $id+$total_id ))
+
+			if [[ $counter -le 0 ]]
+			then
+				#echo Total :
+				echo "\nAverage:\c"
+				avg_id=$(( $total_id/$org_cnt ))
+				echo "\t$avg_id"
+				#exit 0
+				return 0
+			fi
+		done
+
+	fi
+}
+
+########################################################################
+# Program : mem_pipo
+# Purpose : use vmstat to find out memory page in/out
+########################################################################
+# vmstat display 6 head lines on Sun, 6 on AIX and 2 on Linux
+# After head lines, display 19 data lines(one page) on Sun, 20 on AIX
+# and 21 on Linux.., so had to avoid that...
+mem_pipo () {
+	PLATFORM=$(uname)
+	if [[ $PLATFORM = "SunOS" ]]
+	then
+		integer vmstat_page_ctr=18
+		vmstat_param="r b avm fre re pi po fr sr cy in sy cs us sy id etcetc"
+		integer vmstat_head=7
+	fi
+	
+	if [[ $PLATFORM = "AIX" ]]
+	then
+		integer vmstat_page_ctr=19
+		vmstat_param="r b avm fre re pi po fr sr cy in sy cs us sy id etcetc"
+		integer vmstat_head=7
+	fi
+	
+	if [[ $PLATFORM = "Linux" ]]
+	then
+		alias echo='echo -e'
+		integer vmstat_page_ctr=20
+		vmstat_param="r b swpd free buff cache pi po bi bo in cs us sy id etcetc"
+		integer vmstat_head=3
+	fi
+
+	integer intr=${1-1}
+	integer counter=${2-30}
+	integer total_pi=0
+	integer total_po=0
+
+	if [[ $counter -le 0 ]]; then return 0; fi
+	if [[ $intr -le 0 ]]; then return 0; fi
+
+	#echo $vmstat_param
+	integer org_cnt=$counter
+
+	echo ""
+	echo "$(uname -srvmn) $(date '+%m/%d/%Y')"
+	echo
+	echo "Time\t\tPageIn\tPageOut"
+
+	#vmstat data collection more then one page
+	while (( counter > vmstat_page_ctr ))
+	do
+		integer loop_counter=$vmstat_page_ctr
+		counter=counter-loop_counter
+
+		vmstat $intr | tail -n +$vmstat_head |
+		while read $vmstat_param
+		do
+			echo "$(date '+%H:%M:%S') \t$pi\t$po"
+
+			total_pi=$(( $pi+$total_pi ))
+			total_po=$(( $po+$total_po ))
+			loop_counter=$(( $loop_counter-1 ))
+
+			if [[ $loop_counter -eq 0 ]]
+			then
+				#Continue loop on 2nd level
+				#that's "while [ $counter -gt $vmstat_page_ctr ]" level
+				continue 2
+			fi
+
+			if [[ $counter = 0 ]]
+			then
+				#echo Total :
+				#echo kB in : $total_pi kB out : $total_po
+				echo "\nAverage:\c"
+				avg_pi=$(( $total_pi/$org_cnt ))
+				avg_po=$(( $total_po/$org_cnt ))
+				echo "\t$(( $avg_pi+$avg_po ))"
+				#exit 0
+				return 0
+			fi
+		done
+		
+	done
+
+	#DATA collection no more then one page, just loop till the end
+	if [[ $counter -le $vmstat_page_ctr ]]
+	then
+		vmstat $intr | tail -n +$vmstat_head |
+		while read $vmstat_param
+		do
+			echo "`date '+%H:%M:%S'` \t$pi\t$po"
+			counter=$(( $counter-1 ))
+			total_pi=$(( $pi+$total_pi ))
+			total_po=$(( $po+$total_po ))
+
+			if [[ $counter = 0 ]]
+			then
+				# echo Total :
+				# echo kB in : $total_pi kB out : $total_po
+				echo "\nAverage:\c"
+				avg_pi=$(( $total_pi/$org_cnt ))
+				avg_po=$(( $total_po/$org_cnt ))
+				echo "\t$(( $avg_pi+$avg_po ))"
+				#exit 0
+				return 0
+			fi
+		done
+
+	fi
+}
+
+###########################################################################
+# Program : disk_active
+# Purpose : use iostat to find %tm_act, the percentage of time the physical 
+#           disk/tape was active (bandwidth utilization for the drive)
+###########################################################################
+disk_active () {
+	PLATFORM=$(uname)
+	if [[ $PLATFORM = "SunOS" ]]
+	then
+		iostat_com="iostat" 
+		iostat_param="Disks utilization etcetc"
+		iostat_head=8
+	fi
+	
+	if [[ $PLATFORM = "AIX" ]]
+	then
+		iostat_com="iostat"
+		iostat_param="Disks utilization etcetc"
+		iostat_head=8
+	fi
+	
+	if [[ $PLATFORM = "Linux" ]]
+	then
+		iostat_com="iostat -d -x"
+		alias echo='echo -e'
+		iostat_param="Disks rrqm wrqm r w rsec wsec avgrq avgqu await svctm utilization"
+		iostat_head=4
+	fi
+	
+	integer intr=${1-1}
+	integer counter=${2-30}
+
+	if [[ $counter -le 0 ]]; then return 0; fi
+	if [[ $intr -le 0 ]]; then return 0; fi
+
+	integer org_cnt=$counter
+
+	integer DISK_NUM=$($iostat_com | tail -n +$iostat_head | awk '{print $1}' | wc -l)
+	DISK_NAME=($($iostat_com | tail -n +$iostat_head | awk '{print $1}'))
+
+	if [[ $DISK_NUM -gt 1 ]]
+	then
+		echo "Found $DISK_NUM disks...${DISK_NAME[*]}"
+	fi
+
+	disk_activity=("")
+	integer i=0
+	while (( i < DISK_NUM ))
+	do
+		disk_activity[i]=0
+	i=i+1
+	done
+
+	echo ""
+	echo "$(uname -srvmn) $(date '+%m/%d/%Y')"
+	echo ""
+
+	echo "TIME\t\tDiskName\tDiskActive%"
+
+	while (( org_cnt > 0 ))
+	do
+		integer j=0
+		$iostat_com $intr 1 | tail -n +$iostat_head |
+		while read $iostat_param
+		do
+			[[ "$PLATFORM" = "Linux" ]] && (( utilization=utilization*100 ))
+			echo "$(date '+%H:%M:%S')\t$Disks\t$utilization"
+
+			disk_activity[j]=$(( $utilization + ${disk_activity[j]} ))
+			j=j+1
+
+			[[ $j -eq $DISK_NUM ]] && break
+   
+		done
+
+		org_cnt=org_cnt-1
+
+	done
+
+	integer avg_activity
+	integer k=0
+	while (( k < DISK_NUM ))
+	do
+		# echo Total :
+		echo "\nAverage disk utilization(%) of ${DISK_NAME[k]}:\c"
+		avg_activity=$(( ${disk_activity[k]}/$counter ))
+		echo "\t$avg_activity"
+		k=k+1
+	done
+}
+
+############################################################################
+# Program : net_io
+# Purpose : use netstat to find network traffic
+############################################################################
+# netstat -I display 3 head lines on Sun, 3 on AIX and 2 on Linux
+# After head lines, display 19 data lines(one page) on Sun, 20 on AIX
+# and 8 on Linux.., so had to avoid that...
+net_io () {
+	PLATFORM=$(uname)
+	if [[ $PLATFORM = "SunOS" ]]
+	then
+		netstat_com="netstat -I "
+		integer netstat_page_ctr=18
+		netstat_param="ipk ierr opk oerr"
+		netstat_head=4
+		#get_interface_name
+		#get_interface_name
+		if_num=$(netstat -i | grep link | awk '{print $1}' | wc -l)
+		if_name=($(netstat -i | grep link | awk '{print $1}')) 
+	fi
+	
+	if [[ $PLATFORM = "AIX" ]]
+	then
+		netstat_com="netstat -I "
+		integer netstat_page_ctr=19
+		netstat_param="ipk ierr opk oerr"
+		netstat_head=4
+		#get_interface_name
+		if_num=$(netstat -i | grep link | awk '{print $1}' | wc -l)
+		if_name=($(netstat -i | grep link | awk '{print $1}'))
+	fi
+	
+	if [[ $PLATFORM = "Linux" ]]
+	then
+		netstat_com="netstat -I="
+		alias echo='echo -e'
+		integer netstat_page_ctr=7
+		netstat_param="Iface mtusz Met ipk RXERR RXDRP RXOVR opk TXERR"
+		netstat_head=3
+		#get_interface_number and names
+		if_num=$(netstat -I | tail -n +3 | awk '{print $1}' |  wc -l)
+		if_name=($(netstat -I | tail -n +3 | awk '{print $1}')) 
+	fi
+
+	integer intr=${1-1}
+	integer counter=${2-30}
+	integer total_ipk=0
+	integer total_opk=0
+
+	if [[ $counter -le 0 ]]; then return 0; fi
+	if [[ $intr -le 0 ]]; then return 0; fi
+
+	for interface in ${if_name[@]}
+	do
+		integer org_cnt=$counter
+
+		integer if_counter=$counter
+		integer if_total_ipk=0
+		integer if_total_opk=0
+		integer if_avg_ipk=0
+		integer if_avg_opk=0
+
+		[[ $PLATFORM = "AIX" ]] && {
+			integer mtusz=$(netstat -I $interface | grep link | awk '{print $2}')
+		}
+
+		echo ""
+		echo "$(uname -srvmn) $(date '+%m/%d/%Y') "
+		echo
+		echo "TIME\t\tkB IN\t\tkB OUT ON INTERFACE $interface"
+
+		while (( if_counter > netstat_page_ctr ))
+		do
+			integer loop_counter=$netstat_page_ctr
+			if_counter=if_counter-loop_counter
+
+			$netstat_com$interface $intr | tail -n +$netstat_head |
+			while read $netstat_param
+			do
+				echo "$(date '+%H:%M:%S')\t$((($ipk*$mtusz/$intr)/1024))\t\t$((($opk*$mtusz/$intr)/1024))"
+				if_total_ipk=$(( ( $ipk*$mtusz/$intr )/1024+$if_total_ipk ))
+				if_total_opk=$(( ( $opk*$mtusz/$intr )/1024+$if_total_opk ))
+
+				loop_counter=loop_counter-1
+				
+				if [[ $loop_counter -eq 0 ]]
+				then
+					# Continue loop on 2nd level
+					# that's "while [ $if_counter -gt $vmstat_page_ctr ]" level
+					continue 2
+				fi
+ 
+				if [[ $if_counter -le 0 ]]
+				then
+					# echo Total :
+					# echo kB ipk : $total_in KB OUT : $total_opk
+					echo "\nAverage:\c"
+					if_avg_ipk=$(( $if_total_ipk/$org_cnt ))
+					if_avg_opk=$(( $if_total_opk/$org_cnt ))
+					echo "\t$if_avg_ipk\t\t$if_avg_opk\t\t$(( $if_avg_ipk+$if_avg_opk ))"
+					break 
+				fi
+			done
+		done
+
+		if [[ $if_counter -le $netstat_page_ctr ]]
+		then
+			$netstat_com$interface $intr | tail -n +$netstat_head |
+			while read $netstat_param
+			do
+				echo "$(date '+%H:%M:%S')\t$(( ( $ipk*$mtusz/$intr )/1024 ))\t\t$(( ( $opk*$mtusz/$intr )/1024 ))"
+				if_counter=if_counter-1
+				
+				if_total_ipk=$(( ($ipk*$mtusz/$intr)/1024+$if_total_ipk ))
+				if_total_opk=$(( ($opk*$mtusz/$intr)/1024+$if_total_opk ))
+ 
+				if [[ $if_counter -eq 0 ]]
+				then
+					# echo Total :
+					# echo kB in : $total_ipk KB OUT : $total_opk
+					echo "\nAverage:\c"
+					if_avg_ipk=$(( $if_total_ipk/$org_cnt ))
+					if_avg_opk=$(( $if_total_opk/$org_cnt ))
+					echo "\t$if_avg_ipk\t\t$if_avg_opk\t\t$(( $if_avg_ipk+$if_avg_opk ))"
+					break 
+				fi
+			done
+
+		fi
+	done
+}
+
+mping () {
+	set $MONITORSYSTEMS   
+	integer systemCount=$#
+
+	# Login the UNIX Systems in the listing
+	integer xCount=0
+
+	while (( $xCount < $systemCount ))
+	do
+		ping -c 4 -v $1
+		[[ $? -eq 0 ]] || {
+			mail -s "SYSTEM $1 CANNOT BE CONNECTED !" "${mail_alert}" < /dev/null
+		} 
+
+	shift 1
+	xCount=xCount+1
+
+	done
+}
+
+#####################################################################
+#SCRIPT TO CHECK WHETHER CERTAIN JOBS ARE RUNNING NORMALLY 
+#IF JOB NOT RUNNING NIRMALLY, THEN SEND EMAIL ALEARTS
+#
+#USAGE: 
+#~~~~~~
+#If the instance number of deamon is less than or more than supposed
+#instance number, dmon will kill all instance, and run deamon start
+#command (if exist) to set deamon in a normal situation
+#
+#CHANGE HISTORY:
+#~~~~~~~~~~~~~~~
+#1. Modified version by Liru Chen
+#                 - 23 April 2015
+#####################################################################
+dmon () {
+	integer idx deamon_cnt deamon_num
+
+	#######################################################
+	# processname to the list update below. 
+	#######################################################
+	deamons=${DEAMON:="LoadL_master"}
+	
+	dmon_date=$(date +%m%d%Y%H%M%S)
+	dmon_dir=${DMONDIR:="${TMP}"}			#directory of deamon command
+	dmon_log=${LOG}/$(hostname)_DMON_${dmon_date}.log
+
+	for deamon in ${deamons}
+	do
+		deamon_name=$(echo ${deamon} | cut -f1 -d, )
+		deamon_num=$(echo ${deamon} | cut -f2 -d, )
+		deamon_start=$(echo ${deamon} | cut -f3 -d, )
+		deamon_stop=$(echo ${deamon} | cut -f4 -d, )
+		
+		deamon_cnt=$(ps -ef|grep ${deamon_name}|grep -v grep|wc -l)
+		
+		if [[ ${deamon_cnt} -lt ${deamon_num} ]]
+		then
+			echo "${deamon_name} Instance Number ${deamon_cnt} less than defined"
+			mail -s "$(hostname) DEAMON ${deamon_name} less than Instance Number" \
+			"${mail_alert}" < /dev/null
+
+			deamon_pid=$(ps -ef|grep -v grep|grep ${deamon_name}|awk '{print $2}')
+			
+			[[ ${deamon_start} != "NONE" ]] && {
+				for deamon_kill in ${deamon_pid}
+				do
+					kill -9 ${deamon_kill}
+				done
+				
+				${dmon_dir}/${deamon_start}
+			}
+			
+		elif [[ ${deamon_cnt} -gt ${deamon_num} ]]
+		then
+			echo "${deamon_name} Instance Number ${deamon_cnt} more than defined"
+			mail -s "$(hostname) DEAMON ${deamon_name} more than Instance Number" \
+			"${mail_alert}" < /dev/null
+			
+			deamon_pid=$(ps -ef|grep -v grep|grep ${deamon_name}|awk '{print $2}')
+			
+			[[ ${deamon_start} != "NONE" ]] && {
+				for deamon_kill in ${deamon_pid}
+				do
+					kill -9 ${deamon_kill}
+				done
+				
+				${dmon_dir}/${deamon_start}
+
+			}
+	
+		fi
+	done	
+}
+
+#########################################################
+# Program : fsckusage displays information about total
+# space and available space on a file system. The
+# FileSystem parameter specifies the name of the
+# device on which the file system resides, the
+# directory on which the file system is mounted, or
+# the relative path name of a file system.
+#
+# Purpose : use "df -k" to find system storage usage
+########################################################
+#df -k display file system name on 6 column on Linux, 
+#7 on AIX and 7 on SunOS
+#Used% on 5 on Linux, 4 on AIX and 4 on SunOS
+fsckusage () {
+	PLATFORM=$(uname)
+	if [[ $PLATFORM = "SunOS" ]]
+	then
+		fs_used_id=4
+	fi
+	
+	if [[ $PLATFORM = "AIX" ]]
+	then
+		fs_used_id=4
+	fi
+	
+	if [[ $PLATFORM = "Linux" ]]
+	then
+		fs_used_id=5
+	fi
+
+	# check file system usage
+	df -k $1 | tail -n -1 | awk '{ print $'$fs_used_id'}' |
+	egrep $2  > /dev/null 2>&1
+}
+
+fsckdiff() {
+	[[ ! -d ${TMP} ]] && mkdir -p ${TMP}
+	cd ${TMP}
+	
+	if [[ -f tmp_fc ]]
+	then
+		date  >  tmp_fc$$
+		df -k >> tmp_fc$$
+		diff tmp_fc tmp_fc$$
+		mv tmp_fc$$ tmp_fc
+	else
+		date  >  tmp_fc
+		df -k >> tmp_fc
+	fi
+}
+
+# df -k display file-system name on 6 column on Linux, 7 on AIX and 7 on SunOS
+# Used% on 5 on Linux, 4 on AIX and 4 on SunOS
+fsckfull () {
+	echo "--------------------------------------------- "
+	echo "Following File System space usage changed "
+	echo "--------------------------------------------- "
+	fsckdiff
+
+	echo "\n--------------------------------------------- "
+	echo "Following File System(s) space full "
+	echo "---------------------------------------------- "
+	PLATFORM=$(uname)
+	if [[ $PLATFORM = "SunOS" ]]
+	then
+		fs_name_id=7
+	fi
+	
+	if [[ $PLATFORM = "AIX" ]]
+	then
+		fs_head=3
+		fs_name_id=2
+	fi
+	
+	if [[ $PLATFORM = "Linux" ]]
+	then
+		fs_head=0
+		fs_name_id=3
+	fi
+
+	fsnames=$(mount | tail -n +$fs_head | awk '{print $'$fs_name_id'}')
+	for fsname in $fsnames
+	do
+		fsckusage $fsname "(9[0-9]|100)" && \
+		echo "WARNING: FILE SYSTEM $fsname IS FULL, ABOVE 90% SPACE USED"
+	done
+}
+
+###########################################################################
+# Description: mperf <interval> <counter>
+#
+# A system administrator should intuitively know when the system 
+# has gone into the "red zone". This is usually accompanied by 
+# their phone ringing as users call to complain about system performance.
+# But there are more empirical measurements that an administrator can 
+# look for to show that the system is in imminent danger:
+#
+# 1. Average processor utilization exceeds 90%.
+# 2. Network utilization exceeds 50% of network card(s) capacity
+# 3. Available real memory starts Pages In and Pages Out,
+#    Any substantive paging activity is occurring
+# 4. Disk utilizations exceed 90% (this is cumulative activity, 
+#    or the ?tm acct? column from iostat).
+#
+###########################################################################
+mperf () {
+	#Set following bench mark according to your system performance
+	threshold_cpu_idle=${CPUIDLE:=10}
+	threshold_mem_pio=${MEMPIO:=50}
+	threshold_disk_activity=${DISKACTIVITY:=90}
+	threshold_net_package=${NETPACKAGE:=1250000}
+
+	cd ${TMP}
+	
+	##################################################################
+	# Program : call alert_filesystem
+	##################################################################
+	fsckfull	> tmp_filesystem$$.txt
+	
+	mail_$(uname) "$(hostname)_STORAGE_UTILIZATION_REPORT" \
+	${TMP} tmp_filesystem$$.txt "${mail_alert}"
+	
+	rm -f tmp_filesystem$$.txt
+
+	##################################################################
+	# Program : call cpu_idle
+	##################################################################
+	interval=${1-2}
+	counter=${2-10}
+	
+	cpu_idle $interval $counter > tmp_cpu$$.txt
+
+	#the highest recently used CPU-intensive user processes
+	echo "--------------------------------"	>> tmp_cpu$$.txt
+	echo " Top 10 CPU intensive processes " >> tmp_cpu$$.txt
+	echo "--------------------------------" >> tmp_cpu$$.txt
+	ps ax | grep -v TIME | sort -n -r -k4 | head -n 10 >> tmp_cpu$$.txt
+
+	cpu=$( grep Average tmp_cpu$$.txt | awk '{print $2}' )
+	if [[ "$cpu" -lt "$threshold_cpu_idle" ]]
+	then
+		mail_$(uname)  "$(hostname)_CPU_BUSY_REPORT" \
+		${TMP} tmp_cpu$$.txt "${mail_alert}"
+	fi
+	
+	rm -f tmp_cpu$$.txt
+
+	#####################################################################
+	# Program : call disk_active
+	#####################################################################
+	#[[ $(uname) = AIX ]] && (filemon -o diskfmon.$$.txt -O all)  
+	interval=${1-2}
+	counter=${2-10}
+
+	disk_active $interval $counter 	> tmp_disk$$.txt
+
+	#if [[ $(uname) = AIX ]]; then
+	#	trcstop 
+	#	sleep 10
+	#	echo "\n\n\n" >> tmp_disk$$.txt
+	#	cat diskfmon.$$  >> tmp_disk$$.txt
+	#fi
+
+	disk_usage=$( grep Average tmp_disk$$.txt | awk '{print $6}' )
+	for disk in $disk_usage
+	do
+		if [[ "$disk" -gt "$threshold_disk_activity" ]]
+		then 
+			mail_$(uname) "$(hostname)_DISK_BUSY_REPORT" \
+			${TMP} tmp_disk$$.txt "${mail_alert}"
+		fi
+	done
+
+	rm -f tmp_disk$$.txt
+
+	######################################################################
+	# Program : call mem_pipo
+	######################################################################
+	interval=${1-2}
+	counter=${2-10}
+
+	mem_pipo $interval $counter > tmp_mem$$.txt
+
+	mem=$( grep Average tmp_mem$$.txt | awk '{print $2}' )
+	if [[ "$mem" -gt "$threshold_mem_pio" ]]
+	then
+		mail_$(uname) "$(hostname)_MEMORY_PIPO_BUSY_REPORT" \
+        ${TMP} tmp_mem$$.txt "${mail_alert}"
+	fi
+
+	rm -f tmp_mem$$.txt
+
+	######################################################################
+	# Program : call net_io
+	######################################################################
+	#[[ $(uname) = AIX ]] && (netpmon -v -o ${TMP}/netnmon.$$.txt)
+	interval=${1-2}
+	counter=${2-10}
+
+	net_io $interval $counter > tmp_net$$.txt
+
+	#if [[ $(uname) = AIX ]]; then
+	#	trcstop
+	#	sleep 10
+	#	echo "\n\n\n" >> tmp_net$$.txt
+	#	cat netnmon.$$  >> tmp_net$$.txt
+	#fi
+
+	net_usage=$( grep Average tmp_net$$.txt | awk '{print $4}' )
+	for net in $net_usage
+	do
+		if [[ "$net" -gt "$threshold_net_package" ]]
+		then
+			mail_$(uname)  "$(hostname)_NETWORK_IO_BUSY_REPORT" \
+			${TMP} tmp_net$$.txt "${mail_alert}"
+		fi
+	done
+
+	rm -f tmp_net$$.txt
+}
+
+#######################################################################
+# Description:
+# 1. start nmon_script data collection under directory $nmonDir, and
+# 2. The interval for nmon_script $second (seconds), and
+# 3. Run this script for $hour (hours)
+#######################################################################
+snmon () {
+	integer nmon_interval=${NMONINTERVAL:=60}		#default 1 minute
+	integer nmon_duration=${NMONDURATION:=24}		#default 24 hours
+	integer nmon_count=$(( 60*60*nmon_duration/nmon_interval ))
+
+	#start nmon_script
+	[[ ! -d $NMONRUNDIR ]] && mkdir -p $NMONRUNDIR
+	cd $NMONRUNDIR
+	
+	nmon_script -f -t -s $nmon_interval -c $nmon_count
+
+	success=$?
+	[[ $success == 0 ]] && \
+	mail -s "$(hostname)_NMON_STARTED" "${mail_alert}" < /dev/null
+}
+
+###############################################################################
+# Description:  When so many nmon_script running, use it to find the right nmon_script data
+#				files which is done, compress and send out by email.
+#
+# 1. To get last_hour nmon_script report data files, run this script at right 10
+#    minutes after nmon_script just completed, the nmon_script report must being updated in
+#    at least last 15 minutes, and should be completed at least 5 minutes ago
+#    
+#    --------5-----------0-------------5-------------10---------
+#                        |                           |
+#          (period nmon_script supposed to be done)    (send_nmon)
+#                        |                           |
+#            15**********10************5             0
+#
+# 2. To get yesterday nmon_script report data files, run this script any time next day
+#    (notice: 10 minutes later after this nmon_script collection stopped)
+################################################################################
+mnmon () {
+	date_yesterday=$(TZ=EDT+24EDT date +%y%m%d)
+	
+	for nmon_report_dir in ${NMONREPORTDIR:="/login/lchen/nmon"}
+	do
+		[[ ! -d ${nmon_report_dir} ]] && {
+			echo "$(hostname) ${nmon_report_dir} NOT EXIST"
+			continue		
+		}
+		
+		cd ${nmon_report_dir}
+		nmon_lasthour=$(find . \( -name "*.nmon" -o -name "*.nmon.gz" \) -a -mmin -15 -a -mmin +5)
+		nmon_yesterday=$(find . \( -name "*_$date_yesterday*.nmon" -o -name "*_$date_yesterday*.nmon.gz" \) -a -mmin +5)
+		if [[ $NMONREADY == "last_hour" ]]
+		then
+			nmon_reports=$nmon_lasthour
+		elif [[ $NMONREADY == "yesterday" ]]
+		then
+			nmon_reports=$nmon_yesterday
+		fi
+		
+		[[ "$nmon_reports" == "" ]] && {
+			mail -s "$(hostname) NO_NMON_REPORT_UNDER ${nmon_report_dir}" \
+			"${mail_alert}" < /dev/null
+			continue
+		}
+
+		for nmon_report in $nmon_reports
+		do
+			nmon_file=$(basename $nmon_report)
+			file $nmon_file | grep -v grep | grep gzip
+			compressed=$?
+			if [[ $compressed -eq 0 ]]
+			then 
+				mail_$(uname) "$(hostname)_NMON_REPORT" \
+				${nmon_report_dir} $nmon_file "${mail_notice}"
+			else
+				gzip $nmon_file
+				mail_$(uname) "$(hostname)_NMON_REPORT" \
+				${nmon_report_dir} $nmon_file.gz "${mail_notice}"
+			fi
+		done
+
+	done
+}
+
+#############################################################
+#  UNIX environment Error Message Monitor
+#############################################################
+errors () {
+	#error message collection
+	cd ${TMP}
+	
+	PLATFORM=$(uname)
+	if [[ $PLATFORM = "SunOS" ]]
+	then
+		dmesg | grep -i error > tmp_errors.txt
+	fi
+	if [[ $PLATFORM = "Linux" ]]
+	then
+		dmesg | grep -i error > tmp_errors.txt
+	fi
+	if [[ $PLATFORM = "AIX" ]]
+	then
+		errpt -a > tmp_errors.txt
+	fi
+
+	if [[ -s tmp_errors.txt ]]
+	then
+		mail_$(uname) "$(hostname)_ERROR_MESSAGE_REPORT" \
+		${TMP} tmp_errors.txt "${mail_alert}"
+	fi
+
+	rm -f tmp_errors.txt
+
+}
+
+###############################################################
+#Program name : clears.ksh     
+#DESCRIPTION: Clean (or move) all LOGS, nmon_script, gzip files
+#               generated by LIRU CHEN's scripts               
+###############################################################
+#                                                              
+###############################################################                                                          
+#Created - 03-MAY-15              CLR Version                 
+###############################################################
+clears () {
+	clear_dirs=${CLEARDIR:="${LOG}@log,LOG@10"}
+	clear_stage=${CLEARSTAGE:="${LOG}"}
+	#clear_types=${CLEARTYPE:="log"}
+
+	for clear_dir in ${clear_dirs}
+	do
+		clear_location=$(echo "${clear_dir}@"|cut -f1 -d@)
+		clear_types=$(echo "${clear_dir}@"|cut -f2 -d@|tr , " ")
+		clear_day=$(echo "${clear_dir}@"|cut -f3 -d@)
+
+		[[ ! -d ${clear_location} || ${clear_day} == "" ]] && {
+			echo "${clear_location} NOT EXIST and/or Clear Day is 0"
+			continue
+		}
+		
+		for clear_type in ${clear_types}
+		do
+			#find ${clear_location} -name "*${clear_type}" -mtime +${clear_day} -exec mv -f {} ${LOG} \;
+			if [[ ${clear_location} == ${clear_stage} ]]
+			then
+				find ${clear_location} -name "*${clear_type}" -mtime +${clear_day} -exec rm -f {} \;
+			else
+				[[ ! -d ${clear_stage}/${clear_location} ]] && mkdir -p ${clear_stage}/${clear_location}
+				find ${clear_location} -name "*${clear_type}" -mtime +${clear_day} -exec mv -f {} ${clear_stage}/${clear_location} \;
+			fi
+			
+		done
+
+	done
+}
+
+#####################################################################################
+#
+# Name:         tape
+#
+# Reference:    n/a
+#
+# Description:  The tape command gives subcommands to a streaming tape 
+#               device. 
+#
+# Command:      tape <tapedevice> <action> <count>
+#
+# <tapedevice> 
+# Device variable must specify a raw (not block) tape device. For example:
+#	AIX: /dev/rmt0; /dev/rmt0.1(no rewind);...
+#   SunOS: /dev/rmt/0; /dev/rmt/0n(no rewind);...
+#
+# <action>
+# 1. "eof" or "weof": Writes the number of end-of-file markers specified 
+#     by the Count parameter at the current position on the tape. 
+#     On an 8 mm tape drive, an end-of-file marker can be written in three places: 
+#      - Before blank tape 
+#      - Before an extended file mark 
+#      - At the beginning-of-tape mark
+#     On a 9-track tape drive, the end-of-tape marker can be written at
+#     any location on the tape. However, this subcommand does not support 
+#     overwriting single blocks of data.
+# 2. "fsf": Moves the tape forward the number of file marks specified
+#     by the Count parameter and positions it on the end-of-tape (EOT) 
+#     side of the file mark. 
+# 3. "bsf": Moves the tape backward the number of file marks specified by 
+#     the Count parameter and positions it on the beginning-of-tape (BOT) 
+#     side of the file mark. 
+#     If the bsf subcommand moves the tape past the beginning, the tape rewinds, 
+#     and the tctl command returns EIO. 
+# 4. "fsr": Moves the tape forward the number of records specified by the 
+#     Count parameter. 
+# 5. "bsr": Moves the tape backwards the number of records specified
+#     by the Count parameter. 
+# 6. "rewind": Rewinds the tape. The Count parameter is ignored. 
+# 7. "offline" or "rewoffl": Rewinds the tape and takes the tape drive offline.
+#    This will unload the tape when appropriate. The tape must be re-inserted
+#    before the device can be used again. 
+# 8. "erase": Erases all contents on the tape and rewinds it. 
+# 9. "read": Reads from the specified tape device (using the specified block size)
+#     until the internal buffer is full, and then writes the data to standard 
+#     output, continuing to read and write this way until an end-of-file (EOF) 
+#     mark is reached. 
+# 10. "reset": Sends a bus device reset (BDR) to the tape device. 
+#     The BDR will only be sent if the device cannot be opened and is not busy. 
+# 11. "retension": Moves the tape to the beginning, then to the end, 
+#     and then back to the beginning of the tape. 
+#    If you have excessive read errors during a restore operation, you should run
+#    the retension subcommand. 
+#    If the tape has been exposed to environmental extremes, you should run the
+#    retension subcommand before writing to tape. 
+#    The 8 mm tape drive will not respond to this command. 
+# 11. "status": Prints status information about the specified tape device. 
+# 12. "write": Opens the tape device, reads from standard input, and writes the
+#     data to the tape device. 
+#
+# <count>
+# There maybe mutiple files(or archives) on one single tape, use the Count
+# parameter specifies the number of end-of-file markers, number of file marks, 
+# or number of records. 
+# If the Count parameter is not specified, the default count is 1.
+#
+# Filemarks are used for logical separation and fast positioning within a media.
+#####################################################################################
+tape () {
+	:
+} # : (null command)
+
+########################################################################
+# FIND configure IP address, change to new IP after system migration
+# usage: findip <directory> 
+#
+# why not just simplely: grep <thisword> *
+# All lines in all files that contain <thisword> are printed out
+########################################################################
+findip () {
+	ipbit='([0-9]|[1-9][0-9]|[1-2][0-9][0-9])'
+	#ippattern="$ipbit\.$ipbit\.$ipbit\.$ipbit"
+	ippattern="192\.168\.$ipbit\.$ipbit"
+
+	#Get a list of the name pattern matched files
+	find $1 -xdev -ls | awk '{print $11}' | \
+	while read filename
+	do
+	  #Highlight the lines which contain valid ip address
+	  rc=$(file $filename|egrep "shell|commands|text")
+	  if [[ $? -eq 0 ]]
+	  then
+		   echo "NO BINARY FILE FOUND"
+		   rc=$(egrep $ippattern $filename)
+		   if [[ $? -eq 0 ]]
+		   then
+				echo "#"
+				echo " FILE $filename WITH IP:192.168.X.X" 
+				#cat $filename
+				echo ""
+		   fi
+	  fi	
+	done
+}
+
+#Calculate Date -- Perderabo's date calculator
+lastday()  {
+	integer year month leap
+	# ja fe ma ap ma jn jl ag se oc no de
+	set -A mlength xx 31 28 31 30 31 30 31 31 30 31 30 31
+
+	year=$1
+	if ((year<1860 || year> 3999))
+	then
+		print -u2 year out of range
+		return 1
+	fi
+	
+	month=$2
+	if ((month<1 || month> 12))
+	then
+		print -u2 month out of range
+		return 1
+	fi
+
+	if ((month != 2))
+	then
+		print ${mlength[month]}
+		return 0
+	fi
+
+	leap=0
+	if ((!(year%100)))
+	then
+		((!(year%400))) && leap=1
+	else
+		((!(year%4))) && leap=1
+	fi
+
+	feblength=28
+	((leap)) && feblength=29
+	print $feblength
+	return 0
+}
+
+date2jd() {
+	integer ijd day month year mnjd jd lday
+
+	year=$1
+	month=$2
+	day=$3
+	lday=$(lastday $year $month) || return $?
+
+	if ((day<1 || day> lday)) ; then
+		print -u2 day out of range
+		return 1
+	fi
+
+	((standard_jd = day - 32075 
+	   + 1461 * (year + 4800 - (14 - month)/12)/4 
+	   + 367 * (month - 2 + (14 - month)/12*12)/12 
+	   - 3 * ((year + 4900 - (14 - month)/12)/100)/4))
+	((jd = standard_jd-2400001))
+
+
+	print $jd
+	return 0
+}
+
+jd2dow()
+{
+	integer jd dow numeric_mode
+	set +A days Sunday Monday Tuesday Wednesday Thursday Friday Saturday
+
+	numeric_mode=0
+	if [[ $1 = -n ]]
+	then
+		numeric_mode=1
+		shift
+	fi
+
+
+	jd=$1
+	if ((jd<1 || jd>782028))
+	then
+		print -u2 julian day out of range
+		return 1
+	fi
+
+	((dow=(jd+3)%7))
+
+	if ((numeric_mode)) ; then
+		print $dow
+	else
+		print ${days[dow]}
+	fi
+	return
+}
+
+jd2date()
+{
+	integer standard_jd temp1 temp2 jd year month day
+
+	jd=$1
+	if ((jd<1 || jd>782028)) ; then
+			print julian day out of range
+			return 1
+	fi
+	((standard_jd=jd+2400001))
+	((temp1 = standard_jd + 68569))
+	((temp2 = 4*temp1/146097))
+	((temp1 = temp1 - (146097 * temp2 + 3) / 4))
+	((year  = 4000 * (temp1 + 1) / 1461001))
+	((temp1 = temp1 - 1461 * year/4 + 31))
+	((month = 80 * temp1 / 2447))
+	((day   = temp1 - 2447 * month / 80))
+	((temp1 = month / 11))
+	((month = month + 2 - 12 * temp1))
+	((year  = 100 * (temp2 - 49) + year + temp1))
+	print $year $month $day
+	return 0
+}
+
+#  datecalc -- Perderabo's date calculator   
+#
+datecalc () {
+	USAGE="\
+	datecalc -a year month day - year month day
+	datecalc -a year month day [-|+] n
+	datecalc -d year month day
+	datecalc -D year month day
+	datecalc -j year month day
+	datecalc -j n
+	datecalc -l year month
+	use \"datecalc -help\" use for more documentation"
+
+	DOCUMENTATION="\
+	datecalc  Version 1.1
+
+	datecalc does many manipulations with dates.
+	datecalc -a is for date arithmetic
+	datecalc -d or -D converts a date to the day of week
+	datecalc -j converts to date to or from julian day
+	datecalc -l outputs the last day of a month
+
+	All dates must be between the years 1860 and 3999.
+
+	datecalc -a followed by 7 parameters will calculate the
+	number of days between two dates.  Parameters 2-4 and 6-8
+	must be dates in ymd form, and parameter 5 must be a minus
+	sign.  The output is an integer.  Example:
+
+	> datecalc -a 1960 12 31 - 1922 2 2
+	14212
+
+
+	datecalc -a followed by 5 parameters will calculate the
+	a new date offset from a given date,  Parameters 2-4 must
+	be a date in ymd form, paramter 5 must be + or -, and 
+	paramter 6 must be an integer.  Output is a new date.
+	Example:
+
+	> datecalc -a 1960 12 31 + 7
+	1961 1 7
+
+
+	datecalc -d followed by 3 parameters will convert a date
+	to a day-of-week.  Parameters 2-4 must be a date in ymd 
+	form.  Example:
+
+	> datecalc -d 1960 12 31
+	6
+
+
+	datecalc -D is like -d except it displays the name of
+	the day.  Example:
+
+	> datecalc -D 1960 12 31
+	Saturday
+
+
+	datecalc -j followed by 3 parameters will convert a date
+	to Modified Julian Day number.  Example:
+	> datecalc -j 1960 12 31
+	37299
+
+
+	datecalc -j followed by a single parameter will convert
+	a Modified Julian Day number to a date.  Example:
+	> datecalc -j 37299
+	1960 12 31
+
+
+	datecalc -l followed by year and month will output the last
+	day of that month.  Note that by checking the last day of
+	February you can test for leap year.  Example:
+	> datecalc -l 2002 2
+	28"
+
+	#  Parse parameters and get to work.
+	case $1 in
+	-a) if (($# == 8))
+		then
+			if [[ $5 != - ]]
+			then
+				print -u2 - "$USAGE"
+				return 201
+			fi
+			jd1=$(date2jd $2 $3 $4) || return $?
+			jd2=$(date2jd $6 $7 $8) || return $?
+			((jd3=jd1-jd2))
+			print $jd3
+			return 200
+		elif (($# == 6))
+		then
+			jd1=$(date2jd $2 $3 $4) || return $?
+			case $5 in 
+			-|+) eval '(('jd2=${jd1}${5}${6}'))'
+				jd2date $jd2
+				return $?
+			;;
+			*)
+				print -u2 - "$USAGE"
+				return 201
+			;;
+			esac
+						
+		fi
+	;;
+
+	-d|-D)  if (($# != 4))
+			then
+				print -u2 - "$USAGE"
+				return 201
+			fi
+			jd1=$(date2jd $2 $3 $4) || return $?
+			numeric=-n
+			[[ $1 = -D ]] && numeric=""
+			eval jd2dow $numeric $jd1 
+			return $?
+	;;
+
+	-j) if (($# == 4))
+		then
+			date2jd $2 $3 $4
+			return $?
+		elif (($# == 2))
+		then
+			jd2date $2 $3 $4
+			return $?
+		else
+			print -u2 - "$USAGE"
+			return 1
+		fi
+	;;
+
+	-l) if (($# == 3))
+		then
+			lastday $2 $3
+			return $?
+		else
+			print -u2 - "$USAGE"
+			return 201
+		fi
+	;;
+
+	-help)  print - "$USAGE"
+			print  ""
+			print - "$DOCUMENTATION"
+			return 0
+	;;
+
+	*)      print -u2 - "$USAGE"
+			return 0
+	;;
+
+
+	esac
+
+	#not reached
+
+}
+
+#LoadLeveler is a job management system that allows users to run more jobs in less
+#time by matching the jobs' processing needs with the available resources.
+#LoadLeveler schedules jobs, and provides functions for building, submitting, and
+#processing jobs quickly and efficiently in a dynamic environment.
+
+#########################################################################
+#  Program name . . . . . . . . . . . . . . :   $AS400LIB/SUBMITJOB     #
+#  Created by   ............................:   Sagar Goparaju          #
+#  Date Created ............................:   08-MAR-2006             #
+#  Text . . . :This script is simplified Submit Job function            #
+#########################################################################
+#
+#  13-SEP-07 - GOP/      Exclude development variables on COPY_ALL
+#
+###########################################################################
+llusage()
+{
+  cat <<!
+  Usage:   SUBMITJOB [ -p PGM ] [ -j JobName ] [ -c Class ] [ -g Group ]
+           [ -e ErrorLog ] [ -o OutputLog ] [ -t SubmitTime ]
+!
+  return
+}
+
+llsubmitjob () {
+DATE=`date +%m%d%Y_%H%M%S`
+
+# Check arguments
+if [ "$#" -lt 1 ]
+then
+  cat <<!
+  Usage:   SUBMITJOB [ -p PGM ] [ -j JobName ] [ -c Class ] [ -g Group ]
+           [ -e ErrorLog ] [ -o OutputLog ] [ -t SubmitTime ]
+!
+  return
+fi
+
+# while getopts p:j:c:g:e:o:t: OPT
+# do
+     # case $OPT in
+         # "p" ) PROG_ID=$OPTARG ;;
+         # "j" ) JOB_ID=$OPTARG ;;
+         # "c" ) CLASS_ID=$OPTARG ;;
+         # "g" ) GROUP_ID=$OPTARG ;;
+         # "e" ) ERROR_LOG=$OPTARG ;;
+         # "o" ) OUTPUT_LOG=$OPTARG ;;
+         # "t" ) SUBMIT_TIME=$OPTARG ;;
+          # *  ) llusage ;;
+     # esac
+# done
+
+	PROG_ID=$1
+	JOB_ID=$2
+	ERROR_LOG=$3
+	OUTPUT_LOG=$4
+	CLASS_ID=$5
+	GROUP_ID=""
+	SUBMIT_TIME=$6
+					
+    if [ -z "$PROG_ID" ]
+    then
+        echo "   Program Id is a required parameter\n"
+        llusage;
+        return
+    fi
+
+    if [ -z "$JOB_ID" ]
+    then
+        JOB_ID=`basename $PROG_ID`
+    fi
+
+    if [ -z "$CLASS_ID" ]
+    then
+       CLASS_ID='uploads'
+    fi
+
+    if [ -z "$GROUP_ID" ]
+    then
+       GROUP_ID='tpcdnq'
+    fi
+
+    if [ -z "$ERROR_LOG" ]
+    then
+       ERROR_LOG=`basename $PROG_ID`_$DATE.ERR
+    fi
+
+    if [ -z "$OUTPUT_LOG" ]
+    then
+       OUTPUT_LOG=`basename $PROG_ID`_$DATE.LOG
+    fi
+
+	
+	
+llsubmit - <<EXIT
+# @job_name = $JOB_ID
+# @environment = COPY_ALL ; !QZ ; !QD ; !QT ; !SF ; !QDS ; !INPT ; !LLQ ;
+# @notification = NEVER
+# @class = $CLASS_ID
+# @group = $GROUP_ID
+# @error = $ERROR_LOG
+# @output = $OUTPUT_LOG
+# @startdate = $SUBMIT_TIME
+# @queue
+$PROG_ID
+EXIT
+
+}
+
+llcanceljob () {
+	ll_jobs=${1-$LLJOB}
+
+	for ll_job in ${ll_jobs}
+	do
+		job_name=$(echo "${ll_job}," | cut -f1 -d, )
+		stepID=$(llq -f %id %jn | grep $job_name | awk '{print $1}')
+		llcancel $stepID
+	done
+	
+}
+
+llschedulejob () {
+	ll_today=$(date +%m/%d/20%y)
+
+	#Calculate ll_tomorrow=$(TZ=EDT-24EDT date +%m/%d/20%y)
+	ll_date_tmp=$(date +20%y' '%m' '%d)
+	ll_calc=$(datecalc -a ${ll_date_tmp} + 1)
+	ll_year=$(echo $ll_calc|cut -f1 -d' ')
+	ll_month=$(echo $ll_calc|cut -f2 -d' ')
+	ll_day=$(echo $ll_calc|cut -f3 -d' ')
+	ll_tomorrow=${ll_month}/${ll_day}/${ll_year}
+
+	ll_jobs=${LLJOB:="${ll_start_job}"}
+	ll_date=$(date +%m%d%Y%H%M%S)
+	
+	#directory of scripts run under loadleveler 
+	ll_dir=${LLDIR:=/alliance/RUNTIME/LIVOPER}
+	ll_log=${LLOGDIR:=/alliance/RUNTIME/LIVOPER/usislogs}
+	ll_class=${LLCLASS:="locusq"}
+	
+	#Schedule jobs today
+	for ll_job in ${ll_jobs}
+	do
+		ll_name=$(echo "${ll_job}," | cut -f1 -d, )
+		
+		integer i=2
+		while true
+		do
+			job_schedule=$(echo ${ll_job} | cut -f$i -d, )
+			[[ ${job_schedule} == "" ]] && break
+			
+			#job schedlue time before now, loadleveler will run it immediately
+			job_time=$(echo ${job_schedule} | cut -f1 -d"@")
+			job_day=$(echo ${job_schedule} | cut -f2 -d"@")
+			
+			if [[ ${job_day} == $(date +%w) ]]
+			then
+				# llsubmitjob \
+					# -p"${ll_dir}/${ll_name}.ksh" \
+					# -j${ll_name}_jobs \
+					# -e${ll_log}/${ll_name}_error_${ll_date}.LOG \
+					# -o${ll_log}/${ll_name}_output_${ll_date}.LOG \
+					# -c${ll_class} \
+					# -t"${ll_today} ${job_time}"
+				llsubmitjob \
+					"${ll_dir}/${ll_name}.ksh" \
+					"${ll_name}_jobs "\
+					"${ll_log}/${ll_name}_error_${ll_date}.LOG" \
+					"${ll_log}/${ll_name}_output_${ll_date}.LOG" \
+					"${ll_class}" \
+					"${ll_today} ${job_time}"
+			
+			elif [[ ${job_day} == "tomorrow" || ${job_day} == "nextday" ]]
+			then	
+				#Initial job scheduler tomorrow
+				mail -s "$(hostname) loadlevel ${ll_name} start" ${mail_alert} < /dev/null	
+
+				llsubmitjob \
+					"${ll_dir}/${ll_name}.ksh" \
+					"${ll_name}_jobs "\
+					"${ll_log}/${ll_name}_error_${ll_date}.LOG" \
+					"${ll_log}/${ll_name}_output_${ll_date}.LOG" \
+					"${ll_class}" \
+					"${ll_tomorrow} ${job_time}"
+			
+			fi
+			
+		i=i+1
+		done
+	done
+
+			
+}
+
+#Schedule at minte 05 hourly on crontab
+llmon () {
+	for ll_stop_job in ${LLJOBSTOP}
+	do
+		stepID_stopjobs=$(llq -f %id %jn | grep ${ll_stop_job} | awk '{print $1}')
+		#IF SCHEDULJOB running, stop SCHEDULJOB
+		[[ ${stepID_stopjobs} != "" ]] && {
+			mail -s "$(hostname) LOADLEVEL ${ll_stop_job} RUNNING, STOP IT" ${mail_alert} < /dev/null
+				
+			#CANCEL ALL the loadleveler jobs scheduled by ${ll_stop_job}
+			#/alliance/RUNTIME/LIVOPER/CANCELJOB.ksh
+			ksh93 $BASE/shlib llcanceljob
+		}
+	done
+
+	for ll_start_job in ${LLJOBSTART}
+	do
+		stepID_startjobs=$(llq -f %id %jn | grep ${ll_start_job} | awk '{print $1}')	
+		#IF ${ll_start_job} NOT running, start ${ll_start_job}
+		[[ ${stepID_startjobs} == "" ]] && {
+			mail -s "$(hostname) loadlevel ${ll_start_job} START" ${mail_alert} < /dev/null
+				
+			#Run today's jobs in case jobs maybe missed, and schedule ${ll_start_job} tomorrow
+			ksh93 $BASE/shlib llschedulejob
+		}
+		
+		#mail -s "loadlevel ${ll_start_job} running" ${mail_alert} < /dev/null
+	done
+
+}
+
+################################################################################
+# Name:         str_replace
+#
+# Reference:    n/a
+#
+# Description:  This script is used to change String $origin to String $target
+#               in all the files under directory $DIR
+#
+# Command:   str_replace <dir_name or file_name> <origin_string> <target_string> 
+#
+# Approach:  change "lchen/download" to "lchen/Tools/DB/informix/download
+#             in all files under directory "137970"
+#  $ cd 137970
+#  $ for i in `ls *`
+#    do sed "s/lchen\/download/lchen\/Tools\/DB\/informix\/download/g" $i > tempFile
+#    mv tempFile $i
+#    done
+#
+# Modification History:
+#
+#   Date            Name            Description   
+#   ------------------------------------------------------------------
+#   2013-03-15      Liru Chen       
+#   2013-09-20      Liru Chen       MOdified for CGI migration project
+#
+####################################################################################
+str_replace () {
+	[[ $# -ne 3 ]] && {
+		echo "Parameters Not equal to three!"
+		return 201
+	}
+		
+	dir_file=$1
+	origin=$2
+	target=$3
+
+	find $dir_file -xdev -ls | awk '{print $11}' |
+	while read filename
+	do
+		file $filename | egrep "shell|commands|text"
+		[[ $? -eq 0 ]] && {
+			grep $origin $filename
+			[[ $? -eq 0 ]] && {
+				cp $filename ${TMP}
+				slashorigin=$(echo $origin | sed "s/\//\\\\\//g")
+				slashtarget=$(echo $target | sed "s/\//\\\\\//g")
+				sed "s/$slashorigin/$slashtarget/g" \
+					${TMP}/$(basename $filename) > $filename
+			}
+		}   
+	 done
+}
+
+#################################################################################
+# AIX MANITENAMCE
+#################################################################################
+
+
+#Cfg2html is a UNIX shell script similar to supportconfig, getsysinfo or get_config, 
+#except that it creates a HTML (and plain ASCII) system documentation for 
+#HP-UX 10.xx/11.xx, Integrity Virtual Machine, SCO-UNIX, AIX, Sun OS and Linux systems. 
+#Plug-ins for SAP, Oracle, Informix, Serviceguard, Fiber Channel/SAN, TIP/ix, 
+#OpenText (IXOS/LEA), SAN Mass Storage like MAS, EMC, EVA, XPs, Network Node Manager
+#and HP DataProtector etc. are included. 
+#
+#The first versions of cfg2html were written for HP-UX. Meanwhile the cfg2html 
+#HP-UX stream was ported to all major *NIX platforms, LINUX and small embedded systems. 
+#Some consider it to be the Swiss army knife for the Account Support Engineer, 
+#Customer Engineer, System Admin, Solution Architect etc. Originally developed to 
+#plan a system update, it was also found useful to perform basic troubleshooting 
+#or performance analysis. The production of nice HTML and plain ASCII documentation
+#is part of its utility
+#
+#download http://www.cfg2html.com/
+#
+aix_conf () {
+	if [ -f $BIN/cfg2html_aix.sh ]
+	then
+		$BIN/cfg2html_aix.sh
+	fi
+
+	uptime			#Shows how long the system has been up
+
+	lparstat -i		#Display of current LPAR related parameters and Hypervisor information,
+					#as well as utilization statistics for the LPAR
+	
+	lsconf			#shows basic hardware and configuration details
+	
+	lscfg -vp		#Displays the name, location and description of each device found in the
+					#current Customized VPD object class that is a child device of the sys0 object
+
+	lsattr -El sys0	#Displays attribute characteristics and possible values of attributes for devices in the system
+
+	oslevel -s		#Reports the latest installed level (technology level, maintenance level and service pack) of the system
+
+	lssrc -a		#Gets the status of a subsystem, a group of subsystems, or a subserver
+
+	no -a			#Manages network tuning parameters
+
+	netstat -r
+	
+	vmo				#Manages Virtual Memory Manager tunable parameters
+
+	ioo				#Manages Input/Output tunable parameters
+
+	ipcs -a			#Reports interprocess communication facility status
+
+	vmstat -v		#Reports statistics about kernel threads, virtual memory, disks, 
+					#hypervisor pages, traps and processor activity
+
+	emgr -l			#Starts the interim fix manager, which installs, removes, lists, 
+					#and checks system interim fixes
+
+	
+}
+
+aix_lvm () {
+	#Commands for LVM recovery and problem determination is very large,
+	#including (in an approximate attempt to order the commands by depth of
+	#enquiry into the internal structures of AIX):
+	# errpt						#Checking the errorlog
+	# df						#Checking free file system space
+	
+	#When the system is booted, the disk configurator looks at the PVID residing on
+	#the disk and compares it with an entry in the ODM. If an entry is found, 
+	#then the disk is given the hdiskx number in the ODM that is associated with the PVID. 
+	#If there is no matching entry, then the next name in the pool of ’free’ hdisk names
+	#is allocated to the physical volume.
+	# /usr/sbin/lquerypv -H /dev/hdiskx
+	# rmdev -dl <hdiskx>
+	
+	#The basic objects that will be created as part of the configuration or creation
+	# cfgmgr												#Physical volume
+	# mkvg -ft2 -y odmvg hdisk6 hdisk7 hdisk8 hdisk9		#Volume group
+	# mklv -y simplelv odmvg 1							#Simple logical volume
+	# mklv -y mirrorlv -c 2 odmvg 1						#Mirrored logical volume
+	# mklv -y stripelv -S64k -u2 odmvg 2					#triped logical volume
+	# mklv -y mirrorstripelv -S64K -u2 -c2 odmvg 2		#Mirrored and striped logical volume 
+	
+	#The high-level commands
+	# lspv		#It will go to the physical volume with the VGDA containing the latest timestamp
+	# lslv
+	# lsvg		#show if the ODM knows about a volume group	
+	
+	# lslpp					#Checking fileset levels
+	lslpp -l bos.rte.lvm	#Check lvm fileset levels	
+	
+	# lsdev, lsattr -El		#Checking device availability
+	lsdev -Cc disk			#if an hdisk is known and usable to the system
+	lsdev -Cc pdisk			#or SSA pdisk	
+	
+	lspath					#disks and adapter path
+	mpio_get_config -Av		#SAN disks
+	
+	# odmget					#Checking the ODM 
+	# sh -xv, trclvm			#korn shell debug
+
+	#The low-level VGDA interrogation commands
+	# lqueryvg
+	# lquerypv
+	# lquerylv	
+	
+	#LVCB holds information such as the creation date of the logical volume, information 
+	#about mirrored copies, and possible mount points in a journaled file system, 
+	#if its overwritten, mostly by Database raw device, these values become undefined. 
+	#With the introduction of the big VGDA, a copy of the LVCB is now kept in the VGDA
+	#
+	# getlvcb, 
+	# getlvcb -AT <lvname>	
+	# getlvodm
+	
+	# dd						#Examining raw physical volumes, VGDAs, and logical volumes
+	# crash, kdb				#Examining in-kernel memory structures: 
+
+	#VGDAs and VGSAs on the disk surfaces are correct while the ODM becomes incorrect
+	# redefinevg				#To regain this basic ODM information
+	# chvg -u <vgname>			#
+	# chdev -a pv=clear  <disk>	#reset hdisk’s PVID
+	# exportvg
+	# importvg 
+	# synclvodm		#restore the LVCB control information to the ODM
+	
+	# savebase		#update the mini-ODM that resides on the same disk as /dev/ipldevice
+					#Saves information about base-customized devices in the Device 
+					#Configuration database onto the boot device, The savebase takes a 
+					#snapshot of the main ODM and compresses it and picks out only 
+					#what is needed for boot, such as LVM information concerning logical
+					#volumes in rootvg, and so on. It takes this compressed boot image 
+					#and looks at /dev/ipldevice and finds out what disk this represents. 
+					#Typically on most systems, /dev/ipldevice is a hard link to /dev/hdisk0
+
+	#fuser -cx
+	
+	
+	#Replaces a physical volume in a volume group with another physical volume.
+	#Remove any LV on the failed disk, including any copies LV)
+	# rmlv <lvname>
+	# rmlvcopy <lvname> 1 <faileddisk>
+	# reducevg
+	# rmdev -dl <faileddisk>
+	# cfgmgr
+	# extendvg
+	# mklv
+	# mklvcopy
+	# syncvg		#Synchronizes logical volume copies that are not current
+	#	
+	#The best way:
+	# migratepv <sourcedisk> <targetdisk>		#if <sourcedisk> is readable
+	# replacepv <faileddisk> <newdisk>
+
+}
+
+#trclvm makes a temporary copy of an lvm high-level command and
+#instruments it with set -xv lines so that all functions within the script produce
+#debug output.
+trclvm () {
+	set -- `getopt tl: $*`
+	
+	if [ $? != 0 ]
+	then
+		echo Usage: trclvm -t -l logfile command options
+		return
+	fi
+
+	tFLAG=
+	
+	while [ $1 != -- ]
+	do
+		case $1 in
+			-t) tFLAG='-t'; shift;;
+			-l) lFLAG='-l'; lFILE=$2; shift; shift;;
+		esac
+	done
+	
+	shift
+	file=$1
+	shift
+	parms=$*
+
+	mkdir ${TMP}/lvmtrace$$/
+	cp `whence $file` ${TMP}/lvmtrace$$/${file}_orig
+	awk -v tFLAG=$tFLAG '{
+		if ( tFLAG == "-t" ) {
+			if ( $1 ~ /[Cc]leanup()/ ) { 					#we have entered cleanup
+				cFLAG = "-c"
+			}
+		
+			if ( cFLAG && (($1=="rm")||(multi=="y")) ) { 	#comment out rms, handle
+			printf ("#") 									#extended lines
+			slash=substr($0, length($0))
+				if (slash == "\\") {
+					multi = "y"
+				} else {
+					multi = ""
+				}
+			}
+			
+			if ( $1 == "}" ) { 								# we have left cleanup
+				cFLAG = ""
+			}
+		}
+		
+		print $0;
+		if ( LP=="\(\)" && $0 == "\{" ) {print "set -xv"} 	#add debug line
+		LP=substr($0,length($0)-1)
+	
+	}' ${TMP}/lvmtrace$$/${file}_orig > ${TMP}/lvmtrace$$/$file
+	
+	if [ -n "$lFLAG" ]
+	then
+		exec > $lFILE 2>&1
+	fi
+
+	sh -xv ${TMP}/lvmtrace$$/$file $parms
+	rc=$?
+
+	rm -rf ${TMP}/lvmtrace$$
+	return $rc
+
+}
+
+#checks the basic ODM classes relevant to the LVM for a particular string
+findlvm () {
+	for class in CuAt CuDv CuDep CuDvDr PdAt PdDv
+	do
+		odmget $class | grep -ip $1
+	done
+
+}
+
+#<Cluster>: A logical grouping of servers running PowerHA.
+#<Node>: An individual server within a cluster.
+#<Network>: Although normally this term would refer to a larger area of computer-to-computer
+# communication (such as a WAN), in PowerHA network refers to a logical definition of an 
+# area for communication between two servers. Within PowerHA, even SAN resources can be
+# defined as a network.
+#<Boot IP>: This is a default IP address a node uses when it is first activated and becomes
+# available. Typically—and as used in this article—the boot IP is a non-routable IP
+# address set up on an isolated VLAN accessible to all nodes in the cluster.
+#<Persistent IP>: This is an IP address a node uses as its regular means of communication.
+# Typically, this is the IP through which systems administrators access a node.
+#<Service IP>: This is an IP address that can "float" between the nodes. Typically, this
+# is the IP address through which users access resources in the cluster.
+#<Application server>: This is a logical configuration to tell PowerHA how to manage
+# applications, including starting and stopping applications, application monitoring,
+# and application tunables. 
+#<Shared volume group>: This is a PowerHA-managed volume group. Instead of configuring
+# LVM structures like volume groups, logical volumes, and file systems through the
+# operating system, you must use PowerHA for disk resources that will be shared between
+# the servers.
+#<Resource group>: This is a logical grouping of service IP addresses, application servers,
+# and shared volume groups that the nodes in the cluster can manage.
+#<Failover>: This is a condition in which resource groups are moved from one node to another.
+# Failover can occur when a systems administrator instructs the nodes in the cluster to
+# do so or when circumstances like a catastrophic application or server failure forces
+# the resource groups to move.
+#<Failback/fallback>: This is the action of moving back resource groups to the nodes on
+# which they were originally running after a failover has occurred.
+#<Heartbeat>: This is a signal transmitted over PowerHA networks to check and confirm
+# resource availability. If the heartbeat is interrupted, the cluster may initiate a
+# failover depending on the configuration
+
+##########################################################################
+#
+# Datagather.sh     Version 1.3
+# Last Modified - March, 2010 - S. Bodily
+#
+##########################################################################
+aix_hacmp () {
+
+	PATH=/usr/bin:/etc:/usr/sbin:/usr/es/sbin/cluster/utilities:/usr/es/sbin/cluster/diag:/usr/es/sbin/cluster
+
+	node=$(hostname)
+
+	echo "Gathering requested AIX info..."
+	echo ""
+	sleep 2
+	rm ${TMP}/$node.*
+
+	# Set Variables
+	typeset -i dumpreq
+	typeset -i ppsize
+	typeset -i var1=0
+	typeset -i var2=0
+	typeset -i var3=0
+	typeset -i var4=0
+
+	echo "Report Created on:" | tee -a ${TMP}/$node.aixinfo
+	date | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "**********GENERAL INFORMATION*******************" | tee -a ${TMP}/$node.aixinfo
+	cllscf | grep Cluster | tee -a ${TMP}/$node.aixinfo
+
+	echo "Node Names: " | tee -a ${TMP}/$node.aixinfo
+	clnodename | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Local Machine Type:" | tee -a ${TMP}/$node.aixinfo
+	lsattr -El sys0 | grep model | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Running AIX Version:" | tee -a ${TMP}/$node.aixinfo
+	oslevel -r | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Running HACMP Version:" | tee -a ${TMP}/$node.aixinfo
+	lslpp -l cluster.es.server.rte | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "**********CPUGUARD*******************" | tee -a ${TMP}/$node.aixinfo
+	lsattr -El sys0 -a cpuguard | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "**********Restart after Crash***********" | tee -a ${TMP}/$node.aixinfo
+	lsattr -El sys0 -a autorestart | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************ROOTVG SECTION*****************************" | tee -a ${TMP}/$node.aixinfo
+	lsvg -l rootvg | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	lsvg -p rootvg | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Location of Boot Logical Volume: " | tee -a ${TMP}/$node.aixinfo
+	lslv -m hd5 | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Normal Bootlist" | tee -a ${TMP}/$node.aixinfo
+	bootlist -m normal -o | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Check for Bootable Devices: " | tee -a ${TMP}/$node.aixinfo
+	ipl_varyon -i | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************Dump Info****************************" | tee -a ${TMP}/$node.aixinfo
+	sysdumpdev -l | tee -a ${TMP}/$node.aixinfo
+	ppsize=`lsvg rootvg | grep 'PP SIZE' | awk '{print $6}'`
+	pps1=`sysdumpdev -l | grep 'primary' | awk '{print $2}'`
+	dumplv1=${pps1##*/}
+
+	# echo "dumplv1=" $dumplv1  # Display Primary Dump Device
+	#size1=`odmget -q "name=$dumplv1 and attribute=size" CuAt | grep value | awk '{print $3}' | cut -d "\"" -f 2`
+	size1=`lsvg -l rootvg|grep ${dumplv1}|awk '{print $4}'`
+	# echo "size1=" $size1  # Display Size of Primary Dump Device 
+	# echo $dumplv2
+	pps2=`sysdumpdev -l | grep 'secondary' | awk '{print $2}'`
+
+	dumplv2=${pps2##*/}
+	size2=`lsvg -l rootvg|grep ${dumplv2}|awk '{print $4}'`
+	# echo "dumplv2=" $dumplv2   # Display Secondary Dump Device
+	# size2=`odmget -q "name$dumplv2 and attribute=size" CuAt | grep value | awk '{print $3}' | cut -d "\"" -f 2`
+	# echo "size2=" $size2   # Display Size of Secondary Dump Device
+	# echo "pps1=" $pps1
+	# echo "pps2=" $pps2
+	if [[ $ppsize != "" && $size1 != "" && $size2 != "" ]]
+	then
+		var3=$(($ppsize*$size1))
+		var4=$(($ppsize*$size2))
+	fi
+	#if [[ $dumplv2 != sysdumpnull ]];then
+	#     var4=$(($ppsize*$size2))  # Calculate Secondary Dump Device Name
+	#else
+	#    echo "Note: Secondary Dump Device is not Configured!"
+	#fi
+	# echo "var3=" $var3   # Primary Dump PPs x PP Size
+	# echo "var4=" $var4   # Secondary Dump PPs x PP Size
+	
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	# echo "Physical Partition Size:"  $ppsize | tee -a ${TMP}/$node.aixinfo 
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	sysdumpdev -e | tee -a ${TMP}/$node.aixinfo
+	dumpreq=`sysdumpdev -e | awk '{print $7}'`
+
+	let var1=$dumpreq/1024
+	let var2=$var1/1024
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Estimated Dump Size in MB:" $var2 "Primary Size:" $var3 "Secondary Size:" $var4 | tee -a ${TMP}/$node.aixinfo
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************SYSTEM TUNABLES*****************************" | tee -a ${TMP}/$node.aixinfo
+	grep syncd /sbin/rc.boot | tee -a ${TMP}/$node.aixinfo
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "High & Low Watermark Settings" | tee -a ${TMP}/$node.aixinfo
+	lsattr -El sys0 | grep maxpout | tee -a ${TMP}/$node.aixinfo
+	lsattr -El sys0 | grep minpout | tee -a ${TMP}/$node.aixinfo
+	lsattr -El sys0 | grep cpuguard | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Check for FC Tunable Attributes:" | tee -a ${TMP}/$node.aixinfo
+	odmget CuAt | grep dyntrk | tee -a ${TMP}/$node.aixinfo
+	odmget CuAt | grep fc_err_recov | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "HACMP Custom Events Configured: " | tee -a ${TMP}/$node.aixinfo
+	odmget HACMPcustom | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Application Monitors Configured:" | tee -a ${TMP}/$node.aixinfo
+	odmget HACMPmonitor | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************SYSTEM STORAGE***********************" | tee -a ${TMP}/$node.aixinfo
+	echo "List of Disks: (lsdev -Cc disk)" | tee -a ${TMP}/$node.aixinfo
+	lsdev -Cc disk | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "LUN PVIDs on system: (lspv)" | tee -a ${TMP}/$node.aixinfo
+	lspv | tee -a ${TMP}/$node.aixinfo | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "List of HBAs Configured: (lsdev -Cc adapter)" | tee -a ${TMP}/$node.aixinfo
+	lsdev -Cc adapter | grep fcs | tee -a ${TMP}/$node.aixinfo
+	lscfg -vl fcs0 | tee -a ${TMP}/$node.aixinfo
+	lscfg -vl fcs1 | tee -a ${TMP}/$node.aixinfo
+	lscfg -vl fcs2 | tee -a ${TMP}/$node.aixinfo
+	lscfg -vl fcs3 | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "System Filesystem List: (lsfs)"
+	lsfs | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "List of configured Virtual Devices: " | tee -a ${TMP}/$node.aixinfo
+	lsdev -C | grep -i virtual | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "List of ECM Requirements:" | tee -a ${TMP}/$node.aixinfo
+	lslpp -l bos.clvm.enh | tee -a ${TMP}/$node.aixinfo
+	lslpp -l bos.rte.lvm | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Multipathing Driver/s Configured:" | tee -a ${TMP}/$node.aixinfo
+	lslpp -l *sdd* | tee -a ${TMP}/$node.aixinfo
+	lslpp -l *ibm2105* | tee -a ${TMP}/$node.aixinfo
+	lslpp -l devices.fcp.disk.ibm.mpio* | tee -a ${TMP}/$node.aixinfo
+	lslpp -l *power* | tee -a ${TMP}/$node.aixinfo
+	lslpp -l *devices.fcp.disk.array* | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************CLUSTER TOPOLOGY***********************" | tee -a ${TMP}/$node.aixinfo
+	cllsif -p | tee -a ${TMP}/$node.cllsif
+
+	echo "Captured cllsif file... " | tee -a ${TMP}/$node.aixinfo
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Network Failure Detection Rates:" | tee -a ${TMP}/$node.aixinfo
+	odmget -q name=ether HACMPnim | tee -a ${TMP}/$node.aixinfo
+	odmget -q name=rs232 HACMPnim | tee -a ${TMP}/$node.aixinfo
+	odmget -q name=diskhb HACMPnim | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "RSCT Status of HACMP Networks:" | tee -a ${TMP}/$node.aixinfo
+	echo "lssrc -ls topsvcs" | tee -a ${TMP}/$node.aixinfo
+	lssrc -ls topsvcs | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Network Interfaces on System:" | tee -a ${TMP}/$node.aixinfo
+	lsdev -Cc adapter | grep tty | tee -a ${TMP}/$node.aixinfo
+	netstat -in | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Adapter Media Speed & Link Status Settings: " | tee -a ${TMP}/$node.aixinfo
+	netstat -v | grep Media | tee -a ${TMP}/$node.aixinfo
+	netstat -v | grep Link | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	netstat -rn | tee -a ${TMP}/$node.routetable
+	echo "Routing Table file captured ..." | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Netmask & Interface Status: " | tee -a ${TMP}/$node.aixinfo
+	ifconfig -a | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************CLUSTER RESOURCE GROUPS***********************" | tee -a ${TMP}/$node.aixinfo
+	clgetgrp | tee -a ${TMP}/$node.aixinfo
+	clshowres > ${TMP}/$node.clshowres
+	echo "Clshowres Ouput file captured ..." | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Application Servers Configured:" | tee -a ${TMP}/$node.aixinfo
+	odmget HACMPserver | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "Resource Group Processing Order:" | tee -a ${TMP}/$node.aixinfo
+	odmget HACMPgroup | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "RG Dependencies Configured::" | tee -a ${TMP}/$node.aixinfo
+	odmget HACMPrgdependency | tee -a ${TMP}/$node.aixinfo
+	odmget HACMPrg_loc_dependency | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "RG Delayed Fallback Timer Configured:" | tee -a ${TMP}/$node.aixinfo
+	odmget HACMPtimer | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "HACMP File Collections Configured:" | tee -a ${TMP}/$node.aixinfo
+	odmget HACMPfilecollection | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************CLUSTER STATUS***********************" | tee -a ${TMP}/$node.aixinfo
+	clshowsrv -v | tee -a ${TMP}/$node.aixinfo
+	clRGinfo -p | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************ADDITIONAL TROUBLESHOOTING***********************" | tee -a ${TMP}/$node.aixinfo
+	/usr/sbin/emgr -l | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	errpt -a | tee -a ${TMP}/$node.errpt
+	echo "Detailed errpt file written to .errpt file ..." | tee -a ${TMP}/$node.aixinfo
+	cp /wamu/var/log/hacmp/clverify.log ${TMP}/$node.clverify
+	#cp /var/hacmp/clverify/clverify.log ${TMP}/$node.clverify
+	echo "clverify.log file captured ..." | tee -a ${TMP}/$node.aixinfo
+
+	echo " " | tee -a ${TMP}/$node.aixinfo
+	echo "*************HACMP & RSCT Fileset Levels***********************" | tee -a ${TMP}/$node.aixinfo
+	lslpp -h "cluster.*" | tee -a ${TMP}/$node.hafileset
+	echo "HACMP fileset levels written to *.hafileset file ..." | tee -a ${TMP}/$node.aixinfo
+	lslpp -h "rsct.*" | tee -a ${TMP}/$node.hafileset
+	echo "RSCT fileset levels written to *.hafileset file ..." | tee -a ${TMP}/$node.aixinfo
+	# Capture of HACMP Object Classes
+	odmget HACMPadapter | tee -a ${TMP}/$node.haodm
+	odmget HACMPcluster | tee -a ${TMP}/$node.haodm
+	odmget HACMPcustom | tee -a ${TMP}/$node.haodm
+	odmget HACMPdaemons | tee -a ${TMP}/$node.haodm
+	odmget HACMPdisksubsys | tee -a ${TMP}/$node.haodm
+	odmget HACMPdisktype | tee -a ${TMP}/$node.haodm
+	odmget HACMPevent | tee -a ${TMP}/$node.haodm
+	odmget HACMPfcfile | tee -a ${TMP}/$node.haodm
+	odmget HACMPgroup | tee -a ${TMP}/$node.haodm
+	odmget HACMPlogs | tee -a ${TMP}/$node.haodm
+	odmget HACMPmonitor | tee -a ${TMP}/$node.haodm
+	odmget HACMPnetwork | tee -a ${TMP}/$node.haodm
+	odmget HACMPnim | tee -a ${TMP}/$node.haodm
+	odmget HACMPnode | tee -a ${TMP}/$node.haodm
+	odmget HACMPpprc | tee -a ${TMP}/$node.haodm
+	odmget HACMPresource | tee -a ${TMP}/$node.haodm
+	odmget HACMPrgdependency | tee -a ${TMP}/$node.haodm
+	odmget HACMPrules | tee -a ${TMP}/$node.haodm
+	odmget HACMPserver | tee -a ${TMP}/$node.haodm
+	odmget HACMPsite | tee -a ${TMP}/$node.haodm
+	odmget HACMPsvc | tee -a ${TMP}/$node.haodm
+	odmget HACMPsvcpprc | tee -a ${TMP}/$node.haodm
+	odmget HACMPsvcrelationship | tee -a ${TMP}/$node.haodm
+	odmget HACMPtimersvc | tee -a ${TMP}/$node.haodm
+	odmget HACMPtopsvcs | tee -a ${TMP}/$node.haodm
+
+	echo "Capturing AIX filesets"
+	lslpp -L > ${TMP}/$node.aixfilesets
+
+	echo "Capturing hosts files"
+	cp /etc/hosts ${TMP}/$node.hosts
+	cp /usr/es/sbin/cluster/etc/rhosts ${TMP}/$node.rhosts
+
+	echo "Creating Cluster Snapshot...." 
+	rm /usr/es/sbin/cluster/snapshots/$node.info
+	rm /usr/es/sbin/cluster/snapshots/$node.odm
+	clsnapshot -c -i -n $node 
+	sleep 6
+
+	cp /usr/es/sbin/cluster/snapshots/$node.info ${TMP}/$node.snapshot
+
+	echo "Gathering LVM Snap Information...." 
+	snap -L
+	#cp ${TMP}/ibmsupt/lvm/lvm.snap ${TMP}/$node.lvm.snap
+
+	cat ${TMP}/ibmsupt/lvm/*.snap >>${TMP}/ibmsupt/lvm/allvgs.snap
+	cp ${TMP}/ibmsupt/lvm/allvgs.snap ${TMP}/$node.lvm.snap
+	echo "Creating tar file of requested data..."
+	tar -cvf ${TMP}/$node.tar ${TMP}/$node.*
+
+	echo "Creating compressed file"
+	compress ${TMP}/$node.tar
+
+	echo "Cleaning up temporary files created from snap data..."
+	rm -r ${TMP}/$node.aixfilesets
+	rm -r ${TMP}/$node.hafileset
+	rm -r ${TMP}/$node.cllsif
+	rm -r ${TMP}/$node.routetable
+	rm -r ${TMP}/$node.clshowres
+	rm -r ${TMP}/$node.clverify
+	rm -r ${TMP}/$node.errpt
+	rm -r ${TMP}/$node.aixinfo
+	rm -r ${TMP}/$node.haodm
+	rm -r ${TMP}/$node.hosts
+	rm -r ${TMP}/$node.rhosts
+	rm -r ${TMP}/$node.lvm.snap
+	rm -r ${TMP}/ibmsupt/lvm
+	rm -r ${TMP}/$node.snapshot
+	sleep 1
+	echo "Cleanup Done..."
+	sleep 1
+	echo ${TMP}/$node".tar.gz created ...."
+	
+	mail_$(uname)  "$(hostname)_HACMP_REPORT" \
+			${TMP} $node.tar.Z "${mail_alert}"
+
+}
+
+################################################################################
+#
+# Name: 	aix_mksysbk
+#
+# Reference:    n/a
+#
+# Description:  AIX Operation system backup using mksysb.
+# The tape format includes a boot image, a bosinstall image, and an empty table
+# of contents followed by the system backup (root volume group) image. 
+#
+# The root volume group image is in backup-file format, starting with the data 
+# files and then any optional map files
+#
+# Modification History:
+#
+#	Date            Name          	Description   
+#	-------------------------------------------------------------
+#	2012-12-13	Liru Chen	Modified due to cm07 quarterly backup
+#
+####################################################################################
+aix_mksysb () {
+	if [[ $USER != root ]]
+	then
+		echo "You should be root user"
+		exit 202
+	fi
+
+	aix_conf
+
+	#mksysb Backup operating system (that is, the root volume group)
+	# -e: Excludes files listed in the /etc/exclude.rootvg file from being backed up
+	# -i: Generates the /image.data file,which contains details about volume groups,
+	#     logical volumes, file systems, paging space, and physical volumes
+	echo "Backup Operation System (rootvg)..."
+
+	mksysb_date=$(date +%Y%m%d%H%M)
+	mksysb_log=${LOG}/$(hostname)_MKSYSB_${mksysb_date}.log
+	
+	mksysb_dir=${BKUPDIR:="${TMP}"}
+	mksysb_excludefs=${mksysb_dir}/$(hostname).mksysb_excludefs
+	
+	mksysb_image=${BKUPOSIMG:="/dev/rmt0"}
+
+	# If backup device is tape driver, load/rewind tape volume
+	if [[ -c ${mksysb_image} ]]
+	then
+		$TAPE ${mksysb_image} rewind
+		mksysb_target=${mksysb_image}
+	else	#if backup to local disk, keep only one copy of mksysb
+		rm -f ${mksysb_dir}/${mksysb_image}_*
+		mksysb_target=${mksysb_dir}/${mksysb_image}_${mksysb_date}
+	fi
+	
+	#-e Excludes files listed in the /etc/exclude.rootvg file from being backed up. 
+	#	The rules for exclusion follow the pattern matching rules of the grep command
+
+	#-i	Calls the mkszfile command, which generates the /image.data file. 
+	#	The /image.data file contains details about volume groups, logical volumes, 
+	#	file systems, paging space, and physical volumes. This information is included
+	#	in the backup for future use by the installation process.
+
+	#-x file Excludes the file systems that are listed in the file from the system backup.
+	#	File system mount points must be listed one per line.
+			
+	mksysb -i -x ${mksysb_excludefs} -e ${mksysb_target}
+	if [[ $? != 0 ]]
+	then
+		echo  "<error = $?> error on mksysb command:" > ${mksysb_log}
+		mail -s "$(hostname) mksysb failed" "${mail_alert}" < ${mksysb_log}
+		
+		#offline tape if backup device is tape driver
+		[[ -c ${mksysb_target} ]] && $TAPE ${mksysb_target} offline
+		return 201
+	fi
+
+	#list all the files if medium is tape
+	mksysb_content=${mksysb_dir}/$(hostname)_mksysb_content
+	
+	echo "Listing of the root volume group " > ${mksysb_content}
+	
+	if [[ -c ${mksysb_target} ]]
+	then
+		$TAPE ${mksysb_target} rewind
+		if [[ $? != 0 ]]
+		then
+			echo "Error in rewinding the tape on $os_image " >> ${mksysb_log}
+			echo "\t <error code = $? > " >> ${mksysb_log}
+			
+			mail -s "Tape Rewind on $os_image failed after System backup" \
+				"${mail_alert}" < ${mksysb_log}
+			$TAPE ${mksysb_target} offline
+		fi
+
+		#The tape format includes a boot image, a bosinstall image, and an empty 
+		#table of contents followed by the system backup (root volume group) image, 
+		#use "-Tqs4" to get mksysb content on tape
+		/usr/sbin/restore -Tvqs4 -f ${mksysb_target}.1 > ${mksysb_content} 2>&1
+		if [[ $? != 0 ]]
+		then
+			echo "<error = $? > error on reading mksysb content on tape" >> ${mksysb_log}
+			
+			mail -s "List System Backup failed" "${mail_alert}" < ${mksysb_log}
+			$TAPE ${mksysb_target} offline
+			return 209
+		fi
+
+	else
+		#The file-system image is in backup-file format. 
+		#This file will not be bootable and can only be installed
+		#using Network Installation Management (NIM).
+		 /usr/sbin/restore -Tvq -f ${mksysb_target} > ${mksysb_content} 2>&1
+		 if [[ $? != 0 ]]
+		 then
+			echo "<error = $? > error on reading filesystem image" >> ${mksysb_log}
+			
+			mail -s "LIST SYSTEM BACKUP FAILED" "${mail_alert}" < ${mksysb_log}
+			return 210
+		 fi
+
+	fi
+
+	mail_$(uname) "$(hostname)_MKSYSB_COMPLETED" \
+		${mksysb_dir} $(hostname)_mksysb_content "${mail_alert}"
+
+}
+
+################################################################################
+#
+# Name:         aix_backup
+#
+# Reference:    n/a
+#
+# Description:  Backup AIX file systems on specific Volume Group(s) 
+#
+# AIX command used to backup entire file system backed up by i-node 
+# using the Level and FileSystem parameters:
+# backup -0 -uf /dev/rmt0.1 filesystem 
+#
+# 1. All file systems on listed volume groups will be backup on one single tape
+# 2. Exclude the file systems which need not backup in file:
+#    ${TMP}/$(hostname)_backup_exclude
+#
+# Modification History:
+#
+#	Date        Name        Description 
+#	---------------------------------------------------
+#	2013-3-30	Liru Chen	Original, prepared for cm07
+#
+################################################################################
+aix_backup () {
+	if [[ $USER != root ]]
+	then
+		echo "You should be root user"
+		return 202
+	fi
+
+	backup_date=$(date +%Y%m%d%H%M)
+	backup_log=${LOG}/$(hostname)_BACKUP_${backup_date}.log
+	
+	backup_dir=${BKUPDIR:="${TMP}"}
+	backup_image=${BKUPFSIMG:="/dev/rmt0"}
+	
+	backup_doc=${backup_dir}/$(hostname)_STORAGE_DOC
+	backup_exclude=${backup_dir}/$(hostname)_backup_exclude
+	backup_content=${backup_dir}/$(hostname)_backup_content
+
+	#backup level
+	backup_level=0
+
+	[[ -c ${backup_image} ]] && $TAPE ${backup_image} rewind
+	
+	#Collect Filesystem information on specific volume group
+	echo "BACKUP DEVICE:\t${backup_image}" | tee ${backup_doc}
+
+	for backup_vg in $VG
+	do
+		backup_vgname=$(echo "${backup_vg}@"|cut -f1 -d"@")
+		
+		lsvg ${backup_vgname} > ${backup_doc}.${backup_vgname}
+		lsvg -l ${backup_vgname} >> ${backup_doc}.${backup_vgname}
+		lsvg -p ${backup_vgname} >> ${backup_doc}.${backup_vgname}
+		
+		#Get filesystems needed to be backed up listed in this VG
+		backup_filesystem=$(grep jfs ${backup_doc}.${backup_vgname} |
+		grep -v -f ${backup_exclude} | grep -v 'N/A' | awk '{print $7}')
+
+		#log the archive backup_filesystems
+		echo "BACKUP FILESYSTEM LISTING: ${backup_filesystem}" | tee -a ${backup_log}
+		 
+		echo "--------------------------------------" | tee -a ${backup_log}
+		echo "BACKUP LEVEL: ${backup_level} "         | tee -a ${backup_log}
+		echo "BACKUP DATE : $(date)"                  | tee -a ${backup_log}
+		echo "--------------------------------------" | tee -a ${backup_log}
+
+		#Get number of backup_filesystem in the string "backup_filesystem"
+		set ${backup_filesystem}
+		integer fsCount=$#
+
+		#Backup the backup_filesystems sequentially
+		
+		#For Tape device: the <iCount> number identify file marks specified
+		#Count parameter and positions it on the end-of-tape (EOT) side of the file mark.
+		integer iCount=1
+
+		while (( $iCount <= $fsCount ))
+		do
+			echo "Backing up backup_filesystem: $1 $iCount"   | tee -a ${backup_doc}
+			sync
+			sleep 5
+
+			if [[ -c ${backup_image} ]]
+			then
+				backup_target=${backup_image}.1
+			else
+				ext=$( echo $1 | tr / _ )
+				rm -f ${backup_dir}/${backup_image}$ext.$iCount
+				backup_target=${backup_dir}/${backup_image}$ext.$iCount
+			fi
+
+			backup -${backup_level} -uf ${backup_target} $1 | tee -a ${backup_log}
+			if [[ $? != 0 ]]
+			then	
+				echo "< error = $? >error on backing up backup_filesystem: $1" |
+				tee -a  ${backup_log}
+				
+				mail -s "File system $1 backup failed" "${mail_alert}" < ${backup_log}
+				[[ -c ${backup_target} ]] && $TAPE ${backup_image} offline
+				return 209
+			fi
+
+			echo "$1\tBACKUP SeqNumber\t$iCount" | tee -a ${backup_log}
+
+			shift 1
+			iCount=iCount+1
+		done
+
+		#List all the backup contents
+		set ${backup_filesystem}
+		integer fsCount=$#
+		integer xCount=1
+
+		# Rewind tape if use tape drive to backup
+		if [[ -c ${backup_target} ]]
+		then
+			$TAPE ${backup_image} rewind
+			if [[ $? != 0 ]]
+			then
+				echo "\t Error in rewinding the tape on ${backup_image}  " |
+				tee -a ${backup_log}
+				
+				echo "\t <error code = $? > " |
+				tee -a ${backup_log}
+
+				mail -s "Tape Rewind on ${backup_image}  failed" \
+						 "${mail_alert}" < ${backup_log}
+				$TAPE ${backup_image} offline
+			fi
+		fi
+
+		while (( $xCount <= $fsCount ))
+		do
+			echo "\n-----------------------------------------"| tee -a ${backup_log}
+			echo "Filesystem: $1 Backup_Sequence: $xCount"    | tee -a ${backup_log}
+			echo "-----------------------------------------"  | tee -a ${backup_log}
+
+			if [[ -c ${backup_target} ]]
+			then
+				restore -s1 -Tqvf ${backup_image}.1 | tee -a ${backup_content}
+				if [[ $? != 0 ]]
+				then	
+					echo "<error = $? > error on reading backup_filesystem: $1" |
+					tee -a ${backup_log}  
+
+					echo "Dumping the contents of error file:"|
+					tee -a ${backup_log}
+
+					mail -s "List File System $1 backup failed" "${mail_alert}" <${backup_log} 
+					$TAPE ${backup_image} offline
+					return 209
+				fi
+			else
+				ext=$( echo $1 | tr / _ )
+				restore -Tqvf ${backup_dir}/${backup_image}$ext.$xCount | tee -a ${backup_content}
+				if [[ $? != 0 ]]
+				then
+					echo "<error = $?> error on reading backup_filesystem: $1" |
+					tee -a ${backup_log}
+
+					echo "Dumping the contents of error file" |
+					tee -a ${backup_log}
+
+					mail -s "List File System $1 backup failed" "${mail_alert}" < ${backup_log}
+					return 209
+				fi
+			fi
+
+			shift 1
+			xCount=xCount+1
+
+		done
+		
+	done
+
+	echo "/etc/dumpdates at the close of this backup:" |
+	tee -a ${backup_content}
+
+	sort /etc/dumpdates | tee -a ${backup_content}
+	echo "BACKUP task has been completed" |
+	tee -a ${backup_content}
+
+	sleep 5
+
+	# dismount the tape
+	[[ -c ${backup_target} ]] && $TAPE ${backup_image} offline
+
+	#Mail to Administrator
+	mail_$(uname) "FILE_SYSTEMS_BACKUP_COMPLETED" \
+		${backup_dir} $(hostname)_backup_content "${mail_alert}"
+
+}
+
+#Provide the vg name, and hdisks which will be included, the vg parameters
+#will be read from vg document $(hostname)_STORAGE_DOC.$vgname
+aix_crvg () {
+	crvg_vgname=$1
+	crvg_hdisks=$2
+	
+	crvg_date=$(date +%Y%m%d%H%M)
+	crvg_log=${LOG}/$(hostname)_CRVG_${crvg_vgname}_${crvg_date}.log
+	
+	crvg_dir=${BKUPDIR:="${TMP}"}
+	crvg_doc=${crvg_dir}/$(hostname)_STORAGE_DOC
+	
+	[[ ! -e ${crvg_doc}.${crvg_vgname} ]] && {
+		echo "VG $vgname BACKUP not Document"
+		return 201
+	}
+
+	ppsize=$(grep "PP SIZE" ${crvg_doc}.${crvg_vgname} | awk '{print $6}')
+
+	#Create Volume Group dbvg if no there
+	/usr/sbin/mkvg -s $ppsize -y ${crvg_vgname} ${crvg_hdisks} | tee -a ${crvg_log}
+
+	#Create log Logic Volume
+	jfs2loglv=$(grep jfs2log ${crvg_doc}.$vgname | awk '{print $1}')
+	/usr/sbin/mklv -t jfs2log -y $jfs2loglv ${crvg_vgname} 1 | tee -a ${crvg_log}
+
+	mail -s "Create File System $fsname completed" "${mail_alert}" < ${crvg_log}
+}
+
+#provide the fs name and vg name on which this fs will be created,
+#a logic volume of this fs will be created firstly, and size and other parameter
+#of this logical volume is read from $(hostname)_STORAGE_DOC.$vgname
+aix_crfs () {
+	crfs_fsname=$1
+	crfs_vgname=$2
+	
+	crfs_date=$(date +%Y%m%d%H%M)
+	crfs_log=${LOG}/$(hostname)_CRFS_${crfs_fsname}_${crfs_date}.log
+	
+	crfs_dir=${BKUPDIR:="${TMP}"}
+	crfs_doc=${crfs_dir}/$(hostname)_STORAGE_DOC
+	
+	grep ${crfs_fsname} ${crfs_doc}.${crfs_vgname}
+	[[ $? != 0  ]] && {
+		echo "File System ${crfs_fsname} BACKUP not Document"
+		return 201
+	}
+	
+	echo "\n Start to create filesystem...." | tee -a ${crfs_log}
+	cp /etc/filesystems $ETC/$(hostname)_filesystems
+
+	#removes file system if may still have record in /etc/filesystems. 
+	#remove its entry in the /etc/filesystems file,and the underlying logical volume.
+	grep ${crfs_fsname} $ETC/$(hostname)_filesystems
+	if [[ $? == 0 ]]
+	then
+		echo " !!! WARNING: WE ARE GOING TO DELETE CURRENT ${crfs_fsname} !!!"
+		echo ""
+		echo ""
+		echo "CONTROL+C to STOP if you DONOT want to DELETE current ${crfs_fsname}....."
+		echo "You have ONE munite ...."
+		sleep 60
+		
+		echo "DELETING ${crfs_fsname} ...."
+		cd /
+		umount -f ${crfs_fsname}
+		/usr/sbin/rmfs ${crfs_fsname}
+	fi
+
+	#jfs2Log Volume on the new Volume Group
+	jfs2loglv=$(lsvg -l ${crfs_vgname}|grep jfs2log|awk '{print $1}')
+	 
+	#Parameters of logic volume(old) created
+	grep ${crfs_fsname}  ${crfs_doc}.${crfs_vgname} |
+	while read LV_NAME TYPE LPs PPs PVs LV_STATE MOUNT_POINT
+	do
+		#Create Logic Volumes on new Volume Group
+		/usr/sbin/mklv -t jfs2 -y $LV_NAME ${crfs_vgname} $LPs | tee -a ${crfs_log}
+		[[ $? != 0 ]] && return 201
+
+		#Create FileSystems
+		/usr/sbin/crfs -v jfs2 -d $LV_NAME -m $MOUNT_POINT -A yes \
+			-p rw -a logname=$jfs2loglv | tee -a ${crfs_log}
+		[[ $? != 0 ]] && return 201
+
+		mount $MOUNT_POINT
+	done
+
+	mail -s "Create File System ${crfs_fsname} completed" "${mail_alert}" < ${crfs_log}
+
+}
+
+aix_rfs () {
+	rfs_fsname=$1
+	
+	rfs_date=$(date +%Y%m%d%H%M)
+	rfs_log=${LOG}/$(hostname)_RFS_${rfs_fsname}_${rfs_date}.log
+	
+	rfs_image=${BKUPFSIMG:="/dev/rmt0"}
+	rfs_dir=${BKUPDIR:="${TMP}"}
+	rfs_doc=${rfs_dir}/$(hostname)_STORAGE_DOC
+
+	grep ${rfs_fsname} ${rfs_doc}
+	[[ $? != 0 ]] && {
+		echo "File System ${rfs_fsname} BACKUP not Document"
+		return 201
+	}
+		
+	fsnumber=$(grep ${rfs_fsname} ${rfs_doc} | awk '{print $5}')
+	if [[ -c ${rfs_image} ]]
+	then
+		rfs_target=${rfs_image}.1
+	else
+		ext=$(echo ${rfs_fsname} | tr / _ )
+		rfs_target=${rfs_dir}/${rfs_image}$ext.$fsnumber
+	fi
+
+	cd ${rfs_fsname}
+
+	if [[ -c ${rfs_target} ]]
+	then
+		$TAPE ${rfs_image} rewind
+
+restore -xvqys $fsnumber -f ${rfs_target} <<EOF
+1
+no
+EOF
+[[ $? != 0 ]] && {
+	echo "Restore ${rfs_fsname} Failed." | tee -a ${rfs_log}
+	return 201
+}
+
+	else
+
+restore -xvqy -f ${rfs_target} <<EOF
+1
+no
+EOF
+[[ $? != 0 ]] && {
+	echo "Restore ${rfs_fsname} Failed." | tee -a ${rfs_log}
+	return 201
+}
+
+	fi
+
+	echo "Restore ${rfs_fsname} completed successfully." | tee -a ${rfs_log}
+
+}
+
+################################################################################
+#
+# Name:         aix_restore
+#
+# Reference:    n/a
+#
+# Description:  Restore AIX system file system(s)backup by aix_restore_backup 
+#               on a new volume group.
+#
+#1. File systems on old volume groups which backup by aix_restore_backup
+#	will be created on new volume group if not exit.
+#
+#2. All file systems in FS[@] parameters and backuped will be restored
+#
+#	Tips: If tape is used, there maybe mutiple filesystem(s) on one 
+#	single tape volume, the tape device name is /dev/rmt0.1, 
+#	which indicate no-retention and no-rewind after tape operation.
+#
+#	All the backup information is store in a mateFile:
+#	- Backup device ( for example: /dev/rmt0)
+#	- Backup Medium lable ( for example: CM07-C02)
+#	- Detailed volume group information 
+#	- File systems backuped in the volume group (#lsvg -l $vgname)
+#	- The sequential number of backup filesystem if mutiple
+#		filesystems is stored on one single tape volume
+#
+# Modification History:
+#
+#  Date            Name            Description
+#  --------------------------------------------------------------
+#  2012-12-13      Liru Chen       Created due to cm07 quarterly 
+#                                  backup&restore
+#
+####################################################################################
+aix_restore () {
+	if [[ $USER != root ]]
+	then
+		echo "You should be root user"
+		return 201
+	fi
+
+	restore_date=$(date +%Y%m%d%H%M)
+	restore_log=${LOG}/$(hostname)_RESTORE_${restore_date}.log
+	
+	restore_dir=${BKUPDIR:="${TMP}"}
+	restore_image=${BKUPFSIMG:="/dev/rmt0"}
+	
+	restore_doc=${restore_dir}/$(hostname)_STORAGE_DOC
+
+	[[ ! -e ${restore_doc} ]] && {
+		echo "No File System BACKUP Document on $(hostname)"
+		return 201
+		}
+
+	for restore_fs in ${FS}
+	do	
+		restore_fsname=$(echo "${restore_fs}@"|cut -f1 -d"@")
+		restore_vgname=$(echo "${restore_fs}@"|cut -f2 -d"@")
+
+		[[ ${restore_vgname} == "" ]] && {
+			echo "Please select VG for your file system" | tee -a ${restore_log}
+			return 202
+			}
+		
+		for restore_vg in ${VG}
+		do
+			restore_vgname_vg=$(echo "${restore_vg}@"|cut -f1 -d"@")
+			restore_disks=$(echo "${restore_vg}@"|cut -f2 -d"@")
+			
+			lsvg | grep ${restore_vg}
+			[[ $? != 0 && ${restore_vgname} == ${restore_vgname_vg} ]] && {
+				aix_crvg ${restore_vgname} ${restore_disks} | tee -a ${restore_log}
+				}
+		done
+		
+		grep ${restore_fsname} /etc/filesystems
+		[[ $? != 0 ]] && aix_crfs ${restore_fsname} ${restore_vgname} | tee -a ${restore_log}
+		
+		aix_rfs ${restore_fsname} | tee -a ${restore_log}
+
+		#Mail to Administrator;
+		mail -s "File System $fsname restored on Volume Group $vgname" \
+			"${mail_alert}" < ${restore_log}
+
+	done
+
+}
+
+################################################################################
+#
+# Name:         aix_vg_backup
+#
+# Reference:    n/a
+#
+# Description:  Finds and backs up all files belonging to a specified volume group
+#
+# Command:      aix.vg.bkup backup_device vgName backup_medium_lable
+# default backup device: /dev/rmt0
+# default backup medium lable: `hostname`.`date +%Y%m%d%H%M`
+#
+# Modification History:
+# Date		Name		Description 
+# -------------------------------------
+# 2013-3-30	Liru Chen	Original
+#
+################################################################################
+aix_vg_backup () {
+	if [[ $USER != root ]]
+	then
+		echo "You should be root user"
+		return 201
+	fi
+
+	vgb_date=$(date +%Y%m%d%H%M)
+	vgb_log=${LOG}/$(hostname)_VGB_${vgb_date}.log
+	vgb_dir=${BKUPDIR:="${TMP}"}
+	vgb_image=${BKUPVGIMG:="/dev/rmt0"}
+	vgb_content=${vgb_dir}/$(hostname)_vgb_content
+
+	integer i=0
+	integer summ=${#VG[@]}
+	
+	while (( i < summ ))
+	do	
+		vgname=$(echo ${VG[i]}|cut -f1 -d"|")
+		disks=$(echo ${VG[i]}|cut -f2 -d"|"|tr "," " ")
+
+		lsvg | grep $vgname
+		[[ $? != 0 ]] && return 202
+
+		#The savevg command finds and backs up all files belonging to a specified 
+		#volume group. The volume group must be varied-on, and the file systems 
+		#must be mounted. To back up the user volume group and excluding the files
+		#listed in the /etc/exclude.vgname file, and then verify the readability 
+		#of file headers
+
+		# If backup device is tape drive, load/rewind tape volume
+		if [[ -c ${vgb_image} ]]
+		then
+			echo "Please load Tape for $vgname in 2 minues...."
+			sleep 120
+			$TAPE ${vgb_image} rewind
+			vgb_target=${vgb_image}
+		else	#if backup to local disk, keep only one copy of vg image on current directory
+			rm -f ${vgb_dir}/${vgb_image}_${vgname}
+			vgb_target=${vgb_dir}/${vgb_image}_${vgname}
+		fi
+			
+		savevg -ief ${vgb_target} $vgname
+		if [[ $? != 0 ]]
+		then
+			echo "\t Volume Group $vgname backup failed " | tee -a ${vgb_log}
+			echo "\t <error code = $? > "                 | tee -a ${vgb_log}
+			return 201
+		fi
+		
+		#List backup content
+		[[ ! -c ${vgb_target} ]] && {
+			restvg -l -f ${vgb_target} >> ${vgb_content}
+			if [[ $? != 0 ]]
+			then
+				echo "\t Volume Group $vgname backup failed " | tee -a ${vgb_log}
+				echo "\t <error code = $? > "                 | tee -a ${vgb_log}
+				return 201
+			fi	
+		}
+
+	i=i+1
+	done
+	
+	mail -s "Volume Group $vgname backup completed" \
+		"${mail_alert}" < ${vgb_log}
+}
+
+################################################################################
+#
+# Name:         aix_vg_restore
+#
+# Reference:    n/a
+#
+# Description:  Restores the user volume group and all its containers and files, 
+#               as specified in the ${TMP}/vgdata/vgname/vgname.data file 
+#               (where vgname is the name of the volume group) contained within
+#               the backup image created by the savevg command
+#
+# Command:      aix_vg_restore "hd1 hd2 ..." backup_medium_lable
+#
+#               if no disks specified, disks in the /etc/vgname.data file contained 
+#               within the backup image will be used
+#
+# Modification History:
+#
+# Date		Name		Description 
+# --------------------------------------
+# 2013-3-30	Liru Chen	Original
+#
+################################################################################
+aix_vg_restore () {
+	if [[ $USER != root ]]
+	then
+		echo "You should be root user"
+		return 201
+	fi
+
+	vgr_date=$(date +%Y%m%d%H%M)
+	vgr_log=${LOG}/$(hostname)_VGRS_${vgr_date}.log
+	vgr_dir=${BKUPDIR:="${TMP}"}
+	vgr_image=${BKUPVGIMG:="/dev/rmt0"}
+	
+	integer i=0
+	integer summ=${#VG[@]}
+	
+	while (( i < summ ))
+	do	
+		vgname=$(echo ${VG[i]}|cut -f1 -d"|")
+		disks=$(echo ${VG[i]}|cut -f2 -d"|"|tr "," " ")
+		
+		if [[ -c ${vgr_image} ]]
+		then
+			echo "Please load Tape for $vgname in 2 minues...."
+			sleep 120
+			$TAPE ${vgr_image} rewind
+			vgr_target=${vgr_image}
+		else	#if backup to local disk, keep only one copy of vg image on current directory
+			vgr_target=${vgr_dir}/${vgr_image}_${vgname}
+		fi
+		
+		[[ ! -e ${vgr_target} ]] && {
+			echo "VG BACKUP RESUORCE NOT FOUND"
+			return 202
+		}
+		restvg -f ${vgr_target} $disks | tee -a ${vgr_log}
+		if [[ $? != 0 ]]; then
+			mail -s "restore $vgname failed " "${mail_alert}" < /dev/null
+			return 201
+		fi
+
+		sleep 5
+
+	i=i+1
+	done
+	
+	#Mail to Administrator;
+	mail -s "Volume Group $vgname RESTORE COMPLETED" \
+		"${mail_alert}" < ${vgr_log}
+
+}
+
+# The lsmksysb command lists the contents of a volume group backup from tape, 
+# file, CD-ROM, or other source and can be used to restore files from a
+# valid backup source. The lsmksysb command also works for multi-volume backups
+# such as multiple CDs, DVDs, USB disks, or tapes.
+
+# The lsmksysb -r and restorevgfiles commands perform identical operations and
+# should be considered
+aix_file_restore () {
+	bckup_source=$1
+	restore_file=$2
+	
+	#restore file
+	lsmksysb -r -f ${bckup_source} ${restore_file}
+	
+	#list file
+	lsmksysb -f ${bckup_source} ${restore_file}
+	
+	##Other options
+	#/usr/sbin/restore -xvq -f ${bckup_source} ${restore_file}
+	#/usr/sbin/restore -Tvqs4 -f /dev/rmt0.1 ${restore_file}
+	
+}
+
+#################################################################################
+# INFORMIX SERVER MANITENAMCE
+#################################################################################
+#At the start of a session, the client groups all the environment variables that the 
+#server will use and sends the environment variables to the server as single block. 
+#The maximum size of this block is 32K. If the block of environment variables is 
+#greater than 32K, the error -1832 is returned to the application. The text of 
+#this error is "Environment block is greater than 32K." 
+
+#To resolve this error, you can either unset one or more environment variables 
+#or reduce the size of some of the environment variables
+
+
+############################################################################################
+#Description	: INITIAL/DUPLICATE INFORMIX DATABASE SERVER: artestdb
+#
+#Server and Storage:IPDEV
+# 
+#1.INSTALL INFORMIX SERVER SOFTWARE
+#	IDS Server Software: /usr/apps/inf/ver115UC3
+#
+#2.ENVIRONMENT PARAMETERS FILE: ids115.env
+#	Usage: . ids115.env $IDSSERVER
+#	-----------------------------------------------
+# 	SRVR=$1
+# 	echo ""
+# 	echo " Server $SRVR environment ..."
+#	echo ""
+#	INFVERSION=ver115UC3
+#	INFORMIXDIR=/usr/apps/inf/$INFVERSION
+#	INFORMIXSERVER=$SRVR
+#	ONCONFIG=onconfig_$INFORMIXSERVER
+#	ARC_CONFIG=onarconfig_$INFORMIXSERVER
+#	PATH=$INFORMIXDIR/bin:$PATH
+#	INFORMIXTERM=termcap
+#	TERMCAP=$INFORMIXDIR/etc/termcap
+#	SYSROOT=/usr/apps
+#	INFROOT=$SYSROOT/inf
+#	INFBIN=$INFORMIXDIR/bin
+#	INFLIB=$INFORMIXDIR/lib
+#	INFINC=$INFORMIXDIR/incl
+#	INFPLATFORM=IBMAIX
+#	INFLOGDIR=/home/informix/log
+#	INFBKUP=/home/informix/bkup
+#	#DBSPACETEMP=tempdbs1:tempdbs2:tempdbs3S
+#	export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
+#	export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM
+#	export INFLOGDIR INFBKUP
+#	#export DBSPACETEMP
+#	export INFXCPUVPPRIORITY=90
+#	export INFXNETVPPRIORITY=90
+#	export INFXMSCVPPRIORITY=90
+#	export INFXIOVPPRIORITY=90
+#
+#3.CONFIGURATION FILES
+#	$ONCONFIG=$INFORMIXDIR/etc/onconfig_artestdb:
+#	cp -p $INFORMIXDIR/etc/onconfig_systestdb $INFORMIXDIR/etc/onconfig_artestdb
+#	modify  $INFORMIXDIR/etc/onconfig_artestdb according to DB storage definition
+# 	###################################################################
+# 	# Root Dbspace Configuration Parameters
+# 	###################################################################
+# 	# ROOTNAME     - The root dbspace name to contain reserved pages and
+# 	#                internal tracking tables.
+# 	# ROOTPATH     - The path for the device containing the root dbspace
+# 	# ROOTOFFSET   - The offset, in KB, of the root dbspace into the 
+# 	#                device. The offset is required for some raw devices. 
+#	# ROOTSIZE     - The size of the root dbspace, in KB.  The value of 
+# 	#                200000 allows for a default user space of about 
+# 	#                100 MB and the default system space requirements.
+# 	####################################################################
+# 	ROOTNAME rootdbs
+# 	ROOTPATH /ar_root/ar_root.1
+# 	ROOTOFFSET 0
+# 	ROOTSIZE 2048000
+# 	MIRROR 0
+#	###################################################################
+# 	# Physical Log Configuration Parameters
+# 	###################################################################
+# 	# PHYSFILE           - The size, in KB, of the physical log on disk.
+# 	#                      If RTO_SERVER_RESTART is enabled, the 
+# 	#                      suggested formula for the size of PHSYFILE 
+# 	#                      (up to about 1 GB) is:
+# 	#                      PHYSFILE = Size of BUFFERS * 1.1
+#	# onstat -g ckp  display configuration 
+#	# recommendations if a suboptimal configuration is detected
+# 	# PLOG_OVERFLOW_PATH - The directory for extra physical log files
+# 	#                      if the physical log overflows during recovery
+# 	#                      or long transaction rollback
+# 	# PHYSBUFF           - The size of the physical log buffer, in KB
+# 	###################################################################
+# 	PHYSFILE 110000
+# 	#PLOG_OVERFLOW_PATH  $INFORMIXDIR/tmp
+# 	PLOG_OVERFLOW_PATH 
+# 	PHYSBUFF 100000
+# 
+#	# Logical Log Configuration Parameters
+# 	###################################################################
+#	# LOGFILES     - The number of logical log files
+# 	# LOGSIZE      - The size of each logical log, in KB
+# 	# DYNAMIC_LOGS - The type of dynamic log allocation.
+# 	#                Acceptable values are:
+# 	#                2 Automatic. IDS adds a new logical log to the
+# 	#                  root dbspace when necessary.
+# 	#                1 Manual. IDS notifies the DBA to add new logical
+# 	#                  logs when necessary.
+# 	#                0 Disabled
+# 	# LOGBUFF      - The size of the logical log buffer, in KB
+# 	###################################################################
+# 	LOGFILES        6
+# 	LOGSIZE 100000
+# 	DYNAMIC_LOGS 1
+# 	LOGBUFF 64
+#
+# 	###################################################################
+# 	# MSGPATH      - The path of the IDS message log file
+# 	# CONSOLE      - The path of the IDS console message file
+# 	###################################################################
+# 	MSGPATH /login/infown/log/artestdb/online.log
+# 	MSG_DATE 1
+# 	CONSOLE /login/infown/log/artestdb/online.con
+#
+# 	###################################################################
+# 	# Temporary dbspace and sbspace Configuration Parameters
+# 	###################################################################
+# 	# DBSPACETEMP  - The list of dbspaces used to store temporary
+# 	#                tables and other objects. Specify a colon
+# 	#                separated list of dbspaces that exist when the
+#	#                server is started. If no dbspaces are specified, 
+# 	#                or if all specified dbspaces  are not valid, 
+# 	#                temporary files are created in the /tmp directory
+# 	#                instead.
+# 	# SBSPACETEMP  - The list of sbspaces used to store temporary 
+# 	#                tables for smart large objects. If no sbspace
+# 	#                is specified, temporary files are created in
+# 	#                a standard sbspace.
+# 	###################################################################
+# 	DBSPACETEMP  tempdbs1,tempdbs2
+# 	SBSPACETEMP
+#
+# 	###################################################################
+# 	# System Configuration Parameters
+# 	###################################################################
+# 	# SERVERNUM       - The unique ID for the IDS instance. Acceptable 
+# 	#                   values are 0 through 255, inclusive.
+# 	# DBSERVERNAME    - The name of the default database server
+# 	# DBSERVERALIASES - The list of up to 32 alternative dbservernames, 
+# 	#                   separated by commas
+# 	###################################################################
+# 	SERVERNUM 80
+# 	DBSERVERNAME	artestdb
+# 	DBSERVERALIASES
+#
+# 	###################################################################
+# 	# Diagnostic Dump Configuration Parameters
+#	###################################################################
+# 	# DUMPDIR      - The location Assertion Failure (AF) diagnostic 
+# 	#                files
+# 	# DUMPSHMEM    - Controls shared memory dumps. Acceptable values 
+# 	#                are:
+# 	#                0 Disabled
+# 	#                1 Dump all shared memory
+# 	#                2 Exclude the buffer pool from the dump
+# 	# DUMPGCORE    - Enables (1) or disables (0) whether IDS dumps a 
+# 	#                core using gcore
+# 	# DUMPCORE     - Enables (1) or disables (0) whether IDS dumps a 
+# 	#                core after an AF
+#	# DUMPCNT      - The maximum number of shared memory dumps or 
+# 	#                core files for a single session
+# 	###################################################################
+# 	DUMPDIR /recyclebox/inf/dump/artestdb
+# 	DUMPSHMEM 1
+# 	DUMPGCORE 0
+# 	DUMPCORE 0
+# 	DUMPCNT 1
+#
+#$INFROMIXDIR/etc/$SQLHOSTS, 
+# 	#**************************************************************************
+# 	#
+# 	#  Licensed Material - Property Of IBM
+# 	#
+# 	#  "Restricted Materials of IBM"
+# 	#
+# 	#  IBM Informix Dynamic Server
+# 	#  (c) Copyright IBM Corporation 1996, 2004 All rights reserved.
+# 	#
+# 	#   Title:      sqlhosts.demo
+# 	#   Description:
+# 	#               Default sqlhosts file for running demos.
+# 	#
+# 	#**************************************************************************
+# 	# IANA (www.iana.org) assigned port number/service names for Informix:
+# 	# sqlexec 9088/tcp
+# 	# sqlexec-ssl 9089/tcp
+# 	#demo_on        onipcshm        on_hostname     on_servername
+# 	#demo_se        seipcpip        se_hostname     sqlexec
+#
+# 	#Systest database;
+#	systestdb	onsoctcp	ipdev	systestdbsvc    k=1
+#	artestdb	onsoctcp	ipdev	artestsvc
+#
+#
+#/etc/SERVICES
+#------------------------------------------------------------------------------
+# 	ipdbsvc			6800/tcp                        #For restore database instance
+# 	systestdbsvc	6600/tcp                        #system dev test database
+# 	artestdbsvc		6900/tcp                        #system arch test database
+#
+#4.IDS STORAGE 
+#
+# filesystem, ensure size to meet chunk size requirement: 
+#----------------------------------------------------------------
+# 	/dev/arrootlv      2.50      2.48    1%        5     1% /ar_root
+# 	/dev/arploglv      0.50      0.50    1%        4     1% /ar_plog
+# 	/dev/arlloglv      2.00      2.00    1%        4     1% /ar_llog
+# 	/dev/ardat1lv     10.00     10.00    1%        4     1% /ar_dat1
+# 	/dev/ardat2lv      8.00      8.00    1%        4     1% /ar_dat2
+# 	/dev/aridx1lv      2.00      2.00    1%        4     1% /ar_idx1
+# 	/dev/aridx2lv      1.00      1.00    1%        4     1% /ar_idx2
+# 	/dev/artemplv      2.00      2.00    1%        4     1% /ar_temp
+#	on AIX: chfs -a size=10G /ar_dat1
+#
+#generate information about chunks in each storage space on Production Server ipdb,
+#used by tchunk and tdbspace to create chunk files and dbsapace automatically
+#	onstat -d  > $ETC/IDSSTORAGE.artestdb.ipdev
+#
+#	modigy/replace all /ix_ with /ar_,Format Sample:
+#	--------------------------------------------------------------------------------
+# 	IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 00:13:21 -- 2252128 Kbytes
+# 	Dbspaces
+# 	address  number   flags      fchunk   nchunks  pgsize   flags    owner    name
+# 	b0431810 1        0x60001    1        1        4096     N  B     informix rootdbs
+# 	b1839b58 2        0x60001    2        10       4096     N  B     informix datadbs1
+# 	b182c6c8 3        0x60001    12       8        4096     N  B     informix datadbs2
+# 	b182db48 4        0x60001    20       1        4096     N  B     informix indxdbs2
+# 	b182e348 5        0x60001    21       2        4096     N  B     informix indxdbs1
+# 	b182ed18 6        0x60001    23       1        4096     N  B     informix llogdbs
+# 	b182f518 7        0x42001    24       1        4096     N TB     informix tempdbs1
+# 	b182fde0 8        0x42001    25       1        4096     N TB     informix tempdbs2
+# 	8 active, 2047 maximum
+#
+# 	Chunks
+# 	address  chunk/dbs offset     size       free    bpages     flags pathname
+# 	b0431970 1      1  0          512000     480301             PO-B  /ar_root/ar_root.1
+# 	b1839cb8 2      2  0          250000     246682             PO-B  /ar_dat1/ar_dat1.1
+# 	b17ff9f0 3      2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.2
+# 	b17ffbc0 4      2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.3
+# 	b188a4e8 5      2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.4
+# 	b188a6b8 6      2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.5
+# 	b188a888 7      2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.6
+# 	b188aa58 8      2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.7
+# 	b188ac28 9      2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.8
+# 	b188adf8 10     2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.9
+# 	b182c4f8 11     2  0          250000     249997             PO-B  /ar_dat1/ar_dat1.10
+# 	b182c828 12     3  0          250000     249947             PO-B  /ar_dat2/ar_dat2.1
+# 	b182ce98 13     3  0          250000     249997             PO-B  /ar_dat2/ar_dat2.2
+# 	b182d068 14     3  0          250000     249997             PO-B  /ar_dat2/ar_dat2.3
+# 	b182d238 15     3  0          250000     249997             PO-B  /ar_dat2/ar_dat2.4
+# 	b182d408 16     3  0          250000     249997             PO-B  /ar_dat2/ar_dat2.5
+# 	b182d5d8 17     3  0          250000     249997             PO-B  /ar_dat2/ar_dat2.6
+# 	b182d7a8 18     3  0          250000     249997             PO-B  /ar_dat2/ar_dat2.7
+# 	b182d978 19     3  0          250000     249997             PO-B  /ar_dat2/ar_dat2.8
+# 	b182dca8 20     4  0          250000     249947             PO-B  /ar_idx2/ar_idx2.1
+# 	b182e4a8 21     5  0          250000     249947             PO-B  /ar_idx1/ar_idx1.1
+# 	b182eb48 22     5  0          250000     249997             PO-B  /ar_idx1/ar_idx1.2
+# 	b182ee78 23     6  0          250000     99947              PO-B  /ar_llog/ar_llog.1
+# 	b182f678 24     7  0          250000     249947             PO-B  /ar_temp/ar_temp.1
+# 	b188c440 25     8  0          250000     249947             PO-B  /ar_temp/ar_temp.2
+# 	25 active, 32766 mamum
+# 	NOTE: The values in the "size" and "free" columns for DBspace chunks are
+# 	displayed in terms of "pgsize" of the DBspace to which they belong.
+#
+# 	Expanded chunk capacity mode: always
+#
+#5.IDS DATABASE SQL
+#	a) dbschema -d ip_0p > artestdb.ip_artest.ipdev.sql
+#		You can also use the -ss option to generate server-specific information:
+#		dbschema -d ip_0p -ss > artestdb.ip_artest.ipdev.sql
+#
+#SQL generated from dbschema -d ip_0p -ss, modify SQL file into following INFORMIX
+#objects creating SQL files, so we can load create tables and load data for each table,
+#then build other objects like procedures, views, indexes, constraints and triggers if needed
+#
+#	b) Remove the header information about dbschema, if any, from the output file:
+#   		DBSCHEMA Schema Utility       INFORMIX-SQL Version 11.50.UC3W2
+#		Add a CREATE DATABASE statement at the beginning of the output file 
+#			CREATE DATABASE ip_artest IN datadbs1 WITH LOG;
+#			CONNECT TO 'ip_artest@artestdb' USER 'informix' USING 'infdev';#
+#
+# 	c) string replace:	ip_0p --> ip_artest
+#						@ipdb --> @artestdb
+#
+#		No "in datadbs1/2/3;indxdbs1/2/3", all tables/indexes are created in 
+#       default dbspace: datadbs1
+#	There are Error when run this SQL generated by dbschema on production server,
+#	you need to modify db sql:
+#	grant select|update|delete|insert on "informix".vw_tarifftrtmnt to "public" as "informix";
+#	before create view "ipgown".trk_srb3sub
+#6.use DB-Access to create a new database without log mode, it's good for a new 
+#  database which need to load large data to tables, then use ontape and/or ondblog to
+#  change database log mode to regular logging
+################################################################################################
+
+#Read full chunk path names with status PO|PD|MO|MD from $ETC/IDSSTORAGE
+#and create chunk files for INFORMIX database server if not exist
+tchunk () {
+	# if [[ $USER != 'root' ]]
+	# then
+		# echo "You should be root user"
+		# return 201
+	# fi
+	
+	tchunk_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tchunk_db=$(echo $TABLETARGET | cut -f2 -d",")
+
+	[[ ${tchunk_server} == "ipdb" ]] && return 119
+	#[[ ${tchunk_server} == "systestdb" ]] && return 110
+	
+	tchunk_doc=$ETC/IDSSTORAGE.${tchunk_server}.$(hostname)
+	[[ ! -e ${tchunk_doc} ]] && {
+		echo "IDS Storage Document not available"
+		return 202
+	}
+	
+	egrep '[PM][OD]' ${tchunk_doc} | awk '{print $8}' | \
+	while read chunkpath
+	do
+		[[ ! -e $chunkpath ]] && {
+			[[ ! -d $(dirname $chunkpath) ]] && mkdir -p $(dirname $chunkpath)
+			touch $chunkpath
+
+			chown -R informix:informix $(dirname $chunkpath)
+			chmod 660 $chunkpath
+		}
+	done
+}
+
+#Read full chunk path names with status PO|PD|MO|MD from $ETC/IDSSTORAGE
+#and create dbspace for INFORMIX database server if not exist
+tdbspace () {
+	# if [[ $USER != 'root' ]]
+	# then
+		# echo "You should be root user"
+		# return 201
+	# fi
+	
+	tdbspace_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tdbspace_db=$(echo $TABLETARGET | cut -f2 -d",")
+
+	[[ ${tdbspace_server} == "ipdb" ]] && return 119
+	#[[ ${tdbspace_server} == "systestdb" ]] && return 110
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tdbspace_server}
+	
+	tdbspace_doc=$ETC/IDSSTORAGE.${tdbspace_server}.$(hostname)
+	[[ ! -e ${tdbspace_doc} ]] && {
+		echo "IDS Storage Document not available"
+		return 202
+	}
+	
+	grep informix ${tdbspace_doc} |
+	while read address number flags fchunk nchunks pgsize flagsF flagsT owner name
+	do
+		chunk_first=1
+		egrep '[PM][OD]' ${tdbspace_doc} |
+		while read address chunk dbs offset size free flags pathname
+		do
+			[[ $flagsT == "TB" && $dbs == $number ]] && {
+				#one chunk for one temp dbspace
+				onspaces -c -t -d $name -p $pathname -o 0 -s 1000000
+				continue
+			}
+			[[ $flagsT == "B" && $dbs == $number ]] && {
+				if [ ${chunk_first} -eq 1 ]
+				then
+					onspaces -c -d $name -p $pathname -o 0 -s 1000000
+					chunk_first=0	#first chunk used to create dbspace
+				else
+					#other chunks added to created dbspace
+					onspaces -a $name -p $pathname -o 0 -s 1000000
+				fi
+			}
+		done
+	done
+
+}
+
+tlog () {
+	tlog_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tlog_db=$(echo $TABLETARGET | cut -f2 -d",")
+
+	[[ ${tlog_server} == "ipdb" ]] && return 119
+	#[[ ${tlog_server} == "systestdb" ]] && return 110
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tlog_server}
+	
+#Physical Log stores a before-image of any page that Informix is going to modify,
+#the before-images in the Physical Log are used by fast recovery and database restores
+#to give an accurate snapshot of your data at the time of the last checkpoint.
+#
+# There is absolutely no performance penalty for having a big physical log, but
+# there are drawbacks to having an undersized physical log.
+# - Checkpoints firing too frequently due to small physical log hitting 75% full mark often
+# - Checkpoint blocking due to physical log filling during a checkpoint
+# - Fast Recovery can take longer if physical log is not large enough 
+# use onstat -g ckp to find IDS recommendations on the size of physical log
+
+# onstat -l		#Print logging (physical + logical)
+# onstat -g ckp	#Print checkpoint statistics
+# onstat -rm	#Print message log, Repeat options every <seconds> seconds (default: 5)
+
+# The server is blocking transactions because the physical log is too small.
+# Based on the current workload, to prevent the server from blocking future
+# transactions,increase the size of the physical log to 1,202,696 KB
+# 
+# Based on the current workload, the logical log space might be too small
+# to accommodate the time it takes to flush the buffer pool.  The server might
+# block transactions during checkpoints.  If the server blocks transactions,
+# increase the size of the logical log space to at least 1,963,624 KB
+
+onparams -p -s 300000 -d rootdbs -y # this will modify ONCONFIG also
+
+#Logical log records:
+# - Transaction Rollback
+# - Recovery from Engine Failure (Data Restore and Fast Recovery)
+# - Deferred Constraint Checking
+# - Cascading Deletes
+# - Distributed Transactions (Two Phase Commit)
+# - Enterprise Replication
+# - High Availability Data Replication
+#
+#The logical logs are used in a circular fashion, when a new logical log is needed, 
+#Informix starts overwriting the data in the logical log that contains the oldest data
+#as long as it is:
+# 1) marked as backed up and, 
+# 2) does not contain any open transactions.
+#If either 1 or 2 are met, the engine will block and Informix DB hung
+
+#By default, oninit -iy created logical logs based on 
+# LOGFILES     - The number of logical log files (6, default 6)
+# LOGSIZE      - The size of each logical log, in KB (100000, default 10,000 KB)
+
+#use the onparams command to drop the first 3 (leaving me with 3 total) 
+#then create 3 logical logs of the new size and in the new dbspace to take their place
+#I can then drop the remaining 3 logical logs and create the remaining 3 logical logs
+ onmode -l		#Switches the current logical-log file to the next logical-log file
+ onmode -l
+ onmode -l
+#
+ onmode -c		#Forces a checkpoint that flushes the buffers to disk
+#
+ onparams -d -l 1 -y
+ onparams -d -l 2 -y
+ onparams -d -l 3 -y
+#
+ onparams -a -d llogdbs -s 100000 # 25000 pages = 100000 KB
+ onparams -a -d llogdbs -s 100000
+ onparams -a -d llogdbs -s 100000
+#
+ onmode -l		#Switches the current logical-log file to the next logical-log file
+ onmode -l
+ onmode -l
+#
+ onmode -c		#Forces a checkpoint that flushes the buffers to disk
+# - To free a logical-log file that contains the most recent checkpoint record 
+# 	and that is backed up but not yet released (onstat -l status of U-B-L or U-B)
+# - Before you issue onmode -sy to place the database server in quiescent mode
+# - After building a large index, if the database server terminates before the 
+# 	next checkpoint. The index build restarts the next time that you restart the database server.
+# - If a checkpoint has not occurred for a long time and you are about to attempt 
+# 	a system operation that might interrupt the database server
+# - If foreground writes are taking more resources than you want (force a checkpoint
+#	to bring this down to zero temporarily)
+# - Before you run dbexport or unload a table, to ensure physical consistency of all 
+# 	data before you export or unload it
+# - After you perform a large load of tables using PUT or INSERT statements (Because 
+# 	table loads use the buffer cache, forcing a checkpoint cleans the buffer cache.)
+#
+ onparams -d -l 4 -y
+ onparams -d -l 5 -y
+ onparams -d -l 6 -y
+#
+ onparams -a -d llogdbs -s 100000
+ onparams -a -d llogdbs -s 100000
+ onparams -a -d llogdbs -s 100000
+
+}
+
+tdb () {
+	tdb_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tdb_db=$(echo $TABLETARGET | cut -f2 -d",")
+
+	[[ ${tdb_server} == "ipdb" ]] && return 119
+	#[[ ${tdb_server} == "systestdb" ]] && return 110
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tdb_server}
+	
+	tdb_doc=$ETC/${tdb_server}.${tdb_db}.$(hostname).sql
+	[[ ! -e ${tdb_doc} ]] && {
+		echo "IDS DBS SQL DOCUMENT NOT AVAILABLE"
+		return 202
+	}
+	
+	dbaccess - ${tdb_doc}
+
+}
+
+tinit () {
+	if [[ $USER != 'root' ]]
+	then
+		echo "You should be root user"
+		return 2
+	fi
+
+	tinit_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tinit_db=$(echo $TABLETARGET | cut -f2 -d",")
+
+	[[ ${tinit_server} == "ipdb" ]] && return 119
+	#[[ ${tinit_server} == "systestdb" ]] && return 110
+
+	#Make sure IDS STORAGE document $ETC/IDSSTORAGE.artestdb.ipdev is ready; 
+	tchunk
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}	
+	# #. $ids_env ${tinit_server}
+	
+	#Initializes disk space for the root dbspace, destroys all existing data managed by $ids_server
+	#The database server must be offline if already exist and running: onmode -ky
+	#
+	#To monitor all the process during IDS server creation, Please open a new session: onstat -rm; 
+	oninit -ivy
+	oninit_rc=$?
+	
+	if [[ ${oninit_rc} -eq 0 ]]
+	then
+		tdbspace			#Create DBspace when db server created successfully
+		tlog	#modify physical log and logical logs size and location
+
+		#Create DB (No data) with $ETC/${ids_server}.${ids_database}.$(hostname).sql
+		#run by USER informix
+		su - informix -c $BASE/shlib tdb
+		return $?
+	else
+		echo "IDS INIT FAILED"
+		return ${oninit_rc}
+	fi
+	
+}
+
+#SET TABLE TRIGGERS, INDEXES, CONSTRAINTS DISABLED
+ticdisabled () {
+	ticdisabled_server=$(echo $TABLETARGET | cut -f1 -d",")
+	ticdisabled_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${ticdisabled_server} == "ipdb" ]] && return 119
+	#[[ ${ticdisabled_server} == "systestdb" ]] && return 110
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${ticdisabled_server}
+
+	tic_table_name=${1-"securuser"}
+	echo "
+	SET CONSTRAINTS,INDEXES,TRIGGERS FOR ${tic_table_name} DISABLED; " |
+	dbaccess ${ticdisabled_db}
+		
+}
+
+#SET TABLE TRIGGERS, INDEXES, CONSTRAINTS ENABLED
+ticenabled () {
+	ticenabled_server=$(echo $TABLETARGET | cut -f1 -d",")
+	ticenabled_db=$(echo $TABLETARGET | cut -f2 -d",")
+		
+	[[ ${ticenabled_server} == "ipdb" ]] && return 119
+	#[[ ${ticenabled_server} == "systestdb" ]] && return 110
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${ticenabled_server}
+
+	tic_table_name=${1-"securuser"}
+	echo "
+	SET CONSTRAINTS,INDEXES,TRIGGERS FOR ${tic_table_name} ENABLED; " |
+	dbaccess ${ticenabled_db}
+		
+}
+
+#Change whole DB log mode to no log, if you have no space to add physical/logical log
+#without parameter, this will change db log mode to unbuf, it's default
+tlogmode () {
+	tlogmode_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tlogmode_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${tlogmode_server} == "ipdb" ]] && return 119
+	#[[ ${tlogmode_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tlogmode_server}
+	
+	log_mode=${1-"unbuf"}
+	#To change the buffering mode from buffered to unbuffered logging on a database
+	#run the following command:ondblog unbuf ${tlogmode_db}
+
+	#To change the buffering mode from unbuffered to buffered logging on a database
+	#run the following command: ondblog buf ${tlogmode_db}
+	
+	#To end logging for two databases that are listed in a file called dbfile, 
+	#run the following command:	ondblog nolog ${tlogmode_db}
+	
+	#Change to quiescent mode and kill all attached sessions
+	onmode -uy
+	
+	if [[ ${log_mode} == "nolog" ]]
+	then
+		ontape -N ${tlogmode_db}
+	elif [[ ${log_mode} == "buf" ]]
+	then
+		ontape -s -B ${tlogmode_db} -t /dev/null
+	else
+ 		ontape -s -U ${tlogmode_db} -t /dev/null
+	fi
+
+	#Go to multi-user on-line
+	onmode -my
+
+}
+
+##########################################################################
+#Quick script thrown together to find dependencies on a table. 
+# 
+#Usage: depend.sh database table 
+# 
+#This will list all tables which refer to this table either by view or by 
+#foreign key.  It will also list any tables that this table depends on.  
+#It will recurse through a dependency chain. 
+# 
+#The sysconstraints table has a record for every constraint in the database
+#	C Check 
+#	P Primary key 
+#	R Reference (Foreign Key) 
+#	U Unique 
+#	N Not Null
+#
+# Jack Parker 2003 
+#
+############################################################### 
+find_par_view() { 
+	dbaccess $1 - 2>/dev/null <<EOF
+	output to pipe "cat" without headings 
+	select trim(b.tabname) 
+	from sysdepend c, systables a, systables b 
+	where btabid=a.tabid 
+	and dtabid=b.tabid 
+	and b.tabname = "$2"; 
+EOF
+
+} 
+
+find_child_view() { 
+	dbaccess $1 - 2>/dev/null <<EOF
+	output to pipe "cat" without headings 
+	select trim(b.tabname) 
+	from sysdepend c, systables a, systables b 
+	where btabid=a.tabid 
+	and dtabid=b.tabid 
+	and a.tabname = "$2"; 
+EOF
+} 
+ 
+find_par_fk() { 
+	dbaccess $1 - 2>/dev/null <<EOF
+	output to pipe "cat" without headings 
+	select trim(d.tabname) || ' ' || trim(constrname) || ' ' || state 
+	from systables a, sysconstraints b, sysreferences c, systables d, sysobjstate e 
+	where constrtype='R' 
+	and a.tabid=b.tabid 
+	and b.constrid=c.constrid 
+	and b.constrname=e.name 
+	and c.ptabid=d.tabid 
+	and a.tabname = "$2"; 
+EOF
+} 
+ 
+find_child_fk() { 
+	dbaccess $1 - 2>/dev/null <<EOF
+	output to pipe "cat" without headings 
+	select trim(a.tabname) || ' ' || trim(constrname) || ' ' || state 
+	from systables a, sysconstraints b, sysreferences c, systables d, sysobjstate e 
+	where constrtype='R' 
+	and a.tabid=b.tabid 
+	and b.constrid=c.constrid 
+	and b.constrname=e.name 
+	and c.ptabid=d.tabid 
+	and d.tabname = "$2"; 
+EOF
+} 
+ 
+rec_pfk() { 
+	idnt="$idnt-" 
+	find_par_fk $1 $2 | grep -v "^$" | 
+	while read junk 
+	do 
+		echo $idnt "Parent of FK: $junk" 
+		tab=`echo $junk | cut -d" " -f1 ` 
+		rec_pfk $1 $tab 
+	done 
+	idnt=`echo $idnt | awk '{a=length($0)-1; print substr($0,1,a)}'` 
+} 
+ 
+rec_cfk() { 
+	idnt="$idnt-" 
+	find_child_fk $1 $2 | grep -v "^$" | 
+	while read junk 
+	do 
+		echo $idnt "Child of FK: $junk" 
+		tab=`echo $junk | cut -d" " -f1 ` 
+		rec_cfk $1 $tab 
+	done 
+	idnt=`echo $idnt | awk '{a=length($0)-1; print substr($0,1,a)}'` 
+} 
+ 
+rec_pvw() { 
+	idnt="$idnt-" 
+	find_par_view $1 $2 | grep -v "^$" | 
+	while read tab 
+	do 
+		echo $idnt "Parent View : $tab" 
+		rec_cfk $1 $tab 
+	done 
+	idnt=`echo $idnt | awk '{a=length($0)-1; print substr($0,1,a)}'` 
+} 
+ 
+rec_cvw() { 
+	idnt="$idnt-" 
+	find_child_view $1 $2 | grep -v "^$" | 
+	while read tab 
+	do 
+		echo $idnt "Child of View : $tab" 
+		rec_cfk $1 $tab 
+	done 
+	idnt=`echo $idnt | awk '{a=length($0)-1; print substr($0,1,a)}'` 
+} 
+
+tcolumn () {
+	tcolumn_db=$1
+	tcolumn_table=$2
+	
+	echo "select colname from systables,syscolumns
+		where tabname like '${tcolumn_table}'
+		and systables.tabid=syscolumns.tabid
+		order by colno" | dbaccess ${tcolumn_db} |
+		grep colname | grep -v "^$"
+}
+
+tshow () {
+	tshow_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tshow_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tshow_server}
+	
+	tshow_table=${1-"securuser"}
+	
+	echo " 
+
+	Database: ${tshow_db}
+	" 
+	idnt="" 
+	echo "Searching for tables that (${tshow_table} ) has an FK to:" 
+	rec_pfk ${tshow_db} ${tshow_table} 
+	idnt="" 
+	echo "Searching for tables that refer to (${tshow_table} ) with an FK:" 
+	rec_cfk ${tshow_db} ${tshow_table}  
+	idnt="" 
+	echo "Searching for Parent tables for potential view (${tshow_table} ):" 
+	rec_pvw ${tshow_db} ${tshow_table}  
+	idnt="" 
+	echo "Searching for Child views for table (${tshow_table} ):" 
+	rec_cvw ${tshow_db} ${tshow_table} 
+
+}
+
+#This is a recursive algorithm:
+#function call itself, find all related tables after each function return,
+#function will not call itself (ends cycling) when "junk" is empty
+#
+#Set local variable in KSH:
+# - use "function" to set function "trelation", and 
+# - use typeset to set local variable "child_table" & "parent_table"
+function trelation {
+	trelation_server=$(echo $TABLETARGET | cut -f1 -d",")
+	trelation_db=$(echo $TABLETARGET | cut -f2 -d",")
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${trelation_server}	
+
+	trelation_table_dir=${TABLELOADDIR:="/login/lchen/tools/etc/table/load"}
+	trelation_table_relation="${trelation_table_dir}/table_relation_$$"
+	trelation_table_relation_rev="${trelation_table_dir}/table_relation_rev_$$"
+
+	typeset trelation_table=${1-"securuser"}
+	typeset parent_tables=$(find_par_fk ${trelation_db} ${trelation_table}|awk '{print $1}')
+	
+	#When recursive forward
+	for parent_table in ${parent_tables}
+	do
+		echo "${parent_table} ${trelation_table} $$" |
+		tee -a ${trelation_table_relation}
+	done 		
+
+	#Check recursive continue condition, it will stop while "junk" is empty
+	find_child_fk ${trelation_db} ${trelation_table} | grep -v "^$" |
+	while read junk 
+	do 
+		tab=$(echo $junk | cut -d" " -f1)
+		trelation $tab 
+	done 
+	
+	#When recursive return
+	for parent_table in ${parent_tables}
+	do
+		echo "${trelation_table} ${parent_table} $$" |
+		tee -a ${trelation_table_relation_rev}
+	done 
+	
+}
+
+#Collect and generate DDL for tables' CONSTRAINTS,INDEXES,TRIGGERS 
+#echo "alter table informix.b3 add primary key (b3iid)"|dbaccess ip_systest
+#echo "alter table informix.b3b add constraint foreign key (b3iid) references informix.b3|dbaccess ip_systest
+tddl () {
+	tddl_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tddl_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tddl_server}
+	
+	tddl_table_dir=${TABLELOADDIR:="$ETC/table/load"}
+	tddl_table_name=${1-"securuser"}
+
+	cd ${tddl_table_dir}
+	
+	#Clean DDL statement if exist	
+	: > ${tddl_table_name}_ddl_$$.sql
+	: > ${tddl_table_name}_create_index_$$.sql
+	: > ${tddl_table_name}_drop_index_$$.sql
+	: > ${tddl_table_name}_create_trigger_$$.sql
+	: > ${tddl_table_name}_drop_trigger_$$.sql
+	: > ${tddl_table_name}_create_reference_$$.sql
+	: > ${tddl_table_name}_drop_reference_$$.sql
+	: > ${tddl_table_name}_create_primarykey_$$.sql
+	: > ${tddl_table_name}_drop_primarykey_$$.sql
+
+	#Generates DDL of load table
+	dbschema -d ${tddl_db} -t ${tddl_table_name} \
+		> ${tddl_table_name}_ddl_$$.sql
+	
+	dbschema -d ${tddl_db} -t ${tddl_table_name}|awk '{printf $0} /;/{print ""}' |
+		egrep "create.index" > ${tddl_table_name}_create_index_$$.sql	
+	
+	dbschema -d ${tddl_db} -t ${tddl_table_name}|awk '{printf $0} /;/{print ""}' |
+		egrep "create.index"|sed s/create/drop/|awk '{print $1" "$2" "$3}' > \
+		${tddl_table_name}_drop_index_$$.sql 
+
+	dbschema -d ${tddl_db} -t ${tddl_table_name}|awk '{printf $0} /;/{print ""}' |
+		egrep "create.trigger" > ${tddl_table_name}_create_trigger_$$.sql 
+	
+	dbschema -d ${tddl_db} -t ${tddl_table_name}|awk '{printf $0} /;/{print ""}' |
+		egrep "create.trigger"|sed s/create/drop/|awk '{print $1" "$2" "$3}' > \
+		${tddl_table_name}_drop_trigger_$$.sql
+
+	dbschema -d ${tddl_db} -t ${tddl_table_name}|awk '{printf $0} /;/{print ""}' |
+		egrep "alter.table" > ${tddl_table_name}_create_reference_$$.sql
+		
+	primarykn=$(dbschema -d ${tddl_db} -t ${tddl_table_name}|grep -i "primary key") 
+	[[ $primarykn != "" ]] && \
+		echo "ALTER TABLE ${tddl_table_name} ADD CONSTRAINT $primarykn; " \
+		> ${tddl_table_name}_create_primarykey_$$.sql
+					
+	echo "SELECT constrname FROM  sysconstraints
+	WHERE tabid = (SELECT tabid FROM systables
+	WHERE tabname = '${tddl_table_name}');" | dbaccess ${tddl_db} |
+	while read col1 cname
+	do
+		referencen=$(echo $cname | grep ^r)
+		[[ $referencen != "" ]] && \
+			echo "ALTER TABLE ${tddl_table_name} DROP CONSTRAINT $referencen; " \
+			>> ${tddl_table_name}_drop_reference_$$.sql
+	
+		primaryn=$(echo $cname | grep ^u)
+		[[ $primaryn != "" ]] && \
+			echo "ALTER TABLE ${tddl_table_name} DROP CONSTRAINT $primaryn; " \
+			>> ${tddl_table_name}_drop_primarykey_$$.sql
+	done
+
+	[[ -e ${tddl_table_dir}/table_relation_$$ ]] && \
+	children=$(grep ${tddl_table_name} ${tddl_table_dir}/table_relation_$$ |
+				cut -f2 -d" "|grep -vix ${tddl_table_name})
+		
+	for child in ${children}
+	do
+		tddl ${child}
+	done
+	
+}
+
+#SET CONSTRAINTS, TRIGGERS, INDEXES DISABLED for TABLE in reference chain
+#(Foreign Key) From Child to Parent(s)
+function tsd {
+	tsd_table_dir=${TABLELOADDIR:="/login/lchen/tools/etc/table/load"}
+	typeset tsd_table_name=${1-"securuser"}
+
+	[[ -e ${tsd_table_dir}/table_relation_$$ ]] && \
+	children=$(grep ${tsd_table_name} ${tsd_table_dir}/table_relation_$$ |
+				cut -f2 -d" "|grep -vix ${tsd_table_name})	
+	#grep -x  match the specified pattern exactly with no additional characters
+
+	for child in ${children}
+	do
+		tsd ${child}
+	done
+	
+	ticdisabled ${tsd_table_name}
+	
+}
+
+#SET TABLE CONSTRAINTS, TRIGGERS, INDEXES ENABLED for TABLE in reference chain
+#(Foreign Key) From Parent to Child(ren)
+tse () {
+	tse_table_dir=${TABLELOADDIR:="/login/lchen/tools/etc/table/load"}
+	tse_table_name=${1-"securuser"}
+	
+	ticenabled ${tse_table_name}
+
+	[[ -e ${tse_table_dir}/table_relation_$$ ]] && \
+	children=$(grep ${tse_table_name} ${tse_table_dir}/table_relation_$$ |
+				cut -f2 -d" "|grep -vix ${tse_table_name})
+
+	for child in ${children}
+	do
+		tse ${child}
+	done
+}
+
+#Setting (building) reference constraints CONSISTENCY among tables, 
+#On table(s) of the foreign key(s)' owner, rows which cannot find reference
+#on its parent table(s) must be deleted
+#
+#DELETE FROM <child-table> WHERE <foreign-keys> NOT IN
+#(SELECT <foreign-keys> FROM <base-table>)
+#
+#DELETE FROM <child-table>
+#WHERE 0 = (SELECT COUNT(*) FROM <base-table>
+#WHERE <child-table>.key1 = <base-table>.key1
+#AND <child-table>.key2 = <base-table>.key2);
+tcons () {
+	tcons_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tcons_db=$(echo $TABLETARGET | cut -f2 -d",")
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tcons_server}
+	
+	[[ ${tcons_server} == "ipdb" ]] && return 119
+	#[[ ${tcons_server} == "systestdb" ]] && return 110
+
+	tcons_table_dir=${TABLELOADDIR:="/login/lchen/tools/etc/table/load"}
+	tcons_table_name=${1-"securuser"}
+	
+	[[ -e ${tcons_table_dir}/table_relation_$$ ]] && \
+	cat ${tcons_table_dir}/table_relation_$$ |
+	while read parent_table child_table pid
+	do
+		delete_sql="${parent_table}_${child_table}_${pid}_del.sql"
+		
+		column=$(dbschema -d ${tcons_db} -t ${child_table}|
+			awk '{printf $0} /;/{print ""}'| egrep "alter.table"|
+			grep ${parent_table}|cut -f3 -d"("|cut -f1 -d")")
+		columns="$column,"
+		
+		echo "DATABASE ${tcons_db};\n
+		  DELETE FROM ${child_table}\n
+		  WHERE 0 = (SELECT COUNT(*) FROM ${parent_table}\n" \
+				> ${delete_sql}
+		
+		integer ikey=1
+		integer first_key=1
+		while true
+		do
+			key=$(echo $columns|cut -f${ikey} -d",")
+			if [[ ${first_key} -eq 1 ]]
+			then
+				echo "WHERE ${child_table}.$key = ${parent_table}.$key\n"  \
+					>> ${delete_sql}
+				first_key=0
+			else
+				if [[ "$key" != "" ]]
+				then
+					echo "AND ${child_table}.$key = ${parent_table}.$key\n"  \
+						>> ${delete_sql}
+				else
+					echo ");" \
+						>> ${delete_sql}
+				
+					break
+			
+				fi
+			fi
+			
+		ikey=ikey+1
+		done
+		
+	done	
+
+}
+
+tdel () {
+	tdel_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tdel_db=$(echo $TABLETARGET | cut -f2 -d",")
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tdel_server}
+	
+	[[ ${tdel_server} == "ipdb" ]] && return 119
+	#[[ ${tdel_server} == "systestdb" ]] && return 110
+
+	tdel_table_dir=${TABLELOADDIR:="/login/lchen/tools/etc/table/load"}
+	tdel_table_name=${1-"securuser"}
+	
+	[[ -e ${tdel_table_dir}/table_relation_$$ ]] && \
+	cat ${tdel_table_dir}/table_relation_$$ |
+	while read parent_table child_table pid
+	do
+		delete_sql="${parent_table}_${child_table}_${pid}_del.sql"
+		
+		echo "
+		SET CONSTRAINTS,INDEXES FOR ${parent_table} ENABLED; " |
+		dbaccess ${tdel_db}
+		
+		echo "
+		SET CONSTRAINTS,INDEXES FOR ${child_table} ENABLED; " |
+		dbaccess ${tdel_db}
+		
+		#Deleting records on child-table not match FK constraints
+		dbaccess - ${delete_sql}
+
+	done	
+
+}
+
+#Use the Dirty Read option to copy rows from the database whether or not 
+#there are locks on them. The program that fetches a row places no locks 
+#and it respects none. Dirty Read is the only isolation level available 
+#to databases that do not implement transaction logging.
+tunload () {
+	tunload_server=$(echo $TABLESOURCE | cut -f1 -d",")
+	tunload_db=$(echo $TABLESOURCE | cut -f2 -d",")
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tunload_server}
+
+	unload_table_name=${1-"securuser"}
+	unload_table_dir=${TABLEUNLOADDIR:="/login/lchen/tools/etc/table/unload"}
+	[[ ! -d ${unload_table_dir} ]] && mkdir -p ${unload_table_dir}
+	
+	unload_table_file=${unload_table_dir}/${unload_table_name}.${current_date}
+	unload_table_bkup=${unload_table_dir}/${unload_table_name}.${current_time}
+	[[ -e ${unload_table_file} ]] && mv ${unload_table_file} ${unload_table_bkup}
+
+dbaccess ${tunload_db} - <<EOT!
+BEGIN WORK;
+SET ISOLATION to DIRTY READ;
+UNLOAD TO "${unload_table_file}" SELECT * FROM ${unload_table_name};
+COMMIT WORK;
+EOT!
+
+}
+
+#Transfer Table data file from Produciton DB to DEVELOPMENT DB
+tget () {
+	tget_remote_host=${FTPHOST:="ifx01"}
+	tget_user=${FTPUSER:="lchen"}
+	tget_passwd=${FTPPASSWD:="admin12"}
+	tget_table_dir=${FTPLOCALDIR:="$ETC/table/load"}
+	tget_remote_dir=${FTPREMOTEDIR:="/archbkup/dbbkup/stage"}
+
+	if [[ $(hostname) == "$remote_host" ]]; then return; fi
+	
+	tget_table_name=${1-"securuser"}
+	ftp_get ${tget_remote_host} ${tget_user} ${tget_passwd} ${tget_table_dir} ${tget_remote_dir} \
+		${tget_table_name}.${current_date} ${tget_table_name}.${current_date}
+	
+}
+
+tput () {
+	tput_remote_host=${FTPHOST:="ifx01"}
+	tput_user=${FTPUSER:="lchen"}
+	tput_passwd=${FTPPASSWD:="admin12"}
+	tput_table_dir=${FTPLOCALDIR:="$ETC/table/load"}
+	tput_remote_dir=${FTPREMOTEDIR:="/archbkup/dbbkup/stage"}
+
+	if [[ $(hostname) == "$remote_host" ]]; then return; fi
+	
+	tput_table_name=${1-"securuser"}
+	ftp_put ${tput_remote_host} ${tput_user} ${tput_passwd} ${tput_table_dir} ${tput_remote_dir} \
+		${tput_table_name}.${current_date} ${tput_table_name}.${current_date}
+	
+}
+
+#Split data file if it's so huge!!!
+#It's also a good idea if you do not want to load huge table due to
+#system resorce limit, just split data file to smaller ones, and load
+#them one by one.
+tsplit () {
+	wc -l ${load_table_file}
+	split -l ${lines} ${load_table_file}
+}
+
+tload () {
+	if [[ $USER != 'informix' ]]
+	then
+		echo "You should be informix user"
+		return 201
+	fi
+	
+	tload_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tload_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${tload_server} == "ipdb" ]] && return 119
+	#[[ ${tload_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tload_server}
+	
+	tload_table_dir=${TABLELOADDIR:="$ETC/table/load"}
+	tload_table_name=${1-"securuser"}
+	tload_table_file=${tload_table_dir}/${tload_table_name}.${current_date}
+				
+dbaccess ${tload_db} - <<EOT!
+BEGIN WORK;
+LOAD FROM "${tload_table_file}" INSERT INTO ${tload_table_name};
+COMMIT WORK;
+EOT!
+	
+}
+
+#After table load, run update statistics against the DB
+tus () {
+	tus_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tus_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	#[[ ${tus_server} == "ipdb" ]] && return 119
+	#[[ ${tus_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tus_server}
+	
+	echo "update statistics"|dbaccess ${tus_db}
+
+	mail -s "upstat done!" lchen@livingstonintl.com < /dev/null
+}
+
+#Calculate table size, check if you have enough physical and logical log space
+#in case DB server rollback you transaction.
+tsize () {
+	tsize_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tsize_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${tsize_server} == "ipdb" ]] && return 119
+	#[[ ${tsize_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tsize_server}
+	
+	#run update statistics before colculate table size
+	tus
+	
+	size_table=${1-"securuser"}
+
+	rowsize=$(echo "
+		 select rowsize from systables 
+		 where tabname = '${size_table}'" |
+		 dbaccess ${tsize_db} | grep -v rowsize)
+		
+	nrows=$(echo "
+		 select nrows from systables 
+		 where tabname = '${size_table}'" |
+		 dbaccess ${tsize_db} | grep -v nrows)
+		
+	size=$(( rowsize*nrows/1024 ))
+	
+	logfiles=$(onstat -c | grep ^LOGFILES | awk '{print $2}')
+	logsize=$(onstat -c | grep ^LOGSIZE | awk '{print $2}')
+	ltxhwm=$(onstat -c | grep ^LTXHWM | awk '{print $2}')
+	
+	rollback=$(( logfiles*logsize*ltxhwm/100 ))
+	
+	echo $rowsize $nrows $size
+	return ${size}
+		 
+}
+
+#Load table, and recontructure data in related tables according to FK reference
+tcopy () {
+	if [[ $USER != 'informix' ]]
+	then
+		echo "You should be informix user"
+		return 201
+	fi
+	
+	tcopy_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tcopy_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${tcopy_server} == "ipdb" ]] && return 119
+	#[[ ${tcopy_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tcopy_server}
+	
+	tcopy_table_dir=${TABLELOADDIR:="$ETC/table/load"}
+	tcopy_table_name=${1-"securuser"}
+	
+	#Get data file from remote server	
+	#tget ${tcopy_table_name}
+	
+	#Disconnect all sessions during table copy
+	onmode -c
+	onmode -uy
+	onmode -m
+	
+	trelation ${tcopy_table_name}
+	
+	#Generates table DDL
+	tddl ${tcopy_table_name}
+	tcons
+	
+	#SET TABLE CONSTRAINTS, TRIGGERS, INDEXES DISABLED
+	tsd ${tcopy_table_name}
+	
+	#Backup table before truncate it
+	tunload ${tcopy_table_name}
+	
+	#Delete all records 
+	[[ ${tcopy_server} == "ipdb" ]] && return 119
+	#[[ ${tcopy_server} == "systestdb" ]] && return 110
+	echo "truncate ${tcopy_table_name}" | dbaccess ${tcopy_db}
+		
+	#Load all records
+	tload ${tcopy_table_name}
+
+	#On table(s) of the foreign key(s)' owner, rows must which cannot find reference
+	#on its parent table(s) must be deleted, if long transaction failure due to huge
+	#data on deleted table, you may have to change whole database log mode to "nolog"
+	tdel ${tcopy_table_name}
+	
+	#SET TABLE CONSTRAINTS, TRIGGERS, INDEXES ENABLED
+	tse ${tcopy_table_name}
+
+	#Double check INDEX,CONSTRAINT and TRIGGERS status are all ENABLED
+	#in the "sysobjstate" system catalog table with status 'E'
+	tshow ${tcopy_table_name}
+	
+	#The server is blocking transactions because the physical log is too small
+	#Based on the current workload, to prevent the server from blocking future
+	#transactions, increase the size of the physical log to 110040 KB
+	onstat -g ckp
+	
+	#onparams -p -s 110040 -d rootdbs -y
+	#onstat -l
+	
+	#After table load, run update statistics against the DB
+	tus
+	
+}
+
+#######################################################################################
+#  Filename    : large_table.ksh
+#
+#  Author      : Liru Chen
+#
+#  Description	:	
+#  Load data for a group of related tables from Production DB to DEVELOPMENT DB
+#  using no log raw table
+#	1. Tables are listed in <loadtables>, in sequence like:
+#		      <child-table> 
+#		      ....
+#		      <base-table>
+#	   Prepare <loadtables> carefully, it's the start-point of this tool
+#
+#	2. For raw TYPE table, INDEX is OK, but No referential(foreign key), 
+#	   or unique constraints(primary key) is allowed
+#
+#		   ALTER TABLE <tablename> DROP CONSTRAINT <Reference name(rNum)>
+#		   ALTER TABLE <tablename> DROP CONSTRAINT <Primary KeyName(uNum)> 
+#
+#		   notice: rNum and uNum are generated by INFORMIX automatically
+#
+#	3. Re-Build reference, if Failure to satisfy referential constraint
+#
+#		   DELETE FROM <child-table> WHERE <foreign-keys> NOT IN
+#		   (SELECT <foreign-keys> FROM <base-table>)
+#
+#		   or, you may need following when table is so huge or reference condition
+#		   is complex,
+#
+#		   DELETE FROM <child-table>
+#		   WHERE 0 = (SELECT COUNT(*) FROM <base-table>
+#		   WHERE <child-table>.key1 = <base-table>.key1
+#		   AND <child-table>.key2 = <base-table>.key2);
+#
+#	4. ENABLE ALL the index,constraint and trigger, and double check their status
+#
+#  Date : 2015-05-15
+#                
+########################################################################################
+#Phase I: Collect/generate DDL for table's CONSTRAINTS,INDEXES,TRIGGERS 
+
+#Phase II: unload data for roll back if needed, example:
+#lii_client - tariff
+#       |
+#   lii_account ---> user_locus_xref
+#                       | 
+#   client --------> securuser -> search_criteria
+#                       | ------> srchcrit_batch
+#
+#   <---- table unload sequence (direction)
+#   table load sequence (direction) ---->
+
+
+#Phase III: Raw TABLE
+#RAW tables are nonlogging permanent tables that are similar to tables in a nonlogging database.
+#Update, insert, and delete operations on rows in a RAW table are supported but are not logged. 
+#You can define indexes on RAW tables, but you cannot define unique constraints, primary-key 
+#constraints, or referential constraints on RAW tables. Light appends are not supported for 
+#loading RAW tables, except in High-Performance Loader (HPL) operations and in queries that 
+#specify INTO TEMP ... WITH NO LOG. 
+
+#RAW tables are intended for the initial loading and validation of data. To load RAW tables, 
+#you can use any loading utility, including dbexport, the LOAD statement of DB-Access, 
+#or the HPL in express mode. If an error or failure occurs while loading a RAW table, the 
+#resulting data is whatever was on the disk at the time of the failure.
+
+#Phase IV: DROP PRIMARY KEYS AND REFERENCE KEYS CONSTRAINTS, ALTER TYPE(RAW)
+traw () {
+	traw_server=$(echo $TABLETARGET | cut -f1 -d",")
+	traw_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${traw_server} == "ipdb" ]] && return 119
+	#[[ ${traw_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${traw_server}
+	
+	traw_table_dir=${TABLELOADDIR:="$ETC/table/load"}
+	traw_table_name=${1-"securuser"}
+	
+	dbaccess ${traw_db} ${traw_table_dir}/${traw_table_name}_drop_primarykey_$$.sql
+	dbaccess ${traw_db} ${traw_table_dir}/${traw_table_name}_drop_reference_$$.sql
+
+	echo "
+	ALTER TABLE ${traw_table_name} TYPE(RAW); " |
+	dbaccess ${traw_db}
+	
+}
+
+#Phase V: LOAD TABLE
+
+#Phase VI: ALTER TABLE TYPE(STANDARD)
+
+#Restriction: Do not use RAW tables within a transaction. After you have loaded the data, 
+#use the ALTER TABLE statement to change the table to type STANDARD and perform a level-0 backup
+#before you use the table in a transaction.
+tstdd () {
+	tstdd_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tstdd_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${tstdd_server} == "ipdb" ]] && return 119
+	#[[ ${tstdd_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tstdd_server}
+
+	tstdd_table_name=${1-"securuser"}
+	
+	echo "
+	ALTER TABLE ${tstdd_table_name} TYPE(STANDARD); " |
+	dbaccess ${tstdd_db}
+
+}
+
+#Re-Build primary-key constraints on raw table which is just turn to standard
+#
+tprim () {
+	tprim_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tprim_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${tprim_server} == "ipdb" ]] && return 119
+	#[[ ${tprim_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tprim_server}
+	
+	tprim_table_dir=${TABLELOADDIR:="$ETC/table/load"}
+	tprim_table_name=${1-"securuser"}
+	
+	cd ${tprim_table_dir}
+	
+	#cat *_create_primarykey_$$.sql > create_primarykey_all_$$.sql
+	#dbaccess ${tprim_db} create_primarykey_all_$$.sql
+	dbaccess ${tprim_db} ${tprim_table_name}_create_primarykey_$$.sql
+
+}
+
+#Re-Build foreign-keys referential constraints on all related tables
+tfk () {
+	tfk_server=$(echo $TABLETARGET | cut -f1 -d",")
+	tfk_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${tfk_server} == "ipdb" ]] && return 119
+	#[[ ${tfk_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${tfk_server}
+	
+	tfk_table_dir=${TABLELOADDIR:="$ETC/table/load"}
+	
+	cd ${tfk_table_dir}
+
+	cat *_create_reference_$$.sql > create_reference_all_$$.sql
+	dbaccess ${tfk_db} create_reference_all_$$.sql
+}
+
+#Large table Load, and recontructure data in related tables according to FK reference
+ltcopy () {
+	if [[ $USER != 'informix' ]]
+	then
+		echo "You should be informix user"
+		return 201
+	fi
+	
+	ltcopy_server=$(echo $TABLETARGET | cut -f1 -d",")
+	ltcopy_db=$(echo $TABLETARGET | cut -f2 -d",")
+	
+	[[ ${ltcopy_server} == "ipdb" ]] && return 119
+	#[[ ${ltcopy_server} == "systestdb" ]] && return 110
+
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${ltcopy_server}
+	
+	ltcopy_table_dir=${TABLELOADDIR:="$ETC/table/load"}
+	ltcopy_table_name=${1-"securuser"}
+	
+	#Get data file from remote server
+	#tget ${ltcopy_table_name}
+		
+
+	#Disconnect all sessions during table copy
+	onmode -c
+	onmode -uy
+	onmode -m
+
+	trelation ${ltcopy_table_name}
+
+	#Get load table DDL
+	tddl ${ltcopy_table_name}
+	tcons
+	
+	#SET TABLE CONSTRAINTS, TRIGGERS, INDEXES DISABLED
+	tsd ${ltcopy_table_name}
+
+	#Backup table before truncate it
+	tunload ${ltcopy_table_name}
+	
+	#Delete all records 
+	[[ ${ltcopy_server} == "ipdb" ]] && return 119
+	#[[ ${ltcopy_server} == "systestdb" ]] && return 110
+	echo "truncate ${ltcopy_table_name}" | dbaccess ${ltcopy_db}
+	
+	#Set table to raw type
+	traw ${ltcopy_table_name}
+	
+	#Load all records
+	tload ${ltcopy_table_name}
+
+	#Set table to normal after huge data loading
+	tstdd ${ltcopy_table_name}
+
+	#Build PRIMARY Key for load table, which is need to accelerate tdel process
+	tprim ${ltcopy_table_name}
+
+	#On table(s) of the foreign key(s)' owner, rows must which cannot find reference
+	#on its parent table(s) must be deleted, if long transaction failure due to huge
+	#data on deleted table, you may have to change whole database log mode to "nolog"
+	tdel ${ltcopy_table_name}
+
+	#Build foreign-keys constraints for load table
+	tfk ${ltcopy_table_name}
+	
+	#SET TABLE CONSTRAINTS, TRIGGERS, INDEXES ENABLED
+	tse ${ltcopy_table_name}
+
+	#Double check INDEX,CONSTRAINT and TRIGGERS status are all ENABLED
+	#in the "sysobjstate" system catalog table with status 'E'
+	tshow ${ltcopy_table_name}
+	
+	#The server is blocking transactions because the physical log is too small
+	#Based on the current workload, to prevent the server from blocking future
+	#transactions, increase the size of the physical log to 110040 KB
+	onstat -g ckp
+	
+	#onparams -p -s 110040 -d rootdbs -y
+	#onstat -l
+	
+	#After table load, run update statistics against the DB
+	tus
+	
+}
+
+
+#Application
+
+
+#INFORMIX CONFIGURATION FILES BACKUP
+bkiconf () {
+	ids_server=${1-"systestdb"}
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env $ids_server
+		
+	[[ ! -d $ETC ]] && mkdir -p $ETC
+	cd $ETC
+	
+	cp -p $ids_env IDSENV.${ids_server}.$(hostname)
+	cp -p $INFORMIXDIR/etc/$ONCONFIG ONCONFIG.${ids_server}.$(hostname)
+	cp -p $INFORMIXDIR/etc/sqlhosts SQLHOSTS.${ids_server}.$(hostname)
+	cp -p /etc/services	SERVICES.${ids_server}.$(hostname)
+	onstat -d > IDSSTORAGE.${ids_server}.$(hostname)
+}
+
+########################################################
+# Purpose: Used to start INFORMIX services
+########################################################
+start_ids () {
+	if [[ $USER != 'informix' ]]
+	then
+		echo "You should be informix user"
+		return 2
+	fi
+	
+	ids_server=${IDSSERVER:="systestdb"}
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env $ids_server
+
+	#ps -ef|grep -v "grep"|grep oninit
+	onstat - | grep "On-Line"
+	if [[ $? -eq 0 ]]
+	then 
+		mail -s "$(hostname) INFORMIX ${ids_server} STILL RUNNING!" "${mail_alert}" < /dev/null
+		return 0   #exit 0
+	fi
+
+	#Start IDS Server ${ids_server}
+	oninit -w 60	#Returns 1 if the server fails to initialize within 60 seconds
+	if [[ $? -ne 0 ]]
+	then
+		echo "INFORMIX START IS NOT COMPLETED ...\n"
+		mail -s "$(hostname) ERROR START INFORMIX ${ids_server}!" "${mail_alert}" < /dev/null
+		return 1   #exit 1
+	fi
+
+	mail -s "$(hostname) INFORMIX ${ids_server} START!" "${mail_alert}" < /dev/null
+
+	#exit 0
+}
+
+##############################################################################
+# Purpose: start LOCUS services
+#
+# If loucs cannot be started, it could be locus NOT stop properly, 
+# using following shell to clear locus share memory
+#	1. ipcs, to find share memory location of ipgown
+#	2. ipcrm -rm <>, to clear locus share memory
+##############################################################################
+start_locus () {
+	if [[ $USER != 'ipgown' ]]
+	then
+		echo "You should be ipgown user"
+		return 202
+	fi
+	
+	cd /usr/apps/ipg/ver001/srv/locus
+	. ./setenv.locus
+
+	ps -ef|grep -v "grep"|grep ./tcl
+	if [[ $? -eq 0 ]]
+	then 
+		echo "TCL IS STILL RUNNING, IT IS UNUSUAL ...\n"
+		mail -s "$(hostname) TCL IS RUNNING UNUSUAL!" "${mail_alert}" < /dev/null
+		return 1
+	fi
+
+	echo "VERIFY WHETHER LOCUS SERVICE HAS BEEN SHUTDOWN COMPLETELY ....\n"
+	ps -ef|grep locus|grep -v "grep"|grep -v "loc_restart"|grep -v "start_locus"
+	if [[ $? -eq 0 ]]
+	then
+		echo "LOCUS SHUTDOWN IS NOT COMPLETED ...\n"
+		mail -s "$(hostname) LOCUS STILL RUNNING!" "${mail_alert}" < /dev/null
+		return 1
+	fi
+
+	echo "LOCUS SERVICES SHUTDOWN HAS COMPLETED.\n"
+	echo "... RESTART SERVICES IN PROGRESS ...\n"
+	tmboot -y
+
+	echo "VERIFY LOCUS SERVICES ....\n" 
+	count=`ps -ef|grep locus|grep -v "grep"|grep -v "loc_restart"|grep -v "start_locus"|wc -l` 
+	if [[ $count -ne 16 ]]
+	then
+		echo "WE HAVE DIFFICULTY TO RESTART LOCUS SERVICES ...\n"
+		mail -s "$(hostname) ERROR START LOCUS SERVICES!" "${mail_alert}" < /dev/null
+		return 1
+	fi
+
+	mail -s "$(hostname) LOCUS SERVICES START `date`" "${mail_alert}" < /dev/null
+
+#exit 0
+}
+
+########################################################
+# Purpose: Stop LOCUS services 
+########################################################
+stop_locus () {
+	if [[ $USER != 'ipgown' ]]
+	then
+		echo "You should be ipgown user"
+		return 202
+	fi
+	
+	cd /usr/apps/ipg/ver001/srv/locus
+	. ./setenv.locus
+
+	ps -ef|grep -v "grep"|grep ./tcl
+	if [[ $? -eq 0 ]]
+	then 
+		echo "TCL IS STILL RUNNING, IT IS UNUSUAL ...\n"
+		mail -s "$(hostname) TCL IS RUNNING UNUSUAL!" "${mail_alert}" < /dev/null
+		return 1  #exit 1
+	fi
+
+	echo "VERIFY WHETHER LOCUS SERVICE HAS BEEN SHUTDOWN COMPLETELY ....\n"
+	ps -ef|grep locus|grep -v "grep"|grep -v "loc_restart"|grep -v "stop_locus"
+	if [[ $? -ne 0 ]]
+	then
+		mail -s "$(hostname) LOCUS ALREADY DOWN!" "${mail_alert}" </dev/null
+		return 0  #exit 0
+	fi
+
+	echo "SHUTDOWN LOCUS SERVICES IN PROGRESS .....\n\n\n"
+	tmshutdown -y
+	sleep 60
+
+	ps -ef|grep locus|grep -v "grep"|grep -v "loc_restart"|grep -v "stop_locus"
+	if [[ $? -eq 0 ]]
+	then
+		mail -s "$(hostname) LOCUS SERVICES NOT STOPPED PROPERLY!" "${mail_alert}" </dev/null
+		return 1  #exit 0
+	fi
+	
+	mail -s "$(hostname) LOCUS SERVICES STOPPED" "${mail_alert}" < /dev/null
+
+	#exit 0
+}
+
+########################################################
+# Purpose: Stop INFORMIX services
+########################################################
+stop_ids () {
+	if [[ $USER != 'informix' ]]
+	then
+	  echo "You should be informix user"
+	  return 202
+	fi
+	
+	ids_server=${IDSSERVER:="systestdb"}
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env $ids_server
+
+	#ps -ef|grep -v "grep"|grep oninit
+	onstat - | grep "On-Line"
+	if [[ $? -eq 0 ]]
+	then 
+		echo "INFORMIX ${ids_server} IS RUNNING!" 
+		onmode -ky
+		if [[ $? -ne 0 ]]
+		then
+			mail -s "$(hostname) INFORMIX STOP FAILED" "${mail_alert}"  < /dev/null
+			return 1  #exit 1
+		fi
+	fi
+
+	mail -s "$(hostname) INFORMIX ${ids_server} STOPPED!" "${mail_alert}" < /dev/null
+
+	#exit 0
+}
+
+insight_start_now () {
+	if [[ $USER != 'root' ]]
+	then
+		echo "You should be root user"
+		return 202
+	fi
+	
+	echo "START INFORMIX SERVICE..."
+	su - informix -c "$BASE/shlib start_ids" >> ${LOG}/start_insight.log
+	echo "START LOCUS SERVICES..."
+	su - ipgown -c "$BASE/shlib start_locus" >> ${LOG}/start_insight.log
+
+}
+
+insight_stop_now () {
+	if [[ $USER != 'root' ]]
+	then
+		echo "You should be root user"
+		return 202
+	fi
+	
+	echo "Stop locus services..."
+	su - ipgown -c "$BASE/shlib stop_locus" >> ${LOG}/stop_insight.log
+	echo "Stop informix service..."
+	su - informix -c "$BASE/shlib stop_ids" >> ${LOG}/stop_insight.log
+
+}
+
+#Check informix dbspace usage, make sure there is at least one free chunk on 
+#each dbspace and email to DBA when no free chunk
+chchunk () {
+	ids_server=${1-"systestdb"}
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env $ids_server
+
+	cd ${TMP}
+
+	#Check chunk free page daily
+	oncheck -pr|grep "Chunk path" > tmp_chunkpath
+	oncheck -pr|grep "Number of free pages" > tmp_chunkusage
+	
+	paste tmp_chunkpath tmp_chunkusage > tmp_chunk
+	diff tmp_chunk.old tmp_chunk > chunk.mail
+
+	#send out alert email if final chunk of each dbspace started
+	for i in 1 2 3
+	do
+		onstat -d | grep dat$i | grep 249997
+		[[ $? -ne 0 ]] && echo "$(hostname) datadbs$i FULL, ADD CHUNK IMMEDIATELY" \
+		>> chunk.mail
+	done
+
+	for i in 1 2 3
+	do
+		onstat -d | grep idx$i | grep 249997
+		[[ $? -ne 0 ]] && echo "$(hostname) indxdbs$i FULL, ADD CHUNK IMMEDIATELY" \
+		>> chunk.mail
+	done
+
+	mail -s "$(hostname) CHUNK PAGE USAGE CHANGE(OLD-NEW)" "${mail_alert}" \
+		< chunk.mail
+	mv tmp_chunk tmp_chunk.old
+	
+}
+
+###########################################################
+#Name:	ontape_s
+#		Level 0 ontape backup
+###########################################################
+ontape_s () {
+	if [[ $USER != 'informix' ]]
+	then
+		echo "You should be informix user"
+		return 201
+	fi
+
+	bkup_server=${IDSSERVER:="systestdb"}
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${bkup_server}
+	
+	bkup_date=$(date +%Y%m%d%H%M)
+	bkup_dir=${IDSBKDIR:="/dbbkup"}
+	bkup_log=${LOG}/${bkup_server}_ONTAPE_L0.${bkup_date}.log	
+
+	db_image=${bkup_dir}/${bkup_server}_ONTAPE_L0.${bkup_date}
+	#db_image=/dev/null
+
+	cd ${bkup_dir}
+	rm -f ${bkup_server}_ONTAPE_L0*
+
+	cat /dev/null > $db_image
+	chown informix:informix $db_image
+	chmod 660 $db_image
+
+ontape -v -s -L 0 -t $db_image <<EOF> ${bkup_log}  2>&1
+^M
+^M
+EOF
+
+	if [[ $? != 0 ]]
+	then
+		echo "\nERROR: DATABASE BACKUP FAILED" 
+		mail -s "$(hostname) ${bkup_server} BACKUP FAILED!" "${mail_alert}" < /dev/null
+		return 202
+	fi
+
+	bkiconf ${bkup_server}
+	chchunk ${bkup_server} >> $log_bkup
+
+	mail -s "$(hostname) ${bkup_server} BACKUP DONE!" "${mail_alert}" < ${bkup_log}
+
+#exit 0
+}
+
+#################################################################
+#Name:	ontape_r
+#		ontape restore INFORMIX DBSERVER from level 0 backup
+#################################################################
+ontape_r () {
+	if [[ $USER != 'informix' ]]
+	then
+		echo "You should be informix user"
+		return 201
+	fi
+
+	restore_server=${IDSSERVER:="systestdb"}
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${restore_server}
+
+	restore_log=${LOG}/${restore_server}_RESTORE_L0.$restore_date.log
+
+	restore_date=$(date +%Y%m%d%H%M)
+	restore_dir=${IDSBKDIR:="/dbbkup"}
+	
+	cd $restore_dir
+	#mv ${restore_server}_ONTAPE_L0* ${restore_server}_RESTORE_L0
+
+	#ontape -r -t ${restore_server}_RESTORE_L0 -v|tee -a ${restore_log}
+	ontape -r -t ipdb_bkup_L0.201510240001 -v|tee -a ${restore_log}
+	[[ $? -ne 0 ]] && {
+		mail -s "$(hostname) DATABASE RESTORE FAILED" "${mail_alert}" < /dev/null
+		return 205
+		#exit 1
+	}
+
+	onmode -m >> ${restore_log}
+
+	# A message informs you when the restore is complete.
+	echo "RESTORE COMPLETED SUCCESSFULLY, PLEASE CHECK THE MAIL ...\n"
+	mail -s "$(hostname) INFORMIX DATABASE RESTORE SUCCESSFUL" \
+	"${mail_alert}" < $restore_log
+
+	#exit 0 
+}
+
+##########################################################################
+# Trace/Collect SQL statements on Livingston Production INFORMIX database
+# while TEXUDO loading Data from VMS system
+##########################################################################
+tlsql () {
+	ids_server=${IDSSERVER:="systestdb"}
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env $ids_server
+
+	[[ ! -d ${TMP} ]] && mkdir -p ${TMP}
+	cd ${TMP}
+	
+	dmq=($(ps -ef|grep -v grep|grep ./tcl|awk '{print $9}'))
+	[[ ${#dmq[@]} -eq 0 ]] && return	#number of RUNNING DMQ is zero
+	
+	dmqpid=$(ps -ef|grep -v grep|grep ./tcl|awk '{print $2}')
+		echo "--------------------" 	| tee tmp_tls$$.txt
+		echo " DATA LOADER PROCESS" 	| tee -a tmp_tls$$.txt
+		echo "--------------------" 	| tee -a tmp_tls$$.txt
+		echo "DMQ:" ${dmq[@]}			| tee -a tmp_tls$$.txt
+
+	for i in $dmqpid
+	do
+		echo "\nCURRENT DMQ PID $i "		| tee -a tmp_tls$$.txt
+		session=$(onstat -g ses|grep $i|cut -f1 -d" ")
+		echo "CURRENT SESSION ID $session " | tee -a tmp_tls$$.txt
+		onstat -g sql $session 		| tee -a tmp_tls$$.txt
+	done
+
+	ps -ef|grep -v grep|grep -i icc|awk '{print $2}'|
+	while read iccpid
+	do
+		echo "\n-----------------------" 	| tee -a tmp_tls$$.txt
+		echo " ICC JAVA LOADER PROCESS" 	| tee -a tmp_tls$$.txt
+		echo "------------------------" 	| tee -a tmp_tls$$.txt
+		echo "ICC PID LIST: $iccpid    "	| tee -a tmp_tls$$.txt
+		echo " " 							| tee -a tmp_tls$$.txt
+		iccses=$( onstat -g ses|grep "1       ifx01"|cut -f1 -d" " )
+		#iccses=$(onstat -g ses|grep $iccpid|cut -f1 -d" ")
+		onstat -g sql $iccses				| tee -a tmp_tls$$.txt
+	done
+
+	tuxedo=$( onstat -g ses|grep ifx01|cut -f1 -d" " )
+		echo "\n-----------------------" 	| tee -a tmp_tls$$.txt
+		echo " TUXEDO LOADER PROCESS " 		| tee -a tmp_tls$$.txt
+		echo "-------------------------" 	| tee -a tmp_tls$$.txt
+		for k in $tuxedo
+		do 
+			echo "LOCAL TUXEDO SERVICE SESSION $k " 	| tee -a tmp_tls$$.txt
+			onstat -g sql $k  				| tee -a tmp_tls$$.txt
+		done
+
+	mail_$(uname) "$(hostname)_TUXEDO_LOAD_SQL_REPORT" \
+		${TMP} tmp_tls$$.txt "${mail_alert}"
+
+	#remove
+	rm -f tmp_tls$$.txt
+}
+
+#Identify B3 archive database name based on data archive year and month
+#This function need to be modified when database reused
+b3_ardb () {
+	year=$1
+	month=$2
+
+	if [[ $year -eq 2008 ]]
+	then
+		if [[ $month -le 10 ]]
+		then
+			return 1	#arch_db=ip_arch01@ardb
+		else
+			return 2	#arch_db=ip_arch02@ardb
+		fi
+
+	elif [[ $year -eq 2009 ]]
+	then
+		return 2		#arch_db=ip_arch02@ardb
+
+	elif [[ $year -eq 2010 ]]; then
+		if [[ $month -le 04 ]]; then
+			return 2		#arch_db=ip_arch02@ardb
+		else
+			return 3		#arch_db=ip_arch03@ardb
+		fi
+
+	elif [[ $year -eq 2011 ]]
+	then
+		if [[ $month -le 10 ]]
+		then
+			return 3		#arch_db=ip_arch03@ardb
+		else
+			return 4		#arch_db=ip_arch04@ardb
+		fi
+
+	elif [[ $year -eq 2012 ]]
+	then
+		return 4		#arch_db=ip_arch04@ardb
+
+	elif [[ $year -eq 2013 ]]
+	then
+		if [[ $month -le 04 ]]
+		then
+			return 4		#arch_db=ip_arch04@ardb
+		else
+			return 5		#arch_db=ip_arch05@ardb
+		fi
+		
+	elif [[ $year -eq 2014 ]]
+	then
+		if [[ $month -le 10 ]]
+		then
+			return 5		#arch_db=ip_arch05@ardb
+		else
+			return 1		#arch_db=ip_arch01@ardb
+		fi
+
+	elif [[ $year -eq 2015 ]]
+	then
+		return 1		#arch_db=ip_arch01@ardb
+		
+	fi
+}
+
+#Start INFORMIX Archive database server as root user on ifx01
+# 1. . /home/informix/ids115.env ardb
+# 2. oninit
+# 3. Please re-check referenced sample files: /home/lchen/shell/db/informix/download/CLIENT_SAMPLE.sql and entry.head
+#    are correctly located under /home/lchen/shell/tmp/$client_number
+#    and contents are correct
+#
+#Stop INFORMIX Archive database, firstly double check your shell environment parameters
+#point to archive database: ardb
+# 1. echo $INFORMIXSERVER, the output should be ardb !!!
+# 2. onmode -ky
+#
+b3_arch_download () {
+	[[ $# -ne 5 ]] && {
+		echo "Parameter less than five"
+		return 205
+	}
+	
+	. /home/lchen/ids115.env ardb
+	
+	client_number=$1
+	integer year_start=$2
+	integer year_end=$3
+	integer month_start=$4
+	integer month_end=$5
+	
+	integer year=$year_start
+	month=(00 01 02 03 04 05 06 07 08 09 10 11 12)
+
+	b3_arch_resource_dir="/home/lchen/tools/db/informix/download"
+	
+	b3_arch_result_dir=${TMP}/${client_number}
+	[[ ! -d ${b3_arch_result_dir} ]] && mkdir -p ${b3_arch_result_dir}
+	cd ${b3_arch_result_dir}
+	
+	if [[ $year_start -eq $year_end ]]; then
+		integer i=month_start
+		while (( i <= month_end ))
+		do
+			b3_ardb $year ${month[i]}
+			arch_db=ip_arch0$?@ardb
+				
+			cp -p ${b3_arch_resource_dir}/CLIENT_SAMPLE.sql $year${month[i]}.sql
+			str_replace $year${month[i]}.sql "DATABASE" "$arch_db"
+			str_replace $year${month[i]}.sql "CLINETNO" "$client_number"
+			str_replace $year${month[i]}.sql "YEAR" "$year"
+			str_replace $year${month[i]}.sql "MONTH" "${month[i]}"
+			str_replace $year${month[i]}.sql "${b3_arch_resource_dir}" "${b3_arch_result_dir}"
+			
+			dbaccess - $year${month[i]}.sql
+			i=i+1
+		done
+	else
+		while (( year < year_end ))
+		do
+
+			if [[ $year -eq $year_start ]]; then
+				integer i=month_start
+				while (( i <= 12 ))
+				do
+					b3_ardb $year ${month[i]}
+					arch_db=ip_arch0$?@ardb
+					
+					cp -p ${b3_arch_resource_dir}/CLIENT_SAMPLE.sql $year${month[i]}.sql
+					str_replace $year${month[i]}.sql "DATABASE" "$arch_db"
+					str_replace $year${month[i]}.sql "CLINETNO" "$client_number"
+					str_replace $year${month[i]}.sql "YEAR" "$year"
+					str_replace $year${month[i]}.sql "MONTH" "${month[i]}"
+					str_replace $year${month[i]}.sql "${b3_arch_resource_dir}" "${b3_arch_result_dir}"
+				
+					dbaccess - $year${month[i]}.sql
+					i=i+1
+				done
+			fi
+			
+			year=year+1
+			if [[ $year -eq $year_end ]]; then
+				integer j=1
+				while (( j <= month_end ))
+				do
+					b3_ardb $year ${month[j]}
+					arch_db=ip_arch0$?@ardb
+					
+					cp -p ${b3_arch_resource_dir}/CLIENT_SAMPLE.sql $year${month[j]}.sql
+					str_replace $year${month[j]}.sql "DATABASE" "$arch_db"
+					str_replace $year${month[j]}.sql "CLINETNO" "$client_number"
+					str_replace $year${month[j]}.sql "YEAR" "$year"
+					str_replace $year${month[j]}.sql "MONTH" "${month[j]}"
+					str_replace $year${month[i]}.sql "${b3_arch_resource_dir}" "${b3_arch_result_dir}"
+					
+					dbaccess - $year${month[j]}.sql
+					j=j+1
+				done
+			else
+				for k in 1 2 3 4 5 6 7 8 9 10 11 12
+				do
+					b3_ardb $year ${month[k]}
+					arch_db=ip_arch0$?@ardb
+					
+					cp -p ${b3_arch_resource_dir}/CLIENT_SAMPLE.sql $year${month[k]}.sql
+					str_replace $year${month[k]}.sql "DATABASE" "$arch_db"
+					str_replace $year${month[k]}.sql "CLINETNO" "$client_number"
+					str_replace $year${month[k]}.sql "YEAR" "$year"
+					str_replace $year${month[k]}.sql "MONTH" "${month[k]}"
+					str_replace $year${month[i]}.sql "${b3_arch_resource_dir}" "${b3_arch_result_dir}"
+				
+					dbaccess - $year${month[k]}.sql
+				done
+			fi
+		done
+	fi
+		
+	cat ${b3_arch_resource_dir}/entry.head *.tmp > oldshipment$client_number
+
+}
+
+###########################################################################
+# Description: To manage the INFORMIX storage utilization,
+#  1. Check storage spaces ( onstat -d). 
+#  2. Check reserved pages ( oncheck -pr). 
+#  3. Add dbspaces, temporary dbspaces, blobspaces, temporary sbspaces, 
+#     and sbspaces (onspaces). 
+#  4. Display and add chunks to a storage space. 
+#  5. Check the dataskip status. 
+#  6. Display and add external spaces. 
+#  7. Display the number of pages in your database, 
+#     percentage of allocated space, and used space (oncheck -pt). 
+#  8. Override ONDBSPACEDOWN. 
+#
+###########################################################################
+mtbls () {
+	ids_server=${IDSSERVER:="systestdb"}
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env $ids_server
+
+	ids_database=${IDSDB:="ip_systest"}
+	ids_tables=${TABLEMONITOR:="b3"}
+
+	cd ${TMP}
+	
+	#History data collection
+	[[ ! -f tmp_tblspace ]] && {
+		#OS level storage usage
+		#df -k > tmp_tblspace
+
+		#INFORMIX chunk level storage usage
+		onstat -d > tmp_tblspace
+
+		#The oncheck -pt and/or oncheck -pT options print a tblspace report
+		#for a specific table or fragment
+		set ${ids_tables}   
+		integer tablecount=$#
+
+		integer xcount=0
+
+		while (( xcount < tablecount ))
+		do
+			echo "$(date)\t${ids_database}\t$1"	>> tmp_tblspace
+			oncheck -pt ${ids_database}:$1		>> tmp_tblspace
+
+			shift 1
+			xcount=xcount+1
+
+		done
+	}
+
+	#Current data collection
+	df -k		> tmp_tblspace$$
+	onstat -d	>> tmp_tblspace$$
+
+	set ${ids_tables}
+	integer tablecount=$#
+	integer icount=0
+
+	while (( icount < tablecount ))
+	do
+		echo "$(date)\t${ids_database}\t$1"	>> tmp_tblspace$$
+		oncheck -pt ${ids_database}:$1		>> tmp_tblspace$$
+
+		shift 1
+		icount=icount+1
+	done
+
+	#Email the Storage usage difference to Administrator
+	diff tmp_tblspace tmp_tblspace$$ > tmp_tblspace.txt
+	
+	mail_$(uname) "$(hostname)_INFORMIX_TBLSPACE_CHANGE_REPORT" \
+	${TMP} tmp_tblspace.txt "${mail_alert}"
+
+	# Create new storage usage file for next compare
+	rm -f tmp_tblspace.txt
+	mv tmp_tblspace$$ tmp_tblspace
+}
+
+#purpose: run update statistics to update system catalog information 
+#to optimize the database search
+#
+#If you include no FOR PROCEDURE specification, no Table and Column Scope clause, 
+#and no Resolution clause, then statistics are updated for every table 
+#and SPL routine in the current database, including the system catalog tables.
+# -systables, 
+# -syscolumns,
+# -sysindices, 
+# -sysfragments,
+# -sysdistrib, and 
+# -sysfragdist
+upstat () {
+	ids_server=${IDSSERVER:="systestdb"}
+	ids_database=${IDSDB:="ip_systest"}
+	
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${ids_server}
+
+	echo "update statistics"|dbaccess ${ids_database}
+
+	# export INFORMIXDIR=/usr/apps/inf/ver115UC3
+	# export INFORMIXSERVER=ipdb
+	# export PATH=$INFORMIXDIR/bin:$PATH
+
+	# SQLDIR=/usr/apps/inf/bob/upstat
+
+	# echo
+	# date
+
+	# time dbaccess < $SQLDIR/tbls_med.sql > $SQLDIR/tbls_med.out 2>&1
+	# time dbaccess < $SQLDIR/tbls_high.sql > $SQLDIR/tbls_high.out 2>&1
+	# time dbaccess < $SQLDIR/proc.sql > $SQLDIR/proc.out 2>&1
+	
+	mail -s "${ids_server} ${ids_database} upstat done!" \
+	lchen@livingstonintl.com < /dev/null
+}
+
+###########################################################################
+#  Unload & Clear status_history related to WIPs file
+#
+#  Author : Liru Chen
+#  Date: 2014-10-07
+###########################################################################
+unload_clearSH () {
+	if [[ $# != 1 ]]
+	then
+	  echo $"Usage: $0 WIP_file"
+	  exit 1
+	fi
+
+	tmpDir=/recyclebox/lchen/status_history
+	tmpFile=$tmpDir/$(basename $1)
+	outDate=`date +%Y%m%d%H%M`
+
+	datecalc -a `date "+%Y"` `date "+%m"` `date "+%d"` - 365 |
+	read tmpYear tmpMonth tmpDay
+
+	[[ $tmpMonth -lt 10 ]] && tmpMonth=0$tmpMonth
+
+	. /home/informix/ids115.env ipdb
+
+	## First Part; Record all old b3iid related to WIP ##
+	cat /dev/null > $1.status_history.unload 
+	cat /dev/null > $tmpFile.b3iidOld
+	cat /dev/null > $tmpFile.ekotMail.unload
+
+	cat $1 | while read wip
+	do
+		liibrno=${wip:0:3}
+		liireno=${wip:3:8}
+
+		echo $liibrno
+		echo $liireno
+
+		b3iidOld=$(echo "select b3iid from b3 
+		where liibrchno = $liibrno and liirefno = $liireno " |
+		dbaccess ip_0p | grep -v count | grep -v b3iid )
+		
+		echo $b3iidOld >> $tmpFile.b3iidOld
+
+		if [[ $b3iidOld = "" ]]
+		then
+			echo "$wip Missed" >> $tmpFile.ekotMail.unload
+		fi
+
+dbaccess ip_0p@ipdb - <<EOF 1>> $1.status_history.unload 2>&1
+set isolation to dirty read;
+select b3.b3iid, b3.createdate, b3.status, status_history.status, statusdate
+from b3, status_history
+where liibrchno = $liibrno 
+and liirefno = $liireno
+and b3.b3iid = status_history.b3iid; 
+EOF
+
+	done 
+
+	## Second Part; Record old data for status_history ##
+	unloadTmp=$tmpFile.unload
+	unloadTmpTime=$tmpFile.unloadTime
+	cat /dev/null > $tmpFile.recordOld
+	cat /dev/null > $tmpFile.recordOldTime
+
+	cat $1 | \
+	while read wip
+	do
+		 liibrno=${wip:0:3}
+		 liireno=${wip:3:8}
+
+		echo "
+		UNLOAD TO "$unloadTmp.$liibrno.$liireno"
+		  SELECT status_history.b3iid, status_history.status, 
+				 status_history.statusdate FROM b3,status_history
+		  where  liibrchno = $liibrno 
+			and  liirefno = $liireno 
+			and  b3.b3iid = status_history.b3iid " |
+		dbaccess ip_0p
+
+		echo "
+		UNLOAD TO "$unloadTmpTime.$liibrno.$liireno"
+		  SELECT status_history.b3iid, status_history.status, 
+				 status_history.statusdate FROM b3,status_history
+		  where  liibrchno = $liibrno
+			and  liirefno = $liireno
+			and  b3.b3iid = status_history.b3iid
+			and  statusdate > '$tmpYear/$tmpMonth/%'" |
+		dbaccess ip_0p
+
+	done
+
+	cat $unloadTmp.* >> $tmpFile.recordOld
+	#rm -f $unloadTmp.*
+
+	cat $unloadTmpTime.* >> $tmpFile.recordOldTime
+	rm -f $unloadTmpTime.*
+	rm -f $unloadTmp.*
+
+	## Third Part;  Clear old data for status_history ##
+
+	cat $tmpFile.b3iidOld |
+	while read b3iid_delete
+	do
+		echo "
+		DELETE FROM status_history
+		where  b3iid = $b3iid_delete" |
+		dbaccess ip_0p
+	done
+
+	cp $tmpFile.recordOld $tmpFile.recordOld.$outDate
+	cp $tmpFile.recordOldTime $tmpFile.recordOldTime.$outDate
+	cp $tmpFile.b3iidOld $tmpFile.b3iidOld.$outDate
+	cat $tmpFile.ekotMail.unload $tmpFile.recordOld \
+		> $tmpFile.lchenMail.unload
+	 
+	mail -s "status_history download for $(basename $1) completed" \
+			lchen@livingstonintl.com \
+			< $tmpFile.lchenMail.unload 
+
+	mail -s "status_history download for $(basename $1) with Time completed" \
+			lchen@livingstonintl.com \
+			< $tmpFile.recordOldTime 
+
+	mail -s "status_history download for $(basename $1) completed" \
+			EKotsalainen@livingstonintl.com \
+			< $tmpFile.ekotMail.unload 
+
+}
+
+###########################################################################
+#  load status_history related to WIPs file
+#
+#  Author : Liru Chen
+#  Date: 2014-10-07
+###########################################################################
+load_clearedSH () {
+	if [[ $# != 1 ]]
+	then
+	  echo $"Usage: $0 WIP_file"
+	  exit 1
+	fi
+
+	tmpDir=/recyclebox/lchen/status_history
+	tmpFile=$tmpDir/$(basename $1)
+	loadTmp=$tmpFile.load
+
+	#yearLoad="|2014"
+	outDate=`date +%Y%m%d%H%M`
+
+	. /home/informix/ids115.env ipdb
+
+	cat /dev/null > $tmpFile.b3iidNew
+	#cat /dev/null > $tmpFile.b3iid
+	cat /dev/null > $tmpFile.exclude
+	cat /dev/null > $tmpFile.ekotMail.load
+
+	cat $1 |
+	while read wip
+	do
+		liibrno=${wip:0:3}
+		liireno=${wip:3:8}
+
+		b3iidNew=$( echo "select b3iid from b3
+			where liibrchno = $liibrno and liirefno = $liireno " |
+			dbaccess ip_0p | grep -v count | grep -v b3iid )
+			
+		echo $b3iidNew >> $tmpFile.b3iidNew
+
+		if [[ $b3iidNew = "" ]]
+		then
+			echo "$wip Missed" >> $tmpFile.ekotMail.load
+		fi
+	done
+
+	cat $tmpFile.b3iidNew |
+	while read b3iidNew
+	do
+		echo "
+		UNLOAD TO "$loadTmp.$b3iidNew"
+		  SELECT b3iid, status
+		  FROM status_history
+		  where b3iid = $b3iidNew " |
+		dbaccess ip_0p
+	done
+
+	cat $loadTmp.* >> $tmpFile.exclude
+	rm -f $loadTmp.*
+
+	#Get a list of the b3iid
+	#paste -d " " $tmpFile.b3iidOld $tmpFile.b3iidNew > $tmpFile.b3iid
+	#rm -f $tmpFile.b3iidOld $tmpFile.b3iidNew
+
+	cp $tmpFile.recordOld $tmpFile.recordOld.$outDate
+	cp $tmpFile.recordOldTime $tmpFile.recordOldTime.$outDate
+	cp $tmpFile.b3iidNew $tmpFile.b3iidNew.$outDate
+	#cp $tmpFile.b3iid $tmpFile.b3iid.$outDate
+
+	#cat $tmpFile.b3iid | 
+	# while read b3iidOld b3iidNew
+	# do
+	#  #Replace old b3iid with related new one
+	#  /cgi/bin/cgi.replace $tmpFile.recordOld \
+	#     $b3iidOld $b3iidNew
+	# done
+
+	#Get a list of loadable status_history_record
+
+	#Remove blank lines in New b3iid file
+	grep -v "^$" $tmpFile.b3iidNew > $tmpFile.include
+
+	grep -Ff $tmpFile.include $tmpFile.recordOld \
+		 > $tmpFile.recordOld.tmp1
+
+	grep -Fvf $tmpFile.exclude $tmpFile.recordOld.tmp1 \
+		 > $tmpFile.recordOld.tmp2
+
+	grep -Ff $tmpFile.include $tmpFile.recordOldTime \
+		 > $tmpFile.recordOldTime.tmp1
+
+	grep -Fvf $tmpFile.exclude $tmpFile.recordOldTime.tmp1 \
+		 > $tmpFile.recordOldTime.tmp2
+
+	#load status_history data in 12 months
+	#grep "$yearLoad" $tmpFile.recordOld.tmp2 \
+	#     > $tmpFile.record.final
+
+	grep "$yearLoad" $tmpFile.recordOldTime.tmp2 \
+		 > $tmpFile.record.final
+
+	echo "
+	LOAD FROM $tmpFile.record.final
+	INSERT INTO status_history" |
+	dbaccess ip_0p 
+
+	cat $tmpFile.ekotMail.load $tmpFile.record.final \
+		> $tmpFile.lchenMail.load
+
+	mail -s "status_history load for $(basename $1) completed" \
+			lchen@livingstonintl.com \
+			< $tmpFile.lchenMail.load
+
+	mail -s "status_history load for $(basename $1) completed" \
+			EKotsalainen@livingstonintl.com \
+			< $tmpFile.ekotMail.load
+
+}
+
+###########################################################################
+#  AWS Project
+#
+#  Author : Liru Chen
+#  Date: 2015-09-22
+###########################################################################
+
+awsparser () {
+JAVA_HOME=/usr/java6
+export JAVA_HOME
+PATH=.:$JAVA_HOME/bin:$PATH
+export PATH
+
+java -jar /home/csalas/VaxFileParser_v0.6/VAXFilesParser_v0.6.jar
+
+}
+
+# #AWS project, prepare condition for select SQL
+# awsrec () {
+	# echo $1 | grep = > /dev/null
+	# [[ $? -ne 0 ]] && {
+		# echo ""
+		# return
+	# }
+	
+	# awssc_col=$(echo $1|cut -f1 -d=)
+	# awssc_val=$(echo $1|cut -f2 -d=)
+			
+	# echo ${awssc_col} | grep date$ > /dev/null
+	# daterc=$?
+	
+	# if [[ ${daterc} -eq 0 ]]
+	# then
+		# awsdate_year=${awssc_val:0:4}
+		# awsdate_month=${awssc_val:4:2}
+		# awsdate_day=${awssc_val:6:2}
+		
+		# awsdate_val="${awsdate_year}/${awsdate_month}/${awsdate_day}"
+		# echo "${awssc_col} like '${awsdate_val}%'"
+	# else
+		# echo "${awssc_col} = '${awssc_val}'"
+	# fi
+	 
+# }
+
+#Build AWS SELECT CLAUSE ( as globle variable ${select_clause} ) based on the all the columns of the table 
+awscolums () {
+	awscolums_table_name=$(echo $1|tr A-Z a-z)
+	
+	awscolums_server=${IDSSERVER:="systestdb"}
+	awscolums_database=${IDSDB:="ip_systest"}
+
+	# #[[ ${awsdbaccess_server}== "ipdb" ]] && return 119
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${awscolums_server}
+	
+	first_column="Y"
+	select_clause=""
+	tcolumn ${awscolums_database} ${awscolums_table_name} |
+	while read column columnname
+	do
+		if [[ ${first_column} == "Y" ]]
+		then
+			select_clause="SELECT ${awscolums_table_name}.${columnname},'|'"
+			first_column="N"
+		else
+			select_clause="${select_clause},${awscolums_table_name}.${columnname},'|'"
+		fi
+	done
+	#echo ${select_clause}
+}
+
+#Prepare SQL by reading each record provided by VAXFilesParser output, call txt2sql.pl
+awssql () {
+	#AWS SOURCE KEYS DATA FILE FORMAT EXAMPLE:
+	# HS_DUTY_RATE,hsno=7318150029,hstarifftrtmnt=29,effdate=20150101
+	# HS_DUTY_RATE,hsno=7318150010,hstarifftrtmnt=30,effdate=20150101
+	# HS_DUTY_RATE,hsno=7318150011,hstarifftrtmnt=30,effdate=20150101
+	# change it to:
+	# HS_DUTY_RATE,hsno=7318150029,hstarifftrtmnt=29,effdate like '2015/01/01%'
+	# HS_DUTY_RATE,hsno=7318150010,hstarifftrtmnt=30,effdate like '2015/01/01%'
+	# HS_DUTY_RATE,hsno=7318150011,hstarifftrtmnt=30,effdate like '2015/01/01%'
+
+	
+	awssql_input_key=${1-$AWSINPUTKEY}
+	echo "" >> ${awssql_input_key}		#add one more line to the end of input file
+
+	awssql_tmp_dir=${AWSTMPDIR:="/recyclebox/lchen/aws"}
+	awssql_output_dir=${AWSOUTDIR:="/dmqjtmp/rcp/stage/VaxParserOutput"}
+
+	#awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}' filename
+	#perl -lane 'print join " ",@F[1..$#F,0]' file
+	
+	#Method Two, read and parser key file to SQL line by line
+
+	last_table_name=""	
+	#integer awssql_record_num=0
+	integer single_table_key=$(sort ${awssql_input_key}|uniq|cut -f1 -d":"|uniq|grep -v "^$"|wc -l)
+	
+	#The command first compares adjacent lines and then removes the second and succeeding 
+	#duplications of a line. Duplicated lines must be adjacent. (Before issuing the uniq 
+	#command, use the sort command to make all duplicate lines adjacent)
+	sort ${awssql_input_key} | uniq |
+	while read awssql_record_line
+	do
+		#awssql_record_num=awssql_record_num+1
+		awssql_table_name=$(echo "${awssql_record_line}:"|cut -f1 -d":"|tr A-Z a-z)
+		[[ ${awssql_table_name} == "" ]] && continue	#empty line
+
+		awssql_table_condition=$(echo "${awssql_record_line}:"|cut -f2- -d":")
+		[[ ${awssql_table_condition} == "" ]] && {
+			echo " ${awssql_input_key} wrong input key format"
+			return		#wrong input key format
+		}
+		
+		awssql_table_sql=${awssql_tmp_dir}/${awssql_table_name}.${current_time}.sql
+
+		#awssql_table_sql=${awssql_tmp_dir}/${awssql_table_name}.${awssql_record_num}.$$.${current_time}.sql
+		#awssql_table_out=${awssql_tmp_dir}/${awssql_table_name}.${awssql_record_num}.$$.${current_time}.out
+		
+		#echo "
+		#BEGIN WORK;
+		#SET ISOLATION to DIRTY READ;
+		#UNLOAD TO "${awssql_table_out}"
+		
+		[[ ${last_table_name} != ${awssql_table_name} ]] && {
+			last_table_name=${awssql_table_name}
+			
+			#grep -x Displays lines that match the specified pattern exactly with no additional characters.
+			#grep -i Ignores the case (uppercase or lowercase) of letters when making comparisons.
+			sort ${awssql_input_key} | uniq | grep -i "^${awssql_table_name}:" | txt2sqlcolon.pl > ${awssql_table_sql}.tmp
+
+			awscolums ${awssql_table_name}
+
+			#Substitute with sed
+			sed 's/^SELECT_CLAUSE.*/'"${select_clause}"'/g' \
+			${awssql_table_sql}.tmp > ${awssql_table_sql}
+			
+			[[ ${single_table_key} -eq 1 ]] && break
+			
+		}
+ 
+		# echo ${select_clause} >> ${awssql_table_sql}
+		# echo "FROM ${awssql_table_name}" >> ${awssql_table_sql}
+
+		# integer sql_column_num=2
+		# first_column="Y"
+		# while true
+		# do
+			# awssql_column_value=$(echo ${awssql_record_line}|cut -f${sql_column_num} -d",")
+			# [[ ${awssql_column_value} == "" ]] && {
+				# echo ";" >> ${awssql_table_sql}
+				# break
+			# }
+			
+			# if [[ ${first_column} == "Y" ]]
+			# then
+				# #echo "WHERE \n" >> ${awssql_table_sql}
+				# #awsdate ${awssql_column_value} >> ${awssql_table_sql}
+				# #echo "${awssql_column_value} \n" >> 
+				# echo "WHERE " $(awsrec ${awssql_column_value}) >> ${awssql_table_sql}
+				# #echo ${awssql_condition} >> ${awssql_table_sql}
+				# first_column="N"
+			# else
+				# #echo "AND \n" >> ${awssql_table_sql}
+				# #awsdate ${awssql_column_value} >> ${awssql_table_sql}
+				# #echo "${awssql_column_value} \n" >> ${awssql_table_sql}
+				# [[ $(awsrec ${awssql_column_value}) != "" ]] && \
+				# echo "AND " $(awsrec ${awssql_column_value}) >> ${awssql_table_sql}
+				# #echo ${awssql_condition} >> ${awssql_table_sql}
+			# fi
+	
+		# sql_column_num=sql_column_num+1
+		# done
+
+		# #echo "COMMIT WORK;" >> ${awssql_table_sql}
+		
+		#cat ${awssql_table_sql} >> ${awssql_tmp_dir}/${awssql_table_name}.${current_time}.sql
+
+		#rm -f ${awssql_table_sql}
+		#rm -f ${awssql_table_out}
+	done
+}
+
+#pass arguments to sed, append $2 to a line with pattern $1 in file $3
+seda () {
+sed '
+/'"$1"'/ a\
+'"$2"'
+' $3
+}
+
+#pass arguments to sed, insert a line $2 with pattern $1 in file $3
+sedi () {
+sed '
+/'"$1"'/ i\
+'"$2"'
+' $3
+}
+
+#Prepare SQL for B3 related tables
+awsb3 () {
+	awsb3_related_tables=${AWSB3}
+	awsb3_tmp_dir=${AWSTMPDIR:="/recyclebox/lchen/aws"}
+	
+	last_table_name=""
+	for awsb3_table in ${awsb3_related_tables}
+	do
+		awsb3_tablename=$(echo "${awsb3_table}@"|cut -f1 -d"@"|tr A-Z a-z)	
+		#tablename is uppercase
+		awsb3_tone=$(echo "${awsb3_tablename},"|cut -f1 -d",")
+		awsb3_ttwo=$(echo "${awsb3_tablename},"|cut -f2 -d",")
+		
+		#Return if no b3 parent table exist
+		[[ ! -e ${awsb3_tmp_dir}/${awsb3_ttwo}.${current_time}.sql ]] && return
+
+		[[ ${last_table_name} != ${awsb3_tone} ]] && {
+			last_table_name=${awsb3_tone}
+			awscolums ${awsb3_tone}
+		}
+
+		#Substitute strings with sed
+		sed 's/^SELECT.*/'"${select_clause}"'/g' \
+			${awsb3_tmp_dir}/${awsb3_ttwo}.${current_time}.sql \
+			> ${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp1
+		
+		#The special character "&" corresponds to the pattern found: "^FROM.*"
+		#and append: , '"${awsb3_tone}"' to the and of "^FROM.*"
+		sed 's/^FROM.*/&,'"${awsb3_tone}"'/g' \
+			"${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp1" \
+			> "${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp2"
+			
+		cp "${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp2" \
+			"${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp1"
+				
+		awsb3_column=$(echo "${awsb3_table}@"|cut -f2 -d"@")
+		
+		integer b3_column_num=1
+		while true
+		do
+			awsb3_column_name=$(echo "${awsb3_column},"|cut -f${b3_column_num} -d",")
+			[[ ${awsb3_column_name} == "" ]] && {
+				cp "${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp1" \
+					"${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql"
+				break
+			}
+			
+			awsb3_char=";"
+			awsb3_string="AND ${awsb3_tone}.${awsb3_column_name} = ${awsb3_ttwo}.${awsb3_column_name}"
+			awsb3_file="${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp1"
+			
+			sedi "${awsb3_char}" "${awsb3_string}" "${awsb3_file}" \
+				> "${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp2"
+				
+			cp "${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp2" \
+				"${awsb3_tmp_dir}/${awsb3_tone}.${current_time}.sql.tmp1"
+	
+		b3_column_num=b3_column_num+1
+		done
+	
+	done
+}
+
+#run SQL generated by awssql() and awsb3()
+awsdbaccess () {
+	awsdbaccess_sql_file=$1
+	
+	awsdbaccess_server=${IDSSERVER:="systestdb"}
+	awsdbaccess_database=${IDSDB:="ip_systest"}
+	
+	# #[[ ${awsdbaccess_server}== "ipdb" ]] && return 119
+	ids_env=${IDSENV:="/login/lchen/ids115.env"}
+	# #. $ids_env ${awsdbaccess_server}
+
+	awsdbaccess_tmp_dir=${AWSTMPDIR:="/recyclebox/lchen/aws"}
+	awsdbaccess_output_dir=${AWSOUTDIR:="/dmqjtmp/rcp/stage/VaxParserOutput"}
+	
+	awsdbaccess_dbaccess_out=${awsdbaccess_tmp_dir}/$(basename ${awsdbaccess_sql_file} .sql).dbaccess
+	
+	echo "Start dbaccess\n"
+	echo "${awsdbaccess_sql_file}"
+	dbaccess ${awsdbaccess_database} ${awsdbaccess_sql_file} > ${awsdbaccess_dbaccess_out}
+	echo "Stop dbaccess: ${awsdbaccess_sql_file}, output: ${awsdbaccess_dbaccess_out}\n"
+
+}
+
+#change dbaccess output to load/unload output format
+awsoutput () {
+	awsoutput_dbaccess_out=$1
+	
+	awsoutput_tmp_dir=${AWSTMPDIR:="/recyclebox/lchen/aws"}
+	awsoutput_output_dir=${AWSOUTDIR:="/dmqjtmp/rcp/stage/VaxParserOutput"}
+
+	awsoutput_unload_out=${awsoutput_tmp_dir}/$(basename ${awsoutput_dbaccess_out} .dbaccess).unload
+	
+	awsoutput_output=${awsoutput_output_dir}/$(basename ${awsoutput_dbaccess_out} .dbaccess)
+	
+	#egrep -v "constant.*constant"  | uniq |
+	col2rows.pl ${awsoutput_dbaccess_out} > ${awsoutput_unload_out}
+		
+	# #chang dbaccess output format to unload output format
+	# column_item=""
+	# column_string=""
+	# egrep -v "constant.*constant" ${awsoutput_dbaccess_out} | uniq |
+	# while read record_line_out
+	# do
+		# echo ${record_line_out} | grep -E "\|.*\|"
+		# short_formant=$?
+		# [[  ${short_formant} -eq 0  ]] && {
+			# echo ${record_line_out} >> ${awsoutput_unload_out}
+			# continue
+		# }
+		
+		# #Other line considered as short_formant dbaccess output
+		# [[ ${record_line_out} == "" ]] && {
+			# echo "${column_string}" >> ${awsoutput_unload_out}
+			
+			# column_item=""
+			# column_string=""
+			# continue
+		# }
+		# #get values and trim space before and after strings with "xargs"
+		# column_item=$(echo "${record_line_out}"|cut -f 2- -d " "|xargs)
+		# column_string="${column_string}${column_item}"
+
+	# done
+	
+	#Remove blank lines
+	#grep -v "^$" ${awsoutput_unload_out} > ${awsoutput_output}
+	sort ${awsoutput_unload_out}|uniq|grep -v "^$" |egrep -v "constant.*constant" > ${awsoutput_output}
+	
+}
+
+#Get missed keys against incremental data
+awscomp () {
+	awscomp_dir=${AWSOUTDIR:="/dmqjtmp/rcp/stage/AWSOutput"}
+	awscomp_tmp_dir=${AWSTMPDIR:="/recyclebox/lchen/aws"}
+	
+	awscomp_file=$1
+	awscomp_missed=$1.missed
+	awscomp_out=${awscomp_tmp_dir}/${current_time}.all
+	
+	cat  ${awscomp_dir}/*.${current_time} > ${awscomp_out}
+	
+	sort ${awscomp_file} | uniq |
+	while read awscomp_record_line
+	do
+		integer comp_column_num=2
+		first_column="Y"
+		grep_string=""
+		while true
+		do
+			awscomp_column_name=$(echo "${awscomp_record_line}:"|cut -f${comp_column_num} -d":"|cut -f1 -d=)
+			awscomp_column_value=$(echo "${awscomp_record_line}:"|cut -f${comp_column_num} -d":"|cut -f2 -d=)
+			
+			echo ${awscomp_column_name} | grep date$
+			daterc=$?
+	
+			if [[ ${daterc} -eq 0 ]]
+			then
+				awscomp_date_year=${awscomp_column_value:0:4}
+				awscomp_date_month=${awscomp_column_value:4:2}
+				awscomp_date_day=${awscomp_column_value:6:2}
+		
+				awscomp_column_value="${awscomp_date_year}/${awscomp_date_month}/${awscomp_date_day}"
+			fi
+		
+			[[ ${awscomp_column_value} == "" ]] && {
+				eval ${grep_string}
+				grep_rc=$?
+				[[ ${grep_rc} -ne 0 ]] && echo ${awscomp_record_line} >> ${awscomp_missed}
+				break
+			}
+			
+			if [[ ${first_column} == "Y" ]]
+			then
+				grep_string="grep ${awscomp_column_value} ${awscomp_out}" 
+				first_column="N"
+			else
+				grep_string="${grep_string}|grep \"${awscomp_column_value}\""
+			fi
+		
+		comp_column_num=comp_column_num+1
+		
+		done
+	
+	done
+}
+
+#Send 4GL sql output of ${current_time} to AWS under ${AWSOUTDIR}
+awssend() {
+	awssend_dir=${AWSOUTDIR:="/dmqjtmp/rcp/stage/VaxParserOutput"}
+	
+	ls ${awssend}/*.${current_time} |
+	while read awssend_output
+	do
+		scp ${awsse_output} ingest@a0almcdhcan01.dev.liiaws.net:/opt/ingest/informix/
+	
+		ssh ingest@a0almcdhcan01.dev.liiaws.net \
+		"echo transfer completed. > /opt/ingest/informix/$(basename ${awsse_output}).token"
+	
+		mail -s "AWS $(basename ${awsse_output}) REPORT DONE" "${mail_alert}" < ${awssend_output}
+	done
+}
+
+awsput () {
+	awsput_remote_host=${AWSFTPHOST:="ipdev"}
+	awsput_user=${AWSFTPUSER:="lchen"}
+	awsput_passwd=${AWSFTPPASSWD:="admin12"}
+	awsput_image_dir=${AWSFTPLOCALDIR:="/livebkup"}
+	awsput_remote_dir=${AWSFTPREMOTEDIR:="/tmpimage"}
+
+	if [[ $(hostname) == "$remote_host" ]]; then return; fi
+	
+	cd ${awsput_image_dir}
+	ls ipdb_bkup_L0.* |
+	while read image
+	do
+		ftp_put ${awsput_remote_host} ${awsput_user} ${awsput_passwd} \
+		${awsput_image_dir} ${awsput_remote_dir} ${image} ${image}
+	done
+	
+	mail -s "image transfer done" lchen@livingstonintl.com < /dev/null
+	
+}
+
+#Process all VAXFilesParser output files under ${AWSINDIR}
+aws () {
+	aws_input_dir=${AWSINDIR:="/dmqjtmp/rcp/stage/VaxParserOutput"}
+	aws_tmp_dir=${AWSTMPDIR:="/recyclebox/lchen/aws"}
+	
+	ls ${aws_input_dir}/*.txt |
+	while read vax_out_put
+	do
+		current_time=$(date +%Y%m%d%H%M%S)
+		
+		awssql ${vax_out_put}
+		awsb3
+		
+		ls ${aws_tmp_dir}/*.${current_time}.sql |
+		while read current_time_sql
+		do
+			awsdbaccess ${current_time_sql}
+		done
+		
+		ls ${aws_tmp_dir}/*.${current_time}.dbaccess |
+		while read current_time_dbaccess_out
+		do
+			awsoutput ${current_time_dbaccess_out}
+		done
+		
+		#awscomp ${vax_out_put}
+		
+		#awssend
+		
+		sleep 1
+	done
+}
+
+$@
+
+exit 0

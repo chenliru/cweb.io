@@ -1,0 +1,99 @@
+
+
+
+b3iid            55328549
+(constant)       ^~^
+liiclientno      364147
+(constant)       ^~^
+liiaccountno     40
+(constant)       ^~^
+liibrchno        436
+(constant)       ^~^
+liirefno         530052
+(constant)       ^~^
+acctsecurno      41657
+(constant)       ^~^
+b3type           X
+(constant)       ^~^
+cargcntrlno      2CSA1_41657751893193_D
+(constant)       ^~^
+carriercode      2CSA
+(constant)       ^~^
+createdate       2016/06/30 00:00:00
+(constant)       ^~^
+custoff          0423
+(constant)       ^~^
+k84date          2016/06/30 00:00:00
+(constant)       ^~^
+modetransp       
+(constant)       ^~^
+portunlading     
+(constant)       ^~^
+reldate          2016/06/22 00:00:00
+(constant)       ^~^
+status           507
+(constant)       ^~^
+totb3duty        -112.330000000
+(constant)       ^~^
+totb3exctax      0.00
+(constant)       ^~^
+totb3gst         -5.62000000000
+(constant)       ^~^
+totb3sima        0.00
+(constant)       ^~^
+totb3vfd         0.00
+(constant)       ^~^
+transno          751897530
+(constant)       ^~^
+weight           0
+(constant)       ^~^
+purchaseorder1   13000360712016
+(constant)       ^~^
+purchaseorder2   
+(constant)       ^~^
+shipvia          CSA CARRIER CODE
+(constant)       ^~^
+locationofgoods  
+(constant)       ^~^
+containerno      
+(constant)       ^~^
+vendorname       3M COMPANY
+(constant)       ^~^
+vendorstate      
+(constant)       ^~^
+vendorzip        
+(constant)       ^~^
+freight          0.00
+(constant)       ^~^
+usportexit       
+(constant)       ^~^
+billoflading     BOL2016063
+(constant)       ^~^
+cargcntrlqty     0.00
+(constant)       ^~^
+approveddate     2016/06/30 00:00:00
+(constant)       ^~^
+sbrnno           894922491RM0001
+(constant)       ^~^
+ccnqty           0
+(constant)       ^~^
+ccinumlines      6
+(constant)       ^~^
+invoiceqty       0
+(constant)       ^~^
+warehousenum     0
+(constant)       ^~^
+entname          3M CANADA
+(constant)       ^~^
+entaddr1         300 TARTAN DR
+(constant)       ^~^
+entaddr2         
+(constant)       ^~^
+entaddr3         
+(constant)       ^~^
+entaddr4         LONDON                  ON CA
+(constant)       ^~^
+entpostcd        N5C 4M9
+(constant)       ^~^
+
+

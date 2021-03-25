@@ -1,0 +1,5 @@
+#!/usr/bin/ksh
+
+rm -rf /mnt
+
+exit 0

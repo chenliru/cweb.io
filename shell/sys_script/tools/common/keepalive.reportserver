@@ -1,0 +1,47 @@
+#!/bin/ksh
+###############################################################################
+#
+#           Livingston JDBC connections Monitor
+#           Author : Liru Chen   Date: January 9, 2014
+#
+#           Copyright: Livingston International
+#
+###############################################################################
+set -v
+set -x
+
+Maillist="lchen@livingstonintl.com"
+
+# remote connection ports to informix server
+ports=`netstat -an|grep "10.253.131.28"|awk '{print $5}'|cut -f 5 -d . `
+echo $ports
+
+# Monitor date
+Monitor_date=`date +%Y%m%d%H%M`
+
+# Get number of informix connection 
+set $ports
+integer portCount=$#
+echo $portCount
+
+# Monitor the informix connection in the list
+integer xCount=0
+
+while (( $xCount < $portCount ))
+do
+  echo "----------------------------------------------------"
+  echo " Monitor connection: $1"
+  echo "----------------------------------------------------"
+  sync
+
+  telnet tpcvmisoft01 $1
+
+  sleep 5
+
+  shift 1
+  xCount=xCount+1
+
+done
+
+exit 0
+

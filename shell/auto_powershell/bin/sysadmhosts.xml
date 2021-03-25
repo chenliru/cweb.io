@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sysadm>
+
+    <host app="insght" os="aix" name="ipdev" user="lchen" passwd="admin12" keyfile="C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey">
+        <crontab name=""/>
+
+        <deploy name="large_file_report.sh" />
+        <deploy name="snmon.sh" />
+
+        <run name="large_file_report.sh" />
+        <run name="mon.cpu" />
+        <run name="mon.net" />
+
+    </host>
+
+    <host app="lms" os="aix" name="cm07" user="lchen" passwd="admin12" keyfile="C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey">
+        <crontab Name=""/>
+
+        <deploy Name="large_file_report.sh" />
+        <deploy Name="snmon.sh" />
+
+        <run Name="large_file_report.sh" />
+
+    </host>
+
+</sysadm>

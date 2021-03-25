@@ -1,0 +1,24 @@
+#!/bin/ksh
+################################################################################
+#
+# Name: 	cgi.mksysb
+################################################################################
+set -v
+set -x
+
+aixsupport="lchen@livingstonintl.com"
+
+mksysb -e -i /recyclebox/mksysb/mksysb.ifx01
+
+errsts=$?
+if (($errsts != 0))
+then
+  mail -s "Local mksysb failed(IFX01):$backup_date" $aixsupport </dev/null
+  exit 1
+fi
+
+#Mail to Administrator;
+mail -s "Local mksysb successful(IFX01):$backup_date" $aixsupport </dev/null
+
+exit 0
+

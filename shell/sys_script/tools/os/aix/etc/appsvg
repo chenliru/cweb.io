@@ -1,0 +1,24 @@
+VOLUME GROUP:       appsvg                   VG IDENTIFIER:  00ca32fd00004c00000001101750da2b
+VG STATE:           active                   PP SIZE:        256 megabyte(s)
+VG PERMISSION:      read/write               TOTAL PPs:      399 (102144 megabytes)
+MAX LVs:            256                      FREE PPs:       148 (37888 megabytes)
+LVs:                5                        USED PPs:       251 (64256 megabytes)
+OPEN LVs:           5                        QUORUM:         2 (Enabled)
+TOTAL PVs:          1                        VG DESCRIPTORS: 2
+STALE PVs:          0                        STALE PPs:      0
+ACTIVE PVs:         1                        AUTO ON:        yes
+MAX PPs per VG:     32512                                     
+MAX PPs per PV:     1016                     MAX PVs:        32
+LTG size (Dynamic): 256 kilobyte(s)          AUTO SYNC:      no
+HOT SPARE:          no                       BB POLICY:      relocatable 
+PV RESTRICTION:     none                                      
+appsvg:
+LV NAME             TYPE       LPs     PPs     PVs  LV STATE      MOUNT POINT
+appslv              jfs2       40      40      1    open/syncd    /usr/apps
+netinslv            jfs2       10      10      1    open/syncd    /netins
+dmqjtmplv           jfs2       140     140     1    open/syncd    /dmqjtmp
+recyclelv           jfs2       60      60      1    open/syncd    /recyclebox
+loglv02             jfs2log    1       1       1    open/syncd    N/A
+appsvg:
+PV_NAME           PV STATE          TOTAL PPs   FREE PPs    FREE DISTRIBUTION
+hdisk4            active            399         148         00..00..00..68..80

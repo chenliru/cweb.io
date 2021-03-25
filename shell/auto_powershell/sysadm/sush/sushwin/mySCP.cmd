@@ -1,0 +1,1 @@
+c:\auto_powershell\OpenSSH-Win32\scp.exe -i c:\auto_powershell\OpenSSH-Win32\keyfile\Privatekey -P 30022 -oStrictHostKeyChecking=no -oPasswordAuthentication=no db2inst1@ibmserver:/tmp/in2 c:\auto_powershell\sysadm\del\in2

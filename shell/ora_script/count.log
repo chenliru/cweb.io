@@ -1,0 +1,12 @@
+SQL> @count.sql
+
+  COUNT(*)                                                                      
+----------                                                                      
+   5822080                                                                      
+
+
+  COUNT(*)                                                                      
+----------                                                                      
+   5822080                                                                      
+
+SQL> spool off

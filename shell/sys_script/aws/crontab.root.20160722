@@ -1,0 +1,128 @@
+# @(#)08	1.15.1.3  src/bos/usr/sbin/cron/root, cmdcntl, bos530 2/11/94 17:19:47
+# IBM_PROLOG_BEGIN_TAG 
+# This is an automatically generated prolog. 
+#  
+# bos530 src/bos/usr/sbin/cron/root 1.15.1.3 
+#  
+# Licensed Materials - Property of IBM 
+#  
+# (C) COPYRIGHT International Business Machines Corp. 1989,1994 
+# All Rights Reserved 
+#  
+# US Government Users Restricted Rights - Use, duplication or 
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+#  
+# IBM_PROLOG_END_TAG 
+#
+# COMPONENT_NAME: (CMDCNTL) commands needed for basic system needs
+#
+# FUNCTIONS: 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989,1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#0 3 * * * /usr/sbin/skulker
+#45 2 * * 0 /usr/lib/spell/compress
+#45 23 * * * ulimit 5000; /usr/lib/smdemon.cleanu > /dev/null
+# SSA warning : Deleting the next two lines may cause errors in redundant
+# SSA warning : hardware to go undetected.
+01 5 * * * /usr/lpp/diagnostics/bin/run_ssa_ela 1>/dev/null 2>/dev/null
+0 * * * * /usr/lpp/diagnostics/bin/run_ssa_healthcheck 1>/dev/null 2>/dev/null
+# SSA warning : Deleting the next line may allow enclosure hardware errors to go undetected
+30 * * * * /usr/lpp/diagnostics/bin/run_ssa_encl_healthcheck 1>/dev/null 2>/dev/null
+# SSA warning : Deleting the next line may allow link speed exceptions to go undetected
+30 4 * * * /usr/lpp/diagnostics/bin/run_ssa_link_speed 1>/dev/null 2>/dev/null
+0 11 * * * /usr/bin/errclear -d S,O 30
+0 12 * * * /usr/bin/errclear -d H 90
+0 15 * * *  /usr/lib/ras/dumpcheck >/dev/null 2>&1
+#########################################################################
+#									#
+# IP Operations Environment						#
+#									#
+#########################################################################
+#--> runner
+* 6-7  * * * ksh /insight/local/scripts/runner.10.ksh  >> /dmqjtmp/archiveRunnerLog/runner.10.out 2>&1
+* 8-20 * * * ksh /insight/local/scripts/runner.all.ksh >> /dmqjtmp/archiveRunnerLog/runner.all.out 2>&1 
+20-40 22 * * * ksh /insight/local/scripts/runner.71.ksh >> /dmqjtmp/archiveRunnerLog/runner.71.out 2>&1 
+1,16,31,46 8-20 * * * /insight/local/scripts/iccdataupload/StartInsightUpload.ksh >> /insight/local/scripts/iccdataupload/StartInsightUpload.out 2>&1 
+2,17,32,47 8-20 * * * /insight/local/scripts/ICCSetExpiryDates/StartInsightSetExpiryDates.ksh >> /insight/local/scripts/ICCSetExpiryDates/StartInsightSetExpiryDates.out 2>&1 
+5 7-17 * * * /insight/local/scripts/ICCBillingUpload/StartInsightBillingUpload.ksh>> /insight/local/scripts/ICCBillingUpload/StartInsightBillingUpload.out 2>&1 
+
+##--> monitor 
+####30 6 * * 1-5 ksh /insight/local/scripts/emailDog.ksh >> /dmqjtmp/archiveEdogLog/emailDog.out 2>&1
+10 * * * 1-5 ksh /insight/local/scripts/alertDog.ksh >> /dmqjtmp/archiveAdogLog/alertDog.out 2>&1
+30 * * * 1-5 ksh /insight/local/scripts/watchDog.ksh >> /dmqjtmp/archiveWdogLog/watchDog.out 2>&1  
+
+##--> archive log file directory  
+30 6  * * * ksh /insight/local/scripts/tuxLogClean.ksh  > /dmqjtmp/archiveTuxLog/tuxLogClean.out 2>&1  
+30 23 * * * ksh /insight/local/scripts/oprLogClean.ksh  > /dmqjtmp/archiveOprLog/oprLogClean.out 2>&1 
+30 23 * * * ksh /insight/local/scripts/betaLogClean.ksh > /dmqjtmp/archiveBetaLog/betaLogClean.out 2>&1  
+5 4 * * * ksh /insight/local/scripts/bdsLogClean.ksh > /dmqjtmp/archiveBdsLog/bdsLogClean.out 2>&1  
+
+##--> clean up the log and ptr files
+30 6 * * * ksh /insight/local/scripts/ptrLogClean.ksh  > /dmqjtmp/ptrCleanLog/ptrLogClean.out 2>&1
+30 6 * * * ksh /insight/local/scripts/bkupLogClean.ksh > /dmqjtmp/bkupCleanLog/bkupLogClean.out 2>&1
+30 6 * * * ksh /insight/local/scripts/sqexplainClean.ksh >/dev/null 2>&1
+
+##--> system and application backup
+##30,33,36,39,42,45,48,51,54,57 23 * * 6 /home/dguo/script/check_systape.ksh > /dev/null 2>&1
+##*Harry*5 23 * * 6 ksh -c "/insight/local/backup/sysbkup.ksh rmt0" >> /dmqjtmp/archiveSysbkupLog/sysbkup.out 2>&1
+##30,33,36,39,42,45,48,51,54,57 1 * * 0,2-6 /home/dguo/script/check_apptape.ksh > /dev/null 2>&1
+##*Harry*5 1 * * 0,2-6 ksh -c "/insight/local/backup/appbkup.ksh rmt0" >> /dmqjtmp/archiveAppbkupLog/appbkup.out 2>&1
+##30,33,36,39,42,45,48,51,54,57 3 * * 0,2-6 /home/dguo/script/check_dbstape.ksh > /dev/null 2>&1
+##*Harry* 1 4 * * 0,2-6 ksh -c "/insight/local/backup/dbsbkup.ksh" >> /dmqjtmp/archiveDbsbkupLog/dbsbkup.out 2>&1
+
+##--> Perl script funnel files
+30 6 * * * /insight/local/scripts/getTxnRpt.pl > /dmqjtmp/archiveFfileLog/getTxnRpt.out 2>&1
+###Daily cron job backup;
+0 3 * * * /insight/local/scripts/cron_bkup.ksh > /dev/null/ 2>&1
+##-->/sitemgr/b3_arch/run_autoarchive.ksh
+##0 9 * * * /insight/local/b3_arch/run_autoarchive.ksh >> /dmqjtmp/archiveB3Log/monthly_archive.log 2>&1 
+15 0 * * 0 /archbkup/bin/ArchivePurgeB3.sh >> /archbkup/etc/archivepurge.log 2>&1
+
+####################################################################
+0 0 * * 1 /insight/nmon/startnmon.ksh >> /insight/nmon/startnmon.out 2>&1
+##0 0 * * 3-4 /admin/emcdr/iostat/iostat.ksh >> /admin/emcdr/iostat/iostat.out 2>&1
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /usr/sbin/dumpctrl -k >/dev/null 2>/dev/null
+0 0 * * * /opt/csm/bin/cfmupdatenode -a 1>/dev/null 2>/dev/null
+0 0 * * * /opt/csm/csmbin/cleanup.logs.csp  1>>/var/log/csm/csperror.log 2>>/var/log/csm/csperror.log
+55 23 * * * /var/perf/pm/bin/pmcfg  >/dev/null 2>&1     #Enable PM Data Collection
+
+## Weekly NIM MKSYSB
+0 12 * * 0 /usr/local/scripts/client.mksysb.ksh > /dev/null 2>&1
+
+# Weekly CFG2HTML report
+0 7 * * 0 /usr/local/scripts/cfg2html -1 -o /tmp -e 1 > /tmp/cfg2html_aix_log.txt 2>&1
+
+# MPG Power Navigator data collector Version 6.9
+1,16,31,46 * * * * cd /usr/local/mpg; /usr/local/mpg/start_nmon_now -f -q
+25 4 * * * cd /usr/local/mpg; /usr/local/mpg/cend.sh -c /usr/local/mpg/pn.config
+35 4 * * * cd /usr/local/mpg; /usr/local/mpg/pndcm.sh -c /usr/local/mpg/pn.config clean
+30 4 * * * cd /usr/local/mpg; /usr/local/mpg/rackdata.sh -c /usr/local/mpg/pn.config
+30 5 2 * * cd /usr/local/mpg; /usr/local/mpg/pndchk.sh 
+0 5 * * * cd /usr/local/mpg; ./pngetinfo.sh -qa
+
+#Rsync to DR
+00 03 * * * /usr/local/scripts/ifx01_rsync_dr > /dev/null 2>&1
+0 0 * * 0 /usr/local/scripts/rsync_log_cleanup.ksh > /dev/null 2>&1
+
+#Daily error report redirection
+0 0 * * * /usr/local/scripts/DailyError_Archive.ksh > /usr/local/logs/DailyError_Archive.log 2>&1
+
+#Daily nmon Report
+0 0 * * * /usr/local/scripts/nmon.ksh > /usr/local/logs/nmon.out 2>&1
+
+#AWS project incremental Data
+20,50 7-14,16-18,20,22-23 * * * /insight/local/scripts/VaxParser/awslocus.sh > /recyclebox/AWS/awslocus.log 2>&1
+35 15,19,21,23 * * * /insight/local/scripts/VaxParser/awscoda.sh > /recyclebox/AWS/awscoda.log 2>&1
+45 23 * * * /insight/local/scripts/VaxParser/cleanup.sh > /recyclebox/AWS/cleanup.log 2>&1
+
+# Weekly shrink the size of /var/adm/wtmp to 1000 lines
+0 0 * * 0 /usr/local/scripts/wtmp_shrink.ksh > /dev/null 2>&1
+

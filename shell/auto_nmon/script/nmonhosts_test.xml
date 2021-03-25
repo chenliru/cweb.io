@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nmon>
+
+<nmon_app app="lms">
+
+    <nmon_os os="aix">
+      <nmon_host host="cm07">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lms/cm07/nmon/</path>
+      </nmon_host>
+      <nmon_host host="admsrv1">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lms/admsrv1/nmon/</path>
+      </nmon_host>
+      <nmon_host host="admsrv2">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/lms/admsrv2/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+</nmon_app>
+
+<nmon_app app="insight">
+
+    <nmon_os os="aix">
+      <nmon_host host="ipdev">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/insight/ipdev/nmon/</path>
+      </nmon_host>
+      <nmon_host host="ifx01">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/insight/ifx01/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+</nmon_app>
+
+<nmon_app app="kec">
+
+    <nmon_os os="aix">
+      <nmon_host host="kc1tsapal01">
+        <user>lchen</user>
+        <passwd>admin12</passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/kewill/kc1tsapal01/nmon/</path>
+      </nmon_host>
+    </nmon_os>
+
+    <nmon_os os="linux">
+      <nmon_host host="kc1utdb01">
+        <user>lchen</user>
+        <passwd></passwd>
+        <keyfile>C:\Program Files\Notepad++\plugins\Config\HostKeyManager\localPrivateKey</keyfile>
+        <path>/var/log/nmon</path>
+      </nmon_host>
+    </nmon_os>
+
+</nmon_app>
+
+</nmon>

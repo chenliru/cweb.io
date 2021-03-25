@@ -1,0 +1,3 @@
+db2inst1,sush,c:\auto_powershell\sysadm\sush,/tmp
+db2inst1,sush.ksh,c:\auto_powershell\sysadm\sush\sushunix,/tmp
+db2inst1,myTab.run,c:\auto_powershell\sysadm\sush\sushunix,/tmp

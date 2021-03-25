@@ -1,0 +1,229 @@
++ PROFILEBASE=/home/lchen/tools
++ hostname
++ [ ! -f /home/lchen/tools/shlib.ifx01 ]
++ hostname
++ . /home/lchen/tools/shlib.ifx01
++ BASE=/home/lchen/tools
++ BIN=/home/lchen/tools/bin
++ TMP=/home/lchen/tools/tmp
++ ETC=/home/lchen/tools/etc
++ LOG=/home/lchen/tools/log
++ [[ ! -d /home/lchen/tools/log ]]
++ [[ ! -d /home/lchen/tools/tmp ]]
++ [[ ! -d /home/lchen/tools/etc ]]
++ [[ ! -d /home/lchen/tools/bin ]]
++ export BASE BIN TMP ETC LOG
++ MAILALERT=lchen@livingstonintl.com
++ MAILNOTICE=lchen@livingstonintl.com
++ export MAILALERT MAILNOTICE
++ CPUIDLE=10
++ MEMPIO=50
++ DISKACTIVITY=90
++ NETPACKAGE=1250000
++ export CPUIDLE MEMPIO DISKACTIVITY NETPACKAGE
++ FTPHOST=ipdev
++ FTPUSER=lchen
++ FTPPASSWD=admin12
++ FTPLOCALDIR=/archbkup/dbbkup/stage
++ FTPREMOTEDIR=/dbbkup/stage
++ export FTPHOST FTPUSER FTPPASSWD FTPLOCALDIR FTPREMOTEDIR
++ uname
++ [[ AIX == AIX ]]
++ TAPE=tctl
++ uname
++ [[ AIX == SunOS ]]
++ uname
++ [[ AIX == Linux ]]
++ TAPEDEVICE=/dev/rmt0
++ TAPEACTION=status
++ NMONINTERVAL=60
++ NMONDURATION=1
++ NMONRUNDIR=/home/lchen/nmon
++ hostname
++ NMONREPORTDIR=$'\n\t/home/lchen/nmon\n\t/kewill/ifx01/report/nmon\n\t'
++ NMONREADY=last_hour
++ export NMONINTERVAL NMONDURATION NMONRUNDIR NMONREPORTDIR NMONREADY
++ IDSENV=/home/lchen/ids115.env
++ IDSSERVER=ipdb
++ IDSDB=ip_0p
++ IDSBKDIR=/livebkup
++ TABLEMONITOR=$'\n\tb3 b3_line b3_recap_details \n\ttariff lii_client lii_account client_invoice \n\tsecuruser user_locus_xref srch_crit_batch\n\t'
++ TABLESOURCE=ipdb,ip_0p,
++ TABLETARGET=systestdb,ip_systest,
++ TABLELOADDIR=/home/lchen/tools/etc/table/load
++ TABLEUNLOADDIR=/home/lchen/tools/etc/table/unload
++ AWSB3=$'\tb3b,b3@b3iid,\n\t\tcontainers,b3@b3iid,\n\t\tstatus_history,b3@b3iid,status,\n\t\tb3_subheader,b3@b3iid,\n\t\tb3_line,b3_subheader@b3subiid,\n\t\tb3_line_comment,b3_line@b3lineiid,\n\t\tb3_recap_details,b3_line@b3lineiid,\n\t'
++ export IDSENV IDSSERVER IDSDB IDSBKUPDIR
++ export TABLEMONITOR TABLELOADDIR TABLEUNLOADDIR
++ . /home/lchen/ids115.env ipdb
++ SRVR=ipdb
++ echo ''
+
++ echo ' Server ipdb environment ...'
+ Server ipdb environment ...
++ echo ''
+
++ INFVERSION=ver115UC3
++ INFORMIXDIR=/usr/apps/inf/ver115UC3
++ INFORMIXSERVER=ipdb
++ ONCONFIG=onconfig_ipdb
++ ARC_CONFIG=onarconfig_ipdb
++ PATH=/usr/apps/inf/ver115UC3/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin:/usr/java14/jre/bin:/usr/java14/bin
++ INFORMIXTERM=termcap
++ TERMCAP=/usr/apps/inf/ver115UC3/etc/termcap
++ SYSROOT=/usr/apps
++ INFROOT=/usr/apps/inf
++ INFBIN=/usr/apps/inf/ver115UC3/bin
++ INFLIB=/usr/apps/inf/ver115UC3/lib
++ INFINC=/usr/apps/inf/ver115UC3/incl
++ INFPLATFORM=IBMAIX
++ INFLOGDIR=/home/informix/log
++ INFBKUP=/home/informix/bkup
++ export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
++ export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM
++ export INFLOGDIR INFBKUP
++ INFXCPUVPPRIORITY=90
++ export INFXCPUVPPRIORITY
++ INFXNETVPPRIORITY=90
++ export INFXNETVPPRIORITY
++ INFXMSCVPPRIORITY=90
++ export INFXMSCVPPRIORITY
++ INFXIOVPPRIORITY=90
++ export INFXIOVPPRIORITY
++ CLEARSTAGE=/recyclebox/lchen/clears
++ CLEARDIR=$'\n\t/home/lchen/nmon@nmon,nmon.gz@3\n\t/home/lchen/tools/tmp@txt,log,LOG,tmp,TMP,sql,out@3\n\t/home/lchen/tools/log@ALL@3\n\t/recyclebox/lchen/clears@ALL@7\n\t'
++ export CLEARDIR CLEARSTAGE
++ PATH=/home/lchen/tools/bin:/usr/apps/inf/ver115UC3/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin:/usr/java14/jre/bin:/usr/java14/bin
++ export PATH
++ date +%Y%m%d
++ current_date=20171006
++ date +%Y%m%d%H%M%S
++ current_time=20171006003001
++ mail_alert=lchen@livingstonintl.com
++ mail_notice=lchen@livingstonintl.com
++ clears
++ clear_dirs=$'\n\t/home/lchen/nmon@nmon,nmon.gz@3\n\t/home/lchen/tools/tmp@txt,log,LOG,tmp,TMP,sql,out@3\n\t/home/lchen/tools/log@ALL@3\n\t/recyclebox/lchen/clears@ALL@7\n\t'
++ clear_stage=/recyclebox/lchen/clears
++ cd /recyclebox/lchen/clears
++ echo /home/lchen/nmon@nmon,nmon.gz@3@
++ cut -f1 -d@
++ clear_location=/home/lchen/nmon
++ echo /home/lchen/nmon@nmon,nmon.gz@3@
++ tr , ' '
++ cut -f2 -d@
++ clear_types='nmon nmon.gz'
++ echo /home/lchen/nmon@nmon,nmon.gz@3@
++ cut -f3 -d@
++ clear_day=3
++ [[ ! -d /home/lchen/nmon ]]
++ echo '/home/lchen/nmon NOT EXIST and/or Clear Day is 0'
+/home/lchen/nmon NOT EXIST and/or Clear Day is 0
++ continue
++ echo /home/lchen/tools/tmp@txt,log,LOG,tmp,TMP,sql,out@3@
++ cut -f1 -d@
++ clear_location=/home/lchen/tools/tmp
++ echo /home/lchen/tools/tmp@txt,log,LOG,tmp,TMP,sql,out@3@
++ tr , ' '
++ cut -f2 -d@
++ clear_types='txt log LOG tmp TMP sql out'
++ echo /home/lchen/tools/tmp@txt,log,LOG,tmp,TMP,sql,out@3@
++ cut -f3 -d@
++ clear_day=3
++ [[ ! -d /home/lchen/tools/tmp ]]
++ [[ 3 == '' ]]
++ echo /home/lchen/tools/tmp
++ sed 's/\//./g'
++ bkupname=.home.lchen.tools.tmp
++ [[ /home/lchen/tools/tmp == /recyclebox/lchen/clears ]]
++ [[ txt == ALL ]]
++ find /home/lchen/tools/tmp -name '*txt*' -mtime +3 -print
++ 1> tmplist
++ tar -cvf .home.lchen.tools.tmp.20171006.tar -L tmplist
++ [[ -e .home.lchen.tools.tmp.20171006.tar ]]
++ find /home/lchen/tools/tmp -name '*txt*' -mtime +3 -exec rm -f '{}' ';'
++ [[ /home/lchen/tools/tmp == /recyclebox/lchen/clears ]]
++ [[ log == ALL ]]
++ find /home/lchen/tools/tmp -name '*log*' -mtime +3 -print
++ 1> tmplist
++ tar -cvf .home.lchen.tools.tmp.20171006.tar -L tmplist
++ [[ -e .home.lchen.tools.tmp.20171006.tar ]]
++ find /home/lchen/tools/tmp -name '*log*' -mtime +3 -exec rm -f '{}' ';'
++ [[ /home/lchen/tools/tmp == /recyclebox/lchen/clears ]]
++ [[ LOG == ALL ]]
++ find /home/lchen/tools/tmp -name '*LOG*' -mtime +3 -print
++ 1> tmplist
++ tar -cvf .home.lchen.tools.tmp.20171006.tar -L tmplist
++ [[ -e .home.lchen.tools.tmp.20171006.tar ]]
++ find /home/lchen/tools/tmp -name '*LOG*' -mtime +3 -exec rm -f '{}' ';'
++ [[ /home/lchen/tools/tmp == /recyclebox/lchen/clears ]]
++ [[ tmp == ALL ]]
++ find /home/lchen/tools/tmp -name '*tmp*' -mtime +3 -print
++ 1> tmplist
++ tar -cvf .home.lchen.tools.tmp.20171006.tar -L tmplist
++ [[ -e .home.lchen.tools.tmp.20171006.tar ]]
++ find /home/lchen/tools/tmp -name '*tmp*' -mtime +3 -exec rm -f '{}' ';'
++ [[ /home/lchen/tools/tmp == /recyclebox/lchen/clears ]]
++ [[ TMP == ALL ]]
++ find /home/lchen/tools/tmp -name '*TMP*' -mtime +3 -print
++ 1> tmplist
++ tar -cvf .home.lchen.tools.tmp.20171006.tar -L tmplist
++ [[ -e .home.lchen.tools.tmp.20171006.tar ]]
++ find /home/lchen/tools/tmp -name '*TMP*' -mtime +3 -exec rm -f '{}' ';'
++ [[ /home/lchen/tools/tmp == /recyclebox/lchen/clears ]]
++ [[ sql == ALL ]]
++ find /home/lchen/tools/tmp -name '*sql*' -mtime +3 -print
++ 1> tmplist
++ tar -cvf .home.lchen.tools.tmp.20171006.tar -L tmplist
++ [[ -e .home.lchen.tools.tmp.20171006.tar ]]
++ find /home/lchen/tools/tmp -name '*sql*' -mtime +3 -exec rm -f '{}' ';'
++ [[ /home/lchen/tools/tmp == /recyclebox/lchen/clears ]]
++ [[ out == ALL ]]
++ find /home/lchen/tools/tmp -name '*out*' -mtime +3 -print
++ 1> tmplist
++ tar -cvf .home.lchen.tools.tmp.20171006.tar -L tmplist
++ [[ -e .home.lchen.tools.tmp.20171006.tar ]]
++ find /home/lchen/tools/tmp -name '*out*' -mtime +3 -exec rm -f '{}' ';'
++ echo /home/lchen/tools/log@ALL@3@
++ cut -f1 -d@
++ clear_location=/home/lchen/tools/log
++ echo /home/lchen/tools/log@ALL@3@
++ cut -f2 -d@
++ tr , ' '
++ clear_types=ALL
++ echo /home/lchen/tools/log@ALL@3@
++ cut -f3 -d@
++ clear_day=3
++ [[ ! -d /home/lchen/tools/log ]]
++ [[ 3 == '' ]]
++ echo /home/lchen/tools/log
++ sed 's/\//./g'
++ bkupname=.home.lchen.tools.log
++ [[ /home/lchen/tools/log == /recyclebox/lchen/clears ]]
++ [[ ALL == ALL ]]
++ find /home/lchen/tools/log -mtime +3 -print
++ 1> tmplist
++ tar -cvf .home.lchen.tools.log.20171006.tar -L tmplist
+a /home/lchen/tools/log
++ [[ -e .home.lchen.tools.log.20171006.tar ]]
++ gzip -f .home.lchen.tools.log.20171006.tar
++ find /home/lchen/tools/log -mtime +3 -exec rm -f '{}' ';'
+rm: 0653-603 Cannot remove directory /home/lchen/tools/log.
++ echo /recyclebox/lchen/clears@ALL@7@
++ cut -f1 -d@
++ clear_location=/recyclebox/lchen/clears
++ echo /recyclebox/lchen/clears@ALL@7@
++ tr , ' '
++ cut -f2 -d@
++ clear_types=ALL
++ echo /recyclebox/lchen/clears@ALL@7@
++ cut -f3 -d@
++ clear_day=7
++ [[ ! -d /recyclebox/lchen/clears ]]
++ [[ 7 == '' ]]
++ echo /recyclebox/lchen/clears
++ sed 's/\//./g'
++ bkupname=.recyclebox.lchen.clears
++ [[ /recyclebox/lchen/clears == /recyclebox/lchen/clears ]]
++ [[ ALL == ALL ]]
++ find /recyclebox/lchen/clears -mtime +7 -exec rm -f '{}' ';'
++ exit 0

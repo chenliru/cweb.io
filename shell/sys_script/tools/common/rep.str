@@ -1,0 +1,63 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         rep.str
+#
+# Reference:    n/a
+#
+# Description:  This script is used to change all the files under directory $DIR, 
+#               which contain String $origin to String $target
+#
+# Command:   rep.str <dir_name or file_name> <origin_string> <target_string> 
+#
+#            Example:  change "lchen/download" to "lchen/Tools/DB/informix/download"
+#                      in all files under directory "137970"
+#            $ cd 137970
+#            $ for i in `ls *`
+#               do sed "s/lchen\/download/lchen\/Tools\/DB\/informix\/download/g" $i > tempFile
+#               mv tempFile $i
+#              done
+#
+# Modification History:
+#
+#               Date            Name            Description   
+#               ------------------------------------------------------------
+#               2013-03-15      Liru Chen       
+#
+####################################################################################
+set -v
+set -x
+umask 022
+
+if [[ $# -lt 3 ]]; then
+    echo " USAGE: rep.str <'DIR_Name' or 'FILE_name'> <'originString'> <'targetString'>"
+    echo " Tips: Please add \ before special char like / if it's in the String !!!"
+    exit 2
+fi
+
+name=$1
+origin=$2
+target=$3
+
+if [[ -d $name ]]; then
+  cd $name
+
+  for i in `ls` 
+  do
+   [[ -d $i ]] && continue 
+   sed "s/$origin/$target/g" $i > tempfile
+   mv tempfile $i
+   chmod 755 $i
+  done
+
+else
+
+ sed "s/$origin/$target/g" $name > tempfile
+
+ mv tempfile $name
+ chmod 755 $filename
+
+fi
+
+exit 0
+

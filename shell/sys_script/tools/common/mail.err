@@ -1,0 +1,35 @@
+#!/bin/ksh
+############################################################
+#
+#  UNIX environment Error Message Monitor
+#
+#  Author : Liru Chen   Date: June 17, 2012
+#  Copyright: Livingston International
+#
+#############################################################
+set -v
+set -x
+
+.  ~/tools.profile
+
+# error message collection
+PLATFORM=`uname`
+if [[ $PLATFORM = "SunOS" ]]; then
+ dmesg | grep -i error > $ERRFILE
+fi
+if [[ $PLATFORM = "Linux" ]]; then
+ dmesg | grep -i error > $ERRFILE
+fi
+if [[ $PLATFORM = "AIX" ]]; then
+ errpt -a > $ERRFILE
+fi
+
+if [[ -s $ERRFILE ]]; then
+  mail -s " System `hostname` Error Messages "\
+            $SYSADMEMAIL < $ERRFILE
+fi
+
+rm -f $ERRFILE
+
+exit 0
+

@@ -1,0 +1,16 @@
+dr_informix1170 drsoctcp db2cm64 dr_informix1170 
+
+#demo_on        onipcshm        on_hostname     on_servername
+ol_informix1170 onsoctcp        db2cm64         ol_informix1170
+#demo_se        seipcpip        se_hostname     sqlexec
+
+#Systest database;
+systestdb    onsoctcp        ipdev           systestdbsvc
+
+#Below are for archive database;
+#ardb    onsoctcp        ipdev   ardbsvc
+#prf    onsoctcp        ipdev   prfsvc
+
+#Old production database;
+ipdb    onsoctcp        ifx01           ipdbsvc
+ardb	onsoctcp	ifx01		ardbsvc

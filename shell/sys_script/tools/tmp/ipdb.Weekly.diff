@@ -1,0 +1,281 @@
+2,6c2,6
+< /dev/hd4          2883584   2321140   20%    15798     3% /
+< /dev/hd2          5242880   1784768   66%    67226    14% /usr
+< /dev/hd9var       3407872    547360   84%    13745    10% /var
+< /dev/hd3          3145728   1736952   45%     1131     1% /tmp
+< /dev/hd1          2097152   1289076   39%     2956     2% /home
+---
+> /dev/hd4          2883584   2321144   20%    15799     3% /
+> /dev/hd2          5242880   1800204   66%    67226    14% /usr
+> /dev/hd9var       3407872    535920   85%    13745    10% /var
+> /dev/hd3          3145728   1732400   45%     1139     1% /tmp
+> /dev/hd1          2097152   1287348   39%     2957     2% /home
+8c8
+< /dev/hd10opt      3145728    874408   73%    22149    10% /opt
+---
+> /dev/hd10opt      3145728    874376   73%    22162    10% /opt
+12,14c12,14
+< /dev/dmqjtmplv    38797312  25179796   36%     1826     1% /dmqjtmp
+< /dev/recyclelv    36700160  18644152   50%     3733     1% /recyclebox
+< /dev/appslv      10485760   6306860   40%    20374     2% /usr/apps
+---
+> /dev/dmqjtmplv    38797312  25663008   34%     1789     1% /dmqjtmp
+> /dev/recyclelv    36700160  18791364   49%     3733     1% /recyclebox
+> /dev/appslv      10485760   6331236   40%    20373     2% /usr/apps
+18c18
+< /dev/ixdat1lv    28573696   2260824   93%       31     1% /ix_dat1
+---
+> /dev/ixdat1lv    29622272   2309240   93%       32     1% /ix_dat1
+20c20
+< /dev/ixdat3lv    22282240   4214284   82%       24     1% /ix_dat3
+---
+> /dev/ixdat3lv    21233664   3165868   86%       24     1% /ix_dat3
+22,23c22,23
+< /dev/ixidx2lv     7864320   1557100   81%       11     1% /ix_idx2
+< /dev/ixidx3lv     4456448   1769192   61%        8     1% /ix_idx3
+---
+> /dev/ixidx2lv     7864320   1555708   81%       11     1% /ix_idx2
+> /dev/ixidx3lv     4456448   1767660   61%        8     1% /ix_idx3
+30c30
+< /dev/achidx1lv     6553600   1527948   77%       10     1% /ach_idx1
+---
+> /dev/achidx1lv     6553600   1494692   78%       10     1% /ach_idx1
+34,37c34,37
+< /dev/insightlv     2097152   1956284    7%     2555     1% /insight
+< /dev/archbkuplv   188743680  44756384   77%      108     1% /archbkup
+< /dev/livebkuplv    83886080  12918612   85%        9     1% /livebkup
+< /dev/history_lv      262144    259624    1%       25     1% /var/adm/history
+---
+> /dev/insightlv     2097152   1952600    7%     2638     1% /insight
+> /dev/archbkuplv   188743680  43066736   78%      112     1% /archbkup
+> /dev/livebkuplv    83886080  12472132   86%        9     1% /livebkup
+> /dev/history_lv      262144    259628    1%       24     1% /var/adm/history
+39c39
+< IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 52 days 14:29:10 -- 2051200 Kbytes
+---
+> IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 59 days 14:29:09 -- 2051200 Kbytes
+46c46
+< 913ff6a0 4        0x1        4        27       4096     N        informix datadbs1
+---
+> 913ff6a0 4        0x1        4        28       4096     N        informix datadbs1
+60c60
+< 90431970 1      1      0          55000      4793                  PO--  /ix_root/ix_root.1
+---
+> 90431970 1      1      0          55000      4721                  PO--  /ix_root/ix_root.1
+66c66
+< 91401018 7      4      0          250000     1928                  PO--  /ix_dat1/ix_dat1.4
+---
+> 91401018 7      4      0          250000     1800                  PO--  /ix_dat1/ix_dat1.4
+89c89
+< 91403cc8 30     5      0          250000     30829                 PO--  /ix_dat2/ix_dat2.12
+---
+> 91403cc8 30     5      0          250000     26733                 PO--  /ix_dat2/ix_dat2.12
+107,108c107,108
+< 914061e8 48     6      0          250000     79821                 PO--  /ix_idx1/ix_idx1.5
+< 914063b8 49     7      0          250000     170541                PO--  /ix_idx2/ix_idx2.5
+---
+> 914061e8 48     6      0          250000     73677                 PO--  /ix_idx1/ix_idx1.5
+> 914063b8 49     7      0          250000     169517                PO--  /ix_idx2/ix_idx2.5
+136c136
+< 9140caf8 77     12     0          250000     77569                 PO--  /ix_idx3/ix_idx3.3
+---
+> 9140caf8 77     12     0          250000     77313                 PO--  /ix_idx3/ix_idx3.3
+155,156c155,157
+< 9140f1e8 96     4      0          250000     249997                PO--  /ix_dat1/ix_dat1.27
+<  96 active, 2047 maximum
+---
+> 9140f1e8 96     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.27
+> 91d6b838 97     4      0          250000     249997                PO--  /ix_dat1/ix_dat1.28
+>  97 active, 2047 maximum
+163c164
+< Mon Jun 29 12:00:00 EDT 2015	ip_0p	b3
+---
+> Mon Jul  6 12:00:00 EDT 2015	ip_0p	b3
+184,185c185,186
+<     Number of data pages           858712    
+<     Number of rows                 5894040   
+---
+>     Number of data pages           857794    
+>     Number of rows                 5660569   
+379c380
+<     Number of extents              139       
+---
+>     Number of extents              140       
+386,387c387,388
+<     Number of pages allocated      50728     
+<     Number of pages used           50728     
+---
+>     Number of pages allocated      51752     
+>     Number of pages used           50941     
+533a535
+>                 50728         48:175299        1024       1024
+552c554
+<     Number of pages used           14756     
+---
+>     Number of pages used           14760     
+690c692
+<     Number of pages used           15745     
+---
+>     Number of pages used           15807     
+974c976
+<     Number of pages used           17857     
+---
+>     Number of pages used           17912     
+1114c1116
+<     Number of pages used           13659     
+---
+>     Number of pages used           13675     
+1517c1519
+<     Number of pages used           12977     
+---
+>     Number of pages used           13080     
+1965c1967
+<     Number of pages used           15124     
+---
+>     Number of pages used           15141     
+2104c2106
+<     Number of pages used           15857     
+---
+>     Number of pages used           15864     
+2244c2246
+<     Number of pages used           16581     
+---
+>     Number of pages used           16631     
+2367c2369
+< Mon Jun 29 12:00:00 EDT 2015	ip_0p	b3_line
+---
+> Mon Jul  6 12:00:00 EDT 2015	ip_0p	b3_line
+2379c2381
+<     Number of extents              282       
+---
+>     Number of extents              283       
+2386,2389c2388,2391
+<     Number of pages allocated      5315744   
+<     Number of pages used           5315744   
+<     Number of data pages           5019039   
+<     Number of rows                 44935884  
+---
+>     Number of pages allocated      5565741   
+>     Number of pages used           5423361   
+>     Number of data pages           4919676   
+>     Number of rows                 43484668  
+2676a2679
+>               5315744              96:3      249997     249997
+2881c2884
+<     Number of extents              169       
+---
+>     Number of extents              170       
+2888,2889c2891,2892
+<     Number of pages allocated      227776    
+<     Number of pages used           227776    
+---
+>     Number of pages allocated      231872    
+>     Number of pages used           228251    
+3065a3069
+>                227776         48:171203        4096       4096
+3067c3071
+< Mon Jun 29 12:00:00 EDT 2015	ip_0p	b3_recap_details
+---
+> Mon Jul  6 12:00:00 EDT 2015	ip_0p	b3_recap_details
+3088,3089c3092,3093
+<     Number of data pages           1932103   
+<     Number of rows                 80432944  
+---
+>     Number of data pages           1892829   
+>     Number of rows                 77740751  
+3325c3329
+<     Number of pages used           292790    
+---
+>     Number of pages used           294209    
+3711c3715
+< Mon Jun 29 12:00:00 EDT 2015	ip_0p	tariff
+---
+> Mon Jul  6 12:00:00 EDT 2015	ip_0p	tariff
+3732,3733c3736,3737
+<     Number of data pages           3432260   
+<     Number of rows                 20087447  
+---
+>     Number of data pages           3431942   
+>     Number of rows                 20122396  
+5604c5608
+< Mon Jun 29 12:00:01 EDT 2015	ip_0p	lii_client
+---
+> Mon Jul  6 12:00:01 EDT 2015	ip_0p	lii_client
+5616c5620
+<     Number of extents              67        
+---
+>     Number of extents              68        
+5623,5626c5627,5630
+<     Number of pages allocated      4728      
+<     Number of pages used           4728      
+<     Number of data pages           3653      
+<     Number of rows                 182640    
+---
+>     Number of pages allocated      4856      
+>     Number of pages used           4731      
+>     Number of data pages           3655      
+>     Number of rows                 182739    
+5698a5703
+>                  4728          7:145027         128        128
+5700c5705
+< Mon Jun 29 12:00:01 EDT 2015	ip_0p	lii_account
+---
+> Mon Jul  6 12:00:01 EDT 2015	ip_0p	lii_account
+5720,5722c5725,5727
+<     Number of pages used           5037      
+<     Number of data pages           2617      
+<     Number of rows                 204085    
+---
+>     Number of pages used           5040      
+>     Number of data pages           2618      
+>     Number of rows                 204192    
+5796c5801
+< Mon Jun 29 12:00:01 EDT 2015	ip_0p	client_invoice
+---
+> Mon Jul  6 12:00:01 EDT 2015	ip_0p	client_invoice
+5816,5818c5821,5823
+<     Number of pages used           631655    
+<     Number of data pages           413630    
+<     Number of rows                 18199686  
+---
+>     Number of pages used           634690    
+>     Number of data pages           415640    
+>     Number of rows                 18288104  
+6009c6014
+<     Number of extents              133       
+---
+>     Number of extents              134       
+6016,6017c6021,6022
+<     Number of pages allocated      24928     
+<     Number of pages used           24880     
+---
+>     Number of pages allocated      25952     
+>     Number of pages used           24990     
+6157a6163
+>                 24928         48:170179        1024       1024
+6168c6174
+<     Number of extents              143       
+---
+>     Number of extents              144       
+6174,6176c6180,6182
+<     Next extent size               1024      
+<     Number of pages allocated      36560     
+<     Number of pages used           36544     
+---
+>     Next extent size               2048      
+>     Number of pages allocated      37584     
+>     Number of pages used           36665     
+6326a6333
+>                 36560          49:79459        1024       1024
+6345c6352
+<     Number of pages used           24745     
+---
+>     Number of pages used           24854     
+6504c6511
+<     Number of pages used           25946     
+---
+>     Number of pages used           26062     
+6665c6672
+<     Number of pages used           29825     
+---
+>     Number of pages used           29957     

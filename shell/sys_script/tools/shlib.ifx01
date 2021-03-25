@@ -1,0 +1,115 @@
+############################################################################
+# NAME:	shlib.$(hostname)
+#
+# FUNCTION: tools scripts help system administrator/DBA manages OS and DB 
+#           more efficiently. 
+#          
+# USAGE:    This script can either be invoked directly as above or
+#           it can be added to the user's .profile file so that the
+#           database environment is established during login.
+#
+# !! Edit this file according to your Host Environment !!
+#
+# Author:            Liru Chen
+# Date:              2015-07-07
+#
+# All Rights Reserved.
+############################################################################
+BASE=/home/lchen/tools
+BIN=$BASE/bin
+TMP=$BASE/tmp
+ETC=$BASE/etc
+LOG=$BASE/log
+[[ ! -d ${LOG} ]] && mkdir -p ${LOG}
+[[ ! -d ${TMP} ]] && mkdir -p ${TMP}
+[[ ! -d ${ETC} ]] && mkdir -p ${ETC}
+[[ ! -d ${BIN} ]] && mkdir -p ${BIN}
+export BASE BIN TMP ETC LOG
+
+#Alert information to System administrator/DBA, and notice information to normal users
+MAILALERT="lchen@livingstonintl.com"
+MAILNOTICE="lchen@livingstonintl.com"
+export MAILALERT MAILNOTICE
+
+#Performance threshold setting
+CPUIDLE=10
+MEMPIO=50
+DISKACTIVITY=90
+NETPACKAGE=1250000
+export CPUIDLE MEMPIO DISKACTIVITY NETPACKAGE
+
+#FTP
+FTPHOST="ipdev"
+FTPUSER="lchen"
+FTPPASSWD="admin12"
+FTPLOCALDIR="/archbkup/dbbkup/stage"
+FTPREMOTEDIR="/dbbkup/stage"
+export FTPHOST FTPUSER FTPPASSWD FTPLOCALDIR FTPREMOTEDIR
+
+#TAPE
+[[ $(uname) == AIX ]] && TAPE="tctl"
+[[ $(uname) == SunOS ]] && TAPE="mt"
+[[ $(uname) == Linux ]] && TAPE="mt"
+TAPEDEVICE="/dev/rmt0"
+TAPEACTION="status"
+
+#NMON performance data collection
+#@start_nmon_cron:0_11-18_*_*_*
+#@mail_nmon_cron:10_12-19_*_*_*
+NMONINTERVAL=60		#second
+NMONDURATION=1		#hour
+NMONRUNDIR="/home/lchen/nmon"
+NMONREPORTDIR="
+	${NMONRUNDIR}
+	/kewill/$(hostname)/report/nmon
+	"
+NMONREADY="last_hour"		#last_hour | yesterday
+export NMONINTERVAL NMONDURATION NMONRUNDIR NMONREPORTDIR NMONREADY
+
+#INFORMIX DYNAMIC SERVER
+#@ids_cron:
+IDSENV="/home/lchen/ids115.env"
+IDSSERVER="ipdb"
+IDSDB="ip_0p"
+IDSBKDIR="/livebkup"
+
+TABLEMONITOR="
+	b3 b3_line b3_recap_details 
+	tariff lii_client lii_account client_invoice 
+	securuser user_locus_xref srch_crit_batch
+	"
+	
+TABLESOURCE="ipdb,ip_0p,"
+TABLETARGET="systestdb,ip_systest,"
+TABLELOADDIR="${ETC}/table/load"
+TABLEUNLOADDIR="${ETC}/table/unload"
+
+AWSB3="	b3b,b3@b3iid,
+		containers,b3@b3iid,
+		status_history,b3@b3iid,status,
+		b3_subheader,b3@b3iid,
+		b3_line,b3_subheader@b3subiid,
+		b3_line_comment,b3_line@b3lineiid,
+		b3_recap_details,b3_line@b3lineiid,
+	"
+
+export IDSENV IDSSERVER IDSDB IDSBKUPDIR
+export TABLEMONITOR TABLELOADDIR TABLEUNLOADDIR
+
+#[[ ${IDSSERVER} == "ipdb" ]] && return 119
+. $IDSENV ${IDSSERVER}
+
+#Clean expired file types like *log after @days, under directories listed
+#@clears_cron:0_1_*_*_0
+CLEARSTAGE="/recyclebox/lchen/clears"		#Also including this directory in CLEARDIR
+CLEARDIR="
+	${NMONRUNDIR}@"nmon,nmon.gz"@3
+	${TMP}@"txt,log,LOG,tmp,TMP,sql,out"@3
+	${LOG}@"ALL"@3
+	${CLEARSTAGE}@"ALL"@7
+	"
+
+export CLEARDIR CLEARSTAGE
+
+PATH=$BASE/bin:$PATH
+export PATH

@@ -1,0 +1,14 @@
+Tue Oct 22 12:45:00 EDT 2013
+Filesystem    1024-blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4          2883584   2296216   21%    15410     3% /
+/dev/hd2          5242880   2153304   59%    67022    12% /usr
+/dev/hd9var       3145728   1979012   38%     9190     3% /var
+/dev/hd3          3145728   2074968   35%      877     1% /tmp
+/dev/hd1          2097152   1186612   44%     2907     2% /home
+/proc                   -         -    -         -     -  /proc
+/dev/hd10opt      3145728   2404360   24%    12182     3% /opt
+/dev/insightlv     2097152   1987332    6%      383     1% /insight
+/dev/livedump      262144    261776    1%        4     1% /var/adm/ras/livedump
+/dev/hd11admin      524288    523848    1%        6     1% /admin
+mdcliinim01-mgmt:/cd0     4578704         0  100%  2289352   100% /mnt
+mdcliinim01-mgmt:/media    52428800  19699904   63%    32931     1% /mntnim

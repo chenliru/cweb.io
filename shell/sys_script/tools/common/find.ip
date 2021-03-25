@@ -1,0 +1,41 @@
+#!/usr/bin/ksh
+########################################################################
+# list all the content of files named like "*$2*"
+# usage: find.ip <directory> 
+# 
+# Author: Liru Chen 
+# Modified History
+# Date:07/12/2013
+# Date 19/03/2014
+#########################################################################
+#set -v
+#set -x
+ipbit='([0-9]|[1-9][0-9]|[1-2][0-9][0-9])'
+#ippattern="$ipbit\.$ipbit\.$ipbit\.$ipbit"
+#ippattern="192\.168\.$ipbit\.$ipbit"
+ippattern="209\.226\.$ipbit\.$ipbit"
+#echo $ippattern
+
+#Get a list of the name pattern matched files
+find $1 -xdev -ls | awk '{print $11}' | while read filename
+do
+  #Highlight the lines which contain valid ip address
+  rc=`file $filename | egrep "shell|commands|text"` 
+  if [[ $? -eq 0 ]]; then
+   #echo "########## Non Binary File found ################"
+   rc=`egrep $ippattern $filename `
+   if [[ $? -eq 0 ]]; then
+    echo "############################################################################"
+    echo " File $filename with IP:209.226.X.X"                                                       
+    echo "#############################################################################"
+    cat $filename                                                                              
+    echo "#############################################################################"
+    echo " End of file $filename "                                                             
+    echo "#############################################################################"
+    echo ""
+   fi
+  fi
+done
+
+exit 0
+

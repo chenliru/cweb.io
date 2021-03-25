@@ -1,0 +1,76 @@
+#!/bin/ksh
+#####################################################################################
+#
+#  Filename    : db2.restore
+#  Author      : Liru Chen
+#  Modifie     : March. 19, 2013
+#
+#  Description : restore DB2 database from a backup image to an exist or
+#                a new databasae.
+######################################################################################
+
+if [[ $# -lt 5 ]]; then
+   echo " USAGE: db2.restore <inst_name> <db_alias> <new_db_alias> <bkup_image_directory> <timestamp>"
+   echo " use '$ db2ilist' to obtain a list of the names of all DB2 instances associated with current DB2 copy"
+   echo " use '$ db2 list history backup all for <db_alias>' to get detailed database backup image"
+   echo " information including backup image directory, timestamp, etc..."
+   exit 1
+fi
+if [[ $USER != 'root' ]]; then
+   echo " You should be ROOT user"
+   echo " "
+   exit 2
+fi
+
+SCRIPT_NAME=$(basename $0)
+INSTANCE=$1
+INSTPROFILE=/home/$1/sqllib/db2profile
+DB_ALIAS=$2
+NEW_DB_ALIAS=$3
+BKUP_PATH=$4
+TIMESTAMP=$5
+
+# Ensure that Database ALIAS is upper case
+set `echo $DB_ALIAS | tr 'a-z' 'A-Z'`
+DB_ALIAS=$1
+set `echo $NEW_DB_ALIAS | tr 'a-z' 'A-Z'`
+NEW_DB_ALIAS=$1
+
+
+# Run the profile for database instance
+su - $INSTANCE << EOF
+
+. $INSTPROFILE
+
+if [[ $? -ne 0 ]]; then
+echo "ERROR when attempting to run the db2profile : Exiting"
+echo "Please make sure that the Instance is located on this node."
+exit 3
+fi
+
+echo "$SCRIPT_NAME: Attach to $INSTANCE, and start to restore database for $DB_ALIAS !"
+
+# start DB2 database manager
+db2start
+db2 attach to $INSTANCE
+
+if [[ $DB_ALIAS = $NEW_DB_ALIAS ]]; then
+db2 restore db $DB_ALIAS from $BKUP_PATH taken at $TIMESTAMP without prompting
+else
+db2 restore db $DB_ALIAS from $BKUP_PATH taken at $TIMESTAMP into $NEW_DB_ALIAS without prompting
+fi
+
+if [[ $? -ne 0 ]]; then
+echo "ERROR when attempting to restore database $DB_ALIAS : Exiting"
+exit -1
+fi
+
+# Stop the DB2 database manager
+db2stop force
+# Confirm that the instance is stopped
+db2 terminate
+EOF
+
+echo "$SCRIPT_NAME: DB restores for $DB_ALIAS are complete!"
+exit 0
+

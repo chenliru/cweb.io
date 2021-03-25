@@ -1,0 +1,42 @@
+#touch /ach_dat1/ach_dat1.45
+#touch /ach_dat1/ach_dat1.46
+#touch /ach_dat1/ach_dat1.47
+#touch /ach_dat1/ach_dat1.48
+
+#touch /ach_dat2/ach_dat2.49
+#touch /ach_dat2/ach_dat2.50
+#touch /ach_dat2/ach_dat2.51
+#touch /ach_dat2/ach_dat2.52
+
+#chmod 660 /ach_dat1/ach_dat1.45
+#chmod 660 /ach_dat1/ach_dat1.46
+#chmod 660 /ach_dat1/ach_dat1.47
+#chmod 660 /ach_dat1/ach_dat1.48
+
+#chmod 660 /ach_dat2/ach_dat2.49
+#chmod 660 /ach_dat2/ach_dat2.50
+#chmod 660 /ach_dat2/ach_dat2.51
+#chmod 660 /ach_dat2/ach_dat2.52
+
+
+#chown informix:informix /ach_dat1/ach_dat1.45
+#chown informix:informix /ach_dat1/ach_dat1.46
+#chown informix:informix /ach_dat1/ach_dat1.47
+#chown informix:informix /ach_dat1/ach_dat1.48
+
+#chown informix:informix /ach_dat2/ach_dat2.49
+#chown informix:informix /ach_dat2/ach_dat2.50
+#chown informix:informix /ach_dat2/ach_dat2.51
+#chown informix:informix /ach_dat2/ach_dat2.52
+
+onspaces -a datadbs1 -p /ach_dat1/ach_dat1.45 -o 0 -s 1000000
+onspaces -a datadbs1 -p /ach_dat1/ach_dat1.46 -o 0 -s 1000000
+onspaces -a datadbs1 -p /ach_dat1/ach_dat1.47 -o 0 -s 1000000
+onspaces -a datadbs1 -p /ach_dat1/ach_dat1.48 -o 0 -s 1000000
+
+onspaces -a datadbs2 -p /ach_dat2/ach_dat2.49 -o 0 -s 1000000
+onspaces -a datadbs2 -p /ach_dat2/ach_dat2.50 -o 0 -s 1000000
+onspaces -a datadbs2 -p /ach_dat2/ach_dat2.51 -o 0 -s 1000000
+onspaces -a datadbs2 -p /ach_dat2/ach_dat2.52 -o 0 -s 1000000
+
+

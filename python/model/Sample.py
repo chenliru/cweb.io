@@ -349,7 +349,7 @@ puzzle, we look more into continuity of different images). All these abilities a
 class Hist(Template):
     """
     It is just another way of understanding the image. By looking at the histogram of an image, you get intuition about
-contrast, brightness, intensity distribution etc of that image. Almost all image processing tools today, provides
+contrast, brightness, intensity distribution etc of that image. Almost all image processing shell today, provides
 features on histogram
 
     cv2.calcHist() function to find the histogram. Let’s familiarize with the function and its parameters :

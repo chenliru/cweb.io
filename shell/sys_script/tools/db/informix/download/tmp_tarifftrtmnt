@@ -1,0 +1,29 @@
+02           MOST FAVOURED NATION TARIFF
+03           GENERAL TARIFF
+04           AUSTRALIAN TRADE AGREEMENT
+05           NEW ZEALAND TRADE AGREEMENT
+06           WEST INDIES TRADE AGREEMENT
+07           CARIBCAN PREFERENTIAL TARIFF
+08           LEAST DEVELOPED DEVELOPING
+09           GENERAL PREFERENTIAL TREATMENT
+10           CANADA-USA TARIFF TREATMENT
+11           MEXICO TARIFF TREATMENT
+12           MEXICO-USA TARIFF TREATMENT
+13           CANADA-ISRAEL TARIFF TREATMENT
+14           CHILE TARIFF TREATMENT
+21           CANADA-COSTA RICA FTA
+22           ICELAND TARIFF
+23           NORWAY TARIFF
+24           SWITZERLAND-LIECHTENSTEIN TARI
+25           PERU TARIFF
+26           COLUMBIA TARIFF
+27           JORDAN TARIFF
+
+create table "informix".tmp_tarifftrtmnt 
+  (
+    tarifftrtmnt ,
+    description
+  );
+
+insert into tmp_tarifftrtmnt
+       select * from ip_0p@ipdb:informix.vw_tarifftrtmnt

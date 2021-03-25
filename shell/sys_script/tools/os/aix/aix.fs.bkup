@@ -1,0 +1,188 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         aix.fs.bkup
+#
+# Reference:    n/a
+#
+# Description:  Backup AIX file systems on multiple volume group(s)
+#               core AIX command used in this script:
+#               command # backup -0 -uf /dev/rmt0.1 filesystem 
+#
+#               1. All file systems on listed volume groups will be backup
+#
+#               2. Exclude the file systems which need not backup in file:
+#                  $TOOLSDIR/os/aix/etc/`hostname`exclude.backup
+#
+#               metaFile is the repository of the contents for aixfs.bkup 
+#               and aixfs.restore, backup device, medium lable and file systems
+#               layout are stored in this metaFile
+#                
+#               $TOOLSDIR/os/aix/etc/`hostname`.$logDate
+#
+# Command:      aix.fs.bkup backup_device "vg1 vg2 ..." backup_medium_lable
+# 		- default backup device: /dev/rmt0
+#               - default backup medium lable: `hostname`.`date +%Y%m%d%H%M`
+#               - "vg1 vg2 ..." Volume Group(s) name in double quote""
+#
+# Modification History:
+#
+#		Date            Name            Description 
+#		--------------------------------------------------------------
+#		2013-3-30	Liru Chen	Original, prepared for cm07
+#
+################################################################################
+set -v
+set -x
+
+if [[ $# -lt 2 ]]; then
+    echo " USAGE: aix.fs.bkup backup_device \"vg1 vg2 ...\" "
+    echo " "
+    exit 2
+fi
+if [[ $USER != root ]];then
+  echo "You should be root user"
+  exit 2
+fi
+
+#Setting scritps environment parameters
+. ~/tools.profile
+
+bkupdev=${1-$BACKUPDEVICE}
+vg=$2
+metafile=$TOOLSDIR/os/aix/etc/fsbkup.$TOOLSID
+excludefile=$TOOLSDIR/os/aix/etc/`hostname`exclude.fs.bkup
+
+# backup level
+fsbkuplevel=0
+
+# Collect Filesystem information on specified volume group
+echo "BACKUP DEVICE:\t$bkupdev" > $metafile
+
+for vgname in $vg
+do
+ lsvg $vgname > $metafile.$vgname
+ lsvg -l $vgname >> $metafile.$vgname
+ lsvg -p $vgname >> $metafile.$vgname
+done 
+
+# If backup device is tape drive, load tape volume
+[[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev load
+
+# Get filesystems needed to be backup
+filesystem=$(grep jfs $metafile.* | grep -v -f $excludefile \
+           | grep -v 'N/A' | awk '{print $7}')
+
+# log the archive filesystems
+echo "Backup filesystem listing: $filesystem" >> $LOGFILE
+ 
+echo "--------------------------------------" >> $LISFILE
+echo "BACKUP LEVEL: $fsbkuplevel "            >> $LISFILE                    
+echo "BACKUP DATE : `date`"                   >> $LISFILE
+echo "--------------------------------------" >> $LISFILE
+
+# get number of filesystem in the string "filesystem"
+set $filesystem
+integer fsCount=$#
+
+# Backup the file systems sequentially
+integer iCount=1
+
+while (( $iCount <= $fsCount ))
+do
+  echo "-------------------------------------">> $LOGFILE
+  echo "Backing up filesystem: $1"            >> $LOGFILE
+  echo "-------------------------------------">> $LOGFILE
+  sync
+  sleep 5
+
+  if [[ $bkupdev = /dev/rmt* ]];then
+   targetdev=$bkupdev.1
+  else
+   ext=$(echo $1 | sed "s/\//[/g")
+   targetdev=$bkupdev.$ext.$iCount
+  fi
+
+  backup -$fsbkuplevel -uf $targetdev $1 2>&1 | tee -a $LOGFILE
+  if [[ $? != 0 ]]; then	
+    echo "< error = $? > error on backing up filesystem: $1"   >>  $ERRFILE
+    mail -s "File system $1 backup failed: $TOOLSID" $SYSADMEMAIL <$ERRFILE 
+    [[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev offline
+    exit 1
+  fi
+
+  echo "$1\tBACKUP SeqNumber\t$iCount" >> $metafile
+
+  shift 1
+  iCount=iCount+1
+done
+
+# finally list all the files on tape
+set $filesystem
+integer fsCount=$#
+integer xCount=1
+
+# Rewind tape if use tape drive to backup
+if [[ $bkupdev = /dev/rmt* ]]; then
+   util.tape $bkupdev rewind
+   if [[ $? != 0 ]]; then
+    echo "\t Error in rewinding the tape on $bkupdev " >> $ERRFILE
+    echo "\t <error code = $? > "                      >> $ERRFILE
+    mail -s "Tape Rewind on $bkupdev failed after File System backup: $TOOLSID" \
+             $SYSADMEMAIL <$ERRFILE
+    util.tape $bkupdev offline
+   fi
+fi
+
+while (( $xCount <= $fsCount ))
+do
+  echo "\n--------------------------------------------" >> $LOGFILE
+  echo " Listing of filesystem: $1 File number: $xCount">> $LOGFILE | tee -a $LISFILE  
+  echo "\n---------------------------------------------">> $LOGFILE
+
+ if [[ $bkupdev = /dev/rmt* ]]; then
+  
+   restore -s1 -qvTf $bkupdev.1 >>$LISFILE 2>$ERRFILE
+   if [[ $? != 0 ]]; then	
+    echo "<error = $? > error on reading filesystem: $1" >> $ERRFILE | tee -a $LISFILE  
+    echo "Dumping the contents of error file:"           >> $ERRFILE
+    cat $ERRFILE | tee -a $LOGFILE
+    mail -s "List File System $1 backup failed: $TOOLSID" $SYSADMEMAIL <$ERRFILE 
+    util.tape $bkupdev offline
+    exit 1
+   fi
+
+ else
+
+  ext=$(echo $1 | sed "s/\//[/g")
+  restore -qvTf $bkupdev.$ext.$xCount >>$LISFILE 2>$ERRFILE
+  if [[ $? != 0 ]]; then
+   echo "<error = $? > error on reading filesystem: $1" >>$ERRFILE | tee -a $LISFILE
+   echo "Dumping the contents of error file:"           >>$ERRFILE
+   cat $ERRFILE | tee -a $LOGFILE
+   mail -s "List File System $1 backup failed: $TOOLSID" $SYSADMEMAIL <$ERRFILE
+   exit 1
+  fi
+
+ fi
+
+shift 1
+xCount=xCount+1
+
+done
+
+echo "/etc/dumpdates at the close of this backup:" >> $LOGFILE
+sort /etc/dumpdates | tee -a $LOGFILE
+echo "BACKUP task has been completed" >> $LOGFILE
+sleep 5
+
+# dismount the tape
+[[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev offline
+sleep 5
+
+#Mail to Administrator;
+mail -s "File systems backup on Volume Group(s) $vg completed successfully" \
+         $SYSADMEMAIL <$LOGFILE
+
+exit 0
+

@@ -1,0 +1,324 @@
+# @(#)20        1.9  src/bos/usr/sbin/cron/adm, cmdcntl, bos530 9/9/91 06:03:17
+# IBM_PROLOG_BEGIN_TAG 
+# This is an automatically generated prolog. 
+#  
+# bos530 src/bos/usr/sbin/cron/adm 1.9 
+#  
+# Licensed Materials - Property of IBM 
+#  
+# (C) COPYRIGHT International Business Machines Corp. 1989,1991 
+# All Rights Reserved 
+#  
+# US Government Users Restricted Rights - Use, duplication or 
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+#  
+# IBM_PROLOG_END_TAG 
+#
+# COMPONENT_NAME: (CMDCNTL) commands needed for basic system needs
+#
+# FUNCTIONS: 
+#
+# ORIGINS: 27,18
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989,1991
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+#
+#=================================================================
+#      SYSTEM ACTIVITY REPORTS
+#  8am-5pm activity reports every 20 mins during weekdays.
+#  activity reports every an hour on Saturday and Sunday.
+#  6pm-7am activity reports every an hour during weekdays.
+#  Daily summary prepared at 18:05.
+#=================================================================
+#0 8-17 * * 1-5 /usr/lib/sa/sa1 1200 3 &
+#0 * * * 0,6 /usr/lib/sa/sa1 &
+#0 18-7 * * 1-5 /usr/lib/sa/sa1 &
+#5 18 * * 1-5 /usr/lib/sa/sa2 -s 8:00 -e 18:01 -i 3600 -ubcwyaqvm &
+#=================================================================
+#      PROCESS ACCOUNTING:
+#  runacct at 11:10 every night
+#  dodisk at 11:00 every night
+#  ckpacct every hour on the hour
+#  monthly accounting 4:15 the first of every month
+#=================================================================
+#10 23 * * 0-6 /usr/lib/acct/runacct 2>/usr/adm/acct/nite/accterr > /dev/null
+#0 23 * * 0-6 /usr/lib/acct/dodisk > /dev/null 2>&1
+#0 * * * * /usr/lib/acct/ckpacct > /dev/null 2>&1
+#15 4 1 * * /usr/lib/acct/monacct > /dev/null 2>&1
+#=================================================================
+#Report
+55 5 * * * /home/dguo/script/check_2020.ksh>/dev/null 2>&1
+55 5 * * * /home/dguo/script/check_507norecap.ksh>/dev/null 2>&1
+55 5 * * * /home/dguo/script/check_b3.ksh>/dev/null 2>&1
+
+0 3 * * 0 /usr/esa/sbin/esa_awareness
+# cleanup the log
+###0 0 * * * /usr/apps/inf/bob/cleanuplog/cleanuplog.ksh > /usr/apps/inf/bob/cleanuplog/cleanuplog.out 2>&1
+
+# loglist ierr files, and send the outpt files
+0 9 * * * /usr/apps/inf/bob/loglist/checkiperr.ksh  >> /usr/apps/inf/bob/loglist/checkiperr.out 2>&1
+
+# compare the txn data between IP and Locus
+# As per Esa, stop running below job;
+###0  9 * * * /usr/apps/inf/bob/compareb3/compareb3.ksh >> /usr/apps/inf/bob/compareb3/compareb3.out
+
+# update statistics
+0 0 * * * /usr/apps/inf/bob/upstat/upstat.ksh >> /usr/apps/inf/bob/upstat/upstat.out 2>&1
+
+#for performance;
+#46 * * * * /home/informix/purgeslow/io.off/get_hourly.ksh >/dev/null
+#46,16 * * * * /home/informix/purgeslow/io.off/get_half.ksh >/dev/null
+#46,16 * * * * /home/informix/purgeslow/io.off/get_sys.ksh >/dev/null
+
+#Monthly client_invoice purge;
+#30 21 9 * * /usr/apps/inf/maintenance/invoice/inv_purge.ksh 1>/usr/apps/inf/maintenance/invoice/inv_purge.log 2>&1
+
+#0 0 * * * cat /dev/null > /login/insqry/sqexplain.out 
+
+# purge download files
+1 7 * * * /home/ipgown/purgebds/purgetbl.ksh  >> /home/ipgown/purgebds/purgetbl.out 2>&1
+5 7 * * * /home/ipgown/purgebds/purgefile.ksh >> /home/ipgown/purgebds/purgefile.out 2>&1
+
+# start bds
+###5 6 * * * ksh -c /usr/apps/ipg/ver001/srv/bds/pgm/ip_0p/start.ksh > /dev/null
+
+# Restart Locus Services;
+30 3 * * 0 /usr/apps/ipg/ver001/srv/locus/loc_restart.ksh 1>/usr/apps/ipg/ver001/srv/locus/restart.out 2>&1 
+################################################################
+# Monitor Livingston AIX Systems Availability               
+################################################################
+#0 0-23  * * * ksh ~/tools/common/mail.ping >/dev/null 2>&1 
+#
+################################################################
+# Monitor Livingston AIX Errors Utility
+################################################################
+0 8 * * * ksh ~/tools/common/mail.err >/dev/null 2>&1
+#
+################################################################
+# Collect Informix SQL
+################################################################
+2,12,22,32,42,52 7-23 * * * ksh ~/tools/common/mail.ids.SQL ipdb > /dev/null 2>&1
+#
+################################################################
+# Monitor Livingston AIX Performance Utility
+################################################################
+15,45 * * * * ksh ~/tools/common/mail.mon > /dev/null 2>&1
+#
+###############################################################
+# Monitor Storage usage
+##############################################################
+15,45 7-23 * * * ksh ~/tools/common/mail.ids.stor ipdb Daily > /dev/null 2>&1
+0 12 * * 1 ksh ~/tools/common/mail.ids.stor ipdb Weekly > /dev/null 2>&1
+0 12 1 * * ksh ~/tools/common/mail.ids.stor ipdb Monthly > /dev/null 2>&1
+# @(#)08	1.15.1.3  src/bos/usr/sbin/cron/root, cmdcntl, bos530 2/11/94 17:19:47
+# IBM_PROLOG_BEGIN_TAG 
+# This is an automatically generated prolog. 
+#  
+# bos530 src/bos/usr/sbin/cron/root 1.15.1.3 
+#  
+# Licensed Materials - Property of IBM 
+#  
+# (C) COPYRIGHT International Business Machines Corp. 1989,1994 
+# All Rights Reserved 
+#  
+# US Government Users Restricted Rights - Use, duplication or 
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+#  
+# IBM_PROLOG_END_TAG 
+#
+# COMPONENT_NAME: (CMDCNTL) commands needed for basic system needs
+#
+# FUNCTIONS: 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989,1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#0 3 * * * /usr/sbin/skulker
+#45 2 * * 0 /usr/lib/spell/compress
+#45 23 * * * ulimit 5000; /usr/lib/smdemon.cleanu > /dev/null
+# SSA warning : Deleting the next two lines may cause errors in redundant
+# SSA warning : hardware to go undetected.
+01 5 * * * /usr/lpp/diagnostics/bin/run_ssa_ela 1>/dev/null 2>/dev/null
+0 * * * * /usr/lpp/diagnostics/bin/run_ssa_healthcheck 1>/dev/null 2>/dev/null
+# SSA warning : Deleting the next line may allow enclosure hardware errors to go undetected
+30 * * * * /usr/lpp/diagnostics/bin/run_ssa_encl_healthcheck 1>/dev/null 2>/dev/null
+# SSA warning : Deleting the next line may allow link speed exceptions to go undetected
+30 4 * * * /usr/lpp/diagnostics/bin/run_ssa_link_speed 1>/dev/null 2>/dev/null
+0 11 * * * /usr/bin/errclear -d S,O 30
+0 12 * * * /usr/bin/errclear -d H 90
+0 15 * * *  /usr/lib/ras/dumpcheck >/dev/null 2>&1
+#########################################################################
+#									#
+# IP Operations Environment						#
+#									#
+#########################################################################
+#--> runner
+* 6-7  * * * ksh /insight/local/scripts/runner.10.ksh  >> /dmqjtmp/archiveRunnerLog/runner.10.out 2>&1
+* 8-20 * * * ksh /insight/local/scripts/runner.all.ksh >> /dmqjtmp/archiveRunnerLog/runner.all.out 2>&1 
+20-40 22 * * * ksh /insight/local/scripts/runner.71.ksh >> /dmqjtmp/archiveRunnerLog/runner.71.out 2>&1 
+1,16,31,46 8-20 * * * /insight/local/scripts/iccdataupload/StartInsightUpload.ksh >> /insight/local/scripts/iccdataupload/StartInsightUpload.out 2>&1 
+2,17,32,47 8-20 * * * /insight/local/scripts/ICCSetExpiryDates/StartInsightSetExpiryDates.ksh >> /insight/local/scripts/ICCSetExpiryDates/StartInsightSetExpiryDates.out 2>&1 
+5 5-14 * * * /insight/local/scripts/ICCBillingUpload/StartInsightBillingUpload.ksh>> /insight/local/scripts/ICCBillingUpload/StartInsightBillingUpload.out 2>&1 
+
+
+
+#--> monitor 
+###30 6 * * 1-5 ksh /insight/local/scripts/emailDog.ksh >> /dmqjtmp/archiveEdogLog/emailDog.out 2>&1
+10 * * * 1-5 ksh /insight/local/scripts/alertDog.ksh >> /dmqjtmp/archiveAdogLog/alertDog.out 2>&1
+30 * * * 1-5 ksh /insight/local/scripts/watchDog.ksh >> /dmqjtmp/archiveWdogLog/watchDog.out 2>&1  
+
+#--> archive log file directory  
+30 6  * * * ksh /insight/local/scripts/tuxLogClean.ksh  > /dmqjtmp/archiveTuxLog/tuxLogClean.out 2>&1  
+30 23 * * * ksh /insight/local/scripts/oprLogClean.ksh  > /dmqjtmp/archiveOprLog/oprLogClean.out 2>&1 
+30 23 * * * ksh /insight/local/scripts/betaLogClean.ksh > /dmqjtmp/archiveBetaLog/betaLogClean.out 2>&1  
+5 4 * * * ksh /insight/local/scripts/bdsLogClean.ksh > /dmqjtmp/archiveBdsLog/bdsLogClean.out 2>&1  
+
+#--> clean up the log and ptr files
+30 6 * * * ksh /insight/local/scripts/ptrLogClean.ksh  > /dmqjtmp/ptrCleanLog/ptrLogClean.out 2>&1
+30 6 * * * ksh /insight/local/scripts/bkupLogClean.ksh > /dmqjtmp/bkupCleanLog/bkupLogClean.out 2>&1
+30 6 * * * ksh /insight/local/scripts/sqexplainClean.ksh >/dev/null 2>&1
+
+#--> system and application backup
+#30,33,36,39,42,45,48,51,54,57 23 * * 6 /home/dguo/script/check_systape.ksh > /dev/null 2>&1
+5 23 * * 6 ksh -c "/insight/local/backup/sysbkup.ksh rmt0" >> /dmqjtmp/archiveSysbkupLog/sysbkup.out 2>&1
+#30,33,36,39,42,45,48,51,54,57 1 * * 0,2-6 /home/dguo/script/check_apptape.ksh > /dev/null 2>&1
+5 1 * * 0,2-6 ksh -c "/insight/local/backup/appbkup.ksh rmt0" >> /dmqjtmp/archiveAppbkupLog/appbkup.out 2>&1
+#30,33,36,39,42,45,48,51,54,57 3 * * 0,2-6 /home/dguo/script/check_dbstape.ksh > /dev/null 2>&1
+1 4 * * 0,2-6 ksh -c "/insight/local/backup/dbsbkup.ksh" >> /dmqjtmp/archiveDbsbkupLog/dbsbkup.out 2>&1
+
+#--> Perl script funnel files
+30 6 * * * /insight/local/scripts/getTxnRpt.pl > /dmqjtmp/archiveFfileLog/getTxnRpt.out 2>&1
+
+#Daily cron job backup;
+0 3 * * * /insight/local/scripts/cron_bkup.ksh > /dev/null/ 2>&1
+#-->/sitemgr/b3_arch/run_autoarchive.ksh
+#0 9 * * * /insight/local/b3_arch/run_autoarchive.ksh >> /dmqjtmp/archiveB3Log/monthly_archive.log 2>&1 
+
+###################################################################
+0 0 * * 1 /insight/nmon/startnmon.ksh >> /insight/nmon/startnmon.out 2>&1
+#0 0 * * 3-4 /admin/emcdr/iostat/iostat.ksh >> /admin/emcdr/iostat/iostat.out 2>&1
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /usr/sbin/dumpctrl -k >/dev/null 2>/dev/null
+0 0 * * * /opt/csm/bin/cfmupdatenode -a 1>/dev/null 2>/dev/null
+0 0 * * * /opt/csm/csmbin/cleanup.logs.csp  1>>/var/log/csm/csperror.log 2>>/var/log/csm/csperror.log
+55 23 * * * /var/perf/pm/bin/pmcfg >/dev/null 2>&1      #Enable PM Data Collection
+59 23 * * * /var/perf/pm/bin/pmcfg -T >/dev/null 2>&1   #Enable PM Data Transmission
+
+# @(#)08	1.15.1.3  src/bos/usr/sbin/cron/root, cmdcntl, bos530 2/11/94 17:19:47
+# IBM_PROLOG_BEGIN_TAG 
+# This is an automatically generated prolog. 
+#  
+# bos530 src/bos/usr/sbin/cron/root 1.15.1.3 
+#  
+# Licensed Materials - Property of IBM 
+#  
+# (C) COPYRIGHT International Business Machines Corp. 1989,1994 
+# All Rights Reserved 
+#  
+# US Government Users Restricted Rights - Use, duplication or 
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+#  
+# IBM_PROLOG_END_TAG 
+#
+# COMPONENT_NAME: (CMDCNTL) commands needed for basic system needs
+#
+# FUNCTIONS: 
+#
+# ORIGINS: 27
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989,1994
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#0 3 * * * /usr/sbin/skulker
+#45 2 * * 0 /usr/lib/spell/compress
+#45 23 * * * ulimit 5000; /usr/lib/smdemon.cleanu > /dev/null
+# SSA warning : Deleting the next two lines may cause errors in redundant
+# SSA warning : hardware to go undetected.
+01 5 * * * /usr/lpp/diagnostics/bin/run_ssa_ela 1>/dev/null 2>/dev/null
+0 * * * * /usr/lpp/diagnostics/bin/run_ssa_healthcheck 1>/dev/null 2>/dev/null
+# SSA warning : Deleting the next line may allow enclosure hardware errors to go undetected
+30 * * * * /usr/lpp/diagnostics/bin/run_ssa_encl_healthcheck 1>/dev/null 2>/dev/null
+# SSA warning : Deleting the next line may allow link speed exceptions to go undetected
+30 4 * * * /usr/lpp/diagnostics/bin/run_ssa_link_speed 1>/dev/null 2>/dev/null
+0 11 * * * /usr/bin/errclear -d S,O 30
+0 12 * * * /usr/bin/errclear -d H 90
+0 15 * * *  /usr/lib/ras/dumpcheck >/dev/null 2>&1
+# @(#)09	1.6  src/bos/usr/sbin/cron/sys, cmdcntl, bos530 4/25/91 17:17:05
+# IBM_PROLOG_BEGIN_TAG 
+# This is an automatically generated prolog. 
+#  
+# bos530 src/bos/usr/sbin/cron/sys 1.6 
+#  
+# Licensed Materials - Property of IBM 
+#  
+# (C) COPYRIGHT International Business Machines Corp. 1989,1991 
+# All Rights Reserved 
+#  
+# US Government Users Restricted Rights - Use, duplication or 
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+#  
+# IBM_PROLOG_END_TAG 
+#
+# COMPONENT_NAME: (CMDCNTL) commands needed for basic system needs
+#
+# FUNCTIONS: 
+#
+# ORIGINS: 27,18
+#
+# (C) COPYRIGHT International Business Machines Corp. 1989,1991
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# @(#)21	1.2  src/bos/usr/bin/uucp/uucron/uucp, cmduucp, bos610 10/8/90 09:34:47
+# IBM_PROLOG_BEGIN_TAG 
+# This is an automatically generated prolog. 
+#  
+# bos610 src/bos/usr/bin/uucp/uucron/uucp 1.2 
+#  
+# Licensed Materials - Property of IBM 
+#  
+# COPYRIGHT International Business Machines Corp. 1985,1990 
+# All Rights Reserved 
+#  
+# US Government Users Restricted Rights - Use, duplication or 
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+#  
+# IBM_PROLOG_END_TAG 
+# 
+# COMPONENT_NAME: UUCP uucp
+# 
+# FUNCTIONS: 
+#
+# ORIGINS: 10  27  3 
+#
+# (C) COPYRIGHT International Business Machines Corp. 1985, 1989, 1990
+# All Rights Reserved
+# Licensed Materials - Property of IBM
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+#
+# 20,50 * * * * /bin/bsh -c "/usr/lib/uucp/uudemon.poll > /dev/null"
+# 25,55 * * * * /bin/bsh -c "/usr/lib/uucp/uudemon.hour > /dev/null"
+# 45 23 * * * /bin/bsh -c "/usr/lib/uucp/uudemon.cleanu > /dev/null"
+# 48 8,12,16 * * * /bin/bsh -c "/usr/lib/uucp/uudemon.admin > /dev/null"

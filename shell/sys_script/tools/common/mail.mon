@@ -1,0 +1,157 @@
+#!/bin/ksh
+#########################################################################
+# Discription: mail.mon <interval> <counter>
+#
+# A system administrator should intuitively know when the system 
+# has gone into the "red zone". This is usually accompanied by 
+# their phone ringing as users call to complain about system performance.
+# But there are more empirical measurements that an administrator can 
+# look for to show that the system is in imminent danger:
+#
+#        1. Average processor utilization exceeds 90%.
+#        2. Network utilization exceeds 50% of network card(s) capacity
+#        3. Available real memory starts Pages In and Pages Out,
+#           Any substantive paging activity is occurring
+#        4. Disk utilizations exceed 90% (this is cumulative activity, 
+#           or the ?tm acct? column from iostat).
+#
+# Author:         Liru Chen
+#
+# Date:           2012-2-12
+#
+###########################################################################
+set -v
+set -x
+
+if [[ $# -ne 2 ]]; then
+    echo " USAGE: mail.mon <interval> <counter>"
+    echo " "
+    #exit 2
+fi
+
+. ~/tools.profile
+
+# Set following bench mark according to your system performance
+busy_alert_cpu=10
+busy_alert_mem=50
+busy_alert_disk=90
+busy_alert_net=1250000
+
+interval=${1-2}
+counter=${2-10}
+
+##################################################################
+# Program : mon.stor
+# Purpose : First of all, check system storage resource
+#           Send alert if FS usage above 90%, and 
+#           report the storage usage change
+##################################################################
+mon.stor > $TMPFILE.storage
+mail -s " System `hostname` Storage utilization " $SYSADMEMAIL \
+        < $TMPFILE.storage
+rm -f $TMPFILE.storage
+
+##################################################################
+# Program : mon.cpu
+# Purpose : Script to use vmstat to find out CPU usage on a system.
+##################################################################
+mon.cpu $interval $counter > $TMPFILE.cpu
+
+#the highest recently used CPU-intensive user processes in the system
+echo "================================" >> $TMPFILE.cpu
+echo " Top 25 CPU-intensive processes " >> $TMPFILE.cpu
+echo "================================" >> $TMPFILE.cpu
+ps ax | grep -v TIME | sort -n -r -k4 | head -n 25 >> $TMPFILE.cpu
+
+average_cpu_idle=$( grep Average $TMPFILE.cpu | awk ' {print $2} ' )
+if [[ $average_cpu_idle -lt $busy_alert_cpu ]]; then
+mail -s " System `hostname` CPUs are Busy ! " $SYSADMEMAIL \
+        < $TMPFILE.cpu
+fi
+rm -f $TMPFILE.cpu
+
+###############
+# end: cpuuse
+###############
+
+#####################################################################
+# Program : mon.disk
+# Purpose : Script to use iostat to find out disk usage on a system.
+#####################################################################
+[[ `uname` = AIX ]] && (filemon -o diskfmon.out -O all)  # For AIX only
+mon.disk $interval $counter > $TMPFILE.disk
+
+if [[ `uname` = AIX ]]; then
+ trcstop 
+ sleep 10
+ echo "\n\n\n" >> $TMPFILE.disk
+ cat diskfmon.out  >> $TMPFILE.disk
+fi
+
+set -A average_disk_usage $( grep Average $TMPFILE.disk | awk ' {print $6} ' )
+for item in ${average_disk_usage[@]}
+do
+ if [ $item -gt $busy_alert_disk ]; then 
+  mail -s " System `hostname` DISKs are Busy ! " $SYSADMEMAIL \
+          < $TMPFILE.disk
+ fi
+done
+
+[[ `uname` = AIX ]] && (rm -f diskfmon.out)
+rm -f $TMPFILE.disk
+
+###############
+# end: diskuse
+###############
+
+
+############################################################################
+# Program : mon.mem
+# Purpose : Script to use vmstat to find out memory page in/out on a system.
+############################################################################
+mon.mem $interval $counter > $TMPFILE.mem
+
+pi_po_usage=$( grep Average $TMPFILE.mem | awk ' {print $2} ' )
+if [[ $pi_po_usage -gt $busy_alert_mem ]]; then
+ mail -s " System `hostname` Memorys are Busy ! " $SYSADMEMAIL \
+         < $TMPFILE.mem
+fi
+rm -f $TMPFILE.mem
+
+###############
+# end: memuse
+###############
+
+
+######################################################################
+# Program : mon.net
+# Purpose : Script to use netstat to find network traffic
+######################################################################
+[[ `uname` = AIX ]] && (netpmon -v -o netnmon.out)
+mon.net $interval $counter > $TMPFILE.net
+
+if [[ `uname` = AIX ]]; then
+ trcstop
+ sleep 10
+ echo "\n\n\n" >> $TMPFILE.net
+ cat netnmon.out  >> $TMPFILE.net
+fi
+
+set -A average_net_usage $( grep Average $TMPFILE.net | awk ' {print $4} ' )
+for item in ${average_net_usage[@]}
+do
+ if [[ $item -gt $busy_alert_net ]]; then
+  mail -s " System `hostname` NETWORKs are Busy ! " $SYSADMEMAIL \
+           < $TMPFILE.net
+ fi
+done
+
+[[ `uname` = AIX ]] && (rm -f netnmon.out)
+rm -f $TMPFILE.net
+
+##################
+# end: netuse
+##################
+
+exit 0
+

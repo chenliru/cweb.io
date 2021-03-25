@@ -1,0 +1,3 @@
+machine ifx01 login lchen password admini@12
+machine ipdev login lchen password admini@12
+machine db2cm64 login lchen password admini@12

@@ -1,0 +1,56 @@
+2c2
+< /dev/hd4          2883584   2629520    9%    12007     2% /
+---
+> /dev/hd4          2883584   2629492    9%    12007     2% /
+4,6c4,6
+< /dev/hd9var       3145728   2196108   31%    10556     3% /var
+< /dev/hd3          5242880   4176580   21%      766     1% /tmp
+< /dev/hd1          2621440   2038612   23%     2635     1% /home
+---
+> /dev/hd9var       3145728   2196088   31%    10556     3% /var
+> /dev/hd3          5242880   4176580   21%      765     1% /tmp
+> /dev/hd1          2621440   2038556   23%     2634     1% /home
+12c12
+< /dev/dmqjtmplv    23330816  12848976   45%     1829     1% /dmqjtmp
+---
+> /dev/dmqjtmplv    23330816  12848676   45%     1829     1% /dmqjtmp
+20c20
+< /dev/appslv      10485760   6072168   43%    20373     2% /usr/apps
+---
+> /dev/appslv      10485760   6047096   43%    20373     2% /usr/apps
+32c32
+< /dev/insightlv     2097152   1992356    5%     3045     1% /insight
+---
+> /dev/insightlv     2097152   1992352    5%     3045     1% /insight
+38c38
+< IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 02:57:11 -- 929856 Kbytes
+---
+> IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 03:07:11 -- 929856 Kbytes
+188c188
+< Fri May  3 13:45:00 EDT 2013	ip_arch04	b3
+---
+> Fri May  3 13:55:00 EDT 2013	ip_arch04	b3
+953c953
+< Fri May  3 13:45:00 EDT 2013	ip_arch04	b3_line
+---
+> Fri May  3 13:55:00 EDT 2013	ip_arch04	b3_line
+1418c1418
+< Fri May  3 13:45:00 EDT 2013	ip_arch04	b3_recap_details
+---
+> Fri May  3 13:55:01 EDT 2013	ip_arch04	b3_recap_details
+1913c1913
+< Fri May  3 13:45:01 EDT 2013	ip_arch04	tariff
+---
+> Fri May  3 13:55:01 EDT 2013	ip_arch04	tariff
+2132c2132
+< Fri May  3 13:45:01 EDT 2013	ip_arch04	lii_client
+---
+> Fri May  3 13:55:01 EDT 2013	ip_arch04	lii_client
+2189c2189
+< Fri May  3 13:45:01 EDT 2013	ip_arch04	lii_account
+---
+> Fri May  3 13:55:01 EDT 2013	ip_arch04	lii_account
+2273c2273
+< Fri May  3 13:45:02 EDT 2013	ip_arch04	client_invoice
+---
+> Fri May  3 13:55:01 EDT 2013	ip_arch04	client_invoice

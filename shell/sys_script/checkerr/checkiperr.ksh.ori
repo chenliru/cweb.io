@@ -1,0 +1,30 @@
+#!/bin/ksh           
+#
+# Author:	Bob Chong
+# Date:		Sept 18, 2002
+# Purpose:	check TCL error
+#
+set -x
+
+export INFORMIXSERVER=ipdb
+export INFORMIXDIR=/usr/apps/inf/ver731UD3
+export PATH=$PATH:$INFORMIXDIR/bin:/usr/apps/ipg/ver001/util:/usr/apps/inf/bob/loglist
+
+date
+
+checkerr10.ksh
+checkerr21.ksh
+checkerr31.ksh
+checkerr32.ksh
+checkerr34.ksh
+checkerr41.ksh
+checkerr46.ksh
+checkerr51.ksh
+checkerr52.ksh
+checkerr61.ksh
+checkerr70.ksh
+checkerr81.ksh
+checkerr71.ksh
+
+exit 0
+

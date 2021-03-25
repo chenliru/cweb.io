@@ -1,0 +1,3778 @@
+0< /tmp/sh18402.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060308030352  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh18402.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060308030425  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh50696.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060309030627  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh50696.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060309031111  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh58072.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060310030453  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh58072.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060310030731  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh48948.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060311030116  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh48948.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060311030344  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh61604.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060312030304  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh61604.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060312030632  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh49600.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060313030426  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh49600.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060313030601  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh44784.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060314030152  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh44784.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060314030434  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh44598.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060315030543  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh44598.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060315030825  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh60472.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060316030327  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh60472.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060316030805  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh53976.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060317030312  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh53976.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060317030447  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh43268.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060318030200  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh43268.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060318030233  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh53888.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060319030334  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh53888.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060319030407  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh42048.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060320030519  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh42048.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060320030552  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh18250.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060321030550  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh18250.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060321030624  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh68570.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060322030429  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh68570.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060322030807  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh70672.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060323030219  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh70672.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060323030253  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh67562.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060324030155  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh67562.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060324030338  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh72438.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060325030444  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh72438.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060325030518  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh51304.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060326030323  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh51304.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060326030507  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh48748.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060327030315  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh48748.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060327030349  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh64266.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+
+   Nothing to delete.
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh64266.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+
+   Nothing to delete.
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh60512.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060328030600  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh60512.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060328030738  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh18876.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060329030543  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh18876.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060329031028  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh50334.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060330030235  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh50334.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060330030718  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh67608.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060331030730  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh67608.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060331031008  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh65704.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060401030207  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh65704.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060401030444  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh48752.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060403030412  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh48752.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060403030554  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh64350.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060404030207  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh64350.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060404030445  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh68698.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060405030528  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh68698.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060405030906  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh55776.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060406030533  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh55776.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060406030608  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh72586.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060407030234  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh72586.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060407030716  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh64336.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060408030535  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh64336.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060408030717  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh74126.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060409030445  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh74126.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060409030522  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh57272.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060410030649  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh57272.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060410031227  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh52850.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060411030241  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh52850.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060411030318  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh68362.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060412030551  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh68362.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060412030628  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh74612.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060413030357  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh74612.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060413030639  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh65690.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060414030604  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh65690.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060414030849  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh51980.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060415030721  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh51980.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060415030908  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh59038.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060416030527  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh59038.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060416030709  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh75590.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060417030328  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh75590.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060417030406  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh59128.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060418030237  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh59128.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060418030419  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh54010.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060419030248  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh54010.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060419030729  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh44284.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060420030522  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh44284.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060420030810  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh63132.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060421030552  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh63132.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060421030840  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh58772.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060422030219  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh58772.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060422030510  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh73302.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060423030249  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh73302.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060423030540  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh66412.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060424030311  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh66412.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060424030902  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh49806.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060425030431  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh49806.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060425031022  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh42908.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060426030651  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh42908.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060426030732  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh23716.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060427030223  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh23716.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060427030411  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh74338.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060428030352  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh74338.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060428030543  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh60470.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060429030524  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh60470.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060429030814  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh76746.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060430030304  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh76746.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060430030854  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh21154.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060501030347  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh21154.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060501030634  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh69282.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060502030437  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh69282.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060502030725  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh65072.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060503030226  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh65072.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060503030309  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh67754.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060504030454  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh67754.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060504030844  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh73158.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060505030335  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh73158.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060505030924  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh74148.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060506030414  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh74148.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060506030905  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh48718.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060507030314  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh48718.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060507030357  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh60600.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060508030245  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh60600.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060508030328  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh44268.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060509030515  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh44268.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060509031004  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh70944.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060510030416  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh70944.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060510030904  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh78324.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060511030307  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh78324.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060511030655  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh22340.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060512030445  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh22340.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060512031035  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh52716.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060513030436  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh52716.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060513031026  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh63910.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060514030536  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh63910.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060514031027  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh61858.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060515030528  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh61858.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060515030716  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh85690.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060516030519  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh85690.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060516030706  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh42876.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060517030819  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh42876.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060517031007  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh63544.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060518030758  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh63544.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060518031347  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh75488.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060519030548  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh75488.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060519031038  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh74638.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060520030249  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh74638.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060520030838  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh66506.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060521030358  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh66506.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060521030948  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh72908.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060522030348  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh72908.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060522030838  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh80584.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060523030651  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh80584.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060523030939  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh59452.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060524030639  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh59452.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060524030829  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+
+0< /tmp/sh66388.2
+
+Query for database ICMNLSDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060525030831  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for ICMNLSDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for ICMNLSDB
+
+0< /tmp/sh66388.4
+
+Query for database RMDB
+
+
+Retrieving FULL DATABASE BACKUP information.
+  Taken at: 20060525031020  DB Partition Number: 0    Sessions: 1  
+
+
+The current delete transaction failed. You do not have
+sufficient authorization. Attempting to deactivate
+ backup image(s) instead...  
+
+Success.
+
+
+
+Retrieving INCREMENTAL DATABASE BACKUP information.
+  No INCREMENTAL DATABASE BACKUP images found for RMDB
+
+
+Retrieving DELTA DATABASE BACKUP information.
+  No DELTA DATABASE BACKUP images found for RMDB
+

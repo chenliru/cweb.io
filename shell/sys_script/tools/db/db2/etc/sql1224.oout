@@ -1,0 +1,131 @@
+
+
+SQL1224N A database agent could not be started to service a 
+          request, or was terminated as a result of a database 
+          system shutdown or a force command.  
+
+Explanation: 
+
+The message may be attributed to any of the following cases.  
+
+o   The database manager has not been started on the database  
+    server 
+
+o   The database manager was stopped 
+
+o   The database manager has already allocated the maximum number 
+    of agents 
+
+o   The database agent was forced off by the system 
+    administrator 
+
+o   The database agent was terminated due to an abnormal        
+    termination of a key database manager process 
+
+o   The application is using multiple contexts with local         
+    protocol.  In this case the number of connections is limited  
+    by the number of shared memory segments to which a single     
+    process can be attached.  For example, on AIX, the limit is   
+    ten shared memory segments per process.  
+
+o   A user with SYSADM authority issued a FORCE QUIESCE command   
+    while you were connected.  Because your user ID does not have 
+    CONNECT QUIESCE authority for the database/instance or belong 
+    to a group that has CONNECT QUIESCE authority, you were     
+    disconnected from the database/instance.  
+
+o   The application was forced off by DB2 for using more          
+    transaction log space than allowed by the database      
+    configuration parameters MAX_LOG or NUM_LOG_SPAN.  
+
+ 
+
+ Additional federated server cases are: 
+
+o   The maximum number of processes per user (maxuproc on AIX) at 
+    the operating system level has been exceeded.  
+
+o   In the client/server environment using the TCP/IP protocol,   
+    the port number assigned to the TCP/IP service name on the    
+    client is not the same as the port number on the server.  
+
+ 
+
+ This situation can be detected by federated server or by the 
+data source.  
+
+User Response: 
+
+ 
+
+o   Reissue the database request.  If a connection cannot be      
+    established, then ensure that the database manager has been   
+    started successfully.  Additionally, ensure that the        
+    maxagents  database manager configuration parameter is  
+    appropriately configured.  
+
+o   Have the SYSADM unquiesce the database/instance or add the    
+    user to the quiesced group.  
+
+o   Issue more frequent commit operations.  MAX_LOG prevents      
+    individual transactions from consuming too much log space.    
+    NUM_LOG_SPAN prevents individual transactions from holding up 
+    the reuse of transaction log space.  When designing an        
+    application, consider when to commit transactions to prevent  
+    excessive log space use.  
+
+ 
+
+ Federated system users, should also: 
+
+o   Isolate the problem to the data source rejecting the request  
+    (see the problem determination guide  for procedures to     
+    follow to identify the failing data source) and ensure that   
+    the communication subsystem is active and that the database   
+    manager and required communication protocol server processes  
+    have been started on the database server.  
+
+o   For AIX operating systems, check the setting of maxuproc and  
+    change it if needed.  maxuproc restricts the number of   
+    processes that can run under a given federated server.  The  
+    default setting is 40.  
+
+     You can check the current setting of maxuproc with the  
+    command: 
+
+  
+  .
+     lsattr -E -l sys0
+ 
+
+     To view the number of processes currently running under a   
+    given federated server, use the command: 
+
+  
+     ps -ef | grep instdj1 | wc -l
+ 
+
+     where "instdj1" is the instance name of the federated   
+    server.  
+
+     To change maxuproc, use the command: 
+
+  
+     chdev -l sys0 -a maxuproc='nn'
+ 
+
+     where nn  is the new integer value of maxuproc.  
+
+ 
+
+ If the application is using multiple contexts with local 
+protocol, then either reduce the number of connections in the 
+application, or switch to another protocol (for example, TCP/IP). 
+For users on AIX version 4.2.1 or newer, the environment variable 
+EXTSHM can be set to ON to increase the number of shared memory 
+segments to which a single process can be attached.  
+
+ sqlcode :  -1224 
+
+ sqlstate :  55032 
+

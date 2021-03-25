@@ -1,0 +1,64 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         aix.vg.rest
+#
+# Reference:    n/a
+#
+# Description:  Restores the user volume group and all its containers and files, 
+#               as specified in the /tmp/vgdata/vgname/vgname.data file 
+#               (where vgname is the name of the volume group) contained within
+#               the backup image created by the savevg command
+#
+# Command:      aix.vg.rest "hd1 hd2 ..." backup_medium_lable
+#
+#               if no disks specified, disks in the /etc/vgname.data file contained 
+#               within the backup image will be used
+#
+# Modification History:
+#
+#		Date            Name            Description 
+#		--------------------------------------------------------------
+#		2013-3-30	Liru Chen	Original
+#
+################################################################################
+set -v
+set -x
+
+if [[ $# -lt 3 ]]; then
+    echo " USAGE: aix.vg.rest metafileName \"hd1 hd2 ...\" "
+    echo " "
+    exit 2
+fi
+if [[ $USER != 'root' ]];then
+  echo "You should be root user"
+  exit 2
+fi
+
+#Setting scritps environment parameters
+. ~/tools.profile
+
+metafilename=$1
+hdisks=$2
+
+metafile=$TOOLSDIR/os/aix/etc/$metafilename
+bkupdev=$(grep -i "BACKUP DEVICE" $metafile | awk '{print $3}')
+vgname=$(grep -i "BACKUP VG" $metafile | awk '{print $3}')
+
+# restore the volume group image from the $bkupDev, onto the hdisks(as hdisk2,hdisk3...): 
+[[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev load
+
+restvg -f $bkupdev $hdisks
+  if [[ $? != 0 ]]; then
+   mail -s "restore $vgname failed: $TOOLSID" $SYSADMEMAIL <$ERRFILE
+   exit 1
+  fi
+
+sleep 5
+
+#Mail to Administrator;
+mail -s "Volume Group $vgName restore completed successfully: $logDate" \
+         $SYSADMEMAIL <$logfile
+
+exit 0
+

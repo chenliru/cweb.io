@@ -1,0 +1,6 @@
+lchen
+admini@12
+cd /admsrv/nmon
+ascii
+mget *
+quit

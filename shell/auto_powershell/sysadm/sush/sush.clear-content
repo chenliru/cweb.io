@@ -1,0 +1,11 @@
+sushwin\myCLEAR
+sushwin\mySCP.sushput
+sushwin\mySSH.sushset
+sushwin\mySSH.sushrun
+sushwin\mySCP.taskput
+sushwin\mySSH.taskset
+sushwin\mySCP.taskget
+sushwin\mySCP.taskrun
+sushwin\mySCP.taskout
+sushwin\mySCP.taskdel
+sushunix\myTab.run

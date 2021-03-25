@@ -1,0 +1,27 @@
+# cleanup the log
+####0 0 * * * /usr/apps/inf/bob/cleanuplog/cleanuplog.ksh > /usr/apps/inf/bob/cleanuplog/cleanuplog.out 2>&1
+
+### loglist ierr files, and send the outpt files
+0 9 * * * /usr/apps/inf/bob/loglist/checkiperr.ksh  >> /usr/apps/inf/bob/loglist/checkiperr.out 2>&1
+
+## compare the txn data between IP and Locus
+## As per Esa, stop running below job;
+####0  9 * * * /usr/apps/inf/bob/compareb3/compareb3.ksh >> /usr/apps/inf/bob/compareb3/compareb3.out
+
+### update statistics
+15 0 * * 1-6 /usr/apps/inf/bob/upstat/upstat.ksh >> /usr/apps/inf/bob/upstat/upstat.out 2>&1
+
+##for performance;
+##46 * * * * /home/informix/purgeslow/io.off/get_hourly.ksh >/dev/null
+##46,16 * * * * /home/informix/purgeslow/io.off/get_half.ksh >/dev/null
+##46,16 * * * * /home/informix/purgeslow/io.off/get_sys.ksh >/dev/null
+
+##Monthly client_invoice purge;
+##30 21 9 * * /usr/apps/inf/maintenance/invoice/inv_purge.ksh 1>/usr/apps/inf/maintenance/invoice/inv_purge.log 2>&1
+
+##Daily informix DB backup
+1 0 * * * /livebkup/cgi.idsbackup >> /livebkup/dbsbkup.out 2>&1
+
+##Transfer informix DB backup image to IPDEV
+#0 20 * * 5 /archbkup/dbbkup/scp_bkup_image.sh >> /livebkup/dbimageput.out 2>&1
+

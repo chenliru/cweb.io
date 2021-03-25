@@ -1,0 +1,56 @@
+#!/bin/ksh
+################################################################################
+#
+# Command:      For example: cgi.restore <fsfile>
+#
+# Modification History:
+#
+#               Date            Name            Description
+#               ------------------------------------------------------------
+#               2013-09         Liru Chen       Created for cgi migration
+#
+####################################################################################
+set -v
+set -x
+
+CGIDIR=$1
+CGIFSDIR=$1/fs
+
+restoredate=`date +%Y%m%d%H%M`
+backupdate=$2
+
+fsfile=../etc/restore.include.`hostname`
+logfile=../etc/restore.log
+
+# Start backup process
+echo "Restore filesystem `cat $fsfile`" > $logfile
+ 
+cat $fsfile | while read filesystemname
+do
+
+  echo  "----------------------------------------------------" >> $logfile
+  echo  "restoring up filesystem: $filesystemname" >> $logfile
+  echo  "----------------------------------------------------" >> $logfile
+  sync
+  sleep 5
+
+  cd $filesystemname
+
+  filename=$(echo $filesystemname | sed "s/\//./g")
+   
+  restore -xvq -f $CGIFSDIR/`hostname`$filename.$backupdate 
+
+  errstatus=$?
+  if (($errstatus != 0))
+  then
+    mail -s "CGI FS restore failed (`hostname`): $restoredate" lchen@livingstonintl.com < /dev/null
+    exit 1
+  fi
+
+  mail -s "CGI  FS restorebackup successfully (`hostname`): $filesystemname at $restoredate" lchen@livingstonintl.com < /dev/null
+ 
+done
+
+mail -s "CGI FS restore completed successfully (`hostname`): $restoredate" lchen@livingstonintl.com < /dev/null
+
+exit 0

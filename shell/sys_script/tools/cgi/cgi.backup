@@ -1,0 +1,56 @@
+#!/bin/ksh
+#######################################################################################
+#
+# Modification History:
+#
+#		Date            Name            Description 
+#		--------------------------------------------------------------
+#		2013-09-05      Bob Chong
+#    	                        Liru Chen	Original
+#
+#######################################################################################
+set -v
+set -x
+
+CGIDIR=/cgi
+CGIFSDIR=/cgi/fs
+
+servername=`hostname`
+
+bkupdate=`date +%Y%m%d%H%M`
+fsfile=/cgi/etc/backup.include.`hostname`
+logfile=/cgi/log/$servername.backuplog.$bkupdate
+
+# Start backup process
+echo "Backup filesystem `cat $fsfile`" > $logfile
+ 
+cat $fsfile | while read filesystemname
+do
+
+  echo  "----------------------------------------------------" >> $logfile
+  echo  "Backing up filesystem: $filesystemname" >> $logfile
+  echo  "----------------------------------------------------" >> $logfile
+  sync
+  sleep 5
+
+  cd $filesystemname
+
+  filename=$(echo $filesystemname | sed "s/\//./g")
+  
+  find . -print | \
+  backup -ivqf $CGIFSDIR/$servername$filename.$bkupdate >> $logfile 2>&1
+ 
+  errstatus=$?
+  if (($errstatus != 0))
+  then
+    mail -s "CGI FS backup failed (`hostname`): $bkupdate" lchen@livingstonintl.com < /dev/null
+    exit 1
+  fi
+
+  mail -s "CGI FS backup successfully (`hostname`): $filesystemname at $bkupdate" lchen@livingstonintl.com < /dev/null
+
+done
+
+mail -s "CGI FS backup completed successfully (`hostname`): $bkupdate" lchen@livingstonintl.com < /dev/null
+
+exit 0

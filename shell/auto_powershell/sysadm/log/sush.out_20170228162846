@@ -1,0 +1,85 @@
++ set -v
+remotepwd=$(dirname $0)
+
++ dirname /tmp/sush.ksh
++ remotepwd=/tmp
+filename=$remotepwd/myTab.run
+
++ filename=/tmp/myTab.run
+IFS=,;grep ^$(hostname) $filename|
+while read hostname user script sudoer runtime
+do
+	echo $hostname $user $script $sudoer $runtime
+	
+	pathname=$(echo $script|awk '{print $1}')
+	name=$(basename $pathname)
+	out=$name.out
+		
+	[[ $sudoer == "sudoer" ]] && {
+		if [[ -e $pathname && ! -x $pathname ]];then su -l $user -c "chmod a+x $pathname";fi
+		su -l $user -c "$script 1>$remotepwd/$out$runtime 2>&1"
+	}
+	
+	[[ $sudoer == "nosudoer" ]] && {
+		if [[ -e $pathname && ! -x $pathname ]];then chmod a+x $pathname;fi
+		$script 1>$remotepwd/$out$runtime 2>&1
+	}
+	
+done
+
++ IFS=,
++ hostname
++ grep ^ibmserver /tmp/myTab.run
++ read hostname user script sudoer runtime
++ echo ibmserver lchen 'ls -la' sudoer 20170228162846
+ibmserver lchen ls -la sudoer 20170228162846
++ echo 'ls -la'
++ awk '{print $1}'
++ pathname=ls
++ basename ls
++ name=ls
++ out=ls.out
++ [[ sudoer == sudoer ]]
++ [[ -e ls ]]
++ su -l lchen -c 'ls -la 1>/tmp/ls.out20170228162846 2>&1'
++ [[ sudoer == nosudoer ]]
++ read hostname user script sudoer runtime
++ echo ibmserver lchen 'crontab -l' sudoer 20170228162846
+ibmserver lchen crontab -l sudoer 20170228162846
++ echo 'crontab -l'
++ awk '{print $1}'
++ pathname=crontab
++ basename crontab
++ name=crontab
++ out=crontab.out
++ [[ sudoer == sudoer ]]
++ [[ -e crontab ]]
++ su -l lchen -c 'crontab -l 1>/tmp/crontab.out20170228162846 2>&1'
++ [[ sudoer == nosudoer ]]
++ read hostname user script sudoer runtime
++ echo ibmserver lchen script1.sh sudoer 20170228162846
+ibmserver lchen script1.sh sudoer 20170228162846
++ echo script1.sh
++ awk '{print $1}'
++ pathname=script1.sh
++ basename script1.sh
++ name=script1.sh
++ out=script1.sh.out
++ [[ sudoer == sudoer ]]
++ [[ -e script1.sh ]]
++ su -l lchen -c 'script1.sh 1>/tmp/script1.sh.out20170228162846 2>&1'
++ [[ sudoer == nosudoer ]]
++ read hostname user script sudoer runtime
++ echo ibmserver lchen 'large_file_report.sh 50' sudoer 20170228162846
+ibmserver lchen large_file_report.sh 50 sudoer 20170228162846
++ echo 'large_file_report.sh 50'
++ awk '{print $1}'
++ pathname=large_file_report.sh
++ basename large_file_report.sh
++ name=large_file_report.sh
++ out=large_file_report.sh.out
++ [[ sudoer == sudoer ]]
++ [[ -e large_file_report.sh ]]
++ su -l lchen -c 'large_file_report.sh 50 1>/tmp/large_file_report.sh.out20170228162846 2>&1'
++ [[ sudoer == nosudoer ]]
++ read hostname user script sudoer runtime

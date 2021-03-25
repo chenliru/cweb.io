@@ -1,0 +1,7 @@
+db2inst1,sush,c:\auto_powershell\sysadm\sush,/tmp
+db2inst1,sush.ksh,c:\auto_powershell\sysadm\sush\sushunix,/tmp
+db2inst1,myTab.run,c:\auto_powershell\sysadm\sush\sushunix,/tmp
+db2inst1,script2.sh.out20170228162846,c:\auto_powershell\sysadm\log,/tmp
+db2inst1,sush.out,c:\auto_powershell\sysadm\log,/tmp
+db2inst1,script2.sh,c:\auto_powershell\sysadm\del,/tmp
+db2inst1,in2,c:\auto_powershell\sysadm\del,/tmp

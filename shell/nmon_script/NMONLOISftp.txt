@@ -1,0 +1,6 @@
+lchen
+admini@12
+cd /lois/nmon
+ascii
+mget *
+quit

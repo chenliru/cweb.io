@@ -1,0 +1,92 @@
+#!/bin/ksh
+################################################################################
+#
+# Name:         aix.vg.bkup
+#
+# Reference:    n/a
+#
+# Description:  Finds and backs up all files belonging to a specified volume group
+#
+# Command:      aix.vg.bkup backup_device vgName backup_medium_lable
+# 		default backup device: /dev/rmt0
+#               default backup medium lable: `hostname`.`date +%Y%m%d%H%M`
+#
+# Modification History:
+#
+#		Date            Name            Description 
+#		--------------------------------------------------------------
+#		2013-3-30	Liru Chen	Original
+#
+################################################################################
+set -v
+set -x
+
+if [[ $# -lt 3 ]]; then
+  echo " USAGE: aix.vg.bkup backup_device vgName backup_medium_lable"
+  echo " "
+  exit 2
+fi
+if [[ $USER != root ]];then
+  echo "You should be root user"
+  exit 2
+fi
+
+#Setting scritps environment parameters
+. ~/tools.profile
+
+bkupdev=${1-$BACKUPDEVICE}
+vgname=$2
+metafilename=${3-$TOOLSID}
+
+metafile=$TOOLSDIR/os/aix/etc/$metafilename
+
+# Collect Filesystem information on vg which you want to backup
+echo "BACKUP DEVICE:\t$bkupdev" > $metafile
+echo "BACKUP VG:\t$vgname" >> $metafile
+lsvg -l $vgname >> $metafile
+lsvg -p $vgname >> $metafile
+
+# Load the tape volume
+[[ $bkupDev = /dev/rmt* ]] && util.tape $bkupdev load
+
+echo "BACKUP DATE : `date`" >> $LISFILE
+
+#1. The savevg command finds and backs up all files belonging to a specified 
+#   volume group. 
+#2. The volume group must be varied-on, and the file systems must be mounted
+#3. To back up the user volume group and excluding the files listed in
+#   the /etc/exclude.vgname file, and then verify the readability of file headers
+
+savevg -ief $bkupdev $vgname
+if [[ $? != 0 ]]
+then
+  echo "\t Volume Group $vgname backup failed " >> $ERRFILE
+  echo "\t <error code = $? > "                 >> $ERRFILE
+  exit 1
+fi
+
+# Continue if backup device is tape device; Rewind the tape
+[[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev rewind
+
+# finally list all the files on tape
+echo "\n----------------------------------------------------" >> $LOGFILE
+echo "\n Listing of the $vgname:" >> $LOGFILE | tee -a $LISFILE  
+echo "\n----------------------------------------------------" >> $LOGFILE
+# To display volume group information about the volume group backed up on the tape
+
+restvg -l -f $bkupdev >> $LISFILE
+if [[ $? != 0 ]]
+then
+  echo "\t Volume Group $vgname backup failed " >> $ERRFILE
+  echo "\t <error code = $? > "                 >> $ERRFILE
+  exit 1
+fi
+sleep 5
+
+[[ $bkupdev = /dev/rmt* ]] && util.tape $bkupdev offline
+
+#Mail to Administrator;
+mail -s "File systems backup on Volume Group(s) $vgname successfully : $TOOLSID" \
+         $SYSADMEMAIL <$LOGFILE
+exit 0
+

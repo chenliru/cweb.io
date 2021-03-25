@@ -1,0 +1,57 @@
+#!/bin/ksh
+#####################################################################################
+#
+#  Filename    : cgi.db2.bkup
+#  Author      : Liru Chen
+#
+#  Description : Backup DB2 database to filesystem directory.
+######################################################################################
+
+if [[ $# -lt 3 ]]; then
+   echo " USAGE: cgi.db2.bkup <inst_name> <db_alias> <backup_image_directory>"
+   echo " "
+   exit 1
+fi
+if [[ $USER != 'root' ]]; then
+   echo " You should be ROOT user"
+   echo " "
+   exit 2
+fi
+
+SCRIPT_NAME=$(basename $0)
+INSTANCE=$1
+INSTPROFILE=/home/$1/sqllib/db2profile
+DB_ALIAS=$2
+BKUP_PATH=$3
+
+# Ensure that Database ALIAS is upper case
+set `echo $DB_ALIAS | tr 'a-z' 'A-Z'`
+DB_ALIAS=$1
+
+# Run the profile for database instance
+su - $INSTANCE <<EOF
+
+. $INSTPROFILE
+
+if [[ $? -ne 0 ]]; then
+echo "ERROR when attempting to run the db2profile : Exiting"
+echo "Please make sure that the Instance is located on this node."
+exit 3
+fi
+
+# backup db 
+db2 backup db $DB_ALIAS online to $BKUP_PATH compress include logs without prompting
+
+if [[ $? -ne 0 ]]; then
+echo "ERROR when attempting to on-line backup database $DB_ALIAS : Exiting"
+exit -1
+fi
+
+db2 list backup all for $DB_ALIAS
+
+EOF
+
+echo "$SCRIPT_NAME: DB backups for $DB_ALIAS are completed!"
+
+exit 0
+

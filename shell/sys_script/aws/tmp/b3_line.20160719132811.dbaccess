@@ -1,0 +1,502 @@
+
+
+
+b3lineiid           619541625
+(constant)          ^~^
+b3subiid            160068021
+(constant)          ^~^
+b3lineno            1
+(constant)          ^~^
+advaldutyrateumeas  KGM
+(constant)          ^~^
+advalrate1          6.500000000000
+(constant)          ^~^
+convtoqty1          -23.9300000000
+(constant)          ^~^
+convtoqty2          0.00
+(constant)          ^~^
+convtoqty3          0.00
+(constant)          ^~^
+excduty             0.00
+(constant)          ^~^
+excdutyrateumeas    
+(constant)          ^~^
+excdutyrate         0.00
+(constant)          ^~^
+exchgrate           1.000000000000
+(constant)          ^~^
+exctax              0.00
+(constant)          ^~^
+exctaxrateumeas     
+(constant)          ^~^
+exctaxrate          0.00
+(constant)          ^~^
+gst                 -12.2700000000
+(constant)          ^~^
+gstrate             5.000000000000
+(constant)          ^~^
+hsno                3506919090
+(constant)          ^~^
+oicspecialaut       
+(constant)          ^~^
+partkeywrd          7000121446_0000_2
+(constant)          ^~^
+partsufx            0
+(constant)          ^~^
+partdesc            94 RD CYLINDER SPRAY ADH 26.2LBS
+(constant)          ^~^
+simacode            
+(constant)          ^~^
+simaval             0.00
+(constant)          ^~^
+spcdutyrateumeas    
+(constant)          ^~^
+spcrate             0.00
+(constant)          ^~^
+tariffcode          
+(constant)          ^~^
+vfcc                -230.390000000
+(constant)          ^~^
+vfd                 -230.390000000
+(constant)          ^~^
+vfdcode             23
+(constant)          ^~^
+vft                 -245.370000000
+(constant)          ^~^
+linecomment         
+(constant)          ^~^
+advalduty           -14.9800000000
+(constant)          ^~^
+spcduty             0.00
+(constant)          ^~^
+totalduty           -14.9800000000
+(constant)          ^~^
+gstexemptcode       
+(constant)          ^~^
+exctaxexmptcode     
+(constant)          ^~^
+rulingnumber        
+(constant)          ^~^
+trqno               0
+(constant)          ^~^
+prevtransno         41657751893193
+(constant)          ^~^
+prevlineno          4
+(constant)          ^~^
+
+b3lineiid           619541626
+(constant)          ^~^
+b3subiid            160068021
+(constant)          ^~^
+b3lineno            2
+(constant)          ^~^
+advaldutyrateumeas  
+(constant)          ^~^
+advalrate1          2.500000000000
+(constant)          ^~^
+convtoqty1          0.00
+(constant)          ^~^
+convtoqty2          0.00
+(constant)          ^~^
+convtoqty3          0.00
+(constant)          ^~^
+excduty             0.00
+(constant)          ^~^
+excdutyrateumeas    
+(constant)          ^~^
+excdutyrate         0.00
+(constant)          ^~^
+exchgrate           1.000000000000
+(constant)          ^~^
+exctax              0.00
+(constant)          ^~^
+exctaxrateumeas     
+(constant)          ^~^
+exctaxrate          0.00
+(constant)          ^~^
+gst                 -49.2700000000
+(constant)          ^~^
+gstrate             5.000000000000
+(constant)          ^~^
+hsno                9001909090
+(constant)          ^~^
+oicspecialaut       
+(constant)          ^~^
+partkeywrd          7000013670_0000_2
+(constant)          ^~^
+partsufx            0
+(constant)          ^~^
+partdesc            PF19.0 3M LCD PRIVACY COMPUTER FILTER
+(constant)          ^~^
+simacode            
+(constant)          ^~^
+simaval             0.00
+(constant)          ^~^
+spcdutyrateumeas    
+(constant)          ^~^
+spcrate             0.00
+(constant)          ^~^
+tariffcode          
+(constant)          ^~^
+vfcc                -961.420000000
+(constant)          ^~^
+vfd                 -961.420000000
+(constant)          ^~^
+vfdcode             23
+(constant)          ^~^
+vft                 -985.460000000
+(constant)          ^~^
+linecomment         
+(constant)          ^~^
+advalduty           -24.0400000000
+(constant)          ^~^
+spcduty             0.00
+(constant)          ^~^
+totalduty           -24.0400000000
+(constant)          ^~^
+gstexemptcode       
+(constant)          ^~^
+exctaxexmptcode     
+(constant)          ^~^
+rulingnumber        
+(constant)          ^~^
+trqno               0
+(constant)          ^~^
+prevtransno         41657751893193
+(constant)          ^~^
+prevlineno          9
+(constant)          ^~^
+
+b3lineiid           619541627
+(constant)          ^~^
+b3subiid            160068021
+(constant)          ^~^
+b3lineno            3
+(constant)          ^~^
+advaldutyrateumeas  KGM
+(constant)          ^~^
+advalrate1          6.500000000000
+(constant)          ^~^
+convtoqty1          -74.2400000000
+(constant)          ^~^
+convtoqty2          0.00
+(constant)          ^~^
+convtoqty3          0.00
+(constant)          ^~^
+excduty             0.00
+(constant)          ^~^
+excdutyrateumeas    
+(constant)          ^~^
+excdutyrate         0.00
+(constant)          ^~^
+exchgrate           1.000000000000
+(constant)          ^~^
+exctax              0.00
+(constant)          ^~^
+exctaxrateumeas     
+(constant)          ^~^
+exctaxrate          0.00
+(constant)          ^~^
+gst                 -60.0600000000
+(constant)          ^~^
+gstrate             5.000000000000
+(constant)          ^~^
+hsno                3919109919
+(constant)          ^~^
+oicspecialaut       
+(constant)          ^~^
+partkeywrd          7000001560_0000_2
+(constant)          ^~^
+partsufx            0
+(constant)          ^~^
+partdesc            845NA TRILINGUAL 3""X540"" BOOKTAPE NOM 50
+(constant)          ^~^
+simacode            
+(constant)          ^~^
+simaval             0.00
+(constant)          ^~^
+spcdutyrateumeas    
+(constant)          ^~^
+spcrate             0.00
+(constant)          ^~^
+tariffcode          
+(constant)          ^~^
+vfcc                -1127.85000000
+(constant)          ^~^
+vfd                 -1127.85000000
+(constant)          ^~^
+vfdcode             23
+(constant)          ^~^
+vft                 -1201.16000000
+(constant)          ^~^
+linecomment         
+(constant)          ^~^
+advalduty           -73.3100000000
+(constant)          ^~^
+spcduty             0.00
+(constant)          ^~^
+totalduty           -73.3100000000
+(constant)          ^~^
+gstexemptcode       
+(constant)          ^~^
+exctaxexmptcode     
+(constant)          ^~^
+rulingnumber        
+(constant)          ^~^
+trqno               0
+(constant)          ^~^
+prevtransno         41657751893193
+(constant)          ^~^
+prevlineno          10
+(constant)          ^~^
+
+b3lineiid           619541628
+(constant)          ^~^
+b3subiid            160068022
+(constant)          ^~^
+b3lineno            4
+(constant)          ^~^
+advaldutyrateumeas  KGM
+(constant)          ^~^
+advalrate1          0.00
+(constant)          ^~^
+convtoqty1          23.93000000000
+(constant)          ^~^
+convtoqty2          0.00
+(constant)          ^~^
+convtoqty3          0.00
+(constant)          ^~^
+excduty             0.00
+(constant)          ^~^
+excdutyrateumeas    
+(constant)          ^~^
+excdutyrate         0.00
+(constant)          ^~^
+exchgrate           1.000000000000
+(constant)          ^~^
+exctax              0.00
+(constant)          ^~^
+exctaxrateumeas     
+(constant)          ^~^
+exctaxrate          0.00
+(constant)          ^~^
+gst                 11.52000000000
+(constant)          ^~^
+gstrate             5.000000000000
+(constant)          ^~^
+hsno                3506919090
+(constant)          ^~^
+oicspecialaut       
+(constant)          ^~^
+partkeywrd          7000121446_0000_2
+(constant)          ^~^
+partsufx            0
+(constant)          ^~^
+partdesc            94 RD CYLINDER SPRAY ADH 26.2LBS
+(constant)          ^~^
+simacode            
+(constant)          ^~^
+simaval             0.00
+(constant)          ^~^
+spcdutyrateumeas    
+(constant)          ^~^
+spcrate             0.00
+(constant)          ^~^
+tariffcode          
+(constant)          ^~^
+vfcc                230.3900000000
+(constant)          ^~^
+vfd                 230.3900000000
+(constant)          ^~^
+vfdcode             23
+(constant)          ^~^
+vft                 230.3900000000
+(constant)          ^~^
+linecomment         
+(constant)          ^~^
+advalduty           0.00
+(constant)          ^~^
+spcduty             0.00
+(constant)          ^~^
+totalduty           0.00
+(constant)          ^~^
+gstexemptcode       
+(constant)          ^~^
+exctaxexmptcode     
+(constant)          ^~^
+rulingnumber        
+(constant)          ^~^
+trqno               0
+(constant)          ^~^
+prevtransno         41657751893193
+(constant)          ^~^
+prevlineno          4
+(constant)          ^~^
+
+b3lineiid           619541629
+(constant)          ^~^
+b3subiid            160068022
+(constant)          ^~^
+b3lineno            5
+(constant)          ^~^
+advaldutyrateumeas  
+(constant)          ^~^
+advalrate1          0.00
+(constant)          ^~^
+convtoqty1          0.00
+(constant)          ^~^
+convtoqty2          0.00
+(constant)          ^~^
+convtoqty3          0.00
+(constant)          ^~^
+excduty             0.00
+(constant)          ^~^
+excdutyrateumeas    
+(constant)          ^~^
+excdutyrate         0.00
+(constant)          ^~^
+exchgrate           1.000000000000
+(constant)          ^~^
+exctax              0.00
+(constant)          ^~^
+exctaxrateumeas     
+(constant)          ^~^
+exctaxrate          0.00
+(constant)          ^~^
+gst                 48.07000000000
+(constant)          ^~^
+gstrate             5.000000000000
+(constant)          ^~^
+hsno                9001909090
+(constant)          ^~^
+oicspecialaut       
+(constant)          ^~^
+partkeywrd          7000013670_0000_2
+(constant)          ^~^
+partsufx            0
+(constant)          ^~^
+partdesc            PF19.0 3M LCD PRIVACY COMPUTER FILTER
+(constant)          ^~^
+simacode            
+(constant)          ^~^
+simaval             0.00
+(constant)          ^~^
+spcdutyrateumeas    
+(constant)          ^~^
+spcrate             0.00
+(constant)          ^~^
+tariffcode          
+(constant)          ^~^
+vfcc                961.4200000000
+(constant)          ^~^
+vfd                 961.4200000000
+(constant)          ^~^
+vfdcode             23
+(constant)          ^~^
+vft                 961.4200000000
+(constant)          ^~^
+linecomment         
+(constant)          ^~^
+advalduty           0.00
+(constant)          ^~^
+spcduty             0.00
+(constant)          ^~^
+totalduty           0.00
+(constant)          ^~^
+gstexemptcode       
+(constant)          ^~^
+exctaxexmptcode     
+(constant)          ^~^
+rulingnumber        
+(constant)          ^~^
+trqno               0
+(constant)          ^~^
+prevtransno         41657751893193
+(constant)          ^~^
+prevlineno          9
+(constant)          ^~^
+
+b3lineiid           619541630
+(constant)          ^~^
+b3subiid            160068022
+(constant)          ^~^
+b3lineno            6
+(constant)          ^~^
+advaldutyrateumeas  KGM
+(constant)          ^~^
+advalrate1          0.00
+(constant)          ^~^
+convtoqty1          74.24000000000
+(constant)          ^~^
+convtoqty2          0.00
+(constant)          ^~^
+convtoqty3          0.00
+(constant)          ^~^
+excduty             0.00
+(constant)          ^~^
+excdutyrateumeas    
+(constant)          ^~^
+excdutyrate         0.00
+(constant)          ^~^
+exchgrate           1.000000000000
+(constant)          ^~^
+exctax              0.00
+(constant)          ^~^
+exctaxrateumeas     
+(constant)          ^~^
+exctaxrate          0.00
+(constant)          ^~^
+gst                 56.39000000000
+(constant)          ^~^
+gstrate             5.000000000000
+(constant)          ^~^
+hsno                3919109919
+(constant)          ^~^
+oicspecialaut       
+(constant)          ^~^
+partkeywrd          7000001560_0000_2
+(constant)          ^~^
+partsufx            0
+(constant)          ^~^
+partdesc            845NA TRILINGUAL 3""X540"" BOOKTAPE NOM 50
+(constant)          ^~^
+simacode            
+(constant)          ^~^
+simaval             0.00
+(constant)          ^~^
+spcdutyrateumeas    
+(constant)          ^~^
+spcrate             0.00
+(constant)          ^~^
+tariffcode          
+(constant)          ^~^
+vfcc                1127.850000000
+(constant)          ^~^
+vfd                 1127.850000000
+(constant)          ^~^
+vfdcode             23
+(constant)          ^~^
+vft                 1127.850000000
+(constant)          ^~^
+linecomment         
+(constant)          ^~^
+advalduty           0.00
+(constant)          ^~^
+spcduty             0.00
+(constant)          ^~^
+totalduty           0.00
+(constant)          ^~^
+gstexemptcode       
+(constant)          ^~^
+exctaxexmptcode     
+(constant)          ^~^
+rulingnumber        
+(constant)          ^~^
+trqno               0
+(constant)          ^~^
+prevtransno         41657751893193
+(constant)          ^~^
+prevlineno          10
+(constant)          ^~^
+
+

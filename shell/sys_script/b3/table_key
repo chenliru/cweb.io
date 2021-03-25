@@ -1,0 +1,9 @@
+WHERE ((b3.liibrchno=456 AND b3.approveddate like '2016/04/%') OR (b3.liibrchno=456 AND b3.approveddate like '2016/05/%'))
+b3,b3,@b3iid,,
+b3,b3b,@b3iid,,
+b3,containers,@b3iid,,
+b3,status_history,@b3iid,,
+b3,b3_subheader,@b3iid,,
+b3_subheader,b3_line,@b3subiid,,
+b3_line,b3_line_comment,@b3lineiid,,
+b3_line,b3_recap_details,@b3lineiid,,

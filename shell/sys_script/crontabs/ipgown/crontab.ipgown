@@ -1,0 +1,9 @@
+## purge download files
+1 7 * * * /home/ipgown/purgebds/purgetbl.ksh  >> /home/ipgown/purgebds/purgetbl.out 2>&1
+5 7 * * * /home/ipgown/purgebds/purgefile.ksh >> /home/ipgown/purgebds/purgefile.out 2>&1
+
+## start bds
+####5 6 * * * ksh -c /usr/apps/ipg/ver001/srv/bds/pgm/ip_0p/start.ksh > /dev/null
+
+## Restart Locus Services;
+30 3 * * 6 /usr/apps/ipg/ver001/srv/locus/loc_restart.ksh 1>/usr/apps/ipg/ver001/srv/locus/restart.out 2>&1 

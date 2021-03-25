@@ -1,0 +1,29 @@
+select vol_status,substr(VOL_LOGICALNAME,1,25) VOL_LOGICALNAME,'VOL' VOL_USAGE from rmvolumes
+
+VOL_STATUS VOL_LOGICALNAME           VOL_USAGE
+---------- ------------------------- ---------
+F          /dev/lbosdata01lv         VOL      
+F          /dev/lbosdata02lv         VOL      
+F          /dev/lbosdata03lv         VOL      
+F          /dev/lbosdata04lv         VOL      
+F          /dev/lbosdata05lv         VOL      
+F          /dev/lbosdata06lv         VOL      
+F          /dev/lbosdata07lv         VOL      
+F          /dev/lbosdata08lv         VOL      
+A          /dev/lbosdata09lv         VOL      
+A          /dev/lbosdata10lv         VOL      
+A          /dev/lbosdata11lv         VOL      
+F          /dev/lbosdata12lv         VOL      
+F          /dev/lbosdata13lv         VOL      
+F          /dev/lbosdata14lv         VOL      
+F          /dev/lbosdata15lv         VOL      
+F          /dev/lbosdata16lv         VOL      
+F          /dev/lbosdata17lv         VOL      
+F          /dev/lbosdata18lv         VOL      
+F          /dev/lbosdata19lv         VOL      
+F          /dev/lbosdata20lv         VOL      
+A          BLOBS                     VOL      
+
+  21 record(s) selected.
+
+

@@ -1,0 +1,452 @@
+ICMNLSDB:
+total 20
+drwx------ 2 db2inst1 db2iadm1 4096 Sep 12  2012 T0000000
+drwx------ 3 db2inst1 db2iadm1 4096 Mar 19 14:01 T0000001
+drwx------ 2 db2inst1 db2iadm1 4096 Sep 12  2012 T0000002
+drwx------ 2 db2inst1 db2iadm1 4096 Sep 13  2012 T0000012
+drwx------ 3 db2inst1 db2iadm1 4096 Mar 19 14:01 T0000013
+
+ICMNLSDB/T0000000:
+total 98404
+-rw------- 1 db2inst1 db2iadm1 100663296 Mar 18 16:29 C0000000.CAT
+
+ICMNLSDB/T0000001:
+total 4
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 14:01 C0000000.TMP
+
+ICMNLSDB/T0000001/C0000000.TMP:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Mar 19 14:01 SQLTAG.NAM
+
+ICMNLSDB/T0000002:
+total 65604
+-rw------- 1 db2inst1 db2iadm1 67108864 Mar 13 16:41 C0000000.LRG
+
+ICMNLSDB/T0000012:
+total 32804
+-rw------- 1 db2inst1 db2iadm1 33554432 Mar 18 16:29 C0000000.LRG
+
+ICMNLSDB/T0000013:
+total 4
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 14:01 C0000000.UTM
+
+ICMNLSDB/T0000013/C0000000.UTM:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Mar 19 14:01 SQLTAG.NAM
+
+RMDB:
+total 20
+drwx------ 2 db2inst1 db2iadm1 4096 Sep 12  2012 T0000000
+drwx------ 3 db2inst1 db2iadm1 4096 Mar 19 13:58 T0000001
+drwx------ 2 db2inst1 db2iadm1 4096 Sep 12  2012 T0000002
+drwx------ 2 db2inst1 db2iadm1 4096 Sep 13  2012 T0000010
+drwx------ 3 db2inst1 db2iadm1 4096 Mar 19 13:58 T0000011
+
+RMDB/T0000000:
+total 65604
+-rw------- 1 db2inst1 db2iadm1 67108864 Mar 19 11:31 C0000000.CAT
+
+RMDB/T0000001:
+total 4
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 13:58 C0000000.TMP
+
+RMDB/T0000001/C0000000.TMP:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Mar 19 13:58 SQLTAG.NAM
+
+RMDB/T0000002:
+total 32804
+-rw------- 1 db2inst1 db2iadm1 33554432 Mar 19 11:31 C0000000.LRG
+
+RMDB/T0000010:
+total 32804
+-rw------- 1 db2inst1 db2iadm1 33554432 Mar 19 11:31 C0000000.LRG
+
+RMDB/T0000011:
+total 4
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 13:58 C0000000.UTM
+
+RMDB/T0000011/C0000000.UTM:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Mar 19 13:58 SQLTAG.NAM
+
+RMDBBKUP:
+total 20
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 13:54 T0000000
+drwx------ 3 db2inst1 db2iadm1 4096 Mar 19 13:57 T0000001
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 13:54 T0000002
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 13:54 T0000010
+drwx------ 3 db2inst1 db2iadm1 4096 Mar 19 13:57 T0000011
+
+RMDBBKUP/T0000000:
+total 65604
+-rw------- 1 db2inst1 db2iadm1 67108864 Mar 19 13:54 C0000000.CAT
+
+RMDBBKUP/T0000001:
+total 4
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 13:57 C0000000.TMP
+
+RMDBBKUP/T0000001/C0000000.TMP:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Mar 19 13:57 SQLTAG.NAM
+
+RMDBBKUP/T0000002:
+total 32804
+-rw------- 1 db2inst1 db2iadm1 33554432 Mar 19 13:54 C0000000.LRG
+
+RMDBBKUP/T0000010:
+total 32804
+-rw------- 1 db2inst1 db2iadm1 33554432 Mar 19 13:54 C0000000.LRG
+
+RMDBBKUP/T0000011:
+total 4
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 19 13:57 C0000000.UTM
+
+RMDBBKUP/T0000011/C0000000.UTM:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Mar 19 13:57 SQLTAG.NAM
+
+SQL00001:
+total 2952
+drwxr-x--- 3 db2inst1 db2iadm1    4096 Sep 12  2012 db2event
+-rw-r----- 1 db2inst1 db2iadm1    2869 Sep 12  2012 db2rhist.asc
+-rw-r----- 1 db2inst1 db2iadm1    2869 Sep 12  2012 db2rhist.bak
+-rw------- 1 db2inst1 db2iadm1     768 Nov 15 12:49 SQLBP.1
+-rw------- 1 db2inst1 db2iadm1     768 Nov 15 12:49 SQLBP.2
+-rw------- 1 db2inst1 db2iadm1    4096 Sep 12  2012 SQLDBCON
+-rw------- 1 db2inst1 db2iadm1   16384 Mar 18 09:07 SQLDBCONF
+-rw-r----- 1 db2inst1 db2iadm1       9 Mar 18 09:07 SQLINSLK
+-rw------- 1 db2inst1 db2iadm1   24576 Mar 18 09:07 SQLOGCTL.LFH.1
+-rw------- 1 db2inst1 db2iadm1   24576 Mar 18 09:07 SQLOGCTL.LFH.2
+drwxr-x--- 2 db2inst1 db2iadm1    4096 Sep 12  2012 SQLOGDIR
+-rw------- 1 db2inst1 db2iadm1    8192 Mar 18 09:07 SQLOGMIR.LFH
+-rw------- 1 db2inst1 db2iadm1  135168 Sep 12  2012 SQLSGF.1
+-rw------- 1 db2inst1 db2iadm1  135168 Sep 12  2012 SQLSGF.2
+-rw------- 1 db2inst1 db2iadm1 1310720 Mar 18 09:07 SQLSPCS.1
+-rw------- 1 db2inst1 db2iadm1 1310720 Mar 18 09:07 SQLSPCS.2
+-rw-r----- 1 db2inst1 db2iadm1       0 Sep 12  2012 SQLTMPLK
+drwx------ 2 db2inst1 db2iadm1    4096 Sep 12  2012 TBSP32K0000
+drwx------ 2 db2inst1 db2iadm1    4096 Sep 12  2012 TBSP32KTMP0000
+
+SQL00001/db2event:
+total 4
+drwxr-x--- 2 db2inst1 db2iadm1 4096 Sep 12  2012 db2detaildeadlock
+
+SQL00001/db2event/db2detaildeadlock:
+total 60
+-rw-r--r-- 1 db2inst1 db2iadm1 52401 Mar 18 09:07 00000000.evt
+-rw-r----- 1 db2inst1 db2iadm1    43 Sep 12  2012 db2event.ctl
+
+SQL00001/SQLOGDIR:
+total 53404
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000000.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000001.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000002.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000003.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000004.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000005.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000006.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000007.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000008.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000009.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000010.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000011.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 18 09:07 S0000012.LOG
+
+SQL00001/TBSP32K0000:
+total 4924
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00002.DAT
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00003.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00003.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQL00003.LB
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00003.LBA
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00004.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00004.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00005.DAT
+-rw------- 1 db2inst1 db2iadm1  98304 Sep 12  2012 SQL00005.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00006.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00006.INX
+-rw------- 1 db2inst1 db2iadm1  65536 Sep 12  2012 SQL00006.LF
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00007.DAT
+-rw------- 1 db2inst1 db2iadm1  98304 Sep 12  2012 SQL00007.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00008.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00008.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00009.DAT
+-rw------- 1 db2inst1 db2iadm1  98304 Sep 12  2012 SQL00009.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00010.DAT
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00011.DAT
+-rw------- 1 db2inst1 db2iadm1  98304 Sep 12  2012 SQL00011.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00012.DAT
+-rw------- 1 db2inst1 db2iadm1  98304 Sep 12  2012 SQL00012.INX
+-rw------- 1 db2inst1 db2iadm1  65536 Sep 12  2012 SQL00013.DAT
+-rw------- 1 db2inst1 db2iadm1 196608 Sep 12  2012 SQL00013.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQL00013.LB
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00013.LBA
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00014.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00014.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00015.DAT
+-rw------- 1 db2inst1 db2iadm1  98304 Sep 12  2012 SQL00015.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00016.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00016.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00017.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00017.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQL00017.LB
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00017.LBA
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00018.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00018.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00019.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00019.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00020.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00020.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00021.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00021.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQL00021.LB
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00021.LBA
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00022.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00022.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00023.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00023.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00024.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00024.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00025.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00025.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00026.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00026.INX
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00027.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00027.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQL00027.LB
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00027.LBA
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00028.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00028.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQL00028.LB
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00028.LBA
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00029.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00029.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQL00029.LB
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00029.LBA
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00030.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00030.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQL00030.LB
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00030.LBA
+-rw------- 1 db2inst1 db2iadm1  32768 Sep 12  2012 SQL00031.DAT
+-rw------- 1 db2inst1 db2iadm1 131072 Sep 12  2012 SQL00031.INX
+-rw------- 1 db2inst1 db2iadm1    512 Sep 12  2012 SQLTAG.NAM
+
+SQL00001/TBSP32KTMP0000:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Sep 12  2012 SQLTAG.NAM
+
+SQL00002:
+total 265960
+-rw------- 1 db2inst1 db2iadm1  10485760 Mar 14 08:59 CMBINV04
+drwxr-x--- 3 db2inst1 db2iadm1      4096 Sep 12  2012 db2event
+-rw-r----- 1 db2inst1 db2iadm1     36616 Mar 18 11:10 db2rhist.asc
+-rw-r----- 1 db2inst1 db2iadm1     36616 Mar 18 11:10 db2rhist.bak
+-rw------- 1 db2inst1 db2iadm1 117440512 Mar 15 16:09 ICMLFQ32
+-rw------- 1 db2inst1 db2iadm1  41943040 Mar 14 09:14 ICMLNF32
+-rw------- 1 db2inst1 db2iadm1  10485760 Mar 14 08:59 ICMLOB32
+-rw------- 1 db2inst1 db2iadm1  10485760 Sep 12  2012 ICMLOBCOL04
+drwx------ 2 db2inst1 db2iadm1      4096 Sep 12  2012 icmlssystspace32
+drwx------ 2 db2inst1 db2iadm1      4096 Jan 11 09:03 icmlssystspace4
+-rw------- 1 db2inst1 db2iadm1  62914560 Mar 18 16:59 ICMSFQ04
+-rw------- 1 db2inst1 db2iadm1  10485760 Mar 15 16:09 ICMVFQ04
+-rw------- 1 db2inst1 db2iadm1      1536 Sep 12  2012 SQLBP.1
+-rw------- 1 db2inst1 db2iadm1      1536 Sep 12  2012 SQLBP.2
+-rw------- 1 db2inst1 db2iadm1      4096 Sep 12  2012 SQLDBCON
+-rw------- 1 db2inst1 db2iadm1     16384 Mar 19 14:01 SQLDBCONF
+-rw-r----- 1 db2inst1 db2iadm1         9 Mar 19 14:01 SQLINSLK
+-rw------- 1 db2inst1 db2iadm1     24576 Mar 19 14:01 SQLOGCTL.LFH.1
+-rw------- 1 db2inst1 db2iadm1     24576 Mar 19 14:01 SQLOGCTL.LFH.2
+drwxr-x--- 2 db2inst1 db2iadm1      4096 Sep 12  2012 SQLOGDIR
+-rw------- 1 db2inst1 db2iadm1      8192 Mar 19 14:01 SQLOGMIR.LFH
+-rw------- 1 db2inst1 db2iadm1    135168 Sep 12  2012 SQLSGF.1
+-rw------- 1 db2inst1 db2iadm1    135168 Sep 12  2012 SQLSGF.2
+-rw------- 1 db2inst1 db2iadm1   3670016 Mar 19 14:01 SQLSPCS.1
+-rw------- 1 db2inst1 db2iadm1   3670016 Mar 19 14:01 SQLSPCS.2
+-rw-r----- 1 db2inst1 db2iadm1         0 Sep 12  2012 SQLTMPLK
+
+SQL00002/db2event:
+total 4
+drwxr-x--- 2 db2inst1 db2iadm1 4096 Sep 12  2012 db2detaildeadlock
+
+SQL00002/db2event/db2detaildeadlock:
+total 24
+-rw-r--r-- 1 db2inst1 db2iadm1 19405 Mar 19 14:01 00000000.evt
+-rw-r----- 1 db2inst1 db2iadm1    43 Sep 12  2012 db2event.ctl
+
+SQL00002/icmlssystspace32:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Sep 12  2012 SQLTAG.NAM
+
+SQL00002/icmlssystspace4:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Sep 12  2012 SQLTAG.NAM
+
+SQL00002/SQLOGDIR:
+total 40120
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000000.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000001.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000002.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000003.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000004.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000005.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000006.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000007.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000008.LOG
+-rw------- 1 db2inst1 db2iadm1 4104192 Mar 19 14:01 S0000009.LOG
+
+SQL00003:
+total 119384
+-rw------- 1 db2inst1 db2iadm1 20971520 Mar 19 11:31 blobs
+drwxr-x--- 3 db2inst1 db2iadm1     4096 Sep 12  2012 db2event
+-rw-r----- 1 db2inst1 db2iadm1    37833 Mar 19 13:52 db2rhist.asc
+-rw-r----- 1 db2inst1 db2iadm1    37833 Mar 19 13:52 db2rhist.bak
+-rw------- 1 db2inst1 db2iadm1 20971520 Mar 19 11:31 objects
+-rw------- 1 db2inst1 db2iadm1 10485760 Mar 19 11:31 objparts
+-rw------- 1 db2inst1 db2iadm1 20971520 Mar 19 11:31 replicas
+-rw------- 1 db2inst1 db2iadm1 10485760 Mar 19 11:31 sms
+-rw------- 1 db2inst1 db2iadm1     2560 Mar 19 11:31 SQLBP.1
+-rw------- 1 db2inst1 db2iadm1     2560 Mar 19 11:31 SQLBP.2
+-rw------- 1 db2inst1 db2iadm1     4096 Sep 12  2012 SQLDBCON
+-rw------- 1 db2inst1 db2iadm1    16384 Mar 19 13:58 SQLDBCONF
+-rw-r----- 1 db2inst1 db2iadm1        9 Mar 19 14:01 SQLINSLK
+-rw------- 1 db2inst1 db2iadm1    24576 Mar 19 13:58 SQLOGCTL.LFH.1
+-rw------- 1 db2inst1 db2iadm1    24576 Mar 19 13:58 SQLOGCTL.LFH.2
+drwxr-x--- 2 db2inst1 db2iadm1     4096 Mar 19 11:31 SQLOGDIR
+-rw------- 1 db2inst1 db2iadm1     8192 Mar 19 13:58 SQLOGMIR.LFH
+-rw------- 1 db2inst1 db2iadm1   135168 Mar 19 11:31 SQLSGF.1
+-rw------- 1 db2inst1 db2iadm1   135168 Mar 19 11:31 SQLSGF.2
+-rw------- 1 db2inst1 db2iadm1  3145728 Mar 19 13:58 SQLSPCS.1
+-rw------- 1 db2inst1 db2iadm1  3145728 Mar 19 13:58 SQLSPCS.2
+-rw-r----- 1 db2inst1 db2iadm1        0 Sep 12  2012 SQLTMPLK
+-rw------- 1 db2inst1 db2iadm1 10485760 Mar 19 11:31 tracking
+-rw------- 1 db2inst1 db2iadm1 20971520 Mar 19 11:31 validateitm
+
+SQL00003/db2event:
+total 4
+drwxr-x--- 2 db2inst1 db2iadm1 4096 Sep 12  2012 db2detaildeadlock
+
+SQL00003/db2event/db2detaildeadlock:
+total 16
+-rw-r--r-- 1 db2inst1 db2iadm1 10499 Mar 19 13:58 00000000.evt
+-rw-r----- 1 db2inst1 db2iadm1    43 Sep 12  2012 db2event.ctl
+
+SQL00003/SQLOGDIR:
+total 102700
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000000.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000001.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000002.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000003.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000004.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000005.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000006.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000007.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000008.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000009.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000010.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000011.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000012.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000013.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000014.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000015.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000016.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000017.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000018.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000019.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000020.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000021.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000022.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000023.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:58 S0000024.LOG
+
+SQL00004:
+total 119368
+-rw------- 1 db2inst1 db2iadm1 20971520 Mar 19 13:54 blobs
+drwxr-x--- 3 db2inst1 db2iadm1     4096 Mar 19 13:54 db2event
+-rw-r----- 1 db2inst1 db2iadm1    28798 Mar 19 13:54 db2rhist.asc
+-rw-r----- 1 db2inst1 db2iadm1    28798 Mar 19 13:54 db2rhist.bak
+-rw------- 1 db2inst1 db2iadm1 20971520 Mar 19 13:54 objects
+-rw------- 1 db2inst1 db2iadm1 10485760 Mar 19 13:54 objparts
+-rw------- 1 db2inst1 db2iadm1 20971520 Mar 19 13:54 replicas
+-rw------- 1 db2inst1 db2iadm1 10485760 Mar 19 13:54 sms
+-rw------- 1 db2inst1 db2iadm1     2560 Mar 19 13:54 SQLBP.1
+-rw------- 1 db2inst1 db2iadm1     2560 Mar 19 13:54 SQLBP.2
+-rw------- 1 db2inst1 db2iadm1     4096 Mar 19 13:54 SQLDBCON
+-rw------- 1 db2inst1 db2iadm1    16384 Mar 19 13:57 SQLDBCONF
+-rw-r----- 1 db2inst1 db2iadm1        9 Mar 19 13:58 SQLINSLK
+-rw------- 1 db2inst1 db2iadm1    24576 Mar 19 13:57 SQLOGCTL.LFH.1
+-rw------- 1 db2inst1 db2iadm1    24576 Mar 19 13:57 SQLOGCTL.LFH.2
+drwxr-x--- 2 db2inst1 db2iadm1     4096 Mar 19 13:57 SQLOGDIR
+-rw------- 1 db2inst1 db2iadm1     8192 Mar 19 13:57 SQLOGMIR.LFH
+-rw------- 1 db2inst1 db2iadm1   135168 Mar 19 13:54 SQLSGF.1
+-rw------- 1 db2inst1 db2iadm1   135168 Mar 19 13:54 SQLSGF.2
+-rw------- 1 db2inst1 db2iadm1  3145728 Mar 19 13:57 SQLSPCS.1
+-rw------- 1 db2inst1 db2iadm1  3145728 Mar 19 13:57 SQLSPCS.2
+-rw-r----- 1 db2inst1 db2iadm1        0 Mar 19 13:54 SQLTMPLK
+-rw------- 1 db2inst1 db2iadm1 10485760 Mar 19 13:54 tracking
+-rw------- 1 db2inst1 db2iadm1 20971520 Mar 19 13:54 validateitm
+
+SQL00004/db2event:
+total 4
+drwxr-x--- 2 db2inst1 db2iadm1 4096 Mar 19 13:57 db2detaildeadlock
+
+SQL00004/db2event/db2detaildeadlock:
+total 8
+-rw-r--r-- 1 db2inst1 db2iadm1 279 Mar 19 13:57 00000000.evt
+-rw-r----- 1 db2inst1 db2iadm1  43 Mar 19 13:57 db2event.ctl
+
+SQL00004/SQLOGDIR:
+total 102700
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000000.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000001.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000002.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000003.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000004.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000005.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000006.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000007.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000008.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000009.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000010.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000011.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000012.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000013.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000014.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000015.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000016.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000017.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000018.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000019.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000020.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000021.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000022.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000023.LOG
+-rw------- 1 db2inst1 db2iadm1 4202496 Mar 19 13:57 S0000024.LOG
+
+sqldbdir:
+total 20
+-rw-rw-r-- 1 db2inst1 db2iadm1 5412 Mar 19 13:54 sqldbbak
+-rw-rw-r-- 1 db2inst1 db2iadm1 5412 Mar 19 13:54 sqldbdir
+-rw-rw-r-- 1 db2inst1 db2iadm1  540 Mar 19 13:54 sqldbins
+
+TOOLSDB:
+total 12
+drwx------ 2 db2inst1 db2iadm1 4096 Sep 12  2012 T0000000
+drwx------ 3 db2inst1 db2iadm1 4096 Mar 18 09:07 T0000001
+drwx------ 2 db2inst1 db2iadm1 4096 Sep 12  2012 T0000002
+
+TOOLSDB/T0000000:
+total 65604
+-rw------- 1 db2inst1 db2iadm1 67108864 Sep 12  2012 C0000000.CAT
+
+TOOLSDB/T0000001:
+total 4
+drwx------ 2 db2inst1 db2iadm1 4096 Mar 18 09:07 C0000000.TMP
+
+TOOLSDB/T0000001/C0000000.TMP:
+total 4
+-rw------- 1 db2inst1 db2iadm1 512 Mar 18 09:07 SQLTAG.NAM
+
+TOOLSDB/T0000002:
+total 32804
+-rw------- 1 db2inst1 db2iadm1 33554432 Sep 12  2012 C0000000.LRG

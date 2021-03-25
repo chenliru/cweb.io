@@ -1,0 +1,200 @@
+/dbbkup/etc/sql/unload.b3b.2.sql
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+Database closed.
+
+
+Database selected.
+
+
+
+      (count(*)) 
+
+           10168
+
+1 row(s) retrieved.
+
+
+
+Database closed.
+
+/dbbkup/etc/sql/unload.containers.3.sql
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+Database closed.
+
+
+Database selected.
+
+
+
+      (count(*)) 
+
+          138792
+
+1 row(s) retrieved.
+
+
+
+Database closed.
+
+/dbbkup/etc/sql/unload.status_history.4.sql
+
+Database selected.
+
+
+49052 row(s) unloaded.
+
+
+Database closed.
+
+
+Database selected.
+
+
+
+      (count(*)) 
+
+        22682871
+
+1 row(s) retrieved.
+
+
+
+Database closed.
+
+/dbbkup/etc/sql/unload.b3_line_comment.7.sql
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+Database closed.
+
+
+Database selected.
+
+
+
+      (count(*)) 
+
+            3778
+
+1 row(s) retrieved.
+
+
+
+Database closed.
+
+/dbbkup/etc/sql/unload.b3_recap_details.8.sql
+
+Database selected.
+
+
+128463 row(s) unloaded.
+
+
+Database closed.
+
+
+Database selected.
+
+
+
+      (count(*)) 
+
+        73429320
+
+1 row(s) retrieved.
+
+
+
+Database closed.
+
+/dbbkup/etc/sql/unload.b3_line.6.sql
+
+Database selected.
+
+
+50537 row(s) unloaded.
+
+
+Database closed.
+
+
+Database selected.
+
+
+
+      (count(*)) 
+
+        43125837
+
+1 row(s) retrieved.
+
+
+
+Database closed.
+
+/dbbkup/etc/sql/unload.b3_subheader.5.sql
+
+Database selected.
+
+
+14740 row(s) unloaded.
+
+
+Database closed.
+
+
+Database selected.
+
+
+
+      (count(*)) 
+
+         8213116
+
+1 row(s) retrieved.
+
+
+
+Database closed.
+
+/dbbkup/etc/sql/unload.b3.1.sql
+
+Database selected.
+
+
+10478 row(s) unloaded.
+
+
+Database closed.
+
+
+Database selected.
+
+
+
+      (count(*)) 
+
+         5198808
+
+1 row(s) retrieved.
+
+
+
+Database closed.
+

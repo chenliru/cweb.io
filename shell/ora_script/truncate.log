@@ -1,0 +1,5 @@
+SQL> @truncate.sql
+
+Table truncated.
+
+SQL> spool off

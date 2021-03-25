@@ -1,0 +1,85 @@
+#!/bin/ksh
+#################################################################################
+# Program : mon.stor
+# Purpose : Script to use "df -k" to find system storage usage
+#
+# Licensed Materials - Property of SIEMEMS 
+#
+# Author : Liru Chen
+#  
+# COPYRIGHT SIEMEMS ENTERPRISE COMMUNICATION. 1989,1995 
+# All Rights Reserved 
+#
+#################################################################################
+#set -v
+#set -x
+
+# df -k display filesystem name on 6 collumn on Linux, 7 on AIX and 7 on SunOS
+# Used% on 5 on Linux, 4 on AIX and 4 on SunOS
+
+PLATFORM=`uname`
+if [[ $PLATFORM = "SunOS" ]]; then
+ fs_name_id=7
+ fs_used_id=4
+fi
+if [[ $PLATFORM = "AIX" ]]; then
+ fs_head=3
+ fs_name_id=2
+ fs_used_id=4
+fi
+if [[ $PLATFORM = "Linux" ]]; then
+ fs_head=0
+ fs_name_id=3
+ fs_used_id=5
+fi
+
+set -A fsname `mount | tail -n +$fs_head | awk '{print $'$fs_name_id'}'`
+
+. ~/tools.profile
+tempfile=$TMPDIR/`hostname`.fsuse
+
+fsused(){
+#set -vx
+  typeset fs=$1
+  typeset used=$2
+
+  # check filesystem usage
+  df -k $fs | tail -n -1 | awk '{ print $'$fs_used_id'}' \
+            | egrep $used  > /dev/null 2>&1
+}
+
+fschanged(){
+ if [[ -f $tempfile ]];then
+  date  >  $tempfile.cur
+  df -k >> $tempfile.cur
+  diff $tempfile $tempfile.cur
+  mv $tempfile.cur $tempfile
+ else
+  date  >  $tempfile
+  df -k >> $tempfile
+ fi
+
+}
+
+###################
+# Main Start
+###################
+
+echo "\n========================================= "
+echo "\nFollowing File System space usage changed "
+echo "\n========================================= "
+
+fschanged
+
+echo "\n=================================== "
+echo "\nFollowing File System(s) space full "
+echo "\n=================================== "
+
+for fslist in ${fsname[*]}
+do
+ fsused $fslist "(9[0-9]|100)" && {
+  echo "Warning: File System $fslist is full, above 90% fs space used"
+  #exit 1
+  }
+done
+

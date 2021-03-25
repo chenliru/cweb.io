@@ -1,0 +1,34 @@
+#!/bin/ksh
+###########################################################
+# Name:         cgi.idsbackup
+###########################################################
+set -v
+set -x
+
+aixsupport="lchen@livingstonintl.com"
+instance=ipdb
+
+bkupdate=`date +%Y%m%d%H%M`
+
+. /home/informix/ids115.env $instance
+
+cat /dev/null > /cgi/db/ipdb_bkup_L0
+chown informix:informix /cgi/db/ipdb_bkup_L0
+chmod 666 /cgi/db/ipdb_bkup_L0
+
+ontape -v -s -L 0 -t /cgi/db/ipdb_bkup_L0 <<EOF>> /cgi/log/idsbackup.log 2>&1 
+^M
+^M
+EOF
+
+if [ $? != 0 ]
+then
+ echo "\nError: database backup failed" 
+ mail -s "CGI Database backup failed (IFX01)" $aixsupport < /dev/null
+ exit 1
+fi
+
+#Mail to Administrator;
+mail -s "CGI Database backup successful (IFX01)" $aixsupport < /dev/null
+
+exit 0

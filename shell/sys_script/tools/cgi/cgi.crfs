@@ -1,0 +1,99 @@
+#!/bin/ksh
+################################################################################
+#
+# Command:      For example: cgi.crfs <vgname>
+#
+# Modification History:
+#
+#               Date            Name            Description
+#               ------------------------------------------------------------
+#               2013-09         Liru Chen       Created for cgi migration
+#
+####################################################################################
+set -v
+set -x
+
+vgname=../etc/$1
+fsfile=../etc/$1
+
+logfile=../log/crfs.log
+
+createFs() {
+set -x
+set -v
+
+ fsname=$1
+
+ echo "\n Start to create filesystem...." | tee -a $logfile
+ cp /etc/filesystems ../etc/`hostname`.filesystems
+ [[ $? != 0 ]] && exit 1
+
+ # remove file system if may still have record in /etc/filesystems. 
+ # remove its entry in the /etc/filesystems file,and the underlying logical volume.
+ grep $fsname /etc/filesystems
+ if [[ $? = 0 ]]; then
+  echo " Warning: FIRSTLY, we will DELETE current $createfsname."
+  echo ""
+  echo ""
+  echo " CONTROL+C to STOP Restore process if you DONOT want to DELETE current $fsname..."
+  sleep 30
+ 
+  cd /
+  umount -f $fsname
+  /usr/sbin/rmfs $fsname
+ fi
+ 
+ # Parameters of logic volume(old) created
+ cat $fsfile | grep $fsname | \
+ while read LV_NAME TYPE LPs PPs PVs LV_STATE MOUNT_POINT
+ do
+  # Create Logic Volumes on new Volume Group
+  /usr/sbin/mklv -t jfs2 -y $LV_NAME $vgname $LPs
+  [[ $? != 0 ]] && exit 1
+
+  # Create FileSystems
+  /usr/sbin/crfs -v jfs2 -d $LV_NAME -m $MOUNT_POINT -A yes \
+                 -p rw -a logname=$jfs2loglv
+  [[ $? != 0 ]] && exit 1
+
+  mount $MOUNT_POINT
+ done
+
+echo "Create File System $fsname completed successfully." | tee -a $logfile
+
+return 0
+}
+
+#########################################################
+#Create File System(s) listed in backuped volume group(s)
+#########################################################
+#Get a list of the file systems in volume group(s) 
+
+createfilesystem=$(grep jfs $fsfile | grep -v N/A \
+                 | awk '{print $7}')
+
+# get number of filesystem in the string "create_filesystem"
+set $createfilesystem
+integer fsCount=$#
+
+integer Count=1
+
+while (( $Count <= $fsCount ))
+do
+
+  sync
+  sleep 5
+
+  #If file system not mounted and cannot be mounted, create it.
+  mount | grep $1
+  if [[ $? != 0 ]]; then
+   mount $1
+   [[ $? != 0 ]] && createFs $1
+  fi
+
+  shift 1
+  Count=Count+1
+
+done
+
+exit 0

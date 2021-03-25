@@ -1,0 +1,2151 @@
++ set -v
+# tableName
+tableList=/archbkup/log/downloadtables
++ tableList=/archbkup/log/downloadtables
+unloadDir=/archbkup/log
++ unloadDir=/archbkup/log
+DATABASE=ip_0p@ipdb
+
++ DATABASE=ip_0p@ipdb
+tableNames=($(cat $tableList))
++ cat /archbkup/log/downloadtables
++ tableNames=( client_invoice ctry_code tservice state_model tariff_treatment usport_exit stringtable claim_log branch carrier hs_uom hs_duty_rate as_accounted as_claimed status_history transp_mode user_locus_xref b3_iid b3_line_iid b3_linecomment_iid b3_recapdetail_iid b3_subhdr_iid b3b_iid status_history_iid as_accounted_iid accountcontact_iid as_claimed_iid company_iid claim_log_iid client_iid userlocusxref_iid ip_rmd_iid ip_cci_iid ip_cci_line_iid ip_b3b_iid contact_type currency_code documents_list canct_off client ip_cci lii_contact product tariff_code lii_client ip_rmd securuser lii_account account_contact b3b ip_cci_line product_used search_criteria b3_line_comment ip_b3b privilege securgroup services usergroup terr tipsysflds fldidtbl_datatypes gst_rate_code ip_ccn ip_ccn_iid securuser_iid b3_subhdr_iid_1 b3_line_iid_1 b3_rcpdet_iid_1 b3_lincmt_iid_1 b3_subhdr_iid_2 b3_line_iid_2 b3_rcpdet_iid_2 b3_lincmt_iid_2 b3_subhdr_iid_3 b3_line_iid_3 b3_rcpdet_iid_3 b3_lincmt_iid_3 b3_subhdr_iid_4 b3_line_iid_4 b3_rcpdet_iid_4 b3_lincmt_iid_4 b3_subhdr_iid_5 b3_line_iid_5 b3_rcpdet_iid_5 b3_lincmt_iid_5 delimiter srch_crit_batch bulletin company trk_tariff temp_b3 rpt_b3 rpt_b3_subheader rpt_b3_line bat_control bat_id bat_info reporterr b3 b3_subheader b3_line b3_recap_details insight_pdq tariff containers container_iid containershold nbat_info nsrch_crit_batch )
+currentDate=$(date +%Y%m%d)
+
++ date +%Y%m%d
++ currentDate=20150509
+#setup Database environment
+. /home/lchen/ids115.env $DATABASE
+
++ . /home/lchen/ids115.env ip_0p@ipdb
+SRVR=$1
+echo ""
+echo " Server $SRVR environment ..."
+echo ""
+INFVERSION=ver115UC3
+INFORMIXDIR=/usr/apps/inf/$INFVERSION
+INFORMIXSERVER=$SRVR
+ONCONFIG=onconfig_$INFORMIXSERVER 
+ARC_CONFIG=onarconfig_$INFORMIXSERVER
+PATH=$INFORMIXDIR/bin:$PATH
+INFORMIXTERM=termcap
+TERMCAP=$INFORMIXDIR/etc/termcap
+SYSROOT=/usr/apps
+INFROOT=$SYSROOT/inf
+INFBIN=$INFORMIXDIR/bin
+INFLIB=$INFORMIXDIR/lib
+INFINC=$INFORMIXDIR/incl
+INFPLATFORM=IBMAIX
+INFLOGDIR=/home/informix/log
+INFBKUP=/home/informix/bkup
+#DBSPACETEMP=tempdbs1:tempdbs2:tempdbs3S
+export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
+export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM 
+export INFLOGDIR INFBKUP 
+#export DBSPACETEMP
+export INFXCPUVPPRIORITY=90
+export INFXNETVPPRIORITY=90
+export INFXMSCVPPRIORITY=90
+export INFXIOVPPRIORITY=90
++ SRVR=ip_0p@ipdb
++ echo ''
+
++ echo ' Server ip_0p@ipdb environment ...'
+ Server ip_0p@ipdb environment ...
++ echo ''
+
++ INFVERSION=ver115UC3
++ INFORMIXDIR=/usr/apps/inf/ver115UC3
++ INFORMIXSERVER=ip_0p@ipdb
++ ONCONFIG=onconfig_ip_0p@ipdb
++ ARC_CONFIG=onarconfig_ip_0p@ipdb
++ PATH=/usr/apps/inf/ver115UC3/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/home/lchen/bin:/usr/bin/X11:/sbin:.
++ INFORMIXTERM=termcap
++ TERMCAP=/usr/apps/inf/ver115UC3/etc/termcap
++ SYSROOT=/usr/apps
++ INFROOT=/usr/apps/inf
++ INFBIN=/usr/apps/inf/ver115UC3/bin
++ INFLIB=/usr/apps/inf/ver115UC3/lib
++ INFINC=/usr/apps/inf/ver115UC3/incl
++ INFPLATFORM=IBMAIX
++ INFLOGDIR=/home/informix/log
++ INFBKUP=/home/informix/bkup
++ export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
++ export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM
++ export INFLOGDIR INFBKUP
++ INFXCPUVPPRIORITY=90
++ export INFXCPUVPPRIORITY
++ INFXNETVPPRIORITY=90
++ export INFXNETVPPRIORITY
++ INFXMSCVPPRIORITY=90
++ export INFXMSCVPPRIORITY
++ INFXIOVPPRIORITY=90
++ export INFXIOVPPRIORITY
+if [[ $1 == "data" ]]
+then
+	#download tables
+	integer summ=${#tableNames[@]}
+	integer i=0
+
+	while (( i < summ ))
+	do 
+		echo "
+		UNLOAD TO "$unloadDir/${tableNames[$i]}.$currentDate" \
+			SELECT * FROM ${tableNames[$i]}" |\
+		$INFORMIXDIR/bin/dbaccess $DATABASE
+
+	i=i+1
+	done
+
+else
+	#get table names
+	echo "
+	select tabname,nrows from systables " |\
+	$INFORMIXDIR/bin/dbaccess $DATABASE > $tableList
+
+fi
+
++ [[ data == data ]]
++ summ=110
++ typeset -i summ
++ i=0
++ typeset -i i
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/client_invoice.20150509 \t\t\tSELECT * FROM client_invoice'
+
+Database selected.
+
+
+Write failed. 11327007 rows unloaded (check ulimit or disk space).
+
+Error in line 1
+Near character position 54
+
+
+Warning:Data Commit is a result of an unhandled exception in TXN PROC/FUNC/TRI
+
+
+
+Data committed.
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ctry_code.20150509 \t\t\tSELECT * FROM ctry_code'
+
+Database selected.
+
+
+623 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/tservice.20150509 \t\t\tSELECT * FROM tservice'
+
+Database selected.
+
+
+245 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/state_model.20150509 \t\t\tSELECT * FROM state_model'
+
+Database selected.
+
+
+18 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/tariff_treatment.20150509 \t\t\tSELECT * FROM tariff_treatment'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/usport_exit.20150509 \t\t\tSELECT * FROM usport_exit'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+437 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/stringtable.20150509 \t\t\tSELECT * FROM stringtable'
+
+Database selected.
+
+
+40 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/claim_log.20150509 \t\t\tSELECT * FROM claim_log'
+
+Database selected.
+
+
+550764 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/branch.20150509 \t\t\tSELECT * FROM branch'
+
+Database selected.
+
+
+637 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/carrier.20150509 \t\t\tSELECT * FROM carrier'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+26027 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/hs_uom.20150509 \t\t\tSELECT * FROM hs_uom'
+
+Database selected.
+
+
+56531 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/hs_duty_rate.20150509 \t\t\tSELECT * FROM hs_duty_rate'
+
+Database selected.
+
+
+904205 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/as_accounted.20150509 \t\t\tSELECT * FROM as_accounted'
+
+Database selected.
+
+
+1697489 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/as_claimed.20150509 \t\t\tSELECT * FROM as_claimed'
+
+Database selected.
+
+
+1824997 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/status_history.20150509 \t\t\tSELECT * FROM status_history'
+
+Database selected.
+
+
+24882415 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/transp_mode.20150509 \t\t\tSELECT * FROM transp_mode'
+
+Database selected.
+
+
+7 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/user_locus_xref.20150509 \t\t\tSELECT * FROM user_locus_xref'
+
+Database selected.
+
+
+51217 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_iid.20150509 \t\t\tSELECT * FROM b3_iid'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line_iid.20150509 \t\t\tSELECT * FROM b3_line_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_linecomment_iid.20150509 \t\t\tSELECT * FROM b3_linecomment_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_recapdetail_iid.20150509 \t\t\tSELECT * FROM b3_recapdetail_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_subhdr_iid.20150509 \t\t\tSELECT * FROM b3_subhdr_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3b_iid.20150509 \t\t\tSELECT * FROM b3b_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/status_history_iid.20150509 \t\t\tSELECT * FROM status_history_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/as_accounted_iid.20150509 \t\t\tSELECT * FROM as_accounted_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/accountcontact_iid.20150509 \t\t\tSELECT * FROM accountcontact_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/as_claimed_iid.20150509 \t\t\tSELECT * FROM as_claimed_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/company_iid.20150509 \t\t\tSELECT * FROM company_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/claim_log_iid.20150509 \t\t\tSELECT * FROM claim_log_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/client_iid.20150509 \t\t\tSELECT * FROM client_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/userlocusxref_iid.20150509 \t\t\tSELECT * FROM userlocusxref_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_rmd_iid.20150509 \t\t\tSELECT * FROM ip_rmd_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_cci_iid.20150509 \t\t\tSELECT * FROM ip_cci_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_cci_line_iid.20150509 \t\t\tSELECT * FROM ip_cci_line_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_b3b_iid.20150509 \t\t\tSELECT * FROM ip_b3b_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/contact_type.20150509 \t\t\tSELECT * FROM contact_type'
+
+Database selected.
+
+
+8 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/currency_code.20150509 \t\t\tSELECT * FROM currency_code'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/documents_list.20150509 \t\t\tSELECT * FROM documents_list'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/canct_off.20150509 \t\t\tSELECT * FROM canct_off'
+
+Database selected.
+
+
+323 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/client.20150509 \t\t\tSELECT * FROM client'
+
+Database selected.
+
+
+3 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_cci.20150509 \t\t\tSELECT * FROM ip_cci'
+
+Database selected.
+
+
+1664 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/lii_contact.20150509 \t\t\tSELECT * FROM lii_contact'
+
+Database selected.
+
+
+392 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/product.20150509 \t\t\tSELECT * FROM product'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/tariff_code.20150509 \t\t\tSELECT * FROM tariff_code'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+19108 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/lii_client.20150509 \t\t\tSELECT * FROM lii_client'
+
+Database selected.
+
+
+181765 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_rmd.20150509 \t\t\tSELECT * FROM ip_rmd'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+1390 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/securuser.20150509 \t\t\tSELECT * FROM securuser'
+
+Database selected.
+
+
+11159 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/lii_account.20150509 \t\t\tSELECT * FROM lii_account'
+
+Database selected.
+
+
+202996 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/account_contact.20150509 \t\t\tSELECT * FROM account_contact'
+
+Database selected.
+
+
+2429 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3b.20150509 \t\t\tSELECT * FROM b3b'
+
+Database selected.
+
+
+10197 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_cci_line.20150509 \t\t\tSELECT * FROM ip_cci_line'
+
+Database selected.
+
+
+5080 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/product_used.20150509 \t\t\tSELECT * FROM product_used'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/search_criteria.20150509 \t\t\tSELECT * FROM search_criteria'
+
+Database selected.
+
+
+18555 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line_comment.20150509 \t\t\tSELECT * FROM b3_line_comment'
+
+Database selected.
+
+
+3794 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_b3b.20150509 \t\t\tSELECT * FROM ip_b3b'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/privilege.20150509 \t\t\tSELECT * FROM privilege'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/securgroup.20150509 \t\t\tSELECT * FROM securgroup'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/services.20150509 \t\t\tSELECT * FROM services'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/usergroup.20150509 \t\t\tSELECT * FROM usergroup'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/terr.20150509 \t\t\tSELECT * FROM terr'
+
+Database selected.
+
+
+280 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/tipsysflds.20150509 \t\t\tSELECT * FROM tipsysflds'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/fldidtbl_datatypes.20150509 \t\t\tSELECT * FROM fldidtbl_datatypes'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/gst_rate_code.20150509 \t\t\tSELECT * FROM gst_rate_code'
+
+Database selected.
+
+
+3 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_ccn.20150509 \t\t\tSELECT * FROM ip_ccn'
+
+Database selected.
+
+
+73 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/ip_ccn_iid.20150509 \t\t\tSELECT * FROM ip_ccn_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/securuser_iid.20150509 \t\t\tSELECT * FROM securuser_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_subhdr_iid_1.20150509 \t\t\tSELECT * FROM b3_subhdr_iid_1'
+
+Database selected.
+
+
+  244: Could not do a physical-order read to fetch next row.
+Error in line 1
+Near character position 84
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line_iid_1.20150509 \t\t\tSELECT * FROM b3_line_iid_1'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_rcpdet_iid_1.20150509 \t\t\tSELECT * FROM b3_rcpdet_iid_1'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_lincmt_iid_1.20150509 \t\t\tSELECT * FROM b3_lincmt_iid_1'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_subhdr_iid_2.20150509 \t\t\tSELECT * FROM b3_subhdr_iid_2'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line_iid_2.20150509 \t\t\tSELECT * FROM b3_line_iid_2'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_rcpdet_iid_2.20150509 \t\t\tSELECT * FROM b3_rcpdet_iid_2'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_lincmt_iid_2.20150509 \t\t\tSELECT * FROM b3_lincmt_iid_2'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_subhdr_iid_3.20150509 \t\t\tSELECT * FROM b3_subhdr_iid_3'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line_iid_3.20150509 \t\t\tSELECT * FROM b3_line_iid_3'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_rcpdet_iid_3.20150509 \t\t\tSELECT * FROM b3_rcpdet_iid_3'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_lincmt_iid_3.20150509 \t\t\tSELECT * FROM b3_lincmt_iid_3'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_subhdr_iid_4.20150509 \t\t\tSELECT * FROM b3_subhdr_iid_4'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line_iid_4.20150509 \t\t\tSELECT * FROM b3_line_iid_4'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_rcpdet_iid_4.20150509 \t\t\tSELECT * FROM b3_rcpdet_iid_4'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_lincmt_iid_4.20150509 \t\t\tSELECT * FROM b3_lincmt_iid_4'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_subhdr_iid_5.20150509 \t\t\tSELECT * FROM b3_subhdr_iid_5'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line_iid_5.20150509 \t\t\tSELECT * FROM b3_line_iid_5'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_rcpdet_iid_5.20150509 \t\t\tSELECT * FROM b3_rcpdet_iid_5'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_lincmt_iid_5.20150509 \t\t\tSELECT * FROM b3_lincmt_iid_5'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/delimiter.20150509 \t\t\tSELECT * FROM delimiter'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/srch_crit_batch.20150509 \t\t\tSELECT * FROM srch_crit_batch'
+
+Database selected.
+
+
+323 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/bulletin.20150509 \t\t\tSELECT * FROM bulletin'
+
+Database selected.
+
+
+83 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/company.20150509 \t\t\tSELECT * FROM company'
+
+Database selected.
+
+
+1068935 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/trk_tariff.20150509 \t\t\tSELECT * FROM trk_tariff'
+
+Database selected.
+
+
+  272: No SELECT permission.
+Error in line 2
+Near character position 0
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/temp_b3.20150509 \t\t\tSELECT * FROM temp_b3'
+
+Database selected.
+
+
+3340 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/rpt_b3.20150509 \t\t\tSELECT * FROM rpt_b3'
+
+Database selected.
+
+
+3489 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/rpt_b3_subheader.20150509 \t\t\tSELECT * FROM rpt_b3_subheader'
+
+Database selected.
+
+
+5676 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/rpt_b3_line.20150509 \t\t\tSELECT * FROM rpt_b3_line'
+
+Database selected.
+
+
+56393 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/bat_control.20150509 \t\t\tSELECT * FROM bat_control'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/bat_id.20150509 \t\t\tSELECT * FROM bat_id'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/bat_info.20150509 \t\t\tSELECT * FROM bat_info'
+
+Database selected.
+
+
+21 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/reporterr.20150509 \t\t\tSELECT * FROM reporterr'
+
+Database selected.
+
+
+0 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3.20150509 \t\t\tSELECT * FROM b3'
+
+Database selected.
+
+
+Write failed. 2593101 rows unloaded (check ulimit or disk space).
+
+Error in line 1
+Near character position 42
+
+
+Warning:Data Commit is a result of an unhandled exception in TXN PROC/FUNC/TRI
+
+
+
+Data committed.
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_subheader.20150509 \t\t\tSELECT * FROM b3_subheader'
+
+Database selected.
+
+
+  244: Could not do a physical-order read to fetch next row.
+Error in line 1
+Near character position 78
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line.20150509 \t\t\tSELECT * FROM b3_line'
+
+Database selected.
+
+
+Write failed. 4260901 rows unloaded (check ulimit or disk space).
+
+Error in line 1
+Near character position 47
+
+
+Warning:Data Commit is a result of an unhandled exception in TXN PROC/FUNC/TRI
+
+
+
+Data committed.
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_recap_details.20150509 \t\t\tSELECT * FROM b3_recap_details'
+
+Database selected.
+
+
+Write failed. 12218746 rows unloaded (check ulimit or disk space).
+
+Error in line 1
+Near character position 56
+
+
+Warning:Data Commit is a result of an unhandled exception in TXN PROC/FUNC/TRI
+
+
+
+Data committed.
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/insight_pdq.20150509 \t\t\tSELECT * FROM insight_pdq'
+
+Database selected.
+
+
+5 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/tariff.20150509 \t\t\tSELECT * FROM tariff'
+
+Database selected.
+
+
+Write failed. 3313311 rows unloaded (check ulimit or disk space).
+
+Error in line 1
+Near character position 46
+
+
+Warning:Data Commit is a result of an unhandled exception in TXN PROC/FUNC/TRI
+
+
+
+Data committed.
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/containers.20150509 \t\t\tSELECT * FROM containers'
+
+Database selected.
+
+
+142193 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/container_iid.20150509 \t\t\tSELECT * FROM container_iid'
+
+Database selected.
+
+
+1 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/containershold.20150509 \t\t\tSELECT * FROM containershold'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+1118 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/nbat_info.20150509 \t\t\tSELECT * FROM nbat_info'
+
+Database selected.
+
+
+82 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/nsrch_crit_batch.20150509 \t\t\tSELECT * FROM nsrch_crit_batch'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+553 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
+exit 0
+
+
+
++ exit 0
++ set -v
+# tableName
+tableList=/archbkup/log/downloadtables
++ tableList=/archbkup/log/downloadtables
+unloadDir=/archbkup/log
++ unloadDir=/archbkup/log
+DATABASESVC=ipdb
++ DATABASESVC=ipdb
+DATABASE=ip_0p@ipdb
+
++ DATABASE=ip_0p@ipdb
+tableNames=($(cat $tableList))
++ cat /archbkup/log/downloadtables
+cat: 0652-050 Cannot open /archbkup/log/downloadtables.
++ tableNames=( )
+currentDate=$(date +%Y%m%d)
+
++ date +%Y%m%d
++ currentDate=20150509
+#setup Database environment
+. /home/lchen/ids115.env $DATABASESVC
+
++ . /home/lchen/ids115.env ipdb
+SRVR=$1
+echo ""
+echo " Server $SRVR environment ..."
+echo ""
+INFVERSION=ver115UC3
+INFORMIXDIR=/usr/apps/inf/$INFVERSION
+INFORMIXSERVER=$SRVR
+ONCONFIG=onconfig_$INFORMIXSERVER 
+ARC_CONFIG=onarconfig_$INFORMIXSERVER
+PATH=$INFORMIXDIR/bin:$PATH
+INFORMIXTERM=termcap
+TERMCAP=$INFORMIXDIR/etc/termcap
+SYSROOT=/usr/apps
+INFROOT=$SYSROOT/inf
+INFBIN=$INFORMIXDIR/bin
+INFLIB=$INFORMIXDIR/lib
+INFINC=$INFORMIXDIR/incl
+INFPLATFORM=IBMAIX
+INFLOGDIR=/home/informix/log
+INFBKUP=/home/informix/bkup
+#DBSPACETEMP=tempdbs1:tempdbs2:tempdbs3S
+export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
+export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM 
+export INFLOGDIR INFBKUP 
+#export DBSPACETEMP
+export INFXCPUVPPRIORITY=90
+export INFXNETVPPRIORITY=90
+export INFXMSCVPPRIORITY=90
+export INFXIOVPPRIORITY=90
++ SRVR=ipdb
++ echo ''
+
++ echo ' Server ipdb environment ...'
+ Server ipdb environment ...
++ echo ''
+
++ INFVERSION=ver115UC3
++ INFORMIXDIR=/usr/apps/inf/ver115UC3
++ INFORMIXSERVER=ipdb
++ ONCONFIG=onconfig_ipdb
++ ARC_CONFIG=onarconfig_ipdb
++ PATH=/usr/apps/inf/ver115UC3/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/home/lchen/bin:/usr/bin/X11:/sbin:.
++ INFORMIXTERM=termcap
++ TERMCAP=/usr/apps/inf/ver115UC3/etc/termcap
++ SYSROOT=/usr/apps
++ INFROOT=/usr/apps/inf
++ INFBIN=/usr/apps/inf/ver115UC3/bin
++ INFLIB=/usr/apps/inf/ver115UC3/lib
++ INFINC=/usr/apps/inf/ver115UC3/incl
++ INFPLATFORM=IBMAIX
++ INFLOGDIR=/home/informix/log
++ INFBKUP=/home/informix/bkup
++ export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
++ export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM
++ export INFLOGDIR INFBKUP
++ INFXCPUVPPRIORITY=90
++ export INFXCPUVPPRIORITY
++ INFXNETVPPRIORITY=90
++ export INFXNETVPPRIORITY
++ INFXMSCVPPRIORITY=90
++ export INFXMSCVPPRIORITY
++ INFXIOVPPRIORITY=90
++ export INFXIOVPPRIORITY
+if [[ $1 == "data" ]]
+then
+	#download tables
+	integer summ=${#tableNames[@]}
+	integer i=0
+
+	while (( i < summ ))
+	do 
+		echo "
+		UNLOAD TO "$unloadDir/${tableNames[$i]}.$currentDate" \
+			SELECT * FROM ${tableNames[$i]}" |\
+		$INFORMIXDIR/bin/dbaccess $DATABASE
+
+	i=i+1
+	done
+
+else
+	#get table names
+	echo "
+	select tabname,nrows from systables " |\
+	$INFORMIXDIR/bin/dbaccess $DATABASE > $tableList
+
+fi
+
++ [[ '' == data ]]
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\tselect tabname,nrows from systables '
++ 1> /archbkup/log/downloadtables
+
+Database selected.
+
+
+189 row(s) retrieved.
+
+
+Database closed.
+
+exit 0
+
+
+
++ exit 0
++ set -v
+# tableName
+tableList=/archbkup/log/downloadtables
++ tableList=/archbkup/log/downloadtables
+unloadDir=/archbkup/log
++ unloadDir=/archbkup/log
+DATABASESVC=ipdb
++ DATABASESVC=ipdb
+DATABASE=ip_0p@ipdb
+
++ DATABASE=ip_0p@ipdb
+tableNames=($(cat $tableList))
++ cat /archbkup/log/downloadtables
++ tableNames=( b3 b3_line b3_recap_details client_invoice tariff )
+currentDate=$(date +%Y%m%d)
+
++ date +%Y%m%d
++ currentDate=20150509
+#setup Database environment
+. /home/lchen/ids115.env $DATABASESVC
+
++ . /home/lchen/ids115.env ipdb
+SRVR=$1
+echo ""
+echo " Server $SRVR environment ..."
+echo ""
+INFVERSION=ver115UC3
+INFORMIXDIR=/usr/apps/inf/$INFVERSION
+INFORMIXSERVER=$SRVR
+ONCONFIG=onconfig_$INFORMIXSERVER 
+ARC_CONFIG=onarconfig_$INFORMIXSERVER
+PATH=$INFORMIXDIR/bin:$PATH
+INFORMIXTERM=termcap
+TERMCAP=$INFORMIXDIR/etc/termcap
+SYSROOT=/usr/apps
+INFROOT=$SYSROOT/inf
+INFBIN=$INFORMIXDIR/bin
+INFLIB=$INFORMIXDIR/lib
+INFINC=$INFORMIXDIR/incl
+INFPLATFORM=IBMAIX
+INFLOGDIR=/home/informix/log
+INFBKUP=/home/informix/bkup
+#DBSPACETEMP=tempdbs1:tempdbs2:tempdbs3S
+export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
+export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM 
+export INFLOGDIR INFBKUP 
+#export DBSPACETEMP
+export INFXCPUVPPRIORITY=90
+export INFXNETVPPRIORITY=90
+export INFXMSCVPPRIORITY=90
+export INFXIOVPPRIORITY=90
++ SRVR=ipdb
++ echo ''
+
++ echo ' Server ipdb environment ...'
+ Server ipdb environment ...
++ echo ''
+
++ INFVERSION=ver115UC3
++ INFORMIXDIR=/usr/apps/inf/ver115UC3
++ INFORMIXSERVER=ipdb
++ ONCONFIG=onconfig_ipdb
++ ARC_CONFIG=onarconfig_ipdb
++ PATH=/usr/apps/inf/ver115UC3/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/home/lchen/bin:/usr/bin/X11:/sbin:.
++ INFORMIXTERM=termcap
++ TERMCAP=/usr/apps/inf/ver115UC3/etc/termcap
++ SYSROOT=/usr/apps
++ INFROOT=/usr/apps/inf
++ INFBIN=/usr/apps/inf/ver115UC3/bin
++ INFLIB=/usr/apps/inf/ver115UC3/lib
++ INFINC=/usr/apps/inf/ver115UC3/incl
++ INFPLATFORM=IBMAIX
++ INFLOGDIR=/home/informix/log
++ INFBKUP=/home/informix/bkup
++ export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
++ export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM
++ export INFLOGDIR INFBKUP
++ INFXCPUVPPRIORITY=90
++ export INFXCPUVPPRIORITY
++ INFXNETVPPRIORITY=90
++ export INFXNETVPPRIORITY
++ INFXMSCVPPRIORITY=90
++ export INFXMSCVPPRIORITY
++ INFXIOVPPRIORITY=90
++ export INFXIOVPPRIORITY
+if [[ $1 == "data" ]]
+then
+	#download tables
+	integer summ=${#tableNames[@]}
+	integer i=0
+
+	while (( i < summ ))
+	do 
+		echo "
+		UNLOAD TO "$unloadDir/${tableNames[$i]}.$currentDate" \
+			SELECT * FROM ${tableNames[$i]}" |\
+		$INFORMIXDIR/bin/dbaccess $DATABASE
+
+	i=i+1
+	done
+
+else
+	#get table names
+	echo "
+	select tabname,nrows from systables " |\
+	$INFORMIXDIR/bin/dbaccess $DATABASE > $tableList
+
+fi
+
++ [[ date == data ]]
++ echo $'\n\tselect tabname,nrows from systables '
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ 1> /archbkup/log/downloadtables
+
+Database selected.
+
+
+189 row(s) retrieved.
+
+
+Database closed.
+
+exit 0
+
+
+
++ exit 0
++ set -v
+# tableName
+tableList=/archbkup/log/downloadtables
++ tableList=/archbkup/log/downloadtables
+unloadDir=/archbkup/log
++ unloadDir=/archbkup/log
+DATABASESVC=ipdb
++ DATABASESVC=ipdb
+DATABASE=ip_0p@ipdb
+
++ DATABASE=ip_0p@ipdb
+tableNames=($(cat $tableList))
++ cat /archbkup/log/downloadtables
++ tableNames=( b3 b3_line b3_recap_details client_invoice tariff )
+currentDate=$(date +%Y%m%d)
+
++ date +%Y%m%d
++ currentDate=20150509
+#setup Database environment
+. /home/lchen/ids115.env $DATABASESVC
+
++ . /home/lchen/ids115.env ipdb
+SRVR=$1
+echo ""
+echo " Server $SRVR environment ..."
+echo ""
+INFVERSION=ver115UC3
+INFORMIXDIR=/usr/apps/inf/$INFVERSION
+INFORMIXSERVER=$SRVR
+ONCONFIG=onconfig_$INFORMIXSERVER 
+ARC_CONFIG=onarconfig_$INFORMIXSERVER
+PATH=$INFORMIXDIR/bin:$PATH
+INFORMIXTERM=termcap
+TERMCAP=$INFORMIXDIR/etc/termcap
+SYSROOT=/usr/apps
+INFROOT=$SYSROOT/inf
+INFBIN=$INFORMIXDIR/bin
+INFLIB=$INFORMIXDIR/lib
+INFINC=$INFORMIXDIR/incl
+INFPLATFORM=IBMAIX
+INFLOGDIR=/home/informix/log
+INFBKUP=/home/informix/bkup
+#DBSPACETEMP=tempdbs1:tempdbs2:tempdbs3S
+export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
+export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM 
+export INFLOGDIR INFBKUP 
+#export DBSPACETEMP
+export INFXCPUVPPRIORITY=90
+export INFXNETVPPRIORITY=90
+export INFXMSCVPPRIORITY=90
+export INFXIOVPPRIORITY=90
++ SRVR=ipdb
++ echo ''
+
++ echo ' Server ipdb environment ...'
+ Server ipdb environment ...
++ echo ''
+
++ INFVERSION=ver115UC3
++ INFORMIXDIR=/usr/apps/inf/ver115UC3
++ INFORMIXSERVER=ipdb
++ ONCONFIG=onconfig_ipdb
++ ARC_CONFIG=onarconfig_ipdb
++ PATH=/usr/apps/inf/ver115UC3/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:/home/lchen/bin:/usr/bin/X11:/sbin:.
++ INFORMIXTERM=termcap
++ TERMCAP=/usr/apps/inf/ver115UC3/etc/termcap
++ SYSROOT=/usr/apps
++ INFROOT=/usr/apps/inf
++ INFBIN=/usr/apps/inf/ver115UC3/bin
++ INFLIB=/usr/apps/inf/ver115UC3/lib
++ INFINC=/usr/apps/inf/ver115UC3/incl
++ INFPLATFORM=IBMAIX
++ INFLOGDIR=/home/informix/log
++ INFBKUP=/home/informix/bkup
++ export INFVERSION INFORMIXDIR INFORMIXSERVER ONCONFIG ARC_CONFIG PATH
++ export INFORMIXTERM TERMCAP SYSROOT INFROOT INFBIN INFLIB INFINC INFPLATFORM
++ export INFLOGDIR INFBKUP
++ INFXCPUVPPRIORITY=90
++ export INFXCPUVPPRIORITY
++ INFXNETVPPRIORITY=90
++ export INFXNETVPPRIORITY
++ INFXMSCVPPRIORITY=90
++ export INFXMSCVPPRIORITY
++ INFXIOVPPRIORITY=90
++ export INFXIOVPPRIORITY
+if [[ $1 == "data" ]]
+then
+	#download tables
+	integer summ=${#tableNames[@]}
+	integer i=0
+
+	while (( i < summ ))
+	do 
+		echo "
+		UNLOAD TO "$unloadDir/${tableNames[$i]}.$currentDate" \
+			SELECT * FROM ${tableNames[$i]}" |\
+		$INFORMIXDIR/bin/dbaccess $DATABASE
+
+	i=i+1
+	done
+
+else
+	#get table names
+	echo "
+	select tabname,nrows from systables " |\
+	$INFORMIXDIR/bin/dbaccess $DATABASE > $tableList
+
+fi
+
++ [[ data == data ]]
++ summ=5
++ typeset -i summ
++ i=0
++ typeset -i i
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3.20150509 \t\t\tSELECT * FROM b3'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+5637260 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_line.20150509 \t\t\tSELECT * FROM b3_line'
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
+
+Database selected.
+
+
+41960746 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/b3_recap_details.20150509 \t\t\tSELECT * FROM b3_recap_details'
+
+Database selected.
+
+
+76183208 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/client_invoice.20150509 \t\t\tSELECT * FROM client_invoice'
+
+Database selected.
+
+
+17685199 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
++ /usr/apps/inf/ver115UC3/bin/dbaccess ip_0p@ipdb
++ echo $'\n\t\tUNLOAD TO /archbkup/log/tariff.20150509 \t\t\tSELECT * FROM tariff'
+
+Database selected.
+
+
+19294835 row(s) unloaded.
+
+
+
+Database closed.
+
++ i=i+1
++ (( i < summ ))
+exit 0
+
+
+
++ exit 0

@@ -1,0 +1,7 @@
+[[ -f /tmp/sush ]] && rm -f /tmp/sush
+[[ -f /tmp/sush.ksh ]] && rm -f /tmp/sush.ksh
+[[ -f /tmp/myTab.run ]] && rm -f /tmp/myTab.run
+[[ -f /tmp/script2.sh.out20170228162846 ]] && rm -f /tmp/script2.sh.out20170228162846
+[[ -f /tmp/sush.out ]] && rm -f /tmp/sush.out
+[[ -f /tmp/script2.sh ]] && rm -f /tmp/script2.sh
+[[ -f /tmp/in2 ]] && rm -f /tmp/in2

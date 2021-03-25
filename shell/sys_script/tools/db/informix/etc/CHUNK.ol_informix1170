@@ -1,0 +1,12 @@
+/opt/IBM/informix/ol_informix1170/dbspaces/rootdbs
+/opt/IBM/informix/ol_informix1170/dbspaces/plogdbs
+/opt/IBM/informix/ol_informix1170/dbspaces/llogdbs
+/opt/IBM/informix/ol_informix1170/dbspaces/datadbs
+/opt/IBM/informix/ol_informix1170/dbspaces/sbspace
+/opt/IBM/informix/ol_informix1170/dbspaces/tempdbs
+/opt/IBM/informix/ol_informix1170/dbspaces/datadbs.0
+/opt/IBM/informix/ol_informix1170/dbspaces/datadbs.1
+/opt/IBM/informix/ol_informix1170/dbspaces/llogdbs.1
+/opt/IBM/informix/ol_informix1170/dbspaces/llogdbs.0
+/opt/IBM/informix/ol_informix1170/dbspaces/tempdbs.0
+/opt/IBM/informix/ol_informix1170/dbspaces/tempdbs.1

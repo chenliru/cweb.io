@@ -1,0 +1,50 @@
+#!/usr/bin/ksh
+########################################################################
+# list all the content of files named like "*$2*"
+# usage: cat.con <directory> <pattern>
+#
+# Author: Liru Chen 
+# Date:07/12/2013
+#########################################################################
+#set -v
+#set -x
+ipbit='([0-9]|[1-9][0-9]|[1-2][0-9][0-9])'
+ippattern="$ipbit\.$ipbit\.$ipbit\.$ipbit"
+#echo $ippattern
+
+#Get a list of the name pattern matched files
+filename=`find $1 -name "*$2" -ls |awk '{print $11}'`  
+
+#Get number of filess in the string "filename"
+set $filename   
+integer scount=$#
+
+#Display all content of files matched
+integer icount=0
+
+while (( $icount < $scount ))
+do
+  #echo $ipbit
+  #echo $ippattern
+  #Highlight the lines which contain valid ip address
+  echo "########## IP Address found ################"
+  egrep $ippattern $1
+  if [[ $? -eq 0 ]]; then
+   echo "############################################################################"
+   echo " Content of file $1 " 
+   echo "#############################################################################"
+   cat $1
+   echo "#############################################################################"
+   echo " End of file $1 "
+   echo "#############################################################################"
+   echo ""
+   echo ""
+   echo ""
+  fi
+  
+shift 1
+  icount=icount+1
+done
+
+exit 0
+

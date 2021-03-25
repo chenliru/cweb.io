@@ -1,0 +1,2464 @@
+Filesystem    1024-blocks      Free %Used    Iused %Iused Mounted on
+/dev/hd4          2883584   2629492    9%    12007     2% /
+/dev/hd2          8126464   5121172   37%    71001     6% /usr
+/dev/hd9var       3145728   2196088   31%    10556     3% /var
+/dev/hd3          5242880   4176580   21%      765     1% /tmp
+/dev/hd1          2621440   2038556   23%     2634     1% /home
+/proc                   -         -    -         -     -  /proc
+/dev/hd10opt      7864320   7178896    9%    11894     1% /opt
+/dev/ibmlv       10485760  10187912    3%     3564     1% /ibm
+/dev/achrootlv      262144     11776   96%        5     1% /ach_root
+/dev/netinslv     2621440   2620700    1%        4     1% /netins
+/dev/dmqjtmplv    23330816  12848676   45%     1829     1% /dmqjtmp
+/dev/recyclelv    15728640   9815244   38%     1935     1% /recyclebox
+/dev/achlloglv     1048576     48088   96%        5     1% /ach_llog
+/dev/achdat1lv    49545216   1537304   97%       52     1% /ach_dat1
+/dev/achdat2lv    64225280  12215128   81%       56     1% /ach_dat2
+/dev/achidx1lv     4456448    455440   90%        8     1% /ach_idx1
+/dev/achidx2lv     3145728    144920   96%        7     1% /ach_idx2
+/dev/achtemplv     2097152     72504   97%        6     1% /ach_temp
+/dev/appslv      10485760   6047096   43%    20373     2% /usr/apps
+/dev/achploglv      262144     11776   96%        5     1% /ach_plog
+/dev/ixrootlv      262144     46576   83%        5     1% /ix_root
+/dev/ixploglv      262144      5776   98%        5     1% /ix_plog
+/dev/ixlloglv     1048576     48280   96%        5     1% /ix_llog
+/dev/ixdat1lv    26214400   3210008   88%       27     1% /ix_dat1
+/dev/ixdat2lv    26214400   1209968   96%       29     1% /ix_dat2
+/dev/ixdat3lv    23068672   3064820   87%       24     1% /ix_dat3
+/dev/ixidx1lv     7340032    338556   96%       11     1% /ix_idx1
+/dev/ixidx2lv     5242880    241732   96%        9     1% /ix_idx2
+/dev/ixidx3lv     4194304    193336   96%        8     1% /ix_idx3
+/dev/ixtemplv     4194304    193336   96%        8     1% /ix_temp
+/dev/insightlv     2097152   1992352    5%     3045     1% /insight
+/dev/livedump      262144    261776    1%        4     1% /var/adm/ras/livedump
+/dev/hd11admin      524288    523864    1%        5     1% /admin
+/dev/achdat2_2lv    10747904    745932   94%       14     1% /ach_dat2_2
+/dev/achdat1_2lv     5505024    503856   91%        9     1% /ach_dat1_2
+
+IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 03:07:11 -- 929856 Kbytes
+
+Dbspaces
+address  number   flags      fchunk   nchunks  pgsize   flags    owner    name
+50431810 1        0x1        1        1        4096     N        informix rootdbs
+5051dd50 2        0x1        2        1        4096     N        informix llogdbs
+5051deb0 3        0x1        3        2        4096     N        informix tempdbs1
+51387018 4        0x1        4        1        4096     N        informix plogdbs
+51387178 5        0x1        5        53       4096     N        informix datadbs1
+513872d8 6        0x1        27       62       4096     N        informix datadbs2
+51387438 7        0x1        51       4        4096     N        informix indxdbs1
+51387598 8        0x1        54       3        4096     N        informix indxdbs2
+ 8 active, 2047 maximum
+
+Chunks
+address  chunk/dbs     offset     size       free       bpages     flags pathname
+50431970 1      1      0          62500      54513                 PO--  /ach_root/ach_root.1
+513876f8 2      2      0          250000     124947                PO--  /ach_llog/ach_llog.1
+513878c8 3      3      0          250000     249547                PO--  /ach_temp/ach_temp.1
+51387a98 4      4      0          62500      2447                  PO--  /ach_plog/ach_plog.1
+51387c68 5      5      0          250000     0                     PO--  /ach_dat1/ach_dat1.1
+51387e38 6      5      0          250000     3                     PO--  /ach_dat1/ach_dat1.2
+51388018 7      5      0          250000     1                     PO--  /ach_dat1/ach_dat1.3
+513881e8 8      5      0          250000     1                     PO--  /ach_dat1/ach_dat1.4
+513883b8 9      5      0          250000     1                     PO--  /ach_dat1/ach_dat1.5
+51388588 10     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.6
+51388758 11     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.7
+51388928 12     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.8
+51388af8 13     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.9
+51388cc8 14     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.10
+5138c018 15     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.11
+5138c1e8 16     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.12
+5138c3b8 17     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.13
+5138c588 18     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.14
+5138c758 19     5      0          250000     3                     PO--  /ach_dat1/ach_dat1.15
+5138c928 20     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.16
+5138caf8 21     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.17
+5138ccc8 22     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.18
+5138d018 23     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.19
+5138d1e8 24     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.20
+5138d3b8 25     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.21
+5138d588 26     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.22
+5138d758 27     6      0          250000     1                     PO--  /ach_dat2/ach_dat2.1
+5138d928 28     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.2
+5138daf8 29     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.3
+5138dcc8 30     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.4
+5138e018 31     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.5
+5138e1e8 32     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.6
+5138e3b8 33     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.7
+5138e588 34     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.8
+5138e758 35     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.9
+5138e928 36     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.10
+5138eaf8 37     6      0          250000     3                     PO--  /ach_dat2/ach_dat2.11
+5138ecc8 38     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.12
+5138f018 39     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.13
+5138f1e8 40     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.14
+5138f3b8 41     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.15
+5138f588 42     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.16
+5138f758 43     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.17
+5138f928 44     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.18
+5138faf8 45     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.19
+5138fcc8 46     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.20
+51390018 47     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.21
+513901e8 48     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.22
+513903b8 49     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.23
+51390588 50     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.24
+51390758 51     7      0          250000     2                     PO--  /ach_idx1/ach_idx1.1
+51390928 52     7      0          250000     3                     PO--  /ach_idx1/ach_idx1.2
+51390af8 53     7      0          250000     189977                PO--  /ach_idx1/ach_idx1.3
+51390cc8 54     8      0          250000     170663                PO--  /ach_idx2/ach_idx2.1
+51391018 55     8      0          250000     249997                PO--  /ach_idx2/ach_idx2.2
+513911e8 56     8      0          250000     249997                PO--  /ach_idx2/ach_idx2.3
+513913b8 57     3      0          256000     255997                PO--  /ach_temp/ach_temp.2
+51391588 58     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.23
+51391758 59     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.24
+51391928 60     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.25
+51391af8 61     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.26
+51391cc8 62     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.27
+51395018 63     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.28
+513951e8 64     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.25
+513953b8 65     6      0          250000     1                     PO--  /ach_dat2/ach_dat2.26
+51395588 66     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.27
+51395758 67     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.28
+51395928 68     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.29
+51395af8 69     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.30
+51395cc8 70     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.29
+51396018 71     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.30
+513961e8 72     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.31
+513963b8 73     5      0          250000     3                     PO--  /ach_dat1/ach_dat1.32
+51396588 74     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.33
+51396758 75     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.31
+51396928 76     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.32
+51396af8 77     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.33
+51396cc8 78     5      0          250000     2                     PO--  /ach_dat1/ach_dat1.34
+51397018 79     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.35
+513971e8 80     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.34
+513973b8 81     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.35
+51397588 82     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.36
+51397758 83     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.37
+51397928 84     5      0          250000     1                     PO--  /ach_dat1/ach_dat1.38
+51397af8 85     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.36
+51397cc8 86     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.37
+51398018 87     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.38
+513981e8 88     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.39
+513983b8 89     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.40
+51398588 90     5      0          250000     3                     PO--  /ach_dat1/ach_dat1.39
+51398758 91     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.41
+51398928 92     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.42
+51398af8 93     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.40
+51398cc8 94     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.43
+51399018 95     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.41
+513991e8 96     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.44
+513993b8 97     5      0          250000     0                     PO--  /ach_dat1/ach_dat1.42
+51399588 98     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.45
+51399758 99     6      0          250000     0                     PO--  /ach_dat2/ach_dat2.46
+51399928 100    6      0          250000     0                     PO--  /ach_dat2/ach_dat2.47
+51399af8 101    6      0          250000     1                     PO--  /ach_dat2/ach_dat2.48
+51399cc8 102    5      0          250000     0                     PO--  /ach_dat1/ach_dat1.43
+5139a018 103    5      0          250000     0                     PO--  /ach_dat1/ach_dat1.44
+5139a1e8 104    5      0          250000     0                     PO--  /ach_dat1/ach_dat1.45
+5139a3b8 105    5      0          250000     0                     PO--  /ach_dat1/ach_dat1.46
+5139a588 106    5      0          250000     1                     PO--  /ach_dat1/ach_dat1.47
+5139a758 107    5      0          250000     11405                 PO--  /ach_dat1/ach_dat1.48
+5139a928 108    6      0          250000     53                    PO--  /ach_dat2/ach_dat2.49
+5139aaf8 109    6      0          250000     13                    PO--  /ach_dat2/ach_dat2.50
+5139acc8 110    6      0          250000     13                    PO--  /ach_dat2/ach_dat2.51
+5139b018 111    6      0          250000     13                    PO--  /ach_dat2/ach_dat2.52
+5139b1e8 112    6      0          250000     14221                 PO--  /ach_dat2_2/ach_dat2.53
+5139b3b8 113    6      0          250000     118925                PO--  /ach_dat2_2/ach_dat2.54
+5139b588 114    6      0          250000     249997                PO--  /ach_dat2_2/ach_dat2.55
+5139b758 115    6      0          250000     249997                PO--  /ach_dat2_2/ach_dat2.56
+5139b928 116    6      0          250000     249997                PO--  /ach_dat2_2/ach_dat2.57
+5139baf8 117    6      0          250000     249997                PO--  /ach_dat2_2/ach_dat2.58
+5139bcc8 118    6      0          250000     249997                PO--  /ach_dat2_2/ach_dat2.59
+5139c018 119    6      0          250000     249997                PO--  /ach_dat2_2/ach_dat2.60
+5139c1e8 120    6      0          250000     249997                PO--  /ach_dat2_2/ach_dat2.61
+5139c3b8 121    6      0          250000     249997                PO--  /ach_dat2_2/ach_dat2.62
+5139c588 122    5      0          250000     249997                PO--  /ach_dat1_2/ach_dat1.49
+5139c758 123    5      0          250000     249997                PO--  /ach_dat1_2/ach_dat1.50
+5139c928 124    5      0          250000     249997                PO--  /ach_dat1_2/ach_dat1.51
+5139caf8 125    5      0          250000     249997                PO--  /ach_dat1_2/ach_dat1.52
+5139ccc8 126    5      0          250000     249997                PO--  /ach_dat1_2/ach_dat1.53
+513a0018 127    7      0          250000     249997                PO--  /ach_idx1/ach_idx1.4
+ 127 active, 2047 maximum
+
+NOTE: The values in the "size" and "free" columns for DBspace chunks are
+      displayed in terms of "pgsize" of the DBspace to which they belong.
+
+Expanded chunk capacity mode: disabled
+
+Fri May  3 13:55:00 EDT 2013	ip_arch04	b3
+
+
+TBLspace Report for ip_arch04:informix.b3
+
+    Physical Address               103:249884
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               561       
+    Number of special columns      0         
+    Number of keys                 0         
+    Number of extents              133       
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              8         
+    Next extent size               2048      
+    Number of pages allocated      43144     
+    Number of pages used           41768     
+    Number of data pages           41762     
+    Number of rows                 292330    
+    Partition partnum              5243618   
+    Partition lockid               5243618   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        105:165323           8          8
+                    8        105:249740           8          8
+                   16        105:249752           8          8
+                   24        105:249768           8          8
+                   32        105:249780           8          8
+                   40        105:249804          24         24
+                   64        105:249840           8          8
+                   72        105:249852           8          8
+                   80        105:249872           8          8
+                   88        105:249892          16         16
+                  104        105:249916           8          8
+                  112        105:249928           8          8
+                  120        105:249944           8          8
+                  128        105:249960           8          8
+                  136        105:249976           8          8
+                  144        106:227331          24         24
+                  168        106:227375          16         16
+                  184        106:227399          16         16
+                  200        106:227431          16         16
+                  216        106:227463          16         16
+                  232        106:227483          16         16
+                  248        106:227523          16         16
+                  264        106:227551          16         16
+                  280        106:227591          16         16
+                  296        106:227615          16         16
+                  312        106:227655          32         32
+                  344        106:227715          32         32
+                  376        106:227759          16         16
+                  392        106:227779          16         16
+                  408        106:227815          16         16
+                  424        106:227839          16         16
+                  440        106:227859          16         16
+                  456        106:227891          32         32
+                  488        106:227939          32         32
+                  520        106:228007          32         32
+                  552        106:228071          32         32
+                  584        106:228127          32         32
+                  616        106:228191          32         32
+                  648        106:228251          32         32
+                  680        106:228323          32         32
+                  712        106:228383          32         32
+                  744        106:228419          32         32
+                  776        106:228495          32         32
+                  808        106:228551          32         32
+                  840        106:228599          32         32
+                  872        106:228679          32         32
+                  904        106:228759          32         32
+                  936        106:228851          32         32
+                  968        106:229007          64         64
+                 1032        106:229863          64         64
+                 1096        106:230287          64         64
+                 1160        106:230751          64         64
+                 1224        106:231271          64         64
+                 1288        106:232731          64         64
+                 1352        106:233715          64         64
+                 1416        106:234175          64         64
+                 1480        106:234815          64         64
+                 1544        106:235279          64         64
+                 1608        106:235739          64         64
+                 1672        106:235835          64         64
+                 1736        106:236683          64         64
+                 1800        106:237135         128        128
+                 1928        106:237279          64         64
+                 1992        106:237407         192        192
+                 2184        106:237959         128        128
+                 2312        106:238135         128        128
+                 2440        106:238303         128        128
+                 2568        106:238471         128        128
+                 2696        106:238711         128        128
+                 2824        106:239159         128        128
+                 2952        106:239303         128        128
+                 3080        106:239463         128        128
+                 3208        106:239927         128        128
+                 3336        106:240551         128        128
+                 3464        106:241423         128        128
+                 3592        106:242399         128        128
+                 3720        106:243215         128        128
+                 3848        106:244191         128        128
+                 3976        106:244855         128        128
+                 4104        106:245247         128        128
+                 4232        106:246143         256        256
+                 4488        106:246503         256        256
+                 4744        106:247399         256        256
+                 5000        106:247871         256        256
+                 5256        106:248135         256        256
+                 5512        106:248559         256        256
+                 5768        106:249407         256        256
+                 6024         107:66195         256        256
+                 6280         107:68643         256        256
+                 6536         107:70339         256        256
+                 6792         107:71571         256        256
+                 7048         107:72435         256        256
+                 7304         107:72899         256        256
+                 7560         107:73363         256        256
+                 7816         107:74211         256        256
+                 8072         107:74675         256        256
+                 8328         107:75859         512        512
+                 8840         107:78707         512        512
+                 9352         107:81971         512        512
+                 9864         107:82883         512        512
+                10376         107:84723         512        512
+                10888         107:88483         512        512
+                11400         107:90835         512        512
+                11912         107:92931         512        512
+                12424         107:95027         512        512
+                12936         107:98563         512        512
+                13448         107:99459         512        512
+                13960        107:101443         512        512
+                14472        107:104931         512        512
+                14984        107:107171         512        512
+                15496        107:109123         512        512
+                16008        107:112899         512        512
+                16520        107:116035        1024       1024
+                17544        107:119939        1024       1024
+                18568        107:122083        1024       1024
+                19592        107:129091        1024       1024
+                20616        107:133283        1024       1024
+                21640        107:140291        1024       1024
+                22664        107:144515        1024       1024
+                23688        107:149475        1024       1024
+                24712        107:153859        1024       1024
+                25736        107:158307        1024       1024
+                26760        107:165283        1024       1024
+                27784        107:168771        1024       1024
+                28808        107:173699        1024       1024
+                29832        107:180739        1024       1024
+                30856        107:186691        1024       1024
+                31880        107:189315        1024       1024
+                32904        107:194819        2048       2048
+                34952        107:205251        2048       2048
+                37000        107:213571        2048       2048
+                39048        107:222531        2048       2048
+                41096        107:235011        2048       2048
+
+		  Index  199_649 fragment partition datadbs1 in DBspace datadbs1
+
+    Physical Address               103:249885
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               561       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              72        
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               64        
+    Number of pages allocated      1472      
+    Number of pages used           1440      
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              5243619   
+    Partition lockid               5243618   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        105:165331           4          4
+                    4        105:249848           4          4
+                    8        106:227355           4          4
+                   12        106:227519           4          4
+                   16        106:227695           4          4
+                   20        106:227855           4          4
+                   24        106:228003           4          4
+                   28        106:228183           4          4
+                   32        106:228359           4          4
+                   36        106:228527           4          4
+                   40        106:228675           4          4
+                   44        106:229667           4          4
+                   48        106:231087           4          4
+                   52        106:233939           4          4
+                   56        106:235375           4          4
+                   60        106:236747           4          4
+                   64        106:237271           8          8
+                   72        106:238095           8          8
+                   80        106:238463           8          8
+                   88        106:238703           8          8
+                   96        106:239295           8          8
+                  104        106:239631           8          8
+                  112        106:240679           8          8
+                  120        106:241975           8          8
+                  128        106:243207           8          8
+                  136        106:244119           8          8
+                  144        106:244319           8          8
+                  152        106:245239           8          8
+                  160        106:246479           8          8
+                  168        106:247655           8          8
+                  176        106:248127           8          8
+                  184        106:248391           8          8
+                  192        106:248543          16         16
+                  208        106:249919          16         16
+                  224         107:69667          16         16
+                  240         107:70659          16         16
+                  256         107:72883          16         16
+                  272         107:73619          16         16
+                  288         107:74931          16         16
+                  304         107:78435          16         16
+                  320         107:80387          16         16
+                  336         107:82483          16         16
+                  352         107:84707          16         16
+                  368         107:88211          16         16
+                  384         107:90819          16         16
+                  400         107:91347          16         16
+                  416         107:93443          16         16
+                  432         107:96819          16         16
+                  448         107:97251          32         32
+                  480        107:101155          32         32
+                  512        107:105699          32         32
+                  544        107:112867          32         32
+                  576        107:116003          32         32
+                  608        107:117859          32         32
+                  640        107:121507          32         32
+                  672        107:123107          32         32
+                  704        107:132995          32         32
+                  736        107:137123          32         32
+                  768        107:142083          32         32
+                  800        107:142179          32         32
+                  832        107:149443          32         32
+                  864        107:153827          32         32
+                  896        107:158275          32         32
+                  928        107:166307          32         32
+                  960        107:168451          64         64
+                 1024        107:174723          64         64
+                 1088        107:187715          64         64
+                 1152        107:190659          64         64
+                 1216        107:204675          64         64
+                 1280        107:213507          64         64
+                 1344        107:220291          64         64
+                 1408        107:234947          64         64
+
+		  Index b3_rk1 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249971
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               561       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              78        
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               64        
+    Number of pages allocated      1936      
+    Number of pages used           1917      
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340218   
+    Partition lockid               5243618   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          53:36879           4          4
+                    4          53:51755           4          4
+                    8          53:51779           4          4
+                   12          53:51799           4          4
+                   16          53:51807           4          4
+                   20          53:51835           4          4
+                   24          53:51847           4          4
+                   28          53:51859           4          4
+                   32          53:51875           4          4
+                   36          53:51895           4          4
+                   40          53:51907           4          4
+                   44          53:51927           4          4
+                   48          53:51951          12         12
+                   60          53:52003           8          8
+                   68          53:52027           8          8
+                   76          53:52047           4          4
+                   80          53:52071           8          8
+                   88          53:52107           8          8
+                   96          53:52123           8          8
+                  104          53:52151           8          8
+                  112          53:52179           8          8
+                  120          53:52207           8          8
+                  128          53:52231           8          8
+                  136          53:52279           8          8
+                  144          53:52311           8          8
+                  152          53:52371           8          8
+                  160          53:52407           8          8
+                  168          53:52455           8          8
+                  176          53:52491           8          8
+                  184          53:52543           8          8
+                  192          53:52583           8          8
+                  200          53:52607           8          8
+                  208          53:52643          16         16
+                  224          53:52683          16         16
+                  240          53:52727          16         16
+                  256          53:52795          16         16
+                  272          53:52843          16         16
+                  288          53:52911          16         16
+                  304          53:52987          16         16
+                  320          53:53079          16         16
+                  336          53:53151          16         16
+                  352          53:53207          16         16
+                  368          53:53271          16         16
+                  384          53:53351          16         16
+                  400          53:53423          16         16
+                  416          53:53479          16         16
+                  432          53:53567          16         16
+                  448          53:53623          16         16
+                  464          53:53687          32         32
+                  496          53:53783          32         32
+                  528          53:53927          32         32
+                  560          53:54119          32         32
+                  592          53:54255          32         32
+                  624          53:54399          32         32
+                  656          53:54527          32         32
+                  688          53:54679          32         32
+                  720          53:54823          32         32
+                  752          53:54975          32         32
+                  784          53:55103          32         32
+                  816          53:55191          32         32
+                  848          53:55327          32         32
+                  880          53:55423          32         32
+                  912          53:55615          32         32
+                  944          53:55831          96         96
+                 1040          53:56215          64         64
+                 1104          53:56599          64         64
+                 1168          53:56823          64         64
+                 1232          53:57111          64         64
+                 1296          53:57239          64         64
+                 1360          53:57543          64         64
+                 1424          53:57815          64         64
+                 1488          53:58103          64         64
+                 1552          53:58391          64         64
+                 1616          53:58663          64         64
+                 1680          53:59079          64         64
+                 1744          53:59175          64         64
+                 1808          53:59463          64         64
+                 1872          53:59895          64         64
+
+		  Index b3_rk10 fragment partition indxdbs2 in DBspace indxdbs2
+
+    Physical Address               54:62438
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               561       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              42        
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               16        
+    Number of pages allocated      368       
+    Number of pages used           368       
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              8388720   
+    Partition lockid               5243618   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          54:76527           4          4
+                    4          54:78335           4          4
+                    8          54:78351           4          4
+                   12          54:78363           4          4
+                   16          54:78375           4          4
+                   20          54:78383           4          4
+                   24          54:78399           4          4
+                   28          54:78407           4          4
+                   32          54:78423           4          4
+                   36          54:78431           4          4
+                   40          54:78443           4          4
+                   44          54:78451           4          4
+                   48          54:78463           4          4
+                   52          54:78475           4          4
+                   56          54:78483           4          4
+                   60          54:78491           4          4
+                   64          54:78503           8          8
+                   72          54:78527           8          8
+                   80          54:78551           8          8
+                   88          54:78567           8          8
+                   96          54:78591           8          8
+                  104          54:78615           8          8
+                  112          54:78631           8          8
+                  120          54:78655           8          8
+                  128          54:78671           8          8
+                  136          54:78695           8          8
+                  144          54:78719           8          8
+                  152          54:78743           8          8
+                  160          54:78759           8          8
+                  168          54:78775           8          8
+                  176          54:78799           8          8
+                  184          54:78831          24         24
+                  208          54:78887          16         16
+                  224          54:78935          16         16
+                  240          54:78967          16         16
+                  256          54:79015          16         16
+                  272          54:79063          16         16
+                  288          54:79095          16         16
+                  304          54:79143          16         16
+                  320          54:79191          16         16
+                  336          54:79223          16         16
+                  352          54:79255          16         16
+
+		  Index b3_rk2 fragment partition indxdbs2 in DBspace indxdbs2
+
+    Physical Address               54:62439
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               561       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              43        
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               16        
+    Number of pages allocated      596       
+    Number of pages used           590       
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              8388721   
+    Partition lockid               5243618   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          54:76531           4          4
+                    4          54:78331           4          4
+                    8          54:78339          12         12
+                   20          54:78355           8          8
+                   28          54:78367           8          8
+                   36          54:78379           4          4
+                   40          54:78387          12         12
+                   52          54:78403           4          4
+                   56          54:78411          12         12
+                   68          54:78427           4          4
+                   72          54:78435           8          8
+                   80          54:78447           4          4
+                   84          54:78455           8          8
+                   92          54:78467           8          8
+                  100          54:78479           4          4
+                  104          54:78487           4          4
+                  108          54:78495           8          8
+                  116          54:78511          16         16
+                  132          54:78535          16         16
+                  148          54:78559           8          8
+                  156          54:78575          16         16
+                  172          54:78599          16         16
+                  188          54:78623           8          8
+                  196          54:78639          16         16
+                  212          54:78663           8          8
+                  220          54:78679          16         16
+                  236          54:78703          16         16
+                  252          54:78727          16         16
+                  268          54:78751           8          8
+                  276          54:78767           8          8
+                  284          54:78783          16         16
+                  300          54:78807          24         24
+                  324          54:78855          32         32
+                  356          54:78903          32         32
+                  388          54:78951          16         16
+                  404          54:78983          32         32
+                  436          54:79031          32         32
+                  468          54:79079          16         16
+                  484          54:79111          32         32
+                  516          54:79159          32         32
+                  548          54:79207          16         16
+                  564          54:79239          16         16
+                  580          54:79271          16         16
+
+		  Index b3_rk3 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249972
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               561       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              44        
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               16        
+    Number of pages allocated      384       
+    Number of pages used           380       
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340219   
+    Partition lockid               5243618   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          53:36883           4          4
+                    4          53:51771           4          4
+                    8          53:51871           4          4
+                   12          53:51963           4          4
+                   16          53:52051           4          4
+                   20          53:52147           4          4
+                   24          53:52247           4          4
+                   28          53:52339           4          4
+                   32          53:52423           4          4
+                   36          53:52507           4          4
+                   40          53:52615           4          4
+                   44          53:52715           4          4
+                   48          53:52791           4          4
+                   52          53:52875           4          4
+                   56          53:52983           4          4
+                   60          53:53075           4          4
+                   64          53:53167           8          8
+                   72          53:53343           8          8
+                   80          53:53511           8          8
+                   88          53:53719           8          8
+                   96          53:53863           8          8
+                  104          53:54039           8          8
+                  112          53:54247           8          8
+                  120          53:54391           8          8
+                  128          53:54567           8          8
+                  136          53:54743           8          8
+                  144          53:54855           8          8
+                  152          53:55135           8          8
+                  160          53:55287           8          8
+                  168          53:55487           8          8
+                  176          53:55607           8          8
+                  184          53:55823           8          8
+                  192          53:55991          16         16
+                  208          53:56311          16         16
+                  224          53:56663          16         16
+                  240          53:56967          16         16
+                  256          53:57447          16         16
+                  272          53:57735          16         16
+                  288          53:58087          16         16
+                  304          53:58375          16         16
+                  320          53:58855          16         16
+                  336          53:59159          16         16
+                  352          53:59447          16         16
+                  368          53:59751          16         16
+
+		  Index b3_rk5 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249973
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               561       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              93        
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               128       
+    Number of pages allocated      3756      
+    Number of pages used           3732      
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340220   
+    Partition lockid               5243618   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          53:36887           4          4
+                    4          53:51751           4          4
+                    8          53:51763           8          8
+                   16          53:51783           4          4
+                   20          53:51795           4          4
+                   24          53:51803           4          4
+                   28          53:51815          12         12
+                   40          53:51831           4          4
+                   44          53:51851           8          8
+                   52          53:51867           4          4
+                   56          53:51879           4          4
+                   60          53:51891           4          4
+                   64          53:51903           4          4
+                   68          53:51911           4          4
+                   72          53:51919           8          8
+                   80          53:51931           4          4
+                   84          53:51943           8          8
+                   92          53:51967           8          8
+                  100          53:51983           8          8
+                  108          53:51995           8          8
+                  116          53:52019           8          8
+                  124          53:52039           8          8
+                  132          53:52063           8          8
+                  140          53:52083          16         16
+                  156          53:52115           8          8
+                  164          53:52131          16         16
+                  180          53:52167           8          8
+                  188          53:52191          16         16
+                  204          53:52215           8          8
+                  212          53:52239           8          8
+                  220          53:52259           8          8
+                  228          53:52271           8          8
+                  236          53:52287          16         16
+                  252          53:52323          16         16
+                  268          53:52355          16         16
+                  284          53:52391          16         16
+                  300          53:52431          16         16
+                  316          53:52471          16         16
+                  332          53:52511          16         16
+                  348          53:52551          16         16
+                  364          53:52591          16         16
+                  380          53:52627          16         16
+                  396          53:52659          16         16
+                  412          53:52699          16         16
+                  428          53:52743          16         16
+                  444          53:52775          16         16
+                  460          53:52811          16         16
+                  476          53:52859          16         16
+                  492          53:52879          32         32
+                  524          53:52951          32         32
+                  556          53:53027          32         32
+                  588          53:53103          32         32
+                  620          53:53175          32         32
+                  652          53:53239          32         32
+                  684          53:53295          32         32
+                  716          53:53391          32         32
+                  748          53:53439          32         32
+                  780          53:53535          32         32
+                  812          53:53591          32         32
+                  844          53:53655          32         32
+                  876          53:53727          32         32
+                  908          53:53815          32         32
+                  940          53:53887          32         32
+                  972          53:53975          32         32
+                 1004          53:54047          64         64
+                 1068          53:54183          64         64
+                 1132          53:54327          64         64
+                 1196          53:54463          64         64
+                 1260          53:54615          64         64
+                 1324          53:54751          64         64
+                 1388          53:54911          64         64
+                 1452          53:55039          64         64
+                 1516          53:55223          64         64
+                 1580          53:55359          64         64
+                 1644          53:55495          64         64
+                 1708          53:55647         128        128
+                 1836          53:55927          64         64
+                 1900          53:56039          64         64
+                 1964          53:56151          64         64
+                 2028          53:56343          64         64
+                 2092          53:56471         128        128
+                 2220          53:56695         128        128
+                 2348          53:56983         128        128
+                 2476          53:57303         128        128
+                 2604          53:57607         128        128
+                 2732          53:57879         128        128
+                 2860          53:58167         128        128
+                 2988          53:58455         128        128
+                 3116          53:58727         128        128
+                 3244          53:58951         128        128
+                 3372          53:59303         128        128
+                 3500          53:59527         128        128
+                 3628          53:59767         128        128
+
+		  Index b3_rk9 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249974
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               561       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              49        
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               32        
+    Number of pages allocated      480       
+    Number of pages used           472       
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340221   
+    Partition lockid               5243618   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          53:36891           4          4
+                    4          53:51787           4          4
+                    8          53:51839           4          4
+                   12          53:51883           4          4
+                   16          53:51935           4          4
+                   20          53:51979           4          4
+                   24          53:52015           4          4
+                   28          53:52079           4          4
+                   32          53:52175           4          4
+                   36          53:52187           4          4
+                   40          53:52267           4          4
+                   44          53:52319           4          4
+                   48          53:52343           4          4
+                   52          53:52379           4          4
+                   56          53:52427           4          4
+                   60          53:52487           4          4
+                   64          53:52567           8          8
+                   72          53:52719           8          8
+                   80          53:52943           8          8
+                   88          53:53019           8          8
+                   96          53:53095           8          8
+                  104          53:53287           8          8
+                  112          53:53367           8          8
+                  120          53:53471           8          8
+                  128          53:53583           8          8
+                  136          53:53759           8          8
+                  144          53:53919           8          8
+                  152          53:54111           8          8
+                  160          53:54319           8          8
+                  168          53:54559           8          8
+                  176          53:54575           8          8
+                  184          53:54815           8          8
+                  192          53:54863          16         16
+                  208          53:55175          16         16
+                  224          53:55591          16         16
+                  240          53:55775          16         16
+                  256          53:56103          16         16
+                  272          53:56327          16         16
+                  288          53:56679          16         16
+                  304          53:56951          16         16
+                  320          53:57431          16         16
+                  336          53:57527          16         16
+                  352          53:58007          16         16
+                  368          53:58295          16         16
+                  384          53:58583          16         16
+                  400          53:58871          16         16
+                  416          53:59143          16         16
+                  432          53:59431          16         16
+                  448          53:59719          32         32
+
+Fri May  3 13:55:00 EDT 2013	ip_arch04	b3_line
+
+
+TBLspace Report for ip_arch04:informix.b3_line
+
+    Physical Address               100:247968
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               429       
+    Number of special columns      0         
+    Number of keys                 0         
+    Number of extents              164       
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              8         
+    Next extent size               8192      
+    Number of pages allocated      232640    
+    Number of pages used           228366    
+    Number of data pages           228337    
+    Number of rows                 2055028   
+    Partition partnum              6291847   
+    Partition lockid               6291847   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        100:248501           8          8
+                    8        100:248644          64         64
+                   72        100:248712          16         16
+                   88        100:248732          80         80
+                  168        100:248816          64         64
+                  232        100:248884          24         24
+                  256        100:248912          56         56
+                  312        100:248972          48         48
+                  360        100:249024          80         80
+                  440        100:249108          16         16
+                  456        100:249128          72         72
+                  528        100:249208          48         48
+                  576        100:249260          40         40
+                  616        100:249304         104        104
+                  720        100:249412          40         40
+                  760        100:249456          88         88
+                  848        100:249548          48         48
+                  896        100:249600          48         48
+                  944        100:249652          64         64
+                 1008        100:249724          48         48
+                 1056        100:249776         128        128
+                 1184        100:249908          32         32
+                 1216        100:249944          32         32
+                 1248        100:249980          16         16
+                 1264        101:245763         128        128
+                 1392        101:245895          64         64
+                 1456        101:245971         160        160
+                 1616        101:246135          48         48
+                 1664        101:246191         144        144
+                 1808        101:246339          16         16
+                 1824        101:246363         112        112
+                 1936        101:246479          48         48
+                 1984        101:246535         160        160
+                 2144        101:246711         160        160
+                 2304        101:246879         160        160
+                 2464        101:247047          96         96
+                 2560        101:247151          32         32
+                 2592        101:247191         160        160
+                 2752        101:247359         192        192
+                 2944        101:247567         160        160
+                 3104        101:247735         160        160
+                 3264        101:247903          64         64
+                 3328        101:247975          64         64
+                 3392        101:248047         224        224
+                 3616        101:248287         160        160
+                 3776        101:248455         128        128
+                 3904        101:248591          32         32
+                 3936        101:248631         160        160
+                 4096        101:248807         256        256
+                 4352        101:249071          64         64
+                 4416        101:249151         320        320
+                 4736        101:249495         192        192
+                 4928        101:249695         128        128
+                 5056        101:249839         128        128
+                 5184        108:204803         448        448
+                 5632        108:205267         320        320
+                 5952        108:205611         192        192
+                 6144        108:205811         128        128
+                 6272        108:205955         256        256
+                 6528        108:206235         320        320
+                 6848        108:206571         128        128
+                 6976        108:206707         128        128
+                 7104        108:206851         192        192
+                 7296        108:207051         192        192
+                 7488        108:207259         128        128
+                 7616        108:207403         128        128
+                 7744        108:207547         256        256
+                 8000        108:207819         256        256
+                 8256        108:208091         128        128
+                 8384        108:208235         256        256
+                 8640        108:208507         256        256
+                 8896        108:208795         256        256
+                 9152        108:209067         256        256
+                 9408        108:209355         512        512
+                 9920        108:209899         128        128
+                10048        108:210043         384        384
+                10432        108:210443         128        128
+                10560        108:210603         384        384
+                10944        108:211003         384        384
+                11328        108:211419         128        128
+                11456        108:211563         512        512
+                11968        108:212123         512        512
+                12480        108:212651         256        256
+                12736        108:212939         512        512
+                13248        108:213467         256        256
+                13504        108:213755         512        512
+                14016        108:214315         768        768
+                14784        108:215131         512        512
+                15296        108:215675         256        256
+                15552        108:215947         256        256
+                15808        108:216235         512        512
+                16320        108:216763         256        256
+                16576        108:217051         512        512
+                17088        108:217611         512        512
+                17600        108:218139         256        256
+                17856        108:218427         768        768
+                18624        108:219259         512        512
+                19136        108:219835        1024       1024
+                20160        108:220955        1024       1024
+                21184        108:222011         512        512
+                21696        108:222587         512        512
+                22208        108:223131        1024       1024
+                23232        108:224251        1024       1024
+                24256        108:225339         512        512
+                24768        108:225883        1024       1024
+                25792        108:226971         512        512
+                26304        108:227515        1024       1024
+                27328        108:228635        1024       1024
+                28352        108:229723         512        512
+                28864        108:230267         512        512
+                29376        108:230843        1024       1024
+                30400        108:231963        1536       1536
+                31936        108:233595        1024       1024
+                32960        108:234651        1024       1024
+                33984        108:235771        1024       1024
+                35008        108:236859        1024       1024
+                36032        108:237979        1024       1024
+                37056        108:239099        1024       1024
+                38080        108:240219        1024       1024
+                39104        108:241307        1024       1024
+                40128        108:242459        2048       2048
+                42176        108:244635        1024       1024
+                43200        108:245723        1024       1024
+                44224        108:246875        1024       1024
+                45248        108:247963        1024       1024
+                46272        109:196611       13312      13312
+                59584        109:210051        2048       2048
+                61632        109:212163        1024       1024
+                62656        109:213315        2048       2048
+                64704        109:215555        2048       2048
+                66752        109:217795        4096       4096
+                70848        109:222083        2048       2048
+                72896        109:224323        2048       2048
+                74944        109:226563        2048       2048
+                76992        109:228739        2048       2048
+                79040        109:230851        2048       2048
+                81088        109:233219        2048       2048
+                83136        109:235395        2048       2048
+                85184        109:237699        4096       4096
+                89280        109:242179        4096       4096
+                93376        109:246403        2048       2048
+                95424        110:196611       18432      18432
+               113856        110:215299        6144       6144
+               120000        110:221699        2048       2048
+               122048        110:223875        4096       4096
+               126144        110:228227        4096       4096
+               130240        110:232707        4096       4096
+               134336        110:237187        4096       4096
+               138432        110:241411        4096       4096
+               142528        110:245763        4096       4096
+               146624        111:196867        4096       4096
+               150720        111:201347        4096       4096
+               154816        111:205827        4096       4096
+               158912        111:210307        8192       8192
+               167104        111:219139        4096       4096
+               171200        111:223363        4096       4096
+               175296        111:228227        8192       8192
+               183488        111:236931        4096       4096
+               187584        111:241283        8192       8192
+               195776        112:196611        4096       4096
+               199872        112:200963        8192       8192
+               208064        112:209923        8192       8192
+               216256        112:218627        8192       8192
+               224448        112:227587        8192       8192
+
+		  Index  201_711 fragment partition datadbs2 in DBspace datadbs2
+
+    Physical Address               100:247969
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               429       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              119       
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               512       
+    Number of pages allocated      11968     
+    Number of pages used           11777     
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              6291848   
+    Partition lockid               6291847   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        100:248509           4          4
+                    4        100:248708           4          4
+                    8        100:248812           4          4
+                   12        100:248908           4          4
+                   16        100:249020           4          4
+                   20        100:249124           4          4
+                   24        100:249200           4          4
+                   28        100:249256           4          4
+                   32        100:249408           4          4
+                   36        100:249544           4          4
+                   40        100:249648           4          4
+                   44        100:249716           4          4
+                   48        100:249772           4          4
+                   52        100:249904           4          4
+                   56        100:249976           4          4
+                   60        101:245891           4          4
+                   64        101:245963           8          8
+                   72        101:246183           8          8
+                   80        101:246355           8          8
+                   88        101:246527           8          8
+                   96        101:246695           8          8
+                  104        101:246871           8          8
+                  112        101:247039           8          8
+                  120        101:247183           8          8
+                  128        101:247351           8          8
+                  136        101:247551           8          8
+                  144        101:247727           8          8
+                  152        101:247895           8          8
+                  160        101:248039           8          8
+                  168        101:248271           8          8
+                  176        101:248447           8          8
+                  184        101:248583           8          8
+                  192        101:248791          16         16
+                  208        101:249135          16         16
+                  224        101:249479          16         16
+                  240        101:249823          16         16
+                  256        101:249975          16         16
+                  272        108:205251          16         16
+                  288        108:205595          16         16
+                  304        108:205939          16         16
+                  320        108:206211          16         16
+                  336        108:206555          16         16
+                  352        108:206835          16         16
+                  368        108:207243          16         16
+                  384        108:207531          16         16
+                  400        108:207803          16         16
+                  416        108:208075          16         16
+                  432        108:208491          16         16
+                  448        108:208763          32         32
+                  480        108:209323          32         32
+                  512        108:209867          32         32
+                  544        108:210571          32         32
+                  576        108:211387          32         32
+                  608        108:212091          32         32
+                  640        108:212907          32         32
+                  672        108:213723          32         32
+                  704        108:214283          32         32
+                  736        108:215083          32         32
+                  768        108:215643          32         32
+                  800        108:216203          32         32
+                  832        108:217019          32         32
+                  864        108:217579          32         32
+                  896        108:218395          32         32
+                  928        108:219195          32         32
+                  960        108:219771          64         64
+                 1024        108:220891          64         64
+                 1088        108:222523          64         64
+                 1152        108:224155          64         64
+                 1216        108:225275          64         64
+                 1280        108:226907          64         64
+                 1344        108:228539          64         64
+                 1408        108:229659          64         64
+                 1472        108:230779          64         64
+                 1536        108:231899          64         64
+                 1600        108:233531          64         64
+                 1664        108:235675          64         64
+                 1728        108:236795          64         64
+                 1792        108:237915          64         64
+                 1856        108:239035          64         64
+                 1920        108:240155          64         64
+                 1984        108:242331         128        128
+                 2112        108:244507         128        128
+                 2240        108:246747         128        128
+                 2368        108:248987         128        128
+                 2496        108:249179         128        128
+                 2624        108:249371         128        128
+                 2752        108:249563         128        128
+                 2880        108:249755         128        128
+                 3008        109:209923         128        128
+                 3136        109:213187         128        128
+                 3264        109:215427         128        128
+                 3392        109:217667         128        128
+                 3520        109:221891         128        128
+                 3648        109:224131         128        128
+                 3776        109:226371         128        128
+                 3904        109:228611         128        128
+                 4032        109:232899         256        256
+                 4288        109:237443         256        256
+                 4544        109:241923         256        256
+                 4800        109:248451         512        512
+                 5312        109:249091         256        256
+                 5568        109:249475         256        256
+                 5824        110:215043         256        256
+                 6080        110:221443         256        256
+                 6336        110:227971         256        256
+                 6592        110:232451         256        256
+                 6848        110:236931         256        256
+                 7104        110:245507         256        256
+                 7360        111:196611         256        256
+                 7616        111:201091         256        256
+                 7872        111:205571         256        256
+                 8128        111:209923         256        256
+                 8384        111:218499         512        512
+                 8896        111:227459         512        512
+                 9408        111:236419         512        512
+                 9920        111:249475         512        512
+                10432        112:209155         512        512
+                10944        112:218115         512        512
+                11456        112:227075         512        512
+
+		  Index  201_841 fragment partition datadbs2 in DBspace datadbs2
+
+    Physical Address               100:248298
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               429       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              101       
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               256       
+    Number of pages allocated      5440      
+    Number of pages used           5437      
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              6291867   
+    Partition lockid               6291847   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        100:248624           4          4
+                    4        100:248728           4          4
+                    8        100:248880           4          4
+                   12        100:248968           4          4
+                   16        100:249104           4          4
+                   20        100:249204           4          4
+                   24        100:249300           4          4
+                   28        100:249452           4          4
+                   32        100:249596           4          4
+                   36        100:249720           4          4
+                   40        100:249940           4          4
+                   44        100:249996           4          4
+                   48        101:245959           4          4
+                   52        101:246131           4          4
+                   56        101:246335           4          4
+                   60        101:246475           4          4
+                   64        101:246703           8          8
+                   72        101:247143           8          8
+                   80        101:247559           8          8
+                   88        101:247967           8          8
+                   96        101:248279           8          8
+                  104        101:248623           8          8
+                  112        101:249063           8          8
+                  120        101:249471           8          8
+                  128        101:249687           8          8
+                  136        101:249967           8          8
+                  144        101:249991           8          8
+                  152        108:205587           8          8
+                  160        108:205803           8          8
+                  168        108:206227           8          8
+                  176        108:206699           8          8
+                  184        108:207043           8          8
+                  192        108:207387          16         16
+                  208        108:208219          16         16
+                  224        108:209051          16         16
+                  240        108:210027          16         16
+                  256        108:210427          16         16
+                  272        108:210987          16         16
+                  288        108:211547          16         16
+                  304        108:212075          16         16
+                  320        108:212635          16         16
+                  336        108:213451          16         16
+                  352        108:214267          16         16
+                  368        108:215115          16         16
+                  384        108:215931          16         16
+                  400        108:216747          16         16
+                  416        108:217563          16         16
+                  432        108:218123          16         16
+                  448        108:219227          32         32
+                  480        108:220859          32         32
+                  512        108:221979          32         32
+                  544        108:223099          32         32
+                  576        108:224219          32         32
+                  608        108:225851          32         32
+                  640        108:227483          32         32
+                  672        108:228603          32         32
+                  704        108:230235          32         32
+                  736        108:231867          32         32
+                  768        108:233499          32         32
+                  800        108:234619          32         32
+                  832        108:235739          32         32
+                  864        108:237883          32         32
+                  896        108:239003          32         32
+                  928        108:240123          32         32
+                  960        108:241243          64         64
+                 1024        108:245659          64         64
+                 1088        108:247899          64         64
+                 1152        108:249115          64         64
+                 1216        108:249307          64         64
+                 1280        108:249499          64         64
+                 1344        108:249691          64         64
+                 1408        108:249883          64         64
+                 1472        109:212099          64         64
+                 1536        109:215363          64         64
+                 1600        109:217603          64         64
+                 1664        109:222019          64         64
+                 1728        109:224259          64         64
+                 1792        109:226499          64         64
+                 1856        109:230787          64         64
+                 1920        109:233155          64         64
+                 1984        109:235267         128        128
+                 2112        109:241795         128        128
+                 2240        109:246275         128        128
+                 2368        109:248963         128        128
+                 2496        109:249347         128        128
+                 2624        109:249731         256        256
+                 2880        110:223747         128        128
+                 3008        110:232323         128        128
+                 3136        110:236803         128        128
+                 3264        110:241283         128        128
+                 3392        110:249859         128        128
+                 3520        111:200963         128        128
+                 3648        111:205443         128        128
+                 3776        111:210179         128        128
+                 3904        111:219011         128        128
+                 4032        111:223235         128        128
+                 4160        111:227971         256        256
+                 4416        111:241027         256        256
+                 4672        112:200707         256        256
+                 4928        112:209667         256        256
+                 5184        112:226819         256        256
+
+Fri May  3 13:55:01 EDT 2013	ip_arch04	b3_recap_details
+
+
+TBLspace Report for ip_arch04:informix.b3_recap_details
+
+    Physical Address               103:249888
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               91        
+    Number of special columns      0         
+    Number of keys                 0         
+    Number of extents              152       
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              8         
+    Next extent size               4096      
+    Number of pages allocated      98176     
+    Number of pages used           96276     
+    Number of data pages           96264     
+    Number of rows                 4043047   
+    Partition partnum              5243622   
+    Partition lockid               5243622   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        105:165371           8          8
+                    8        105:249732           8          8
+                   16        105:249760           8          8
+                   24        105:249788           8          8
+                   32        105:249832           8          8
+                   40        105:249864           8          8
+                   48        105:249908           8          8
+                   56        105:249936           8          8
+                   64        105:249968           8          8
+                   72        105:249988           8          8
+                   80        106:227359           8          8
+                   88        106:227391           8          8
+                   96        106:227423           8          8
+                  104        106:227455           8          8
+                  112        106:227499           8          8
+                  120        106:227543           8          8
+                  128        106:227571          16         16
+                  144        106:227635          16         16
+                  160        106:227699          16         16
+                  176        106:227795          16         16
+                  192        106:227875          16         16
+                  208        106:227975          16         16
+                  224        106:228039          16         16
+                  240        106:228107          16         16
+                  256        106:228167          16         16
+                  272        106:228231          16         16
+                  288        106:228283          16         16
+                  304        106:228367          16         16
+                  320        106:228451          16         16
+                  336        106:228531          16         16
+                  352        106:228583          16         16
+                  368        106:228659          16         16
+                  384        106:228711          32         32
+                  416        106:228791          32         32
+                  448        106:228883          32         32
+                  480        106:228931          32         32
+                  512        106:228975          32         32
+                  544        106:229095          32         32
+                  576        106:229143          32         32
+                  608        106:229183          32         32
+                  640        106:229223          32         32
+                  672        106:229263          32         32
+                  704        106:229311          32         32
+                  736        106:229351          32         32
+                  768        106:229391          32         32
+                  800        106:229439          32         32
+                  832        106:229479          32         32
+                  864        106:229535          32         32
+                  896        106:229575          64         64
+                  960        106:229671          64         64
+                 1024        106:229775          64         64
+                 1088        106:229935          64         64
+                 1152        106:230023          64         64
+                 1216        106:230119          64         64
+                 1280        106:230223          64         64
+                 1344        106:230379          64         64
+                 1408        106:230475          64         64
+                 1472        106:230587          64         64
+                 1536        106:230667          64         64
+                 1600        106:230831          64         64
+                 1664        106:230927          64         64
+                 1728        106:231023          64         64
+                 1792        106:231107          64         64
+                 1856        106:231207          64         64
+                 1920        106:231351         128        128
+                 2048        106:231543         128        128
+                 2176        106:231719         128        128
+                 2304        106:231895         128        128
+                 2432        106:232071         128        128
+                 2560        106:232231         128        128
+                 2688        106:232411         128        128
+                 2816        106:232603         128        128
+                 2944        106:232843         128        128
+                 3072        106:233035         128        128
+                 3200        106:233219         128        128
+                 3328        106:233395         128        128
+                 3456        106:233555         128        128
+                 3584        106:233811         128        128
+                 3712        106:234039         128        128
+                 3840        106:234319         128        128
+                 3968        106:234511         256        256
+                 4224        106:234991         256        256
+                 4480        106:235443         256        256
+                 4736        106:235995         256        256
+                 4992        106:236379         256        256
+                 5248        106:236847         256        256
+                 5504        106:237703         256        256
+                 5760        106:238839         256        256
+                 6016        106:239639         256        256
+                 6272        106:240191         256        256
+                 6528        106:240687         256        256
+                 6784        106:241103         256        256
+                 7040        106:241647         256        256
+                 7296        106:241983         256        256
+                 7552        106:242535         256        256
+                 7808        106:242951         256        256
+                 8064        106:243415         512        512
+                 8576        106:244343         512        512
+                 9088        106:245439         512        512
+                 9600        106:246823         512        512
+                10112        106:248895         512        512
+                10624         107:65539         512        512
+                11136         107:66451         512        512
+                11648         107:67155         512        512
+                12160         107:67923         512        512
+                12672         107:68899         512        512
+                13184         107:69683         512        512
+                13696         107:70803         512        512
+                14208         107:71907         512        512
+                14720         107:73699         512        512
+                15232         107:74947         512        512
+                15744         107:76371         512        512
+                16256         107:77139        1024       1024
+                17280         107:79235        1024       1024
+                18304         107:80819        1024       1024
+                19328         107:83555        1024       1024
+                20352         107:85779        1024       1024
+                21376         107:87187        1024       1024
+                22400         107:89283        1024       1024
+                23424         107:91363        1024       1024
+                24448         107:93459        1024       1024
+                25472         107:95795        1024       1024
+                26496         107:97283        1024       1024
+                27520        107:100003        1024       1024
+                28544        107:102211        1024       1024
+                29568        107:103779        1024       1024
+                30592        107:105763        1024       1024
+                31616        107:107971        1024       1024
+                32640        107:109891        2048       2048
+                34688        107:113667        2048       2048
+                36736        107:117891        2048       2048
+                38784        107:123651        2048       2048
+                40832        107:126531        2048       2048
+                42880        107:130947        2048       2048
+                44928        107:135075        2048       2048
+                46976        107:138243        2048       2048
+                49024        107:142467        2048       2048
+                51072        107:146563        2048       2048
+                53120        107:151011        2048       2048
+                55168        107:154947        2048       2048
+                57216        107:159331        2048       2048
+                59264        107:161955        2048       2048
+                61312        107:166403        2048       2048
+                63360        107:170819        2048       2048
+                65408        107:174787        4096       4096
+                69504        107:182275        4096       4096
+                73600        107:190723        4096       4096
+                77696        107:198979        4096       4096
+                81792        107:207811        4096       4096
+                85888        107:216195        4096       4096
+                89984        107:225091        4096       4096
+                94080        107:230723        4096       4096
+
+		  Index  202_753 fragment partition datadbs1 in DBspace datadbs1
+
+    Physical Address               103:249889
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               91        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              136       
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               1024      
+    Number of pages allocated      24528     
+    Number of pages used           23735     
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              5243623   
+    Partition lockid               5243622   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        105:165379           4          4
+                    4        105:249748           4          4
+                    8        105:249828           4          4
+                   12        105:249924           4          4
+                   16        105:249984           4          4
+                   20        106:227479           4          4
+                   24        106:227507           4          4
+                   28        106:227539           4          4
+                   32        106:227651           4          4
+                   36        106:227811           4          4
+                   40        106:227931           4          4
+                   44        106:227991           4          4
+                   48        106:228059           4          4
+                   52        106:228187           4          4
+                   56        106:228315           4          4
+                   60        106:228363           4          4
+                   64        106:228483           8          8
+                   72        106:228647           8          8
+                   80        106:228751           8          8
+                   88        106:228843           8          8
+                   96        106:228923           8          8
+                  104        106:229071           8          8
+                  112        106:229127           8          8
+                  120        106:229175           8          8
+                  128        106:229215           8          8
+                  136        106:229255           8          8
+                  144        106:229303           8          8
+                  152        106:229343           8          8
+                  160        106:229383           8          8
+                  168        106:229423           8          8
+                  176        106:229471           8          8
+                  184        106:229511          24         24
+                  208        106:229643          16         16
+                  224        106:229759          16         16
+                  240        106:229847          16         16
+                  256        106:229999          16         16
+                  272        106:230095          16         16
+                  288        106:230199          16         16
+                  304        106:230351          16         16
+                  320        106:230459          16         16
+                  336        106:230555          16         16
+                  352        106:230651          16         16
+                  368        106:230731          16         16
+                  384        106:230911          16         16
+                  400        106:231007          16         16
+                  416        106:231091          16         16
+                  432        106:231191          16         16
+                  448        106:231335          16         16
+                  464        106:231511          32         32
+                  496        106:231687          32         32
+                  528        106:231863          32         32
+                  560        106:232023          32         32
+                  592        106:232199          32         32
+                  624        106:232359          32         32
+                  656        106:232555          32         32
+                  688        106:232811          32         32
+                  720        106:232971          32         32
+                  752        106:233163          32         32
+                  784        106:233347          32         32
+                  816        106:233523          32         32
+                  848        106:233683          32         32
+                  880        106:233943          32         32
+                  912        106:234007          32         32
+                  944        106:234287          32         32
+                  976        106:234447          64         64
+                 1040        106:234927          64         64
+                 1104        106:235379          64         64
+                 1168        106:235931          64         64
+                 1232        106:236315          64         64
+                 1296        106:236783          64         64
+                 1360        106:237607          64         64
+                 1424        106:238639          64         64
+                 1488        106:240055          64         64
+                 1552        106:240447          64         64
+                 1616        106:240943          64         64
+                 1680        106:241359          64         64
+                 1744        106:241911          64         64
+                 1808        106:242303          64         64
+                 1872        106:242791          64         64
+                 1936        106:243343          64         64
+                 2000        106:243991         128        128
+                 2128        106:245111         128        128
+                 2256        106:246015         128        128
+                 2384        106:247679         128        128
+                 2512        106:249727         128        128
+                 2640         107:66067         128        128
+                 2768         107:67027         128        128
+                 2896         107:67795         128        128
+                 3024         107:68515         128        128
+                 3152         107:69475         128        128
+                 3280         107:70675         128        128
+                 3408         107:71443         128        128
+                 3536         107:72755         128        128
+                 3664         107:74483         128        128
+                 3792         107:75587         128        128
+                 3920         107:77011         128        128
+                 4048         107:78179         256        256
+                 4304         107:80403         256        256
+                 4560         107:82499         256        256
+                 4816         107:85235         256        256
+                 5072         107:86803         256        256
+                 5328         107:88995         256        256
+                 5584         107:90435         256        256
+                 5840         107:92675         256        256
+                 6096         107:94771         256        256
+                 6352         107:96835         256        256
+                 6608         107:99075         256        256
+                 6864        107:101187         256        256
+                 7120        107:103267         256        256
+                 7376        107:105443         256        256
+                 7632        107:107683         256        256
+                 7888        107:109635         256        256
+                 8144        107:112195         512        512
+                 8656        107:117059         512        512
+                 9168        107:121539         512        512
+                 9680        107:125763         512        512
+                10192        107:130115         512        512
+                10704        107:134307         512        512
+                11216        107:137155         512        512
+                11728        107:141571         512        512
+                12240        107:146051         512        512
+                12752        107:148611         512        512
+                13264        107:153059         512        512
+                13776        107:157507         512        512
+                14288        107:161443         512        512
+                14800        107:164515         512        512
+                15312        107:170307         512        512
+                15824        107:172931         512        512
+                16336        107:179715        1024       1024
+                17360        107:187779        1024       1024
+                18384        107:197379        1024       1024
+                19408        107:203587        1024       1024
+                20432        107:211971        1024       1024
+                21456        107:220483        1024       1024
+                22480        107:229187        1024       1024
+                23504        107:237571        1024       1024
+
+		  Index  202_842 fragment partition datadbs1 in DBspace datadbs1
+
+    Physical Address               103:249902
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               91        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              126       
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               512       
+    Number of pages allocated      15840     
+    Number of pages used           15796     
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              5243636   
+    Partition lockid               5243622   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        105:165728           4          4
+                    4        105:249776           4          4
+                    8        105:249888           4          4
+                   12        105:249996           4          4
+                   16        106:227415           4          4
+                   20        106:227587           4          4
+                   24        106:227631           4          4
+                   28        106:227747           4          4
+                   32        106:227971           4          4
+                   36        106:228055           4          4
+                   40        106:228123           4          4
+                   44        106:228247           4          4
+                   48        106:228319           4          4
+                   52        106:228415           4          4
+                   56        106:228547           4          4
+                   60        106:228655           4          4
+                   64        106:228743           8          8
+                   72        106:228915           8          8
+                   80        106:228963           8          8
+                   88        106:229135           8          8
+                   96        106:229295           8          8
+                  104        106:229431           8          8
+                  112        106:229567           8          8
+                  120        106:229659           8          8
+                  128        106:229751           8          8
+                  136        106:229839           8          8
+                  144        106:229927           8          8
+                  152        106:230015           8          8
+                  160        106:230087           8          8
+                  168        106:230111           8          8
+                  176        106:230215           8          8
+                  184        106:230371           8          8
+                  192        106:230443          16         16
+                  208        106:230571          16         16
+                  224        106:230815          16         16
+                  240        106:230991          16         16
+                  256        106:231171          16         16
+                  272        106:231495          16         16
+                  288        106:231671          16         16
+                  304        106:231847          16         16
+                  320        106:232055          16         16
+                  336        106:232391          16         16
+                  352        106:232539          16         16
+                  368        106:232795          16         16
+                  384        106:233003          16         16
+                  400        106:233203          16         16
+                  416        106:233379          16         16
+                  432        106:233779          16         16
+                  448        106:233975          32         32
+                  480        106:234239          32         32
+                  512        106:234783          32         32
+                  544        106:234895          32         32
+                  576        106:235343          32         32
+                  608        106:235699          32         32
+                  640        106:235899          32         32
+                  672        106:236251          64         64
+                  736        106:236643          32         32
+                  768        106:236751          32         32
+                  800        106:237343          32         32
+                  832        106:238263          32         32
+                  864        106:239095          32         32
+                  896        106:239895          32         32
+                  928        106:240159          32         32
+                  960        106:240511          32         32
+                  992        106:241039          64         64
+                 1056        106:241583          64         64
+                 1120        106:242239          64         64
+                 1184        106:242855          64         64
+                 1248        106:244127          64         64
+                 1312        106:244983          64         64
+                 1376        106:245375          64         64
+                 1440        106:245951          64         64
+                 1504        106:246759          64         64
+                 1568        106:248415          64         64
+                 1632        106:249663          64         64
+                 1696        106:249935          64         64
+                 1760         107:66963          64         64
+                 1824         107:67667          64         64
+                 1888         107:68435          64         64
+                 1952         107:69603          64         64
+                 2016         107:70195         128        128
+                 2144         107:71315         128        128
+                 2272         107:73219         128        128
+                 2400         107:75459         128        128
+                 2528         107:76883         128        128
+                 2656         107:78579         128        128
+                 2784         107:80259         128        128
+                 2912         107:80659         128        128
+                 3040         107:82755         128        128
+                 3168         107:84579         128        128
+                 3296         107:85651         128        128
+                 3424         107:87059         128        128
+                 3552         107:88355         128        128
+                 3680         107:90307         128        128
+                 3808         107:92419         128        128
+                 3936         107:94483         128        128
+                 4064         107:95539         256        256
+                 4320         107:98307         256        256
+                 4576        107:101955         256        256
+                 4832        107:103523         256        256
+                 5088        107:106915         256        256
+                 5344        107:111939         256        256
+                 5600        107:113411         256        256
+                 5856        107:117571         256        256
+                 6112        107:121219         256        256
+                 6368        107:123395         256        256
+                 6624        107:126275         256        256
+                 6880        107:128835         256        256
+                 7136        107:130691         256        256
+                 7392        107:134819         256        256
+                 7648        107:137731         256        256
+                 7904        107:141315         256        256
+                 8160        107:145539         512        512
+                 8672        107:150499         512        512
+                 9184        107:156995         512        512
+                 9696        107:164003         512        512
+                10208        107:169795         512        512
+                10720        107:178883         512        512
+                11232        107:181763         512        512
+                11744        107:188803         512        512
+                12256        107:198403         512        512
+                12768        107:203075         512        512
+                13280        107:207299         512        512
+                13792        107:212995         512        512
+                14304        107:221507        1024       1024
+                15328        107:230211         512        512
+
+Fri May  3 13:55:01 EDT 2013	ip_arch04	tariff
+
+
+TBLspace Report for ip_arch04:informix.tariff
+
+    Physical Address               100:247965
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               514       
+    Number of special columns      0         
+    Number of keys                 0         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              8         
+    Next extent size               8         
+    Number of pages allocated      8         
+    Number of pages used           1         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              6291844   
+    Partition lockid               6291844   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        100:248481           8          8
+
+		  Index  190_597 fragment partition datadbs2 in DBspace datadbs2
+
+    Physical Address               100:247966
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               514       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              6291845   
+    Partition lockid               6291844   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        100:248489           4          4
+
+		  Index  190_840 fragment partition datadbs2 in DBspace datadbs2
+
+    Physical Address               100:248297
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               514       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              6291866   
+    Partition lockid               6291844   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        100:248620           4          4
+
+		  Index tariff_rk1 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249963
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               514       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340210   
+    Partition lockid               6291844   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0         52:249927           4          4
+
+		  Index tariff_rk2 fragment partition indxdbs2 in DBspace indxdbs2
+
+    Physical Address               54:62470
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               514       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              8388752   
+    Partition lockid               6291844   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          54:76494           4          4
+
+		  Index tariff_rk3 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249964
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               514       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340211   
+    Partition lockid               6291844   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0         52:249931           4          4
+
+		  Index tariff_rk4 fragment partition indxdbs2 in DBspace indxdbs2
+
+    Physical Address               54:62471
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               514       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              8388753   
+    Partition lockid               6291844   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          54:76498           4          4
+
+		  Index tariff_rk5 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249965
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               514       
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340212   
+    Partition lockid               6291844   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0         52:249985           4          4
+
+Fri May  3 13:55:01 EDT 2013	ip_arch04	lii_client
+
+
+TBLspace Report for ip_arch04:informix.lii_client
+
+    Physical Address               90:249670
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               76        
+    Number of special columns      0         
+    Number of keys                 0         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              8         
+    Next extent size               8         
+    Number of pages allocated      8         
+    Number of pages used           1         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              5243554   
+    Partition lockid               5243554   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        104:249920           8          8
+
+		  Index  144_329 fragment partition datadbs1 in DBspace datadbs1
+
+    Physical Address               90:249671
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               76        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              5243555   
+    Partition lockid               5243554   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        104:249928           4          4
+
+Fri May  3 13:55:01 EDT 2013	ip_arch04	lii_account
+
+
+TBLspace Report for ip_arch04:informix.lii_account
+
+    Physical Address               90:249672
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               48        
+    Number of special columns      0         
+    Number of keys                 0         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              8         
+    Next extent size               8         
+    Number of pages allocated      8         
+    Number of pages used           1         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              5243556   
+    Partition lockid               5243556   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        104:249948           8          8
+
+		  Index  147_375 fragment partition datadbs1 in DBspace datadbs1
+
+    Physical Address               90:249673
+    Creation date                  03/07/2013 15:32:30
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               48        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              5243557   
+    Partition lockid               5243556   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        104:249956           4          4
+
+		  Index  147_831 fragment partition datadbs1 in DBspace datadbs1
+
+    Physical Address               103:249897
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               48        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              5243631   
+    Partition lockid               5243556   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        105:165705           4          4
+
+Fri May  3 13:55:01 EDT 2013	ip_arch04	client_invoice
+
+
+TBLspace Report for ip_arch04:informix.client_invoice
+
+    Physical Address               100:248303
+    Creation date                  03/07/2013 15:32:29
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               87        
+    Number of special columns      0         
+    Number of keys                 0         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              8         
+    Next extent size               8         
+    Number of pages allocated      8         
+    Number of pages used           1         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              6291872   
+    Partition lockid               6291872   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        100:247855           8          8
+
+		  Index  100_1 fragment partition datadbs2 in DBspace datadbs2
+
+    Physical Address               100:248304
+    Creation date                  03/07/2013 15:32:29
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               87        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              6291873   
+    Partition lockid               6291872   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0        100:247863           4          4
+
+		  Index client_invoice_rk1 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249945
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               87        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340192   
+    Partition lockid               6291872   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0         52:249838           4          4
+
+		  Index client_invoice_rk2 fragment partition indxdbs2 in DBspace indxdbs2
+
+    Physical Address               54:62454
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               87        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              8388736   
+    Partition lockid               6291872   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          54:76421           4          4
+
+		  Index client_invoice_rk3 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249946
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               87        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340193   
+    Partition lockid               6291872   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0         52:249842           4          4
+
+		  Index client_invoice_rk4 fragment partition indxdbs2 in DBspace indxdbs2
+
+    Physical Address               54:62455
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               87        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              8388737   
+    Partition lockid               6291872   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0          54:76425           4          4
+
+		  Index client_invoice_rk5 fragment partition indxdbs1 in DBspace indxdbs1
+
+    Physical Address               52:249947
+    Creation date                  03/07/2013 15:32:33
+    TBLspace Flags                 802        Row Locking
+                                              TBLspace use 4 bit bit-maps
+    Maximum row size               87        
+    Number of special columns      0         
+    Number of keys                 1         
+    Number of extents              1         
+    Current serial value           1         
+    Current SERIAL8 value          1         
+    Current BIGSERIAL value        1         
+    Current REFID value            1         
+    First extent size              4         
+    Next extent size               4         
+    Number of pages allocated      4         
+    Number of pages used           2         
+    Number of data pages           0         
+    Number of rows                 0         
+    Partition partnum              7340194   
+    Partition lockid               6291872   
+
+    Extents                       
+         Logical Page     Physical Page        Size Physical Pages
+                    0         52:249846           4          4
+

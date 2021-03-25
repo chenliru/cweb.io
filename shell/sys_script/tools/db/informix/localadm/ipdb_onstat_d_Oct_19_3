@@ -1,0 +1,118 @@
+
+IBM Informix Dynamic Server Version 11.50.UC3W2   -- On-Line -- Up 250 days 21:43:11 -- 2051200 Kbytes
+
+Dbspaces
+address  number   flags      fchunk   nchunks  pgsize   flags    owner    name
+90431810 1        0x1        1        1        4096     N        informix rootdbs
+913ff3e0 2        0x1        2        1        4096     N        informix llogdbs
+913ff540 3        0x1        3        1        4096     N        informix plogdbs
+913ff6a0 4        0x1        4        22       4096     N        informix datadbs1
+913ff800 5        0x1        19       25       4096     N        informix datadbs2
+913ff960 6        0x1        34       7        4096     N        informix indxdbs1
+913ffac0 7        0x1        37       5        4096     N        informix indxdbs2
+913ffc20 8        0x2001     40       1        4096     N T      informix tempdbs1
+913ffd80 9        0x2001     41       1        4096     N T      informix tempdbs2
+91400018 10       0x2001     42       1        4096     N T      informix tempdbs3
+91400178 11       0x1        59       19       4096     N        informix datadbs3
+914002d8 12       0x1        75       4        4096     N        informix indxdbs3
+91400438 13       0x2001     78       1        4096     N T      informix tempdbs4
+ 13 active, 2047 maximum
+
+Chunks
+address  chunk/dbs     offset     size       free       bpages     flags pathname
+90431970 1      1      0          55000      19751                 PO--  /ix_root/ix_root.1
+91400598 2      2      0          250000     69947                 PO--  /ix_llog/ix_llog.1
+91400768 3      3      0          64000      1447                  PO--  /ix_plog/ix_plog.1
+91400938 4      4      0          250000     7                     PO--  /ix_dat1/ix_dat1.1
+91400b08 5      4      0          250000     1252                  PO--  /ix_dat1/ix_dat1.2
+91400cd8 6      4      0          250000     656                   PO--  /ix_dat1/ix_dat1.3
+91401018 7      4      0          250000     2312                  PO--  /ix_dat1/ix_dat1.4
+914011e8 8      4      0          250000     0                     PO--  /ix_dat1/ix_dat1.5
+914013b8 9      4      0          250000     0                     PO--  /ix_dat1/ix_dat1.6
+91401588 10     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.7
+91401758 11     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.8
+91401928 12     4      0          250000     323                   PO--  /ix_dat1/ix_dat1.9
+91401af8 13     4      0          250000     1800                  PO--  /ix_dat1/ix_dat1.10
+91401cc8 14     4      0          250000     72                    PO--  /ix_dat1/ix_dat1.11
+91402018 15     4      0          250000     688                   PO--  /ix_dat1/ix_dat1.12
+914021e8 16     4      0          250000     1208                  PO--  /ix_dat1/ix_dat1.13
+914023b8 17     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.14
+91402588 18     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.15
+91402758 19     5      0          250000     1                     PO--  /ix_dat2/ix_dat2.1
+91402928 20     5      0          250000     1069                  PO--  /ix_dat2/ix_dat2.2
+91402af8 21     5      0          250000     5                     PO--  /ix_dat2/ix_dat2.3
+91402cc8 22     5      0          250000     5                     PO--  /ix_dat2/ix_dat2.4
+91403018 23     5      0          250000     5                     PO--  /ix_dat2/ix_dat2.5
+914031e8 24     5      0          250000     133                   PO--  /ix_dat2/ix_dat2.6
+914033b8 25     5      0          250000     133                   PO--  /ix_dat2/ix_dat2.7
+91403588 26     5      0          250000     133                   PO--  /ix_dat2/ix_dat2.8
+91403758 27     5      0          250000     645                   PO--  /ix_dat2/ix_dat2.9
+91403928 28     5      0          250000     23557                 PO--  /ix_dat2/ix_dat2.10
+91403af8 29     5      0          250000     154885                PO--  /ix_dat2/ix_dat2.11
+91403cc8 30     5      0          250000     67589                 PO--  /ix_dat2/ix_dat2.12
+91404018 31     5      0          250000     9221                  PO--  /ix_dat2/ix_dat2.13
+914041e8 32     5      0          250000     92165                 PO--  /ix_dat2/ix_dat2.14
+914043b8 33     5      0          250000     245765                PO--  /ix_dat2/ix_dat2.15
+91404588 34     6      0          250000     1                     PO--  /ix_idx1/ix_idx1.1
+91404758 35     6      0          250000     6                     PO--  /ix_idx1/ix_idx1.2
+91404928 36     6      0          250000     3                     PO--  /ix_idx1/ix_idx1.3
+91404af8 37     7      0          250000     3                     PO--  /ix_idx2/ix_idx2.1
+91404cc8 38     7      0          250000     1                     PO--  /ix_idx2/ix_idx2.2
+91405018 39     7      0          250000     5                     PO--  /ix_idx2/ix_idx2.3
+914051e8 40     8      0          250000     242356                PO--  /ix_temp/ix_temp.1
+914053b8 41     9      0          250000     242396                PO--  /ix_temp/ix_temp.2
+91405588 42     10     0          250000     242396                PO--  /ix_temp/ix_temp.3
+91405758 43     7      0          250000     132637                PO--  /ix_idx2/ix_idx2.4
+91405928 44     5      0          250000     243717                PO--  /ix_dat2/ix_dat2.16
+91405af8 45     6      0          250000     34445                 PO--  /ix_idx1/ix_idx1.4
+91405cc8 46     5      0          250000     249949                PO--  /ix_dat2/ix_dat2.17
+91406018 47     5      0          250000     229517                PO--  /ix_dat2/ix_dat2.18
+914061e8 48     6      0          250000     249997                PO--  /ix_idx1/ix_idx1.5
+914063b8 49     7      0          250000     249997                PO--  /ix_idx2/ix_idx2.5
+91406588 50     5      0          250000     233613                PO--  /ix_dat2/ix_dat2.19
+91406758 51     6      0          250000     249997                PO--  /ix_idx1/ix_idx1.6
+91406928 52     5      0          250000     249997                PO--  /ix_dat2/ix_dat2.20
+91406af8 53     5      0          250000     247437                PO--  /ix_dat2/ix_dat2.21
+91406cc8 54     5      0          250000     249997                PO--  /ix_dat2/ix_dat2.22
+91407018 55     5      0          250000     249997                PO--  /ix_dat2/ix_dat2.23
+914071e8 56     6      0          250000     249997                PO--  /ix_idx1/ix_idx1.7
+914073b8 57     5      0          250000     249997                PO--  /ix_dat2/ix_dat2.24
+91407588 58     5      0          250000     217229                PO--  /ix_dat2/ix_dat2.25
+91407758 59     11     0          250000     3                     PO--  /ix_dat3/ix_dat3.1
+91407928 60     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.2
+91407af8 61     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.3
+91407cc8 62     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.4
+9140b018 63     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.5
+9140b1e8 64     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.6
+9140b3b8 65     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.7
+9140b588 66     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.8
+9140b758 67     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.9
+9140b928 68     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.10
+9140baf8 69     11     0          250000     1                     PO--  /ix_dat3/ix_dat3.11
+9140bcc8 70     11     0          250000     5                     PO--  /ix_dat3/ix_dat3.12
+9140c018 71     11     0          250000     5                     PO--  /ix_dat3/ix_dat3.13
+9140c1e8 72     11     0          250000     5                     PO--  /ix_dat3/ix_dat3.14
+9140c3b8 73     11     0          250000     5                     PO--  /ix_dat3/ix_dat3.15
+9140c588 74     11     0          250000     5                     PO--  /ix_dat3/ix_dat3.16
+9140c758 75     12     0          250000     6                     PO--  /ix_idx3/ix_idx3.1
+9140c928 76     12     0          250000     5                     PO--  /ix_idx3/ix_idx3.2
+9140caf8 77     12     0          250000     204049                PO--  /ix_idx3/ix_idx3.3
+9140ccc8 78     13     0          250000     242396                PO--  /ix_temp/ix_temp.4
+9140d018 79     11     0          250000     5                     PO--  /ix_dat3/ix_dat3.17
+9140d1e8 80     11     0          250000     106773                PO--  /ix_dat3/ix_dat3.18
+9140d3b8 81     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.16
+9140d588 82     4      0          250000     3784                  PO--  /ix_dat1/ix_dat1.17
+9140d758 83     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.18
+9140d928 84     11     0          250000     249997                PO--  /ix_dat3/ix_dat3.19
+9140daf8 85     12     0          250000     249997                PO--  /ix_idx3/ix_idx3.4
+9140dcc8 86     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.19
+9140e018 87     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.20
+9140e1e8 88     4      0          250000     0                     PO--  /ix_dat1/ix_dat1.21
+9140e3b8 89     4      0          250000     233101                PO--  /ix_dat1/ix_dat1.22
+ 89 active, 2047 maximum
+
+NOTE: The values in the "size" and "free" columns for DBspace chunks are
+      displayed in terms of "pgsize" of the DBspace to which they belong.
+
+Expanded chunk capacity mode: disabled
+

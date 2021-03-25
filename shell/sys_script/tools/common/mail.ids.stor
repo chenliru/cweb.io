@@ -1,0 +1,93 @@
+#!/bin/ksh
+###################################################################################
+# Discription: To manage the informix storage utilization, INFORMIX DBA should:
+#              1. Check reserved pages ( oncheck -pr). 
+#              2. Check storage spaces ( onstat -d). 
+#              3. Add dbspaces, temporary dbspaces, blobspaces, temporary sbspaces, 
+#                 and sbspaces (onspaces). 
+#              4. Display and add chunks to a storage space. 
+#              5. Check the dataskip status. 
+#              6. Display and add external spaces. 
+#              7. Display the number of pages in your database, 
+#                 percentage of allocated space, and used space (oncheck -pt). 
+#              9. Override ONDBSPACEDOWN. 
+#
+# Author:  Liru Chen
+# Date: April, 2012
+#
+#####################################################################################
+#set -v
+#set -x
+
+if [[ $# -lt 4 ]]; then
+    echo " USAGE: mail.ids.storage informix_instance schedule_Time database monitored_table"
+    echo " "
+    #exit 2
+fi
+
+. ~/tools.profile
+
+instance=${1-$IDSSERVER}
+scheduletime=${2-Daily}
+
+database=${3-$IDSDATABASE}
+monitortable=${4-$IDSMONITORTABLE}
+
+. $TOOLSDIR/db/informix/$IDSENV $instance
+tempfile=$TMPDIR/$instance.$scheduletime
+
+# History data collection
+[[ -f $tempfile ]] || {
+   # OS level storage usage
+   df -k > $tempfile
+
+   # Informix chunck level storage usage
+   onstat -d >> $tempfile
+
+   # Informix table level storage usage
+   # The oncheck -pt and/or oncheck -pT options print a tblspace report 
+   # for a specific table or fragment
+   set $monitortable   
+   integer tablecount=$#
+
+   integer xcount=0
+
+   while (( $xcount < $tablecount ))
+   do
+    echo "`date`\t$database\t$1" >> $tempfile
+    oncheck -pt $database:$1     >> $tempfile
+
+    shift 1
+    xcount=xcount+1
+
+   done
+}
+
+# Current data collection
+df -k > $tempfile.cur
+onstat -d >> $tempfile.cur
+
+set $monitortable
+integer tablecount=$#
+
+integer icount=0
+
+while (( $icount < $tablecount ))
+do
+ echo "`date`\t$database\t$1" >> $tempfile.cur
+ oncheck -pt $database:$1     >> $tempfile.cur
+
+ shift 1
+ icount=icount+1
+done
+
+# email the Storage usage difference to Administrator
+diff $tempfile $tempfile.cur > $tempfile.diff 
+mail -s " System `hostname` $scheduletime Storage usage change " $SYSADMEMAIL \
+         < $tempfile.diff
+
+# Create new storage usage file for next comparation
+mv $tempfile.cur $tempfile
+
+exit 0
+
